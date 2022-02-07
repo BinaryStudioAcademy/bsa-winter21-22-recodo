@@ -5,8 +5,131 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RecodoDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        MouseDown="Window_MouseDown"
+        Title="MainWindow" Height="400" Width="80">
+    <Window.Background>
+        <SolidColorBrush Opacity="0" Color="White"/>
+    </Window.Background>
+    <Border BorderThickness="0" CornerRadius="0,20,20,0"  Background="#732939">
+        <Grid>
+            <StackPanel>
+                <Label Margin="0 10 0 5" Foreground="White" HorizontalContentAlignment="Center" FontSize="18">5:00</Label>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsFocused" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="White" />
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="20" Source="images/stop.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsFocused" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="White" />
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="20" Source="images/refresh.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsFocused" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="White" />
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="20" Source="images/pause.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsFocused" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="White" />
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="20" Source="images/delete.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsFocused" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="White" />
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="20" Source="images/edit.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

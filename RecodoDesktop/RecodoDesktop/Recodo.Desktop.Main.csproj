@@ -7,7 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <None Remove="images\delete.png" />
+    <None Remove="images\edit.png" />
+    <None Remove="images\image.png" />
+    <None Remove="images\pause.png" />
+    <None Remove="images\refresh.png" />
+    <None Remove="images\stop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\pause.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <EmbeddedResource Include="images\image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
