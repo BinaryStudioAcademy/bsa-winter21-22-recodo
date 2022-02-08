@@ -24,6 +24,7 @@
             <SolidColorBrush x:Key="SecondaryHueDarkForegroundBrush" Color="#FFFFFF"/>
             
             <SolidColorBrush x:Key="MaterialDesignLightBackground" Color="#F4E9E9"/>
+            <FontFamily x:Key="MaterialDesignFont">pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Poppins/#Poppins</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
