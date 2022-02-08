@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="VideoRecordingForm"
         Left="500"
-        Background="{StaticResource MaterialDesignLightBackground}" SizeToContent="WidthAndHeight">
+        Background="{StaticResource MaterialDesignLightBackground}" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230.98"/>
@@ -64,8 +64,8 @@
                     Source="Icons/camera.png"/>
                 <TextBlock
                     Text="Video"
-			        Margin="10,4,4,4"
-			        VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">
+			        Margin="10,2,0,0"
+			        VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Stretch">
                 </TextBlock>
             </StackPanel>
         </Button>
@@ -93,15 +93,21 @@
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}">Create a recording canvas</Button>
         
         <TextBlock Grid.Row="5" Grid.Column="0" Margin="34.62,0,0,5.95" FontSize="14" FontWeight="SemiBold" FontFamily="{DynamicResource MaterialDesignFont}">Recording Settings</TextBlock>
-        <Button Grid.Row="6" Grid.Column="0" Width="39" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34.62,0,0,7.23" Height="38">
-            <Image Height="15" Width="20" Source="Icons/camera.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-10,-5,-10,-5"/>
-        </Button>
-        <ComboBox SelectedIndex="0" Grid.Row="6" Grid.Column="1" Width="354" Height="37.89" Margin="-152,0,27.32,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="14,0,0,0" Grid.IsSharedSizeScope="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#7F2C2C2C" Background="White" FontSize="13" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" FontFamily="{DynamicResource MaterialDesignFont}">Screen and camera</ComboBox>
-        <Button Grid.Row="7" Grid.Column="0" Width="39" Height="38" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34.62,0,0,0">
-            <Image Height="20" Width="16.4" Source="Icons/mic.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-10,-5,-10,-5"/>
-        </Button>
-        <ComboBox SelectedIndex="0" Grid.Row="7" Width="354" Height="37.89" Grid.Column="1" Margin="-152,0,27.32,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="14,0,0,0" Grid.IsSharedSizeScope="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#7F2C2C2C" Background="White" FontSize="13" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" SnapsToDevicePixels="True" ItemContainerStyle="{DynamicResource MaterialDesignNavigationListBoxItem}" FontFamily="{DynamicResource MaterialDesignFont}">Screen and camera</ComboBox>
-        
+
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,7.23">
+            <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0">
+                <Image Height="15" Width="20" Source="Icons/camera.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button>
+            <ComboBox SelectedIndex="0" Width="354" Height="37.89" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="13" Background="{DynamicResource PrimaryHueLightForegroundBrush}" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" Foreground="#7F2C2C2C" Padding="14,0,0,0" VerticalContentAlignment="Center" BorderThickness="0,0,0,0">Screen and camera</ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,0">
+            <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0">
+                <Image Height="20" Width="16.4" Source="Icons/mic.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button>
+            <ComboBox SelectedIndex="0" Width="354" Height="37.89" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="13" Background="{DynamicResource PrimaryHueLightForegroundBrush}" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" Foreground="#7F2C2C2C" VerticalContentAlignment="Center" Padding="14,0,0,0" BorderThickness="0,0,0,0">Screen and camera</ComboBox>
+        </StackPanel>
+     
         <TextBlock Grid.Row="8" Grid.Column="0" Margin="34.62,31.65,0,0" FontSize="13" VerticalAlignment="Top" FontFamily="{DynamicResource MaterialDesignFont}">Internet speed is good</TextBlock>
         <ComboBox SelectedIndex="0" Grid.Row="8" Grid.Column="1" Width="97.99" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,31.65,27.32,0" FontWeight="SemiBold" FontSize="13" Height="20" Padding="0,0,0,0" Grid.IsSharedSizeScope="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" FontFamily="{DynamicResource MaterialDesignFont}">Auto (720p)</ComboBox>
         
