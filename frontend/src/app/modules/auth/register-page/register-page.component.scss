@@ -1,0 +1,46 @@
+.flex-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  .to-login-container {
+    margin-top: 50px;
+    h2 {
+      color: #732939;
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 0;
+      font-family: "Poppins", sans-serif;
+    }
+    .already-registered {
+      margin: 0;
+      margin-top: 10px;
+      color: #777;
+      font-size: 13px;
+      font-weight: 500;
+      span {
+        color: #732939;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .left-part {
+    background: #f4e9e9;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right-part {
+    background: #b6445d;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

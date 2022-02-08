@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterFormComponent } from './modules/auth/register-form/register-form.component';
+import { RegisterPageComponent } from './modules/auth/register-page/register-page.component';
 
 const routes: Routes = [
-  { path: "register", component: RegisterFormComponent }
+  { path: "register", component: RegisterPageComponent }
 ];
 
 @NgModule({

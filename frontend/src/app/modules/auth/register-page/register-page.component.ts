@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { matchValidator } from '../validators/customValidator';
 
 @Component({
-  selector: 'app-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+  selector: 'app-register-page',
+  templateUrl: './register-page.component.html',
+  styleUrls: ['./register-page.component.scss']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterPageComponent implements OnInit {
 
   public registerForm: FormGroup;
 
@@ -33,7 +33,10 @@ export class RegisterFormComponent implements OnInit {
       confirmPassword: [, { validators: [Validators.required, matchValidator('password')], updateOn: "change" }],
     });
   }
+
   ngOnInit(): void {
+
   }
+
 
 }
