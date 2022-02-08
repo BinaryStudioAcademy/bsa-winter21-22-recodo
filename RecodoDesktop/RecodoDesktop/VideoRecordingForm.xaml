@@ -25,30 +25,36 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Column="0" Width="56" Height="56" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35.32,22.92,0,39.15" Background="{DynamicResource SecondaryHueMidBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-            <StackPanel Width="22.04" Height="29.47" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,13.5,0,0" Orientation="Vertical">
-                <Image Source="Icons/r.png" Height="29.47" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" />
-                <Image Source="Icons/r-triangle.png" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-25,0,0" Width="7.87" Height="8.95"/>
-            </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,39.15">
+            <Border CornerRadius="32" Width="56" Height="56" Margin="35.32,22.92,0,0" Background="{DynamicResource SecondaryHueMidBrush}" >
+                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Width="22.04" Height="29.47" Margin="17.25,13.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Image Source="Icons/r.png" Height="29.47" Margin="0,0,0,0" Width="22.04" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Image Source="Icons/r-triangle.png" Width="7.87" Height="8.95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-14.49,4.73,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <TextBlock FontSize="28px" FontFamily="Poppins" FontWeight="Medium" Height="42" Margin="12.29,29.92,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="107" UseLayoutRounding="False" Padding="0,5,0,0">Recodo</TextBlock>
         </StackPanel>
         
-        <TextBlock FontSize="28px" FontFamily="Poppins" FontWeight="Medium" VerticalAlignment="Top" Margin="104,35,32,0" Height="42">Recodo</TextBlock>
-        <Button Grid.Column="1" Grid.Row="0"  Width="60" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26.23,19.95,0,0">
-            <StackPanel Width="20.33" Height="26.13">
-                <Image Source="Icons/bell.png" />
-            </StackPanel>
-        </Button>
-        <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource MaterialDesignFlatButton}" Height="60" VerticalAlignment="Top" Margin="92,20,79,0">
-            <StackPanel Width="22.63" Height="24.68">
-                <Image Source="Icons/home.png" />
-            </StackPanel>
-        </Button>
-        <Button Grid.Column="1" Grid.Row="0"  Width="60"  Style="{StaticResource MaterialDesignFlatButton}" Height="60" Margin="157.77,19.95,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <StackPanel Width="27" Height="6">
-                <Image Source="Icons/menu.png" />
-            </StackPanel>
-        </Button>
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,19.95,0,0"  >
+            <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}" Height="60" Width="60">
+                <StackPanel Width="20.33" Height="26.13">
+                    <Image Source="Icons/bell.png" />
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="60" Width="60" >
+                <StackPanel Width="22.63" Height="24.68">
+                    <Image Source="Icons/home.png" />
+                </StackPanel>
+            </Button>
+            <Button  Style="{StaticResource MaterialDesignFlatButton}" Height="60" Width="60">
+                <StackPanel Width="27" Height="6">
+                    <Image Source="Icons/menu.png" Height="6" Width="27" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
 
         <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="33.21,0,0,0">
@@ -63,6 +69,7 @@
                 </TextBlock>
             </StackPanel>
         </Button>
+        
         <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignFlatAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,27.32,0" Height="36" Width="198">
             <StackPanel Orientation="Horizontal">
                 <Image
