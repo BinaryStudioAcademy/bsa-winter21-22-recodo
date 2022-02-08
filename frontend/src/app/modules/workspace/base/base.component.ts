@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout'
 
 @Component({
   selector: 'app-base',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BaseComponent implements OnInit {
 
-  constructor() { }
+  public sidebarOpen:boolean = true;
+  constructor(
+    private observer:BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
   }
 
+  ngAfterViewInit(){
+    this.observer.observe(['(max-width:800px)']).subscribe(
+      (res)=>{
+        if(res.matches){
+          this.sidebarOpen=false;
+        }
+        else{
+          this.sidebarOpen = true;
+        }
+      }
+    );
+  }
+  public sidebarToogler(){
+    this.sidebarOpen = !this.sidebarOpen;
+  }
 }
