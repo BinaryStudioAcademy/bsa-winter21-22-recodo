@@ -17,7 +17,7 @@ namespace Recodo.DAL.Context
         public DbSet<VideoReaction> VideoReactions { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<InviteToTeam> InviteToTeams { get; set; }
+        public DbSet<TeamInvitation> TeamInvitations { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<CommentReaction> CommentReactions { get; set; }
         public DbSet<Comment> Comments { get; set; }
