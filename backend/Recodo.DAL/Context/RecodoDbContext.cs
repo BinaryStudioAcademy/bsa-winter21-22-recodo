@@ -13,6 +13,14 @@ namespace Recodo.DAL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Team> Teams  { get; set; }
+        public DbSet<VideoReaction> VideoReaction { get; set; }
+        public DbSet<Video> Videos { get; set; }
+        public DbSet<Notification> Notification { get; set; }
+        public DbSet<InviteToTeam> InviteToTeams { get; set; }
+        public DbSet<Folder> Folders { get; set; }
+        public DbSet<CommentReaction> CommentReactions { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public RecodoDbContext(DbContextOptions<RecodoDbContext> options) : base(options)
         {
 
