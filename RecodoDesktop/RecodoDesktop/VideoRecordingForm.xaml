@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="VideoRecordingForm"
         Left="500"
-        Background="{StaticResource MaterialDesignLightBackground}" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="{DynamicResource MaterialDesignFont}">
+        Background="{StaticResource MaterialDesignLightBackground}" 
+        SizeToContent="WidthAndHeight" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" 
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230.98"/>
@@ -85,10 +90,9 @@
             </StackPanel>
         </Button>
 
-        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="34.62,0,27.32,0" Padding="14,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#7C2C2C2C" Background="{DynamicResource PrimaryHueLightForegroundBrush}" FontSize="13" Template="{DynamicResource MaterialDesignFloatingHintComboBoxTemplate}" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" SnapsToDevicePixels="True" FontFamily="{DynamicResource MaterialDesignFont}" >Screen and camera
-        </ComboBox>
-        
-        <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="37.89" Margin="34.62,6.58,27.32,10" Width="400" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="14,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#7F2C2C2C" Background="White" FontSize="13" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" ItemContainerStyle="{DynamicResource MaterialDesignComboBoxItemSelectedCollapsedStyle}" Template="{DynamicResource MaterialDesignFloatingHintComboBoxTemplate}" FontFamily="{DynamicResource MaterialDesignFont}">Full screen</ComboBox>
+        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="34.62,0,27.32,0" Padding="14,0,0,0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#7C2C2C2C" Background="{DynamicResource PrimaryHueLightForegroundBrush}" FontSize="13" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" FontFamily="{DynamicResource MaterialDesignFont}">Screen and camera</ComboBox>
+
+        <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="34.62,6.58,27.32,10" Padding="14,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#7F2C2C2C" Background="{DynamicResource PrimaryHueLightForegroundBrush}" FontSize="13" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0"  FontFamily="{DynamicResource MaterialDesignFont}">Full screen</ComboBox>
         
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}">Create a recording canvas</Button>
         
