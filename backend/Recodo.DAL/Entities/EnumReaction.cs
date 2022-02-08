@@ -9,7 +9,7 @@ namespace Recodo.DAL.Entities
     public enum Reaction
     {
         Like,
-        DisLike,
+        Dislike,
         Love,
         Fun,
     }
