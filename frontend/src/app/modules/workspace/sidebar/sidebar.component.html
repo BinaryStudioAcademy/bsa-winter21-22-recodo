@@ -1,0 +1,45 @@
+<mat-nav-list>
+
+    <a class="logo" routerLink="#">
+        <div class="logo-image">
+            <img class="imgA" src="../../assets/R.svg" alt="Recodo">
+            <img class="imgB" src="../../assets/Vector.svg">
+        </div>
+        <div class="logo-text">
+            Recodo
+        </div>
+    </a>
+
+    <div class="workspace-container">
+        <div class="workspace-user">
+            <span class="user-subheader">
+                Volodymyr workspace
+            </span>
+            <span class="member-subheader">
+                1 member
+            </span>
+        </div>
+        <button class="workspace-button" routerLink="">
+            Invite teammates
+        </button>
+    </div>
+
+    <p matSubheader>Libraries</p>
+    
+    <button mat-list-item routerLink="content" router-link-active="list-item-active">
+        <mat-icon svgIcon="personal"></mat-icon>
+        <span>Personal</span>
+    </button>
+    <button mat-list-item routerLink="" router-link-active="list-item-active">
+        <mat-icon svgIcon="share"></mat-icon>
+        <span>Share with me</span>
+    </button>
+    <button mat-list-item routerLink="" router-link-active="list-item-active">
+        <mat-icon svgIcon="team"></mat-icon>
+        <span>Team</span>
+    </button>
+    <button mat-list-item routerLink="" router-link-active="list-item-active">
+        <mat-icon svgIcon="settings"></mat-icon>
+        <span>Settings</span>
+    </button>
+</mat-nav-list>
