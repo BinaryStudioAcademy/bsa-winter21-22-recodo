@@ -9,7 +9,7 @@ namespace Recodo.Common.Dtos
     public enum Reaction
     {
         Like,
-        DisLike,
+        Dislike,
         Love,
         Fun,
     }
