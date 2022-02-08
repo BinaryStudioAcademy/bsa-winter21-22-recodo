@@ -7,33 +7,59 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\delete-modified.png" />
     <None Remove="images\delete.png" />
+    <None Remove="images\delete2.png" />
+    <None Remove="images\edit-modified.png" />
     <None Remove="images\edit.png" />
+    <None Remove="images\edit2.png" />
     <None Remove="images\image.png" />
+    <None Remove="images\pause-modified.png" />
     <None Remove="images\pause.png" />
+    <None Remove="images\pause2.png" />
+    <None Remove="images\refresh-modified.png" />
     <None Remove="images\refresh.png" />
+    <None Remove="images\refresh2.png" />
+    <None Remove="images\stop-modified.png" />
     <None Remove="images\stop.png" />
+    <None Remove="images\stop2.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="images\delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\edit2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\pause.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\pause2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\refresh2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\stop.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <EmbeddedResource Include="images\image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Resource Include="images\stop2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="fonts\" />
   </ItemGroup>
 
 </Project>

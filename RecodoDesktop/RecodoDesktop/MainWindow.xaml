@@ -6,15 +6,22 @@
         xmlns:local="clr-namespace:RecodoDesktop"
         mc:Ignorable="d"
         MouseDown="Window_MouseDown"
-        Title="MainWindow" Height="400" Width="80">
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="345" Width="70">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
-    <Border BorderThickness="0" CornerRadius="0,20,20,0"  Background="#732939">
+
+    <Window.Resources>
+        <FontFamily x:Key="Poppins-SemiBold">/fonts/Poppins-SemiBold</FontFamily>
+    </Window.Resources>
+
+    <Border BorderThickness="0" CornerRadius="0,20,20,0" Background="#732939">
         <Grid>
             <StackPanel>
-                <Label Margin="0 10 0 5" Foreground="White" HorizontalContentAlignment="Center" FontSize="18">5:00</Label>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Label FontFamily="{StaticResource Poppins-SemiBold}" FontWeight="Bold" Name="TimeLabel" Margin="0 10 0 0" Foreground="#E0748B" HorizontalContentAlignment="Center" FontSize="13">5:00</Label>
+
+                <Button Name="ButtonStop" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -28,16 +35,28 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="20" Source="images/stop.png" Width="20" Height="20"/>
+                        <Image Margin="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="images/stop.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonStop, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="images/stop.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+
+                <Button Name="ButtonRefresh" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -51,16 +70,28 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="20" Source="images/refresh.png" Width="20" Height="20"/>
+                        <Image Margin="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="images/refresh.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonRefresh, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="images/refresh.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+
+                <Button Name="ButtonPause" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -74,16 +105,28 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="20" Source="images/pause.png" Width="20" Height="20"/>
+                        <Image Margin="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="images/pause.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="images/pause.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+
+                <Button Name="ButtonDelete" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -97,16 +140,28 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="20" Source="images/delete.png" Width="20" Height="20"/>
+                        <Image Margin="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="images/delete.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonDelete, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="images/delete2.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+
+                <Button Name="ButtonEdit" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -120,13 +175,24 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="20" Source="images/edit.png" Width="20" Height="20"/>
+                        <Image Margin="15">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="images/edit.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonEdit, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="images/edit.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
             </StackPanel>

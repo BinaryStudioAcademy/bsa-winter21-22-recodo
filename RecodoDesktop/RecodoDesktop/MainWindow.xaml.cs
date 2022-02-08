@@ -8,12 +8,13 @@ namespace RecodoDesktop
         public MainWindow()
         {
             InitializeComponent();
-            this.Top = 0;
+            this.Top = 70;
             this.Left = 0;
             this.Topmost = true;
             this.ShowInTaskbar = true;
             this.AllowsTransparency = true;
             this.WindowStyle = WindowStyle.None;
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -25,6 +26,11 @@ namespace RecodoDesktop
             }
             catch (System.Exception)
             { }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
