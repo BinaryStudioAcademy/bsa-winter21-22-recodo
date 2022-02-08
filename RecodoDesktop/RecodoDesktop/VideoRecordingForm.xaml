@@ -111,8 +111,14 @@
             </Button>
             <ComboBox SelectedIndex="0" Width="354" Height="37.89" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="13" Background="{DynamicResource PrimaryHueLightForegroundBrush}" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" Foreground="#7F2C2C2C" VerticalContentAlignment="Center" Padding="14,0,0,0" BorderThickness="0,0,0,0">Screen and camera</ComboBox>
         </StackPanel>
-     
-        <TextBlock Grid.Row="8" Grid.Column="0" Margin="34.62,31.65,0,0" FontSize="13" VerticalAlignment="Top" FontFamily="{DynamicResource MaterialDesignFont}">Internet speed is good</TextBlock>
+
+        <StackPanel Grid.Row="8" Grid.Column="0" Margin="35.32,31.65,0,0" Orientation="Horizontal">
+            <Image                    
+                Height="8.32"
+                Width="8.32"
+                Source="Icons/online.png"/>
+            <TextBlock  FontSize="13" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="13.32,0,0,0">Internet speed is good</TextBlock>
+        </StackPanel>
         <ComboBox SelectedIndex="0" Grid.Row="8" Grid.Column="1" Width="97.99" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,31.65,27.32,0" FontWeight="SemiBold" FontSize="13" Height="20" Padding="0,0,0,0" Grid.IsSharedSizeScope="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" FontFamily="{DynamicResource MaterialDesignFont}">Auto (720p)</ComboBox>
         
         <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37">
