@@ -13,6 +13,7 @@
     <None Remove="Icons\image.png" />
     <None Remove="Icons\menu.png" />
     <None Remove="Icons\mic.png" />
+    <None Remove="Icons\r-triangle.png" />
     <None Remove="Icons\R.png" />
   </ItemGroup>
 
@@ -27,6 +28,7 @@
     <Resource Include="Icons\image.png" />
     <Resource Include="Icons\menu.png" />
     <Resource Include="Icons\mic.png" />
+    <Resource Include="Icons\r-triangle.png" />
     <Resource Include="Icons\R.png" />
   </ItemGroup>
 
