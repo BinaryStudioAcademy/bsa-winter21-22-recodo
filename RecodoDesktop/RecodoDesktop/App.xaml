@@ -16,7 +16,7 @@
             <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#FB6D3A"/>
             <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF"/>
             <!--Secondary-->
-            <SolidColorBrush x:Key="SecondaryHueLightBrush" Color="#E0748B" Opacity="0.3"/>
+            <SolidColorBrush x:Key="SecondaryHueLightBrush" Color="#E0748B"/>
             <SolidColorBrush x:Key="SecondaryHueLightForegroundBrush" Color="#78293B"/>
             <SolidColorBrush x:Key="SecondaryHueMidBrush" Color="#B6445D"/>
             <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="#FFFFFF"/>
