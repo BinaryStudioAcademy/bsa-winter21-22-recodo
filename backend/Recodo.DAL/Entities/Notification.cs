@@ -16,12 +16,5 @@ namespace Recodo.DAL.Entities
         public DateTime CreatedAt { get; set; }
         public bool IsRead { get; set; }
 
-        public enum NotificationType
-        {
-            BillingNotification,
-            NewVideoNotification,
-            NewReactionNotification,
-            NewComment
-        }
     }
 }
