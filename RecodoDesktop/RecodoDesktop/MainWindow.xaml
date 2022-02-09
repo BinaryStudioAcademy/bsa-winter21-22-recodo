@@ -34,8 +34,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -47,7 +46,7 @@
                                     <Setter Property="Source" Value="images/stop.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonStop, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="images/stop.png" />
+                                            <Setter Property="Source" Value="images/stop_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -69,8 +68,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -82,7 +80,7 @@
                                     <Setter Property="Source" Value="images/refresh.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonRefresh, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="images/refresh.png" />
+                                            <Setter Property="Source" Value="images/refresh_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -104,8 +102,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -117,7 +114,7 @@
                                     <Setter Property="Source" Value="images/pause.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="images/pause.png" />
+                                            <Setter Property="Source" Value="images/pause_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -139,8 +136,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -152,7 +148,7 @@
                                     <Setter Property="Source" Value="images/delete.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonDelete, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="images/delete2.png" />
+                                            <Setter Property="Source" Value="images/delete_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -174,8 +170,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Button.IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="White" />
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -187,7 +182,7 @@
                                     <Setter Property="Source" Value="images/edit.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonEdit, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="images/edit.png" />
+                                            <Setter Property="Source" Value="images/edit_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
