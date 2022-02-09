@@ -5,6 +5,9 @@ namespace RecodoDesktop
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Interaction logic for MainWindow.xaml
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -14,7 +17,6 @@ namespace RecodoDesktop
             this.ShowInTaskbar = true;
             this.AllowsTransparency = true;
             this.WindowStyle = WindowStyle.None;
-
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
