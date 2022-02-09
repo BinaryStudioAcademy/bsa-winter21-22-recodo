@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Recodo.BLL.Exceptions;
-using Recodo.Common.Error;
 using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Middleware
@@ -27,29 +27,16 @@ namespace Recodo.API.Middleware
                 var response = context.Response;
                 response.ContentType = "application/json";
 
-                switch (error)
+                response.StatusCode = error switch
                 {
-                    case NotFoundException:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
-                        break;
-                    case InvalidUserNameOrPasswordException:
-                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        break;
-                    case ExpiredRefreshTokenException:
-                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        break;
-                    case InvalidTokenException:
-                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        break;
-                    default:
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        break;
-                }
-                await context.Response.WriteAsync(new ErrorDetails()
-                {
-                    StatusCode = context.Response.StatusCode,
-                    Message = error.Message
-                }.ToString());
+                    NotFoundException => (int)HttpStatusCode.NotFound,
+                    InvalidUserNameOrPasswordException => (int)HttpStatusCode.Unauthorized,
+                    ExpiredRefreshTokenException => (int)HttpStatusCode.Unauthorized,
+                    InvalidTokenException => (int)HttpStatusCode.Unauthorized,
+                    _ => (int)HttpStatusCode.InternalServerError
+                };
+
+                await context.Response.WriteAsync(JsonSerializer.Serialize(error.Message));
             }
         }
     }
