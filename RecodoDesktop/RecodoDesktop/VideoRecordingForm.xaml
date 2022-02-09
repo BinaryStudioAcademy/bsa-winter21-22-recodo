@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Recodo.Desktop.Main"
         mc:Ignorable="d"
         Title="VideoRecordingForm"
@@ -103,9 +104,9 @@
             </StackPanel>
         </Button>
 
-        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,0,27.32,0">Screen and camera</ComboBox>
+        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,0,27.32,0" materialDesign:ColorZoneAssist.Mode="Light" >Screen and camera</ComboBox>
 
-        <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,6.58,27.32,10">Full screen</ComboBox>
+        <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,6.58,27.32,10" materialDesign:ColorZoneAssist.Mode="Light">Full screen</ComboBox>
 
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}" Padding="0,0,0,0">Create a recording canvas</Button>
 
@@ -115,21 +116,21 @@
             <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" BorderBrush="#4CE0748B" Background="#4CE0748B">
                 <Image Height="15" Width="20" Source="Icons/camera.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
-            <ComboBox SelectedIndex="0" Width="354" Height="37.89">Screen and camera</ComboBox>
+            <ComboBox SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light">Screen and camera</ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,0">
             <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" Background="#4CE0748B" BorderBrush="#4CE0748B">
                 <Image Height="20" Width="16.4" Source="Icons/mic.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
-            <ComboBox SelectedIndex="0" Width="354" Height="37.89">Screen and camera</ComboBox>
+            <ComboBox SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light">Screen and camera</ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="8" Grid.Column="0" Margin="35.32,31.65,0,0" Orientation="Horizontal">
             <Image  Height="8.32" Width="8.32" Source="Icons/online.png"/>
             <TextBlock  FontSize="13" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="13.32,0,0,0">Internet speed is good</TextBlock>
         </StackPanel>
-        <ComboBox Grid.Row="8" Grid.Column="1" Width="97.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,0,0" SelectedIndex="0">Auto (720p)</ComboBox>
+        <ComboBox Grid.Row="8" Grid.Column="1" Width="97.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,0,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light">Auto (720p)</ComboBox>
 
         <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
