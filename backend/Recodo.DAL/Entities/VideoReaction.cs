@@ -1,4 +1,4 @@
-﻿using Recodo.Common.Dtos;
+﻿using Recodo.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
