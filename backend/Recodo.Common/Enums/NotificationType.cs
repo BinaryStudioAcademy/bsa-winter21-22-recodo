@@ -8,9 +8,8 @@ namespace Recodo.Common.Enums
 {
     public enum NotificationType
     {
-        BillingNotification,
-        NewVideoNotification,
-        NewReactionNotification,
+        NewVideo,
+        NewReaction,
         NewComment
     }
 }
