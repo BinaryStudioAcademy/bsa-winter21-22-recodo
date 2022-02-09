@@ -5,10 +5,16 @@
     }
   }
 
-  *{
+*{
     box-sizing: border-box;
-  }
+}
 
+mat-nav-list{
+    margin-left: 35px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-right: 35px;
+}
 
 .logo-image{
     float: left;
@@ -16,8 +22,6 @@
     height: 56px;
     background: #B6445D;
     border-radius: 32px;
-    margin-left: 35px;
-    margin-top: 20px;
     
     img {
     position: absolute;
@@ -33,62 +37,43 @@
     z-index: 3;
     }
 }
+
 .logo-text{
     float: left;
     color: #fff;
     font-size: 1.8rem;
     padding-left: 10px;
     padding-top: 19px;
-    margin-top: 20px;
 }
 
 .mat-list-item{
     
-    color: #fff !important;
-    font-size: 1rem !important;
+    color: #fff;
+    font-size: 1rem;
     height: 65px !important;
     border: none;
     background:#732939;
-    ::ng-deep{
-        .mat-list-item-content{
-            border-radius: 10px;
-            margin: 0 35px;
-            &:hover{
-                background: #B6445D;
-            }
-        }
+    border-radius: 10px;
+    &:hover{
+        background: #B6445D;
     }
 }
 
-/*.list-item-active{
-    color: #fff !important;
-    border: none;
-    ::ng-deep{
-        .mat-list-item-content{
-            border-radius: 10px;
-            margin: 0 35px;
-            background-color: #B6445D;
-            &:hover{
-                background: #B6445D;
-            }
-        }
-    }
-}*/
+.button-active{
+    background: #B6445D;
+}
 
 .mat-subheader {
     color: #FEC9D4;
-    padding-left: 35px;
     width: 100%;
-  }
+}
 
 .workspace-container{
     float:left ;
     background: #B6445D;
     padding: 10px;
     margin-bottom:35px;
-    margin-left: 35px;
-    margin-right: 35px;
-    margin-top: 30px;
+    margin-top: 31px;
     border-radius: 10px;
 }
 
@@ -111,9 +96,6 @@
     color: white;
     height: 36px;
     text-align: center;
-    &:hover{
-        background: #FC7D4C;
-    }
 }
 
 .user-subheader{
@@ -121,6 +103,7 @@
     padding-top: 10px;
     padding-left: 10px;
 }
+
 .member-subheader{
     width: 100%;
     color: #FEC9D4;
