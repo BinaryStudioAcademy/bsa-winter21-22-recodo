@@ -10,7 +10,7 @@ const routes: Routes = [
         path: 'personal', component:PersonalComponent
       },
       {
-        path: '', redirectTo: '', pathMatch: 'full'
+        path: '', redirectTo: 'personal', pathMatch: 'full'
       }
     ] 
   }
