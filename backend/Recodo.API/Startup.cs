@@ -52,6 +52,17 @@ namespace Recodo.API
             {
                 endpoints.MapControllers();
             });
+
+            InitializeDatabase(app);
+        }
+
+        private static void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                using var context = scope.ServiceProvider.GetRequiredService<RecodoDbContext>();
+                context.Database.Migrate();
+            };
         }
     }
 }

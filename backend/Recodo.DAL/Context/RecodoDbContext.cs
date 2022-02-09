@@ -25,7 +25,11 @@ namespace Recodo.DAL.Context
         public RecodoDbContext(DbContextOptions<RecodoDbContext> options) : base(options)
         {
 
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Configure();
         }
     }
 }
