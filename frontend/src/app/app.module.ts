@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
-import { ContentComponent } from './modules/workspace/content/content.component';
+import { PersonalComponent } from './modules/workspace/personal/personal.component';
 import { BaseComponent } from './modules/workspace/base/base.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomIconService } from './services/custom-icon.service';
@@ -22,7 +22,7 @@ import { CustomIconService } from './services/custom-icon.service';
     AppComponent,
     NavbarComponent,
     SidebarComponent,
-    ContentComponent,
+    PersonalComponent,
     BaseComponent
   ],
   imports: [
