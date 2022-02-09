@@ -19,7 +19,9 @@
     "README.md": true,
     "tsconfig.app.json": true,
     "tsconfig.json": true,
-    "tsconfig.spec.json": true
+    "tsconfig.spec.json": true,
+    "node_modules": true,
+    ".angular": true
   },
   "explorerExclude.backup": null
 }
