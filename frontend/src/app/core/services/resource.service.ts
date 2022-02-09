@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { IResponse } from '../models/response';
 
 @Injectable({
@@ -23,8 +23,9 @@ export abstract class ResourceService<T> {
     return JSON.stringify(entity);
   }
 
-  fromServerModel(json: IResponse): T {
-    return json.data as T;
+  fromServerModel(json: IResponse): T[] {
+    var data: T[] = Array.isArray(json.data) ? json.data : [json.data];
+    return data;
   }
 
   getList(index: number, page: number): Observable<T[]> {
@@ -35,14 +36,14 @@ export abstract class ResourceService<T> {
     return this.httpClient
       .get<IResponse[]>(`/${this.APIUrl}?${params.toString()}`)
       .pipe(
-        map((list) => list.map((item) => this.fromServerModel(item))),
+        switchMap((list) => list.map((item) => this.fromServerModel(item))),
         catchError(this.handleError)
       );
   }
 
   get(id: string | number): Observable<T> {
     return this.httpClient.get<IResponse>(`/${this.APIUrl}/${id}`).pipe(
-      map((item) => this.fromServerModel(item)),
+      switchMap((item) => this.fromServerModel(item)),
       catchError(this.handleError)
     );
   }
