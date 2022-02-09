@@ -68,30 +68,15 @@
                 <SolidColorBrush Color="#4CE0748B" Opacity="30"/>
             </Button.Background>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="33.21,0,0,0">
-                <Image
-                    Height="15"
-                    Width="24"
-                    Source="Icons/camera.png"/>
-                <TextBlock
-                    Text="Video"
-			        Margin="10,2,0,0"
-			        VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center">
-                </TextBlock>
+                <Image Source="Icons/camera.png" Height="15" Width="24"/>
+                <TextBlock Text="Video" Margin="10,2,0,0" VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
         </Button>
 
         <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignFlatAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,27.32,0" Height="36" Width="198">
             <StackPanel Orientation="Horizontal">
-                <Image
-                    Height="15"
-                    Width="24"
-                    Source="Icons/image.png"/>
-                <TextBlock
-                    Text="Screenshot (coming soon)"
-                    Foreground="#989898"
-			        Margin="4.61,4,4,4"
-			        VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">
-                </TextBlock>
+                <Image Height="15" Width="24" Source="Icons/image.png"/>
+                <TextBlock Text="Screenshot (coming soon)" Foreground="#989898" Margin="4.61,4,4,4" VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}"></TextBlock>
             </StackPanel>
         </Button>
 
@@ -118,10 +103,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="8" Grid.Column="0" Margin="35.32,31.65,0,0" Orientation="Horizontal">
-            <Image                    
-                Height="8.32"
-                Width="8.32"
-                Source="Icons/online.png"/>
+            <Image  Height="8.32" Width="8.32" Source="Icons/online.png"/>
             <TextBlock  FontSize="13" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="13.32,0,0,0">Internet speed is good</TextBlock>
         </StackPanel>
         <ComboBox SelectedIndex="0" Grid.Row="8" Grid.Column="1" Width="97.99" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,31.65,27.32,0" FontWeight="SemiBold" FontSize="13" Height="20" Padding="0,0,0,0" Grid.IsSharedSizeScope="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{DynamicResource SecondaryHueDarkBrush}" BorderThickness="0,0,0,0" FontFamily="{DynamicResource MaterialDesignFont}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">Auto (720p)</ComboBox>
