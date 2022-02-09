@@ -87,7 +87,7 @@
                     Width="24"
                     Source="Icons/image.png"/>
                 <TextBlock
-                    Text="Screenshot (Beta)"
+                    Text="Screenshot (coming soon)"
                     Foreground="#989898"
 			        Margin="4.61,4,4,4"
 			        VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">
