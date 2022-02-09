@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchValidator } from '../validators/customValidator';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordMatchValidator } from '../validators/customValidator';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent {
 
   public registerForm: FormGroup;
 
@@ -30,10 +30,13 @@ export class RegisterFormComponent implements OnInit {
         Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         ], updateOn: "change"
       }],
-      confirmPassword: [, { validators: [Validators.required, matchValidator('password')], updateOn: "change" }],
+      confirmPassword: [, { validators: [Validators.required], updateOn: "change" }],
+    }, {
+      validator: passwordMatchValidator
     });
   }
-  ngOnInit(): void {
-  }
+
+
+
 
 }

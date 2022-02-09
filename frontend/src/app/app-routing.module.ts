@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterPageComponent } from './modules/auth/register-page/register-page.component';
 
 const routes: Routes = [
-  { path: "register", component: RegisterPageComponent }
+  { path: "register", loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) }
 ];
 
 @NgModule({

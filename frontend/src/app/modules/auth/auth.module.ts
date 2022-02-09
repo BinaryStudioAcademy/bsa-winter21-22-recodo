@@ -6,13 +6,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterFormComponent } from './register-form/register-form.component';
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 
 @NgModule({
   declarations: [
     RegisterPageComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
   ],
   imports: [
     CommonModule,
@@ -20,6 +21,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
     MatFormFieldModule,
     MatIconModule,
     ReactiveFormsModule,
+    AuthRoutingModule,
   ]
 })
 export class AuthModule { }
