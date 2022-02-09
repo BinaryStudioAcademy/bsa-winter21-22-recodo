@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recodo.Common.Dtos
+namespace Recodo.Common.Enums
 {
     public enum Reaction
     {
