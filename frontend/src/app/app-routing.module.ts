@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PersonalComponent } from './modules/workspace/personal/personal.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  { path:'personal', component:PersonalComponent }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path:'home', loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule)}
 ];
 
 @NgModule({
