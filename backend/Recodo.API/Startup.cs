@@ -21,10 +21,11 @@ namespace Recodo.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services
-                .AddMvcCore()
-                .AddFluentValidation();
+            services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Recodo.API", Version = "v1" });
