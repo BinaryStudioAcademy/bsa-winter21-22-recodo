@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { CustomIconService } from 'src/app/services/custom-icon.service';
 
 @Component({
   selector: 'app-base',
@@ -9,9 +10,13 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 export class BaseComponent implements OnInit {
 
   public sidebarOpen:boolean = true;
+  
   constructor(
-    private observer:BreakpointObserver
-  ) { }
+    private observer:BreakpointObserver,
+    private customService:CustomIconService) 
+    { 
+    this.customService.init();
+  }
 
   ngOnInit(): void {
   }
