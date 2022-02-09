@@ -103,7 +103,7 @@
             </StackPanel>
         </Button>
 
-        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89">Screen and camera</ComboBox>
+        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,0,27.32,0">Screen and camera</ComboBox>
 
         <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,6.58,27.32,10">Full screen</ComboBox>
 
