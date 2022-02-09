@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
@@ -9,15 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPageComponent {
 
-
   public hidePass: Boolean = true;
   public hideConfirmPass: Boolean = true;
 
-  constructor(
-
-  ) {
-  }
-
-
+  constructor() { }
 
 }
