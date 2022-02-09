@@ -66,24 +66,24 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,19.95,0,0"  >
-            <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}" Height="60" Width="60">
+            <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="60">
                 <StackPanel Width="20.33" Height="26.13">
                     <Image Source="Icons/bell.png" />
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="60" Width="60" >
+            <Button Style="{StaticResource MaterialDesignFlatButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="60" >
                 <StackPanel Width="22.63" Height="24.68">
                     <Image Source="Icons/home.png" />
                 </StackPanel>
             </Button>
-            <Button  Style="{StaticResource MaterialDesignFlatButton}" Height="60" Width="60">
+            <Button  Style="{StaticResource MaterialDesignFlatButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="60">
                 <StackPanel Width="27" Height="6">
                     <Image Source="Icons/menu.png" Height="6" Width="27" />
                 </StackPanel>
             </Button>
         </StackPanel>
 
-        <Button Grid.Row="1" Grid.Column="0" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}">
+        <Button Grid.Row="1" Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}">
             <Button.BorderBrush>
                 <SolidColorBrush Color="#4CE0748B" Opacity="30"/>
             </Button.BorderBrush>
@@ -96,7 +96,7 @@
             </StackPanel>
         </Button>
 
-        <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignFlatAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,27.32,0" Height="36" Width="198" Padding="16,4,0,4" HorizontalContentAlignment="Left">
+        <Button Grid.Column="1" Grid.Row="1" materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignFlatAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,27.32,0" Height="36" Width="198" Padding="16,4,0,4" HorizontalContentAlignment="Left">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Image Height="15" Width="24" Source="Icons/image.png" HorizontalAlignment="Left"/>
                 <TextBlock Text="Screenshot" Foreground="#989898" Margin="4.61,4,0,4" VerticalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}"></TextBlock>
@@ -104,23 +104,23 @@
             </StackPanel>
         </Button>
 
-        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,0,27.32,0" materialDesign:ColorZoneAssist.Mode="Light" >Screen and camera</ComboBox>
+        <ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,0,27.32,0" materialDesign:ColorZoneAssist.Mode="Light">Screen and camera</ComboBox>
 
         <ComboBox  SelectedIndex="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="400" Height="37.89" Margin="34.62,6.58,27.32,10" materialDesign:ColorZoneAssist.Mode="Light">Full screen</ComboBox>
 
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}" Padding="0,0,0,0">Create a recording canvas</Button>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  materialDesign:ButtonAssist.CornerRadius="10" Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}" Padding="0,0,0,0">Create a recording canvas</Button>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Margin="35,0,231,6" FontSize="14" FontWeight="SemiBold" FontFamily="{DynamicResource MaterialDesignFont}" Grid.ColumnSpan="2" Height="21" VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="0,5,0,0" Width="135">Recording Settings</TextBlock>
 
         <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,7.23">
-            <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" BorderBrush="#4CE0748B" Background="#4CE0748B">
+            <Button materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" BorderBrush="#4CE0748B" Background="#4CE0748B">
                 <Image Height="15" Width="20" Source="Icons/camera.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
             <ComboBox SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light">Screen and camera</ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,0">
-            <Button Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" Background="#4CE0748B" BorderBrush="#4CE0748B">
+            <Button materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" Background="#4CE0748B" BorderBrush="#4CE0748B">
                 <Image Height="20" Width="16.4" Source="Icons/mic.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
             <ComboBox SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light">Screen and camera</ComboBox>
@@ -132,7 +132,7 @@
         </StackPanel>
         <ComboBox Grid.Row="8" Grid.Column="1" Width="97.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,0,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light">Auto (720p)</ComboBox>
 
-        <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37">
+        <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="15" Height="18" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">Start recording</TextBlock>
                 <TextBlock FontWeight="Light" FontSize="12" VerticalAlignment="Bottom" Margin="13.78,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">5 minutes limit</TextBlock>
