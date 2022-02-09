@@ -2,7 +2,6 @@
 using Recodo.BLL.Exceptions;
 using System;
 using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Middleware
@@ -36,7 +35,7 @@ namespace Recodo.API.Middleware
                     _ => (int)HttpStatusCode.InternalServerError
                 };
 
-                await context.Response.WriteAsync(JsonSerializer.Serialize(error.Message));
+                await context.Response.WriteAsync(error.Message);
             }
         }
     }
