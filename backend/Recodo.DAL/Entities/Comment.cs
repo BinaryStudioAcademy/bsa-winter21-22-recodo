@@ -14,5 +14,6 @@ namespace Recodo.DAL.Entities
         public User Author { get; set; }
         public int VideoId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public ICollection<CommentReaction> Reactions { get; set; }
     }
 }
