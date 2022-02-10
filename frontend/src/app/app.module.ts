@@ -18,7 +18,7 @@ import { AuthModule } from './modules/auth/auth.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    WorkspaceModule
+    WorkspaceModule,
     AuthModule
   ],
   providers: [CustomIconService],
