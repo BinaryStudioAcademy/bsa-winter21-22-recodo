@@ -67,4 +67,8 @@
     <Folder Include="fonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+  </ItemGroup>
+
 </Project>

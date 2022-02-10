@@ -15,8 +15,6 @@ namespace RecodoDesktop
             this.Left = 0;
             this.Topmost = true;
             this.ShowInTaskbar = true;
-            this.AllowsTransparency = true;
-            this.WindowStyle = WindowStyle.None;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
