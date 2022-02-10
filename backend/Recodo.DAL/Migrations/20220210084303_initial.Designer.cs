@@ -10,7 +10,7 @@ using Recodo.DAL.Context;
 namespace Recodo.DAL.Migrations
 {
     [DbContext(typeof(RecodoDbContext))]
-    [Migration("20220210081708_initial")]
+    [Migration("20220210084303_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,34 +63,6 @@ namespace Recodo.DAL.Migrations
                     b.HasIndex("VideoId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Recodo.DAL.Entities.CommentReaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Reaction")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CommentReactions");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
@@ -301,34 +273,6 @@ namespace Recodo.DAL.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Recodo.DAL.Entities.VideoReaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Reaction")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("VideoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("VideoReactions");
-                });
-
             modelBuilder.Entity("TeamUser", b =>
                 {
                     b.Property<int>("TeamsId")
@@ -373,24 +317,48 @@ namespace Recodo.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsMany("Recodo.DAL.Entities.CommentReaction", "Reactions", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<int>("CommentId")
+                                .HasColumnType("integer");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<int>("Reaction")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("UserId")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("CommentId");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("CommentReaction");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CommentId");
+
+                            b1.HasOne("Recodo.DAL.Entities.User", "User")
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.Navigation("User");
+                        });
+
                     b.Navigation("Author");
-                });
 
-            modelBuilder.Entity("Recodo.DAL.Entities.CommentReaction", b =>
-                {
-                    b.HasOne("Recodo.DAL.Entities.Comment", null)
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Recodo.DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
@@ -459,22 +427,46 @@ namespace Recodo.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsMany("Recodo.DAL.Entities.VideoReaction", "Reactions", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<int>("Reaction")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("UserId")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("VideoId")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.HasIndex("VideoId");
+
+                            b1.ToTable("VideoReaction");
+
+                            b1.HasOne("Recodo.DAL.Entities.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("VideoId");
+                        });
+
                     b.Navigation("Author");
-                });
 
-            modelBuilder.Entity("Recodo.DAL.Entities.VideoReaction", b =>
-                {
-                    b.HasOne("Recodo.DAL.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Recodo.DAL.Entities.Video", null)
-                        .WithMany()
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("TeamUser", b =>

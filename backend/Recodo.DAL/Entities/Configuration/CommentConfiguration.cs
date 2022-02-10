@@ -15,6 +15,14 @@ namespace Recodo.DAL.Entities.Configuration
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Body).IsRequired();
             builder.HasOne(p => p.Author).WithMany().HasForeignKey(p => p.AuthorId).IsRequired();
+            builder.OwnsMany(p => p.Reactions, r =>
+              {
+                  r.HasKey(x => x.Id);
+                  r.WithOwner().HasForeignKey(x => x.CommentId);
+                  r.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
+                  r.Property(x => x.Reaction).IsRequired();
+                  r.Property(x => x.CreatedAt).IsRequired();
+              });
             builder.HasOne<Video>().WithMany().HasForeignKey(p => p.VideoId);
         }
     }

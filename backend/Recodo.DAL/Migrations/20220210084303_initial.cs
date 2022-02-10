@@ -257,7 +257,7 @@ namespace Recodo.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VideoReactions",
+                name: "VideoReaction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -269,15 +269,15 @@ namespace Recodo.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VideoReactions", x => x.Id);
+                    table.PrimaryKey("PK_VideoReaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VideoReactions_Users_UserId",
+                        name: "FK_VideoReaction_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VideoReactions_Videos_VideoId",
+                        name: "FK_VideoReaction_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
@@ -285,7 +285,7 @@ namespace Recodo.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentReactions",
+                name: "CommentReaction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -297,15 +297,15 @@ namespace Recodo.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentReactions", x => x.Id);
+                    table.PrimaryKey("PK_CommentReaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CommentReactions_Comments_CommentId",
+                        name: "FK_CommentReaction_Comments_CommentId",
                         column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommentReactions_Users_UserId",
+                        name: "FK_CommentReaction_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -313,13 +313,13 @@ namespace Recodo.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentReactions_CommentId",
-                table: "CommentReactions",
+                name: "IX_CommentReaction_CommentId",
+                table: "CommentReaction",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentReactions_UserId",
-                table: "CommentReactions",
+                name: "IX_CommentReaction_UserId",
+                table: "CommentReaction",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -374,13 +374,13 @@ namespace Recodo.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoReactions_UserId",
-                table: "VideoReactions",
+                name: "IX_VideoReaction_UserId",
+                table: "VideoReaction",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoReactions_VideoId",
-                table: "VideoReactions",
+                name: "IX_VideoReaction_VideoId",
+                table: "VideoReaction",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
@@ -397,7 +397,7 @@ namespace Recodo.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CommentReactions");
+                name: "CommentReaction");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
@@ -415,7 +415,7 @@ namespace Recodo.DAL.Migrations
                 name: "TeamUser");
 
             migrationBuilder.DropTable(
-                name: "VideoReactions");
+                name: "VideoReaction");
 
             migrationBuilder.DropTable(
                 name: "Comments");

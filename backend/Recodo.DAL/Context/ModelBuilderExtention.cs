@@ -14,7 +14,6 @@ namespace Recodo.DAL.Context
         public static void Configure(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
-            modelBuilder.ApplyConfiguration(new CommentReactionConfiguration());
             modelBuilder.ApplyConfiguration(new FolderConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new PermissionConfiguration());
@@ -23,7 +22,6 @@ namespace Recodo.DAL.Context
             modelBuilder.ApplyConfiguration(new TeamInvitationConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new VideoConfiguration());
-            modelBuilder.ApplyConfiguration(new VideoReactionConfiguration());
         }
     }
 }
