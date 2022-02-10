@@ -58,11 +58,9 @@ namespace Recodo.API
 
         private static void InitializeDatabase(IApplicationBuilder app)
         {
-            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                using var context = scope.ServiceProvider.GetRequiredService<RecodoDbContext>();
-                context.Database.Migrate();
-            };
+            using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<RecodoDbContext>();
+            context.Database.Migrate();
         }
     }
 }
