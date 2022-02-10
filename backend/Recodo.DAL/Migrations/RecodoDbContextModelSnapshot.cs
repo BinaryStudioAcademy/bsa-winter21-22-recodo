@@ -223,6 +223,9 @@ namespace Recodo.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Salt")
+                        .HasColumnType("text");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
