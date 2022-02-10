@@ -130,7 +130,7 @@ namespace Recodo.DAL.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Massage")
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -208,10 +208,11 @@ namespace Recodo.DAL.Migrations
 
             modelBuilder.Entity("Recodo.DAL.Entities.TeamInvitation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -219,15 +220,7 @@ namespace Recodo.DAL.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("TeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
+                    b.HasKey("TeamId", "UserId");
 
                     b.HasIndex("UserId");
 

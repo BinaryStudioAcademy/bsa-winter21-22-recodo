@@ -85,7 +85,7 @@ namespace Recodo.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Massage = table.Column<string>(type: "text", nullable: false),
+                    Message = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     ReceiverId = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -152,8 +152,6 @@ namespace Recodo.DAL.Migrations
                 name: "TeamInvitations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     TeamId = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -161,7 +159,7 @@ namespace Recodo.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamInvitations", x => x.Id);
+                    table.PrimaryKey("PK_TeamInvitations", x => new { x.TeamId, x.UserId });
                     table.ForeignKey(
                         name: "FK_TeamInvitations_Teams_TeamId",
                         column: x => x.TeamId,
@@ -358,11 +356,6 @@ namespace Recodo.DAL.Migrations
                 name: "IX_RefreshTokens_UserId",
                 table: "RefreshTokens",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamInvitations_TeamId",
-                table: "TeamInvitations",
-                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamInvitations_UserId",
