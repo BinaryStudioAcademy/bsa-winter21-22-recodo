@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Recodo.API.Middleware;
+using Recodo.Common.Validators;
 using Recodo.DAL.Context;
 
 namespace Recodo.API
@@ -27,7 +28,7 @@ namespace Recodo.API
             services.AddControllers()
                 .AddFluentValidation(s =>
                 {
-                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    s.RegisterValidatorsFromAssemblyContaining<ModelValidator>();
                 });
             services.AddSwaggerGen(c =>
             {
