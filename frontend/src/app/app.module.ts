@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomIconService } from './services/custom-icon.service';
 import { WorkspaceModule } from './modules/workspace/workspace.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { WorkspaceModule } from './modules/workspace/workspace.module';
     BrowserAnimationsModule,
     HttpClientModule,
     WorkspaceModule
+    AuthModule
   ],
   providers: [CustomIconService],
   bootstrap: [AppComponent]
