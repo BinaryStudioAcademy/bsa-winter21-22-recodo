@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,12 +16,13 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Recodo.BLL\Recodo.BLL.csproj" />
     <ProjectReference Include="..\Recodo.Common\Recodo.Common.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="6.0.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.1" />
   </ItemGroup>
 
 </Project>
