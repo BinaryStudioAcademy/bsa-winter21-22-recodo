@@ -1,10 +1,13 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Recodo.API.Middleware;
+using Recodo.DAL.Context;
 
 namespace Recodo.API
 {
@@ -30,6 +33,9 @@ namespace Recodo.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Recodo.API", Version = "v1" });
             });
+
+            services.AddDbContext<RecodoDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +53,8 @@ namespace Recodo.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
