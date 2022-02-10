@@ -8,7 +8,6 @@ namespace Recodo.DAL.Entities
 {
     public class TeamInvitation
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int TeamId { get; set; }
         public DateTime CreatedAt { get; set; }

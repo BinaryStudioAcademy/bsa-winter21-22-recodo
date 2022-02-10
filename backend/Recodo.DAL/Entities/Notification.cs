@@ -10,7 +10,7 @@ namespace Recodo.DAL.Entities
     public class Notification
     {
         public int Id { get; set; }
-        public string Massage { get; set; }
+        public string Message { get; set; }
         public NotificationType Type { get; set; }
         public int ReceiverId { get; set; }
         public DateTime CreatedAt { get; set; }

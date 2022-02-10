@@ -12,7 +12,7 @@ namespace Recodo.DAL.Entities.Configuration
     {
         public void Configure(EntityTypeBuilder<TeamInvitation> builder)
         {
-            builder.HasKey(p => p.Id);
+            builder.HasKey(p => new {p.TeamId, p.UserId});
             builder.HasOne<User>().WithMany().HasForeignKey(p => p.UserId);
             builder.HasOne<Team>().WithMany().HasForeignKey(p => p.TeamId);
         }

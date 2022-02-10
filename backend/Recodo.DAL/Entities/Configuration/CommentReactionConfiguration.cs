@@ -13,9 +13,9 @@ namespace Recodo.DAL.Entities.Configuration
         public void Configure(EntityTypeBuilder<CommentReaction> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.HasOne(p=>p.User).WithMany().HasForeignKey(p=>p.UserId);
+            builder.HasOne(p =>p .User).WithMany().HasForeignKey(p => p.UserId);
             builder.Property(p => p.Reaction).IsRequired();
-            builder.HasOne<Comment>().WithMany().HasForeignKey(p=>p.CommentId);
+            builder.HasOne<Comment>().WithMany().HasForeignKey(p => p.CommentId);
         }
     }
 }

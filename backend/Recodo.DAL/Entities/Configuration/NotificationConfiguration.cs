@@ -13,9 +13,12 @@ namespace Recodo.DAL.Entities.Configuration
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Massage).IsRequired();
-            builder.Property(p=>p.ReceiverId).IsRequired();
+            builder.Property(p => p.Message).IsRequired();
+            builder.Property(p => p.ReceiverId).IsRequired();
             builder.HasOne<User>().WithMany().HasForeignKey(p => p.ReceiverId);
+            builder.Property(p => p.CreatedAt).IsRequired();
+            builder.Property(p => p.Type).IsRequired();
+            builder.Property(p => p.IsRead).IsRequired();
         }
     }
 }

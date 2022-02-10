@@ -12,9 +12,9 @@ namespace Recodo.DAL.Entities.Configuration
     {
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
-            builder.HasKey(p=>p.Id);
-            builder.Property(p=>p.Token).IsRequired();
-            builder.HasOne<User>().WithMany().HasForeignKey(p=>p.UserId);
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Token).IsRequired();
+            builder.HasOne<User>().WithMany().HasForeignKey(p => p.UserId);
 
         }
     }
