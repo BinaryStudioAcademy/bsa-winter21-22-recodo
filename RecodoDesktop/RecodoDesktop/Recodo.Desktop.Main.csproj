@@ -10,4 +10,9 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+    <ProjectReference Include="..\Recodo.Desktop.Models\Recodo.Desktop.Models.csproj" />
+  </ItemGroup>
+
 </Project>
