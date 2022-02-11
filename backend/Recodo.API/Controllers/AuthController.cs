@@ -36,7 +36,13 @@ namespace Recodo.API.Controllers
             };
 
             return new JsonResult(result);
+        }
 
+        [HttpPost]
+        [Route("api/Login")]
+        public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
+        {
+            return Ok(await _authService.Authorize(userDTO));
         }
     }
 }

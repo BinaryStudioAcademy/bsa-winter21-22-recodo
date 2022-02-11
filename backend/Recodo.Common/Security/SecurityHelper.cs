@@ -26,5 +26,12 @@ namespace Recodo.Common.Security
                 return salt;
             }
         }
+
+        public static bool IsValidPassword(string hasedPassword, string password, string salt)
+        {
+            var hash = HashPassword(password, Convert.FromBase64String(salt));
+
+            return hasedPassword == hash;
+        }
     }
 }
