@@ -19,40 +19,30 @@ export abstract class ResourceService<T> {
 
   abstract getResourceUrl(): string;
 
-  toServerModel(entity: T): string {
-    return JSON.stringify(entity);
+  getListPagination(index: number, page: number): Observable<T[]> {
+    return this.httpClient.get<IResponse>(`/${this.APIUrl}`).pipe(
+      map((item) => JSON.parse(item.data)),
+      catchError(this.handleError)
+    );
   }
 
-  fromServerModel(json: IResponse): T[] {
-    let item = JSON.parse(json.data);
-    var data: T[] = Array.isArray(item) ? item : [item];
-    return data;
-  }
-
-  getList(index: number, page: number): Observable<T[]> {
-    let params = new HttpParams()
-      .set('limit', index.toString())
-      .set('offset', page.toString());
-
-    return this.httpClient
-      .get<IResponse[]>(`/${this.APIUrl}?${params.toString()}`)
-      .pipe(
-        switchMap((list) => list.map((item) => this.fromServerModel(item))),
-        catchError(this.handleError)
-      );
+  getList(): Observable<T[]> {
+    return this.httpClient.get<IResponse>(`/${this.APIUrl}`).pipe(
+      map((item) => JSON.parse(item.data)),
+      catchError(this.handleError)
+    );
   }
 
   get(id: string | number): Observable<T> {
     return this.httpClient.get<IResponse>(`/${this.APIUrl}/${id}`).pipe(
-      switchMap((item) => this.fromServerModel(item)),
-      take(1),
+      map((item) => JSON.parse(item.data)),
       catchError(this.handleError)
     );
   }
 
   add(resource: T): Observable<IResponse> {
     return this.httpClient
-      .post<IResponse>(`/${this.APIUrl}`, this.toServerModel(resource))
+      .post<IResponse>(`/${this.APIUrl}`, JSON.stringify(resource))
       .pipe(catchError(this.handleError));
   }
 
@@ -62,9 +52,9 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  update(resource: T) {
+  update(resource: T): Observable<IResponse> {
     return this.httpClient
-      .put(`/${this.APIUrl}`, this.toServerModel(resource))
+      .put<IResponse>(`/${this.APIUrl}`, JSON.stringify(resource))
       .pipe(catchError(this.handleError));
   }
 
