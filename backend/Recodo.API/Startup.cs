@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Recodo.API.Extensions;
 using Recodo.API.Middleware;
+using Recodo.Common.Validators;
 using Recodo.DAL.Context;
 
 namespace Recodo.API
@@ -22,7 +24,10 @@ namespace Recodo.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<ModelValidator>();
+                });
 
             services.AddDbContext<RecodoDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
