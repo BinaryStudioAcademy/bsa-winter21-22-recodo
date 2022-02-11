@@ -25,6 +25,11 @@ namespace Recodo.API.Controllers
         [Route("api/Register")]
         public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(modelState: ModelState);
+            }
+
             var createdUser = await _userService.CreateUser(userDTO);
 
             var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.UserName, createdUser.Email);
@@ -35,13 +40,18 @@ namespace Recodo.API.Controllers
                 User = createdUser 
             };
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("api/Login")]
         public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(modelState: ModelState);
+            }
+
             return Ok(await _authService.Authorize(userDTO));
         }
     }
