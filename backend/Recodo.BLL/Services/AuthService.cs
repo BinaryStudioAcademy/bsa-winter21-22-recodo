@@ -14,10 +14,10 @@ namespace Recodo.BLL.Services
         private protected readonly JwtFactory _jwtFactory;
         public AuthService(RecodoDbContext context, IMapper mapper, JwtFactory jwtFactory) : base(context, mapper)
         {
-            this._jwtFactory = jwtFactory;
+            _jwtFactory = jwtFactory;
         }
 
-        public async Task<AccessTokenDTO> GenerateAccessToken(int id, string userName, string userEmail)
+        public async Task<TokenDTO> GenerateAccessToken(int id, string userName, string userEmail)
         {
             string refreshToken = _jwtFactory.GenerateRefreshToken();
 
@@ -29,9 +29,9 @@ namespace Recodo.BLL.Services
 
             await _context.SaveChangesAsync();
 
-            AccessToken accessToken = await _jwtFactory.GenerateAccessToken(id, userName, userEmail);
+            string accessToken = await _jwtFactory.GenerateAccessToken(id, userName, userEmail);
 
-            return new AccessTokenDTO(accessToken,refreshToken);
+            return new TokenDTO(accessToken, refreshToken);
         }
 
     }

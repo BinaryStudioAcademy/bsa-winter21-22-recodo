@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
         private readonly UserService _userService;
 
-        public RegisterController(AuthService authService, UserService userService)
+        public AuthController(AuthService authService, UserService userService)
         {
-            this._authService = authService;
-            this._userService = userService;
+            _authService = authService;
+            _userService = userService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<AuthUserDTO>> Post([FromBody] UserRegisterDTO userDTO)
+        [Route("api/Register")]
+        public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
             var createdUser = await _userService.CreateUser(userDTO);
 
-            var accessToken = await _authService.GenerateAccessToken(createdUser.Id, createdUser.UserName, createdUser.Email);
+            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.UserName, createdUser.Email);
 
             var result = new AuthUserDTO 
             { 
-                Token = accessToken, 
+                Token = token, 
                 User = createdUser 
             };
 

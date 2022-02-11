@@ -22,13 +22,13 @@ namespace Recodo.BLL.JWT
             _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         }
 
-        public async Task<AccessToken> GenerateAccessToken(int id, string userName, string email)
+        public async Task<string> GenerateAccessToken(int id, string userName, string email)
         {
             var identity = GenerateClaimsIdentity(id, userName);
 
             var claims = new[]
             {
-                 new Claim(JwtRegisteredClaimNames.Sub, userName),
+                 new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
                  new Claim(JwtRegisteredClaimNames.Email, email),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
@@ -43,7 +43,7 @@ namespace Recodo.BLL.JWT
                 _jwtOptions.Expiration,
                 _jwtOptions.SigningCredentials);
 
-            return new AccessToken(_jwtSecurityTokenHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);
+            return _jwtSecurityTokenHandler.WriteToken(jwt);
         }
         
         public string GenerateRefreshToken()
@@ -73,9 +73,9 @@ namespace Recodo.BLL.JWT
                 throw new ArgumentNullException(nameof(options));
             }
 
-            if (options.ValidFor <= TimeSpan.Zero)
+            if (options.ValidForInMin <= TimeSpan.Zero)
             {
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidFor));
+                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidForInMin));
             }
 
             if (options.SigningCredentials == null)

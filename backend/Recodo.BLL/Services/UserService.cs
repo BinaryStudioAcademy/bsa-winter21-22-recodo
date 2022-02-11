@@ -17,7 +17,7 @@ namespace Recodo.BLL.Services
 
         }
 
-        public async Task<UserDTO> CreateUser(UserRegisterDTO userRegisterDTO)
+        public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)
         {
             var userEntity = _mapper.Map<User>(userRegisterDTO);
             userEntity.CreatedAt = DateTime.UtcNow;

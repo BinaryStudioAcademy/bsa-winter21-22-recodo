@@ -6,8 +6,6 @@ namespace Recodo.Common.Auth
 {
     public class JwtIssuerOptions
     {
-        private const int expireTokenTimeInMin = 1440;
-
         /// <summary>
         /// 4.1.1.  "iss" (Issuer) Claim - The "iss" (issuer) claim identifies the principal that issued the JWT.
         /// </summary>
@@ -26,7 +24,7 @@ namespace Recodo.Common.Auth
         /// <summary>
         /// 4.1.4.  "exp" (Expiration Time) Claim - The "exp" (expiration time) claim identifies the expiration time on or after which the JWT MUST NOT be accepted for processing.
         /// </summary>
-        public DateTime Expiration => IssuedAt.Add(ValidFor);
+        public DateTime Expiration => IssuedAt.Add(ValidForInMin);
 
         /// <summary>
         /// 4.1.5.  "nbf" (Not Before) Claim - The "nbf" (not before) claim identifies the time before which the JWT MUST NOT be accepted for processing.
@@ -39,9 +37,10 @@ namespace Recodo.Common.Auth
         public DateTime IssuedAt => DateTime.UtcNow;
 
         /// <summary>
-        /// Set the timespan the token will be valid for (default is 1440 min)
+        /// Set the timespan the token will be valid for 
+        /// Also can set up into appsettings.json
         /// </summary>
-        public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(expireTokenTimeInMin);
+        public TimeSpan ValidForInMin { get; set; } 
 
         /// <summary>
         /// "jti" (JWT ID) Claim (default ID is a GUID)

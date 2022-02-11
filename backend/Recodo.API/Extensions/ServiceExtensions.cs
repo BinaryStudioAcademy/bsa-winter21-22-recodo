@@ -26,12 +26,11 @@ namespace Recodo.API.Extensions
 
         public static void RegisterAutoMapper(this IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new UserProfile());
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddMaps("Recodo.BLL");
             });
 
-            IMapper mapper = mappingConfig.CreateMapper();
+            IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
         }
 
@@ -39,6 +38,7 @@ namespace Recodo.API.Extensions
         {
             var secretKey = configuration["SecretJWTKey"]; // get value from system environment
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var validFor = Convert.ToInt64(configuration["ExpireTokenTimeInMin"]);
 
             // Get options from app settings
             var jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
@@ -48,6 +48,7 @@ namespace Recodo.API.Extensions
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.ValidForInMin = TimeSpan.FromMinutes(validFor);
                 options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
@@ -62,7 +63,7 @@ namespace Recodo.API.Extensions
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
-                RequireExpirationTime = false,
+                RequireExpirationTime = true,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };

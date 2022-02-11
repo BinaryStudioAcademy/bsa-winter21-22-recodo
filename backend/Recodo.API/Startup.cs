@@ -27,7 +27,7 @@ namespace Recodo.API
             services.AddDbContext<RecodoDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            //Register your mappers in Recodo.API.Extensions.ServiceExtensions.cs
+            //All profiles register automatically
             services.RegisterAutoMapper();
 
             //Register your services in Recodo.API.Extensions.ServiceExtensions.cs

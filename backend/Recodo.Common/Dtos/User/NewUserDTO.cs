@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recodo.Common.Dtos.User
 {
-    public class UserRegisterDTO:UserDTO
+    public class NewUserDTO:UserDTO
     {
         public string Password { get; set; }
     }

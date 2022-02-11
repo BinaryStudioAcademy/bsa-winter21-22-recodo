@@ -4,11 +4,11 @@ using Recodo.DAL.Entities;
 
 namespace Recodo.BLL.MappingProfiles
 {
-    public class UserProfile:Profile
+    public class UserProfile : Profile
     {
         public UserProfile()
         {
-            CreateMap<UserRegisterDTO, User>();
+            CreateMap<NewUserDTO, User>();
             CreateMap<User, UserDTO>();
         }
     }
