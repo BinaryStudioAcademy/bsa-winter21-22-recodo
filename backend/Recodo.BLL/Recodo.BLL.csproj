@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Recodo.Common\Recodo.Common.csproj" />
     <ProjectReference Include="..\Recodo.DAL\Recodo.DAL.csproj" />
   </ItemGroup>
