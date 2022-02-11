@@ -1,0 +1,24 @@
+.description-container {
+  display: flex;
+  flex-direction: column;
+  .user-info-container {
+    height: 15vh;
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1rem;
+      .user-name {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+      }
+      .date {
+        color: #989898;
+      }
+    }
+  }
+  .textarea {
+    width: 100%;
+  }
+}
