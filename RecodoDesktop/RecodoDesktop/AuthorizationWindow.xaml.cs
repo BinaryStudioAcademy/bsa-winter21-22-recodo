@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recodo.Desktop.Logic;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -30,11 +31,14 @@ namespace Recodo.Desktop.Main
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
+            BrowserService.OpenUrl("https://recodo.westeurope.cloudapp.azure.com/");
+            //Todo: get authUser token and user info
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
+            BrowserService.OpenUrl("https://recodo.westeurope.cloudapp.azure.com/");
         }
     }
 }
