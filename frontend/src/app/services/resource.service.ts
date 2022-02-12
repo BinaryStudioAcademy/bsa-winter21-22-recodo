@@ -40,21 +40,21 @@ export abstract class ResourceService<T> {
     );
   }
 
-  add(resource: T): Observable<IResponse> {
+  add(resource: T) {
     return this.httpClient
-      .post<IResponse>(`/${this.APIUrl}`, JSON.stringify(resource))
+      .post<T>(`/${this.APIUrl}`, JSON.stringify(resource))
       .pipe(catchError(this.handleError));
   }
 
-  delete(id: string | number): Observable<IResponse> {
+  delete(id: string | number) {
     return this.httpClient
-      .delete<IResponse>(`/${this.APIUrl}/${id}`)
+      .delete<T>(`/${this.APIUrl}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
-  update(resource: T): Observable<IResponse> {
+  update(resource: T) {
     return this.httpClient
-      .put<IResponse>(`/${this.APIUrl}`, JSON.stringify(resource))
+      .put<T>(`/${this.APIUrl}`, JSON.stringify(resource))
       .pipe(catchError(this.handleError));
   }
 
