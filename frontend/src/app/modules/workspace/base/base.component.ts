@@ -8,7 +8,7 @@ import { CustomIconService } from 'src/app/services/custom-icon.service';
 })
 export class BaseComponent {
 
-  constructor(private customService:CustomIconService) { 
+  constructor(private customService:CustomIconService) {
     this.customService.init();
   }
 
