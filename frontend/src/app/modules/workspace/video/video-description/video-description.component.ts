@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./video-description.component.scss'],
 })
 export class VideoDescriptionComponent {
-  @Input() public Username?: string;
-  @Input() public DateOfComment?: string;
+  @Input() public username?: string;
+  @Input() public dateOfComment?: string;
   public src = '../../assets/icons/test-user-logo.png';
   constructor() {}
 }
