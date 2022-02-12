@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Recodo.BLL.JWT;
 using Recodo.BLL.Services;
 using Recodo.Common.Auth;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using Recodo.Common.Dtos.Response;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Recodo.BLL.MappingProfiles;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Recodo.API.Extensions
 {
@@ -26,7 +28,8 @@ namespace Recodo.API.Extensions
 
         public static void RegisterAutoMapper(this IServiceCollection services)
         {
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddMaps("Recodo.BLL");
             });
 
@@ -92,7 +95,29 @@ namespace Recodo.API.Extensions
                     }
                 };
             });
+        }
 
+        public static void ConfigureCustomValidationErrors(this IServiceCollection services)
+        {
+            // override modelstate
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    context.HttpContext.Response.ContentType = "validation-errors-type";
+                    var errors = context.ModelState.Values.SelectMany(x =>
+                        x.Errors.Select(p => p.ErrorMessage)).ToList();
+
+                    var result = new ResponseDTO
+                    {
+                        IsError = true,
+                        ExceptionMessage = "Validation errors",
+                        Data = errors
+                    };
+
+                    return new BadRequestObjectResult(result);
+                };
+            });
         }
     }
 }

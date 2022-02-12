@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Recodo.Common.Dtos.User
 {
-    public class NewUserDTO:UserDTO
+    public class NewUserDTO : UserDTO
     {
+        [Required]
         public string Password { get; set; }
     }
 }

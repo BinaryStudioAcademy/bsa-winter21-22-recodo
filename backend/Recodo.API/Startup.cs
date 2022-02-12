@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Recodo.API.Extensions;
-using Recodo.API.Middleware;
+using Recodo.API.Filters;
 using Recodo.Common.Validators;
 using Recodo.DAL.Context;
 
@@ -24,10 +24,13 @@ namespace Recodo.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddFluentValidation(s =>
+            services
+                .AddControllers(options =>
                 {
-                    s.RegisterValidatorsFromAssemblyContaining<ModelValidator>();
-                });
+                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+                    options.Filters.Add(typeof(GenericResponseFilter));
+                })
+                .AddFluentValidation(s => s.RegisterValidatorsFromAssemblyContaining<ModelValidator>());
 
             services.AddDbContext<RecodoDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
@@ -45,6 +48,7 @@ namespace Recodo.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Recodo.API", Version = "v1" });
             });
 
+            services.ConfigureCustomValidationErrors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,8 +65,6 @@ namespace Recodo.API
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

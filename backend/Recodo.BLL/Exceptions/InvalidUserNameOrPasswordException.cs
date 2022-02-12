@@ -2,10 +2,10 @@
 
 namespace Recodo.BLL.Exceptions
 {
-    public sealed class InvalidUserNameOrPasswordException : Exception
+    public class InvalidUsernameOrPasswordException : Exception
     {
-        public InvalidUserNameOrPasswordException() 
-            : base("Invalid username or password.") 
+        public InvalidUsernameOrPasswordException()
+            : base("Invalid username or password.")
         {
 
         }

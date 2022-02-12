@@ -1,5 +1,4 @@
-﻿
-namespace Recodo.Common.Dtos.User
+﻿namespace Recodo.Common.Dtos.User
 {
     public class UserDTO
     {
