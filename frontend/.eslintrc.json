@@ -42,6 +42,13 @@
             "code": 120
           }
         ],
+        "no-multi-spaces": "warn",
+        "no-multiple-empty-lines": "warn",
+        "no-trailing-spaces": "warn",
+        "space-before-blocks": "warn",
+        "no-var": "warn",
+        "quotes": ["warn", "single"],
+        "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error"
       }
     },
