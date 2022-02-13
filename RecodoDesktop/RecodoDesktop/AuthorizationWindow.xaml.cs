@@ -28,11 +28,13 @@ namespace Recodo.Desktop.Main
             InitializeComponent();
         }
 
-        private void SignInButton_Click(object sender, RoutedEventArgs e)
+        private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            DefaultBrowser.Open("https://recodo.westeurope.cloudapp.azure.com/");
-            //Todo: get authUser token and user info
+            var options = new AuthRequestOptions();
+            var browser = new DefaultBrowser(options);
+            string result = await browser.InvokeAsync();
+            MessageBox.Show(result);
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)

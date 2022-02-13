@@ -10,6 +10,57 @@ namespace Recodo.Desktop.Logic
 {
     public class DefaultBrowser
     {
+        public int Port { get; }
+        private readonly string _path;
+        private readonly AuthRequestOptions _options;
+        public DefaultBrowser(AuthRequestOptions options, int? port = null, string path = null)
+        {
+            _path = path;
+
+            if (!port.HasValue)
+            {
+                Port = GetRandomUnusedPort();
+            }
+            else
+            {
+                Port = port.Value;
+            }
+            _options = options;
+            _options.RedirectUrl = $"http://{IPAddress.Loopback}:{Port}/";
+        }
+
+        public async Task<string> InvokeAsync(CancellationToken cancellationToken = default)
+        {
+            using var listener = new LoopbackHttpListener(Port, _path);
+            Open(_options.GetAuthRequestUrl());
+
+            try
+            {
+                var result = await listener.WaitForCallbackAsync();
+                if (string.IsNullOrWhiteSpace(result))
+                {
+                    return "Empty response.";
+                }
+
+                return result;
+            }
+            catch (TaskCanceledException ex)
+            {
+                return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        private static int GetRandomUnusedPort()
+        {
+            var listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+            var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            listener.Stop();
+            return port;
+        }
 
         public static void Open(string url)
         {

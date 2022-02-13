@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Recodo.Desktop.Logic
 {
-    public class LoopbackHttpListener: IDisposable
+    public sealed class LoopbackHttpListener: IDisposable
     {
         const int DefaultTimeout = 60 * 3;
         readonly IWebHost _host;
