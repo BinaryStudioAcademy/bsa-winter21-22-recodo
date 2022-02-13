@@ -31,14 +31,14 @@ namespace Recodo.Desktop.Main
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            BrowserService.OpenUrl("https://recodo.westeurope.cloudapp.azure.com/");
+            DefaultBrowser.Open("https://recodo.westeurope.cloudapp.azure.com/");
             //Todo: get authUser token and user info
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            BrowserService.OpenUrl("https://recodo.westeurope.cloudapp.azure.com/");
+            DefaultBrowser.Open("https://recodo.westeurope.cloudapp.azure.com/");
         }
     }
 }

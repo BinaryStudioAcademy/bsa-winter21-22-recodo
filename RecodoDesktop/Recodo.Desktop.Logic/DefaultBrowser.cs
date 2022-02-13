@@ -1,12 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Recodo.Desktop.Logic
 {
-    public class BrowserService
+    public class DefaultBrowser
     {
 
-        public static void OpenUrl(string url)
+        public static void Open(string url)
         {
             try 
             {
