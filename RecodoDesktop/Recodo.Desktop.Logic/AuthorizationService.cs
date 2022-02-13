@@ -1,8 +1,11 @@
-﻿using Recodo.Desktop.Models.Auth;
+﻿using Newtonsoft.Json;
+using Recodo.Desktop.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +14,8 @@ namespace Recodo.Desktop.Logic
 {
     public class AuthorizationService
     {
-        private DefaultBrowser _browser;
-        private AuthorizationOptions _options;
+        readonly private DefaultBrowser _browser;
+        readonly private AuthorizationOptions _options;
         private AuthorizeResult _authResult;
         public AuthorizationService(AuthorizationOptions options)
         {
@@ -24,11 +27,33 @@ namespace Recodo.Desktop.Logic
         public async Task<AuthorizeResult> Authorize()
         {
             string result = await _browser.InvokeAsync();
-            _authResult = ParseRawResult(result);
+            _authResult = ParseRawAuthResult(result);
             return _authResult;
         }
 
-        private static AuthorizeResult ParseRawResult(string result)
+        public async Task<string> GetToken()
+        {
+            var data = new StringContent(_options.GetTokenRequestData(_authResult.Code), Encoding.UTF8, "application/x-www-form-urlencoded");
+            
+            using var client = new HttpClient();
+            var response = await client.PostAsync(_options.TokenEndpoint, data);
+
+            string result = response.Content.ReadAsStringAsync().Result;
+            Dictionary<string, string> tokenEndpointDecoded = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+
+            return tokenEndpointDecoded["access_token"];
+        }
+
+        public async Task<string> GetUserInfo(string token)
+        {
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+            var content = await client.GetStringAsync(_options.UserInfoEndpoint);
+            return content;
+        }
+
+        private static AuthorizeResult ParseRawAuthResult(string result)
         {            
             // parse query string
             Dictionary<string, string> keyValuePairs =
