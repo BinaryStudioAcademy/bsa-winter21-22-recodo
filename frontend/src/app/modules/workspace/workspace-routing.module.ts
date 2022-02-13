@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BaseComponent } from './base/base.component'; 
+import { BaseComponent } from './base/base.component';
 import { PersonalComponent } from './personal/personal.component';
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
       {
         path: '', redirectTo: 'personal', pathMatch: 'full'
       }
-    ] 
+    ]
   }
 ];
 

@@ -13,7 +13,6 @@ import { MatListModule } from '@angular/material/list';
 import { BaseRoutingModule } from './workspace-routing.module';
 
 
-
 @NgModule({
   declarations: [
     NavbarComponent,
