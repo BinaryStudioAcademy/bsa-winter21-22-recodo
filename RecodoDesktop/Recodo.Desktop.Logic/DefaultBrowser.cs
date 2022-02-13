@@ -10,28 +10,15 @@ namespace Recodo.Desktop.Logic
 {
     public class DefaultBrowser
     {
-        public int Port { get; }
-        private readonly string _path;
-        private readonly AuthRequestOptions _options;
-        public DefaultBrowser(AuthRequestOptions options, int? port = null, string path = null)
+        private readonly AuthorizationOptions _options;
+        public DefaultBrowser(AuthorizationOptions options)
         {
-            _path = path;
-
-            if (!port.HasValue)
-            {
-                Port = GetRandomUnusedPort();
-            }
-            else
-            {
-                Port = port.Value;
-            }
             _options = options;
-            _options.RedirectUrl = $"http://{IPAddress.Loopback}:{Port}/";
         }
 
         public async Task<string> InvokeAsync(CancellationToken cancellationToken = default)
         {
-            using var listener = new LoopbackHttpListener(Port, _path);
+            using var listener = new LoopbackHttpListener(_options.RedirectUrl);
             Open(_options.GetAuthRequestUrl());
 
             try
@@ -53,15 +40,7 @@ namespace Recodo.Desktop.Logic
                 return ex.Message;
             }
         }
-        private static int GetRandomUnusedPort()
-        {
-            var listener = new TcpListener(IPAddress.Loopback, 0);
-            listener.Start();
-            var port = ((IPEndPoint)listener.LocalEndpoint).Port;
-            listener.Stop();
-            return port;
-        }
-
+        
         public static void Open(string url)
         {
             try 

@@ -19,12 +19,9 @@ namespace Recodo.Desktop.Logic
 
         public string Url => _url;
 
-        public LoopbackHttpListener(int port, string path = null)
+        public LoopbackHttpListener(string url)
         {
-            path ??= String.Empty;
-            if (path.StartsWith("/")) path = path[1..];
-
-            _url = $"http://{IPAddress.Loopback}:{port}/{path}";
+            _url = url;
 
             _host = new WebHostBuilder()
                 .UseKestrel()

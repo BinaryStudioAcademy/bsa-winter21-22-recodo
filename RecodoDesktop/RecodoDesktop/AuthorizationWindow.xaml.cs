@@ -31,10 +31,10 @@ namespace Recodo.Desktop.Main
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            var options = new AuthRequestOptions();
-            var browser = new DefaultBrowser(options);
-            string result = await browser.InvokeAsync();
-            MessageBox.Show(result);
+            var options = new AuthorizationOptions();
+            var auth = new AuthorizationService(options);
+            var result = await auth.Authorize();
+            MessageBox.Show($"Code: {result.Code}\n State: {result.State}");
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)

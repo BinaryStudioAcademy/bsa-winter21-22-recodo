@@ -2,7 +2,7 @@
 
 namespace Recodo.Desktop.Logic
 {
-    public class AuthRequestOptions
+    public class AuthorizationOptions
     {
         const uint bufferSize = 64;
         const string clientId = "sample-client-id";
@@ -16,7 +16,7 @@ namespace Recodo.Desktop.Logic
         readonly string codeChallenge;
 
         public string RedirectUrl { get; set; }
-        public AuthRequestOptions()
+        public AuthorizationOptions()
         {
             state = Base64UrlString.RandomBase64UrlString(bufferSize);
             codeVerifier = Base64UrlString.RandomBase64UrlString(bufferSize);
@@ -28,6 +28,12 @@ namespace Recodo.Desktop.Logic
             return $"{authorizationEndpoint}?response_type=code&client_id={clientId}&" +
                    $"redirect_uri={Uri.EscapeDataString(RedirectUrl)}&code_challenge={codeChallenge}&" +
                                           $"code_challenge_method={codeChallengeMethod}&state={state}";
+        }
+
+        public string GetTokenRequestUrl(string code)
+        {
+            return $"grant_type=code&client_id={clientId}&code={code}&" +
+                   $"code_verifier={codeVerifier}&redirect_url={RedirectUrl}";
         }
     }
 }
