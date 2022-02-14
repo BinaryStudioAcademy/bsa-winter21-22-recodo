@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import '~@vime/core/themes/default.css';
+
+@import '~@vime/core/themes/light.css';
+
 html,
 body {
   height: 100%;
@@ -37,3 +41,4 @@ body {
 .w-100 {
   width: 100%;
 }
+

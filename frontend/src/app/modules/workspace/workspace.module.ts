@@ -18,6 +18,7 @@ import { VideoPlayerComponent } from './video/video-player/video-player.componen
 import { VideoReactionsComponent } from './video/video-reactions/video-reactions.component';
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { VimeModule } from "@vime/angular";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatInputModule,
     MatListModule,
     SharedModule,
+    VimeModule,
   ],
 })
 export class WorkspaceModule {}
