@@ -15,6 +15,7 @@ namespace Recodo.DAL.Entities
         public bool IsEmailConfirmed { get; set; }
         public DateTime CreatedAt { get; set; }
         public string AvatarLink { get; set; }
+        public string Salt { get; set; }
         public List<Permission> Permissions { get; set; }
         public List<Team> Teams { get; set; }
     }
