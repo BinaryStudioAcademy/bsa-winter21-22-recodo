@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using Recodo.Desktop.Models.Auth;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Recodo.Desktop.Logic
@@ -16,7 +16,6 @@ namespace Recodo.Desktop.Logic
     {
         readonly private DefaultBrowser _browser;
         readonly private AuthorizationOptions _options;
-        private AuthorizeResult _authResult;
         public AuthorizationService(AuthorizationOptions options)
         {
             _options = options;
@@ -27,13 +26,12 @@ namespace Recodo.Desktop.Logic
         public async Task<AuthorizeResult> Authorize()
         {
             string result = await _browser.InvokeAsync();
-            _authResult = ParseRawAuthResult(result);
-            return _authResult;
+            return ParseRawAuthResult(result);
         }
 
-        public async Task<string> GetToken()
+        public async Task<string> GetToken(AuthorizeResult authResult)
         {
-            var data = new StringContent(_options.GetTokenRequestData(_authResult.Code), Encoding.UTF8, "application/x-www-form-urlencoded");
+            var data = new FormUrlEncodedContent(_options.GetTokenRequestData(authResult.Code));
             
             using var client = new HttpClient();
             var response = await client.PostAsync(_options.TokenEndpoint, data);
@@ -55,13 +53,10 @@ namespace Recodo.Desktop.Logic
 
         private static AuthorizeResult ParseRawAuthResult(string result)
         {            
-            // parse query string
-            Dictionary<string, string> keyValuePairs =
-                    result.Split('&').ToDictionary(c => c.Split('=')[0].TrimStart('?'),
-                                                    c => Uri.UnescapeDataString(c.Split('=')[1]));
-            if (keyValuePairs.ContainsKey("code") && keyValuePairs.ContainsKey("state"))
+            var queryParams = QueryHelpers.ParseNullableQuery(result);
+            if (queryParams.ContainsKey("code") && queryParams.ContainsKey("state"))
             {
-                return new AuthorizeResult { Code = keyValuePairs["code"], State = keyValuePairs["state"] };               
+                return new AuthorizeResult { Code = queryParams["code"], State = queryParams["state"] };               
             }
             else
             {

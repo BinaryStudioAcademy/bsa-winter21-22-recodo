@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using System;
 using System.Collections.Generic;
 
 namespace Recodo.Desktop.Logic
@@ -13,10 +12,8 @@ namespace Recodo.Desktop.Logic
         readonly string tokenEndpoint = "https://oauth.mocklab.io/oauth/token";
         readonly string userInfoEndpoint = "https://oauth.mocklab.io/userinfo";
 
-        readonly string state;
-        readonly string codeVerifier;
-        readonly string codeChallenge;
-
+        readonly Dictionary<string, string> authRequestParams = new();
+        readonly Dictionary<string, string> tokenRequestParams = new();
         public string RedirectUrl { get; set; }
         public string TokenEndpoint => tokenEndpoint;
 
@@ -24,22 +21,32 @@ namespace Recodo.Desktop.Logic
 
         public AuthorizationOptions()
         {
-            state = Base64UrlString.RandomBase64UrlString(bufferSize);
-            codeVerifier = Base64UrlString.RandomBase64UrlString(bufferSize);
-            codeChallenge = Base64UrlString.Base64UrlEncodeNoPadding(Base64UrlString.Sha256(codeVerifier));
+            var state = Base64UrlString.RandomBase64UrlString(bufferSize);
+            var codeVerifier = Base64UrlString.RandomBase64UrlString(bufferSize);
+            var codeChallenge = Base64UrlString.Base64UrlEncodeNoPadding(Base64UrlString.Sha256(codeVerifier));
+
+            authRequestParams.Add("response_type", "code");
+            authRequestParams.Add("client_id", clientId);
+            authRequestParams.Add("code_challenge", codeChallenge);
+            authRequestParams.Add("code_challenge_method", codeChallengeMethod);
+            authRequestParams.Add("state", state);
+
+            tokenRequestParams.Add("grant_type", "code");
+            tokenRequestParams.Add("client_id", clientId);
+            tokenRequestParams.Add("code_verifier", codeVerifier);
+            tokenRequestParams.Add("redirect_url", RedirectUrl);
         }
 
-        public string GetAuthRequestUrl()
+        public string GetAuthRequestUrl()       
         {
-            return $"{authorizationEndpoint}?response_type=code&client_id={clientId}&" +
-                   $"redirect_uri={Uri.EscapeDataString(RedirectUrl)}&code_challenge={codeChallenge}&" +
-                                          $"code_challenge_method={codeChallengeMethod}&state={state}";
+            authRequestParams.Add("redirect_uri", RedirectUrl);
+            return QueryHelpers.AddQueryString(authorizationEndpoint, authRequestParams);
         }
 
-        public string GetTokenRequestData(string code)
+        public Dictionary<string, string> GetTokenRequestData(string code)
         {
-            return $"grant_type=code&client_id={clientId}&code={code}&" +
-                   $"code_verifier={codeVerifier}&redirect_url={RedirectUrl}";
+            tokenRequestParams.Add("code", code);
+            return tokenRequestParams;
         }
     }
 }
