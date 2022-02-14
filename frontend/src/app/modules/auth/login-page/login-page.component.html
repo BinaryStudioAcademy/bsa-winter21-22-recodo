@@ -10,15 +10,15 @@
             <div class="to-login-container">
                 <h2>Sign in to Recodo</h2>
             </div>
-            <form class="login-form" [formGroup]="loginForm" action="">
+            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)">
                 <p class="input-label">Email</p>
                 <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="never" hideRequiredMarker="true">
-                    <input type="email" matInput placeholder="user@gmail.com" formControlName="email" required>
+                    <input type="email" matInput placeholder="user@gmail.com" [(ngModel)]="userLoginDto.email" formControlName="email">
                 </mat-form-field>
                 <p class="input-label">Password</p>
                 <mat-form-field class="input-form" appearance="fill" color="warn" hideRequiredMarker="true">
                     <input [type]="hidePass ? 'password' : 'text'" matInput minlength="8" placeholder="password"
-                        formControlName="password" required>
+                         [(ngModel)]="userLoginDto.password" formControlName="password">
                     <mat-icon class="password-icon" matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' :
                         'visibility_off'}}
                     </mat-icon>

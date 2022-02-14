@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
+import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -9,20 +10,16 @@ import { passwordMatchValidator } from 'src/app/core/validators/customValidators
 })
 export class LoginPageComponent{
 
+  @Input() userLoginDto:UserLoginDto = {} as UserLoginDto;
   public loginForm: FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginService:LoginService) {
     this.loginForm = this.formBuilder.group({
-      fullName: [, {
-        validators: [
-          Validators.required,
-          Validators.pattern("^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$")
-        ],
-        updateOn: "change"
-      }],
       email: [, {
         validators: [
           Validators.required,
@@ -38,14 +35,11 @@ export class LoginPageComponent{
         ],
         updateOn: "change"
       }],
-      confirmPassword: [, {
-        validators: [
-          Validators.required
-        ],
-        updateOn: "change"
-      }],
-    }, {
-      validator: passwordMatchValidator
-    });
+    }); 
   }
+
+  public signIn(_user:UserLoginDto){
+    this.loginService.login(_user);
+  }
+
 }
