@@ -35,7 +35,7 @@ namespace Recodo.Desktop.Main
             var authResult = await auth.Authorize();
             this.ProgressPanel.Visibility = Visibility.Hidden;
             this.Activate();
-            var token = await auth.GetToken();
+            var token = await auth.GetToken(authResult);
             var userInfo = await auth.GetUserInfo(token);
             MessageBox.Show($"Code: {authResult.Code}\n State: {authResult.State} \n Token: {token} \n UserInfo:{userInfo}");
         }
