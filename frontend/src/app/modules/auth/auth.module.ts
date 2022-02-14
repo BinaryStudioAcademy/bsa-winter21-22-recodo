@@ -9,7 +9,6 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { AuthRoutingModule } from './auth-routing.module';
 
 
-
 @NgModule({
   declarations: [
     RegisterPageComponent,
