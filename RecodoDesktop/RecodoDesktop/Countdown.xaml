@@ -1,0 +1,14 @@
+<Window x:Class="Recodo.Desktop.Main.Countdown"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DispatcherTimerSample" Height="150" Width="250">
+    <Grid>
+        <Ellipse
+            Width="100"
+            Height="100"
+            Fill="Red"
+            Canvas.Left="135"
+            Canvas.Top="25"/>      
+        <Label Name="countdown" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Grid>
+</Window>

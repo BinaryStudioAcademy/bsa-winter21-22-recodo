@@ -23,6 +23,11 @@ namespace RecodoDesktop
         public MainWindow()
         {
             InitializeComponent();
+
+            StickPanel stickPanel = new();
+            stickPanel.Show();
+            Countdown countdown = new();
+            countdown.Show();
         }
     }
 }
