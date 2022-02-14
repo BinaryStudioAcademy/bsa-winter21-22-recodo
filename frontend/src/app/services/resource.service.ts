@@ -6,8 +6,7 @@ import {
 } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { IResponse } from '../core/models/response';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,42 +18,43 @@ export abstract class ResourceService<T> {
 
   abstract getResourceUrl(): string;
 
-  getListPagination(index: number, page: number): Observable<T[]> {
-    return this.httpClient.get<IResponse>(`/${this.APIUrl}`).pipe(
-      map((item) => JSON.parse(item.data)),
-      catchError(this.handleError)
-    );
+  getListPagination(page: number, count: number): Observable<T[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('count', count.toString());
+
+    return this.httpClient
+      .get<T[]>(`/${this.APIUrl}}?${params.toString()}`)
+      .pipe(catchError(this.handleError));
   }
 
   getList(): Observable<T[]> {
-    return this.httpClient.get<IResponse>(`/${this.APIUrl}`).pipe(
-      map((item) => JSON.parse(item.data)),
-      catchError(this.handleError)
-    );
+    return this.httpClient
+      .get<T[]>(`/${this.APIUrl}`)
+      .pipe(catchError(this.handleError));
   }
 
   get(id: string | number): Observable<T> {
-    return this.httpClient.get<IResponse>(`/${this.APIUrl}/${id}`).pipe(
-      map((item) => JSON.parse(item.data)),
-      catchError(this.handleError)
-    );
+    return this.httpClient
+      .get<T>(`/${this.APIUrl}/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
   add(resource: T) {
     return this.httpClient
-      .post<T>(`/${this.APIUrl}`, JSON.stringify(resource))
+      .post(`/${this.APIUrl}`, resource)
       .pipe(catchError(this.handleError));
   }
 
   delete(id: string | number) {
     return this.httpClient
-      .delete<T>(`/${this.APIUrl}/${id}`)
+      .delete(`/${this.APIUrl}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   update(resource: T) {
     return this.httpClient
-      .put<T>(`/${this.APIUrl}`, JSON.stringify(resource))
+      .put(`/${this.APIUrl}`, resource)
       .pipe(catchError(this.handleError));
   }
 
