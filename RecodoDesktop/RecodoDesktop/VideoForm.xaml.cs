@@ -37,20 +37,22 @@ namespace Recodo.Desktop.Main
         }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
-        {           
+        {
             try
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Mat m = new Mat();  // обьект для хранения картинки
                     _cameraService.Retrieve(m);
-                    imageBox.Source = Convert(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal).ToBitmap());
-                    
+                    if (_cameraService.Retrieve(m))
+                    {
+                        imageBox.Source = Convert(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal).ToBitmap());
+                    }
                 });
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка!");
+                MessageBox.Show(ex.Message, "Error!");
             }
         }
 

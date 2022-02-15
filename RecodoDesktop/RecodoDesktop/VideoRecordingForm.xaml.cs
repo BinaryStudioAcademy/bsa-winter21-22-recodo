@@ -22,10 +22,6 @@ namespace Recodo.Desktop.Main
     {
         private bool videoFormOpened = false;
 
-        public delegate void SelectionChanged();
-
-        public event SelectionChanged Notify;
-
         CameraService _cameraService = CameraService.GetInstance();
         public VideoRecordingForm()
         {
@@ -39,35 +35,34 @@ namespace Recodo.Desktop.Main
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var devices = _cameraService.GetCameras().ToList();
+            List<string> devices = _cameraService.GetCameras().ToList();
             for (int i = 0; i < devices.Count; i++)
             {
                 cameraComboBox.Items.Add(devices[i]);
-            }      
+            }
         }
 
         private void cameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
+            this.Dispatcher.Invoke(() =>
+                {
+                VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
             
-            if (!videoFormOpened)
-            {
-                videoFormOpened = true;
-                return;
-            }
-            if (cameraComboBox.SelectedIndex != 0)
-            {
-                videoForm.Show();
-            }
-            else
-            {
-                
-                _cameraService.StopCapture();
-               
-            }
-            
-            
+                if (!videoFormOpened)
+                {
+                        videoFormOpened = true;
+                        return;
+                }
+                if (cameraComboBox.SelectedIndex != 0)
+                {
+                        _cameraService.StopCapture();
+                        videoForm.Show();
+                }
+                else
+                {
+                        _cameraService.StopCapture();               
+                }
+            });
         }
-
     }
 }
