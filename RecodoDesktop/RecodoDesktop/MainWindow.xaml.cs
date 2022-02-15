@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Recodo.Desktop.Main;
 
 namespace RecodoDesktop
 {
@@ -23,9 +24,6 @@ namespace RecodoDesktop
         public MainWindow()
         {
             InitializeComponent();
-
-            StickPanel stickPanel = new();
-            stickPanel.Show();
             Countdown countdown = new();
             countdown.Show();
         }

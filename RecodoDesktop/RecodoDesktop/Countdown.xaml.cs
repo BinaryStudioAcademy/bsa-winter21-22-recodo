@@ -8,9 +8,14 @@ namespace Recodo.Desktop.Main
 	{
         DispatcherTimer _timer;
         TimeSpan _time;
-		public Countdown()
+        public delegate void FinishTimerMethod();
+		public Countdown(FinishTimerMethod finishTimerMethod = null)
 		{
 			InitializeComponent();
+            TimerStart(finishTimerMethod);
+        }
+        public void TimerStart(FinishTimerMethod finishTimerMethod)
+        {
             _time = TimeSpan.FromSeconds(3);
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
@@ -19,10 +24,14 @@ namespace Recodo.Desktop.Main
                     {
                         _timer.Stop();
                         Hide();
+                        if (finishTimerMethod != null)
+                        {
+                           finishTimerMethod();
+                        }
                     }
                     _time = _time.Add(TimeSpan.FromSeconds(-1));                    
                 }, Application.Current.Dispatcher);
 			_timer.Start();
-		}
+        }
 	}
 }
