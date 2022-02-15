@@ -22,10 +22,10 @@ export class LoginService extends ResourceService<UserLoginDto> {
     return '/Login';
   }
 
-  public logout(){
+  public logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    this.user = {} as UserDto;
+    this.user = { } as UserDto;
   }
 
   public login(user : UserLoginDto) {
