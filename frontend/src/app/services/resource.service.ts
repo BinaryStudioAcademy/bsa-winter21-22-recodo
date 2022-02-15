@@ -4,7 +4,6 @@ import {HttpClient, HttpErrorResponse, HttpParams, HttpResponse,
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthUserDto } from '../models/auth/auth-user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +33,13 @@ export abstract class ResourceService<T> {
 
   get(id: string | number) : Observable<HttpResponse<T>> {
     return this.httpClient
-      .get<T>(`${this.APIUrl}/${id}`, {observe: 'response'})
+      .get<T>(`${this.APIUrl}/${id}`, {observe : 'response'})
       .pipe(catchError(this.handleError));
   }
 
   add<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>> {
     return this.httpClient
-      .post<TResponse>(`${this.APIUrl}`, resource, {observe:'response'})
+      .post<TResponse>(`${this.APIUrl}`, resource, {observe :'response'})
       .pipe(catchError(this.handleError));
   }
 
@@ -52,11 +51,11 @@ export abstract class ResourceService<T> {
 
   update<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>>  {
     return this.httpClient
-      .put<TResponse>(`${this.APIUrl}`, resource,{observe:'response'})
+      .put<TResponse>(`${this.APIUrl}`, resource, { observe : 'response' })
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error : HttpErrorResponse) {
     return throwError(() => error);
   }
 

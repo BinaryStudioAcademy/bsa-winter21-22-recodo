@@ -19,11 +19,15 @@ export class LoginService extends ResourceService<UserLoginDto> {
   }
 
   getResourceUrl(): string {
-    return "/Login";
+    return '/Login';
   }
 
-  public login(user:UserLoginDto){
-    this._handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user)).subscribe();
+  public login(user : UserLoginDto) {
+    return this._handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user)).subscribe();
+  }
+
+  public areTokensExist() {
+    return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
   }
 
   private _handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
@@ -42,5 +46,4 @@ export class LoginService extends ResourceService<UserLoginDto> {
         localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));
     }
   } 
-
 }
