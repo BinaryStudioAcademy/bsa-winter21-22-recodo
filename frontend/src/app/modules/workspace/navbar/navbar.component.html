@@ -1,15 +1,30 @@
 <mat-toolbar>
-    <mat-toolbar-row >
-        <div class="additional-icons">
-            <button  mat-icon-button> 
-                <mat-icon svgIcon="search"></mat-icon>
-            </button>
-            <button  mat-icon-button> 
-                <mat-icon svgIcon="bell"></mat-icon>
-            </button>
-            <button mat-button class="user">
-                <img src="../../assets/icons/test-user-logo.png" alt="UserAvatar" class="user-image">
-            </button>
-        </div>       
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <div class="additional-icons">
+      <button mat-icon-button>
+        <mat-icon svgIcon="search"></mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon svgIcon="bell"></mat-icon>
+      </button>
+      <button mat-button class="user" (contextmenu)="onContextMenu($event)">
+        <img
+          src="../../assets/icons/test-user-logo.png"
+          alt="UserAvatar"
+          class="user-image"
+        />
+      </button>
+      <div
+        style="visibility: hidden; position: fixed"
+        [style.left]="contextMenuPosition.x"
+        [style.top]="contextMenuPosition.y"
+        [matMenuTriggerFor]="contextMenu"
+      ></div>
+      <mat-menu #contextMenu="matMenu">
+        <ng-template matMenuContent>
+          <button mat-menu-item (click)="onLogOut()">Log out</button>
+        </ng-template>
+      </mat-menu>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
