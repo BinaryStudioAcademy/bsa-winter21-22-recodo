@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginPageComponent{
 
   @Input() userLoginDto : UserLoginDto = {} as UserLoginDto;
-  public loginForm : FormGroup;
+  public loginForm : FormGroup = {} as FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;  
@@ -20,7 +20,10 @@ export class LoginPageComponent{
   constructor(
     private router : Router,
     private formBuilder : FormBuilder,
-    private loginService : LoginService) {
+    private loginService : LoginService
+  ) { }  
+
+  ngOnInit(){
     this.loginForm = this.formBuilder.group({
       email: [, {
         validators: [
@@ -41,10 +44,12 @@ export class LoginPageComponent{
   }
 
   public signIn(_user : UserLoginDto) {
-    this.loginService.login(_user);
-    if(this.loginService.areTokensExist()) {
-      this.router.navigate(['/']);
-      console.log(localStorage.getItem('accessToken'));
-    }
+    this.loginService.login(_user).subscribe((resp) => 
+    {
+      if(this.loginService.areTokensExist()) {
+        this.router.navigate(['me/']);
+        console.log(localStorage.getItem('accessToken'));
+      }
+    });
   }
 }

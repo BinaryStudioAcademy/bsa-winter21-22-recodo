@@ -23,7 +23,7 @@ export class LoginService extends ResourceService<UserLoginDto> {
   }
 
   public login(user : UserLoginDto) {
-    return this._handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user)).subscribe();
+    return this._handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
   }
 
   public areTokensExist() {

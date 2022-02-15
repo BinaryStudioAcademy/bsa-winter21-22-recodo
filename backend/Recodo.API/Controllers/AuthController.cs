@@ -21,8 +21,7 @@ namespace Recodo.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        [Route("api/Register")]
+        [HttpPost("api/Register")]
         public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
             if (!ModelState.IsValid)
@@ -43,8 +42,7 @@ namespace Recodo.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        [Route("api/Login")]
+        [HttpPost("api/Login")]
         public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
         {
             if (!ModelState.IsValid)
