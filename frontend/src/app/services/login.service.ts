@@ -22,6 +22,12 @@ export class LoginService extends ResourceService<UserLoginDto> {
     return '/Login';
   }
 
+  public logout(){
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.user = {} as UserDto;
+  }
+
   public login(user : UserLoginDto) {
     return this.handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
   }
