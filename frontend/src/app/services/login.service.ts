@@ -33,14 +33,14 @@ export class LoginService extends ResourceService<UserLoginDto> {
   private handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
     return observable.pipe(
         map((resp) => {
-            this.setTokens(resp.body?.token);
+            this.setTokens(resp.body?.token as TokenDto);
             this.user = resp.body?.user as UserDto;
-            return resp.body?.user;
+            return this.user;
         })
     );
   }
 
-  private setTokens(tokens: TokenDto | undefined) {
+  private setTokens(tokens: TokenDto) {
     if (tokens && tokens.accessToken && tokens.refreshToken) {
         localStorage.setItem('accessToken', JSON.stringify(tokens.accessToken));
         localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));

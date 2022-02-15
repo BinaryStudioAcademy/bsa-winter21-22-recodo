@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { TokenDto } from '../models/token/token-dto';
 import { AuthUserDto } from '../models/user/auth-user-dto';
+import { UserDto } from '../models/user/user-dto';
 import { UserRegisterDto } from '../models/user/user-register-dto';
 import { ResourceService } from './resource.service';
 
@@ -17,19 +18,23 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
 
     public register(user: UserRegisterDto) {
         debugger
-        return this._handleAuthResponse(this.add<UserRegisterDto,AuthUserDto>(user)).subscribe();
+        return this.handleAuthResponse(this.add<UserRegisterDto,AuthUserDto>(user));
     }
 
-    private _handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
+    public areTokensExist() {
+        return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
+    }
+
+    private handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
         return observable.pipe(
             map((resp) => {
-                this._setTokens(resp.body?.token as TokenDto);
-                return resp.body?.user;
+                this.setTokens(resp.body?.token as TokenDto);
+                return resp.body?.user as UserDto;
             })
         );
     }
 
-    private _setTokens(tokens: TokenDto) {
+    private setTokens(tokens: TokenDto) {
         if (tokens && tokens.accessToken && tokens.refreshToken) {
             localStorage.setItem('accessToken', JSON.stringify(tokens.accessToken));
             localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));
