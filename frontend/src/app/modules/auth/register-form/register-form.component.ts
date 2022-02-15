@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
+import { RegistrationService } from 'src/app/services/auth.service';
+import {UserRegisterDto} from 'src/app/models/user/user-register-dto';
 
 @Component({
   selector: 'app-register-form',
@@ -14,7 +16,8 @@ export class RegisterFormComponent {
   public hidePass = true;
   public hideConfirmPass = true;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private registrationService: RegistrationService) {
     this.registerForm = this.formBuilder.group({
       fullName: [, {
         validators: [
@@ -48,5 +51,12 @@ export class RegisterFormComponent {
       validator: passwordMatchValidator
     });
   }
-
+  registerUser() {
+    let userRegisterDto : UserRegisterDto = {
+      email: this.registerForm.controls['email'].value,
+      userName: this.registerForm.controls['fullName'].value,
+      password: this.registerForm.controls['password'].value
+    }
+    this.registrationService.register(userRegisterDto)
+  }
 }
