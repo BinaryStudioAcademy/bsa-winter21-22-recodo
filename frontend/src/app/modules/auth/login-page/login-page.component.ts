@@ -17,7 +17,7 @@ export class LoginPageComponent implements OnInit {
 
   public hidePass = true;
   public hideConfirmPass = true;
-  public currentUser:UserDto | undefined;
+  public currentUser:UserDto = {} as UserDto;
 
   constructor(
     private router : Router,
@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
     this.validateForm();
   }
 
-  private validateForm(){
+  private validateForm() {
     this.loginForm = this.formBuilder.group({
       email: [, {
         validators: [
@@ -52,10 +52,8 @@ export class LoginPageComponent implements OnInit {
   public signIn(_user : UserLoginDto) {
     this.loginService.login(_user).subscribe((responce) => {
       this.currentUser = responce;
-      console.log('current user: ',this.currentUser);
       if(this.loginService.areTokensExist()) {
         this.router.navigate(['me/']);
-        console.log(localStorage.getItem('accessToken'));
       }
     });
   }

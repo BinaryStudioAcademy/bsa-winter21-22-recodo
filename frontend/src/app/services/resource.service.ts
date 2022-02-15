@@ -48,7 +48,7 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  update<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>>  {
+  update<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>> {
     return this.httpClient
       .put<TResponse>(`${this.APIUrl}`, resource, { observe : 'response' })
       .pipe(catchError(this.handleError));

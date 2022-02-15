@@ -22,7 +22,7 @@ namespace Recodo.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost("/Register")]
+        [HttpPost("Register")]
         public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
             var createdUser = await _userService.CreateUser(userDTO);
@@ -38,7 +38,7 @@ namespace Recodo.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("/Login")]
+        [HttpPost("Login")]
         public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
         {
             return Ok(await _authService.Authorize(userDTO));
