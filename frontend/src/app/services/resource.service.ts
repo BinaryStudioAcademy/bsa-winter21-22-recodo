@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -35,31 +30,32 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  get(id: string | number): Observable<HttpResponse<T>> {
+  get(id: string | number) : Observable<HttpResponse<T>> {
     return this.httpClient
-      .get<T>(`${this.APIUrl}/${id}`, {observe: 'response'})
+      .get<T>(`${this.APIUrl}/${id}`, {observe : 'response'})
       .pipe(catchError(this.handleError));
   }
 
-  add<TRequest,TResponse>(resource: TRequest):Observable<HttpResponse<TResponse>> {
+  add<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>> {
     return this.httpClient
-      .post<TResponse>(`${this.APIUrl}`, resource, {observe:'response'})
+      .post<TResponse>(`${this.APIUrl}`, resource, {observe :'response'})
       .pipe(catchError(this.handleError));
   }
 
-  delete(id: string | number):Observable<HttpResponse<T>> {
+  delete(id: string | number) : Observable<HttpResponse<T>> {
     return this.httpClient
       .delete<T>(`${this.APIUrl}/${id}`, {observe:'response'})
       .pipe(catchError(this.handleError));
   }
 
-  update<TRequest,TResponse>(resource: TRequest):Observable<HttpResponse<TResponse>>  {
+  update<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>>  {
     return this.httpClient
-      .put<TResponse>(`${this.APIUrl}`, resource,{observe:'response'})
+      .put<TResponse>(`${this.APIUrl}`, resource, { observe : 'response' })
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error : HttpErrorResponse) {
     return throwError(() => error);
   }
+
 }

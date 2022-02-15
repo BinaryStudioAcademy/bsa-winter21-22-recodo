@@ -133,6 +133,7 @@ mat-list-item:nth-child(3){
 .header-links-left{
     float: left;
     button{
+        border-bottom:2px solid #F4E9E9;
         margin-right: 10px;
         border-radius: 0px;
         &:hover{border-bottom:2px solid #FB6D3A;}
