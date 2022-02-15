@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
-import { RegistrationService } from 'src/app/services/auth.service';
 import {UserRegisterDto} from 'src/app/models/user/user-register-dto';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-register-form',

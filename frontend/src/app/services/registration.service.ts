@@ -1,10 +1,10 @@
-import { HttpResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
-import { TokenDto } from "../models/token/token-dto";
-import { AuthUserDto } from "../models/user/auth-user-dto";
-import { UserRegisterDto } from "../models/user/user-register-dto";
-import { ResourceService } from "./resource.service";
+import { HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { TokenDto } from '../models/token/token-dto';
+import { AuthUserDto } from '../models/user/auth-user-dto';
+import { UserRegisterDto } from '../models/user/user-register-dto';
+import { ResourceService } from './resource.service';
 
 @Injectable({
     providedIn: 'root'
