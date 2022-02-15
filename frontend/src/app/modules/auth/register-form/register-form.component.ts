@@ -1,52 +1,68 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
+import { ExternalAuthService } from 'src/app/services/external-auth.service';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+  styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent {
-
   public registerForm: FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.registerForm = this.formBuilder.group({
-      fullName: [, {
-        validators: [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$')
+  constructor(
+    private formBuilder: FormBuilder,
+    private externalAuthService: ExternalAuthService
+  ) {
+    this.registerForm = this.formBuilder.group(
+      {
+        fullName: [
+          ,
+          {
+            validators: [
+              Validators.required,
+              Validators.pattern("^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$"),
+            ],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-      email: [, {
-        validators: [
-          Validators.required,
-          Validators.email
+        email: [
+          ,
+          {
+            validators: [Validators.required, Validators.email],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        password: [
+          ,
+          {
+            validators: [
+              Validators.required,
+              Validators.minLength(8),
+              Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+            ],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-      confirmPassword: [, {
-        validators: [
-          Validators.required
+        confirmPassword: [
+          ,
+          {
+            validators: [Validators.required],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-    }, {
-      validator: passwordMatchValidator
-    });
+      },
+      {
+        validator: passwordMatchValidator,
+      }
+    );
   }
 
+  public googleLogin = () => {
+    this.externalAuthService.signInWithGoogle();
+  };
 }

@@ -34,8 +34,9 @@ namespace Recodo.API.Controllers
             return new JsonResult(result);
         }
 
-        [HttpPost("ExternalGoogleLogin")]
-        public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthDto externalAuth)
+        [HttpPost]
+        [Route("api/GoogleLogin")]
+        public async Task<IActionResult> GoogleLogin([FromBody] ExternalAuthDto externalAuth)
         {
             var payload = await _authService.VerifyGoogleToken(externalAuth);
             if (payload == null)

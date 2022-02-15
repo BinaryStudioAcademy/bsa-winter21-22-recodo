@@ -22,16 +22,6 @@ export class LoginFormComponent {
   ) {
     this.registerForm = this.formBuilder.group(
       {
-        fullName: [
-          ,
-          {
-            validators: [
-              Validators.required,
-              Validators.pattern("^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$"),
-            ],
-            updateOn: 'change',
-          },
-        ],
         email: [
           ,
           {
@@ -47,13 +37,6 @@ export class LoginFormComponent {
               Validators.minLength(8),
               Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
             ],
-            updateOn: 'change',
-          },
-        ],
-        confirmPassword: [
-          ,
-          {
-            validators: [Validators.required],
             updateOn: 'change',
           },
         ],

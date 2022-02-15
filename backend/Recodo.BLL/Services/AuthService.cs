@@ -49,7 +49,7 @@ namespace Recodo.BLL.Services
         {
             try
             {
-                string clientId = _configuration["clientId"];
+                string clientId = _configuration["GoogleClientId"];
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
                     Audience = new List<string>() { clientId }

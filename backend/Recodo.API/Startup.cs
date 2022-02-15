@@ -30,7 +30,7 @@ namespace Recodo.API
                 });
 
             services.AddDbContext<RecodoDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             //All profiles register automatically
             services.RegisterAutoMapper();
@@ -39,6 +39,8 @@ namespace Recodo.API
             services.RegisterCustomServices();
 
             services.ConfigureJwt(Configuration);
+
+            services.AddCors();
 
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +57,17 @@ namespace Recodo.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Recodo.API v1"));
             }
+
+            app.UseCors(builder => builder
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .WithExposedHeaders("Token-Expired")
+              .AllowCredentials()
+              .WithOrigins("http://localhost:4200"));
+            app.UseRouting();
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
 
