@@ -12,7 +12,7 @@ import { ResourceService } from './resource.service';
 })
 export class LoginService extends ResourceService<UserLoginDto> {
 
-  private user:UserDto | undefined= {} as UserDto;
+  private user:UserDto = {} as UserDto;
 
   constructor(override httpClient: HttpClient) {
     super(httpClient);
@@ -23,24 +23,24 @@ export class LoginService extends ResourceService<UserLoginDto> {
   }
 
   public login(user : UserLoginDto) {
-    return this._handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
+    return this.handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
   }
 
   public areTokensExist() {
     return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
   }
 
-  private _handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
+  private handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
     return observable.pipe(
         map((resp) => {
-            this._setTokens(resp.body?.token);
-            this.user = resp.body?.user;
+            this.setTokens(resp.body?.token);
+            this.user = resp.body?.user as UserDto;
             return resp.body?.user;
         })
     );
   }
 
-  private _setTokens(tokens: TokenDto | undefined) {
+  private setTokens(tokens: TokenDto | undefined) {
     if (tokens && tokens.accessToken && tokens.refreshToken) {
         localStorage.setItem('accessToken', JSON.stringify(tokens.accessToken));
         localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));

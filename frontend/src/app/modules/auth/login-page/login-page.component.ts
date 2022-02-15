@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { UserDto } from 'src/app/models/user/user-dto';
 
 @Component({
   selector: 'app-login-page',
@@ -16,6 +17,7 @@ export class LoginPageComponent implements OnInit {
 
   public hidePass = true;
   public hideConfirmPass = true;
+  public currentUser:UserDto | undefined;
 
   constructor(
     private router : Router,
@@ -24,6 +26,10 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.validateForm();
+  }
+
+  private validateForm(){
     this.loginForm = this.formBuilder.group({
       email: [, {
         validators: [
@@ -44,7 +50,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   public signIn(_user : UserLoginDto) {
-    this.loginService.login(_user).subscribe(() => {
+    this.loginService.login(_user).subscribe((responce) => {
+      this.currentUser = responce;
+      console.log('current user: ',this.currentUser);
       if(this.loginService.areTokensExist()) {
         this.router.navigate(['me/']);
         console.log(localStorage.getItem('accessToken'));
