@@ -1,20 +1,10 @@
 <div class="registration-container">
   <img src="../../../../assets/icons/logo.svg" alt="logo" />
   <div class="to-login-container">
-    <h2>Create an account</h2>
+    <h2>Log in</h2>
     <p class="already-registered">Already registered? <span>Log in</span></p>
   </div>
   <form class="registration-form" [formGroup]="registerForm" action="">
-    <p class="input-label">Full Name</p>
-    <mat-form-field
-      class="input-form"
-      appearance="fill"
-      color="warn"
-      floatLabel="always"
-      hideRequiredMarker="true"
-    >
-      <input matInput placeholder="Name" formControlName="fullName" required />
-    </mat-form-field>
     <p class="input-label">Email</p>
     <mat-form-field
       class="input-form"
@@ -50,28 +40,6 @@
         >{{ hidePass ? "visibility" : "visibility_off" }}
       </mat-icon>
     </mat-form-field>
-    <p class="input-label">Repeat Password</p>
-    <mat-form-field
-      class="input-form"
-      appearance="fill"
-      color="warn"
-      floatLabel="always"
-      hideRequiredMarker="true"
-    >
-      <input
-        [type]="hideConfirmPass ? 'password' : 'text'"
-        matInput
-        placeholder="password"
-        formControlName="confirmPassword"
-        required
-      />
-      <mat-icon
-        class="password-icon"
-        matSuffix
-        (click)="hideConfirmPass = !hideConfirmPass"
-        >{{ hideConfirmPass ? "visibility" : "visibility_off" }}
-      </mat-icon>
-    </mat-form-field>
     <div class="registation-buttons">
       <button
         class="submit-button"
@@ -79,10 +47,10 @@
         type="submit"
         [disabled]="!registerForm.valid"
       >
-        Sign Up
+        Log In
       </button>
-      <p>Or sign up with</p>
-      <button class="login-with-button">
+      <p>Or log in with</p>
+      <button (click)="googleLogin()" class="login-with-button">
         <img src="../../../../assets/icons/googleButton.svg" alt="google" />
       </button>
       <button class="login-with-button">

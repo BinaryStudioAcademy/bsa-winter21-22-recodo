@@ -1,3 +1,27 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    ".vscode": true,
+    "node_modules": true,
+    ".browserslistrc": true,
+    "yarn.lock": true,
+    "tsconfig.spec.json": true,
+    "tsconfig.json": true,
+    "tsconfig.app.json": true,
+    "README.md": true,
+    "package.json": true,
+    "package-lock.json": true,
+    "karma.conf.js": true,
+    "angular.json": true,
+    ".gitignore": true,
+    ".eslintrc.json": true,
+    ".editorconfig": true
+  },
+  "explorerExclude.backup": null
 }
