@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Icons\bell.png" />
     <Resource Include="Icons\camera.png" />
     <Resource Include="Icons\home.png" />
