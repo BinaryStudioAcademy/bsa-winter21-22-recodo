@@ -1,41 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Icons\bell.png" />
-    <None Remove="Icons\camera.png" />
-    <None Remove="Icons\home.png" />
-    <None Remove="Icons\image.png" />
-    <None Remove="Icons\menu.png" />
-    <None Remove="Icons\mic.png" />
-    <None Remove="Icons\online.png" />
-    <None Remove="Icons\r-triangle.png" />
-    <None Remove="Icons\R.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Icons\bell.png" />
+		<None Remove="Icons\camera.png" />
+		<None Remove="Icons\home.png" />
+		<None Remove="Icons\image.png" />
+		<None Remove="Icons\menu.png" />
+		<None Remove="Icons\mic.png" />
+		<None Remove="Icons\online.png" />
+		<None Remove="Icons\r-triangle.png" />
+		<None Remove="Icons\R.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+	</ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Icons\bell.png" />
-    <Resource Include="Icons\camera.png" />
-    <Resource Include="Icons\home.png" />
-    <Resource Include="Icons\image.png" />
-    <Resource Include="Icons\menu.png" />
-    <Resource Include="Icons\mic.png" />
-    <Resource Include="Icons\online.png" />
-    <Resource Include="Icons\r-triangle.png" />
-    <Resource Include="Icons\R.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Icons\bell.png" />
+		<Resource Include="Icons\camera.png" />
+		<Resource Include="Icons\home.png" />
+		<Resource Include="Icons\image.png" />
+		<Resource Include="Icons\menu.png" />
+		<Resource Include="Icons\mic.png" />
+		<Resource Include="Icons\online.png" />
+		<Resource Include="Icons\r-triangle.png" />
+		<Resource Include="Icons\R.png" />
+
+		<Resource Include="Icons\Panel\delete.png" />
+		<Resource Include="Icons\Panel\edit.png" />
+		<Resource Include="Icons\Panel\pause.png" />
+		<Resource Include="Icons\Panel\refresh.png" />
+		<Resource Include="Icons\Panel\stop.png" />
+
+		<Resource Include="Icons\Panel\delete_focus.png" />
+		<Resource Include="Icons\Panel\edit_focus.png" />
+		<Resource Include="Icons\Panel\pause_focus.png" />
+		<Resource Include="Icons\Panel\refresh_focus.png" />
+		<Resource Include="Icons\Panel\stop_focus.png" />
+	</ItemGroup>
+
 
 </Project>
