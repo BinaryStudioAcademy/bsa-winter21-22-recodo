@@ -26,8 +26,8 @@ export class LoginService extends ResourceService<UserLoginDto> {
     return this.handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
   }
 
-  public areTokensExist() {
-    return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
+  public areTokensExist() : boolean {
+    return !!localStorage.getItem('accessToken') && !!localStorage.getItem('refreshToken');
   }
 
   private handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
