@@ -1,10 +1,4 @@
 ﻿using Recodo.Desktop.Main;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace RecodoDesktop
@@ -16,8 +10,11 @@ namespace RecodoDesktop
     {
         void App_Startup(object sender, StartupEventArgs e)
         {
-            VideoRecordingForm videoRecordingForm = new ();
+            VideoRecordingForm videoRecordingForm = new();
             videoRecordingForm.Show();
+
+            StickPanel stickPanel = new();
+            stickPanel.Show();
         }
     }
 }
