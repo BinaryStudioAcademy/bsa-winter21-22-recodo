@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -24,41 +20,42 @@ export abstract class ResourceService<T> {
       .set('count', count.toString());
 
     return this.httpClient
-      .get<T[]>(`/${this.APIUrl}}?${params.toString()}`)
+      .get<T[]>(`${this.APIUrl}}?${params.toString()}`)
       .pipe(catchError(this.handleError));
   }
 
-  getList(): Observable<T[]> {
+  getList(): Observable<HttpResponse<T[]>> {
     return this.httpClient
-      .get<T[]>(`/${this.APIUrl}`)
+      .get<T[]>(`${this.APIUrl}`, {observe : 'response'})
       .pipe(catchError(this.handleError));
   }
 
-  get(id: string | number): Observable<T> {
+  get(id: string | number) : Observable<HttpResponse<T>> {
     return this.httpClient
-      .get<T>(`/${this.APIUrl}/${id}`)
+      .get<T>(`${this.APIUrl}/${id}`, {observe : 'response'})
       .pipe(catchError(this.handleError));
   }
 
-  add(resource: T) {
+  add<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>> {
     return this.httpClient
-      .post(`/${this.APIUrl}`, resource)
+      .post<TResponse>(`${this.APIUrl}`, resource, {observe :'response'})
       .pipe(catchError(this.handleError));
   }
 
-  delete(id: string | number) {
+  delete(id: string | number) : Observable<HttpResponse<T>> {
     return this.httpClient
-      .delete(`/${this.APIUrl}/${id}`)
+      .delete<T>(`${this.APIUrl}/${id}`, {observe:'response'})
       .pipe(catchError(this.handleError));
   }
 
-  update(resource: T) {
+  update<TRequest,TResponse>(resource: TRequest) : Observable<HttpResponse<TResponse>> {
     return this.httpClient
-      .put(`/${this.APIUrl}`, resource)
+      .put<TResponse>(`${this.APIUrl}`, resource, { observe : 'response' })
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error : HttpErrorResponse) {
     return throwError(() => error);
   }
+
 }

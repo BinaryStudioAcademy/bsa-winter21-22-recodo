@@ -4,10 +4,10 @@
         <h2>Create an account</h2>
         <p class="already-registered">Already registered? <span>Log in</span></p>
     </div>
-    <form class="registration-form" [formGroup]="registerForm" action="">
-        <p class="input-label">Full Name</p>
+    <form class="registration-form" [formGroup]="registerForm" action="" (submit)="registerUser()">
+        <p class="input-label">Workspace name</p>
         <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="always" hideRequiredMarker="true">
-            <input matInput placeholder="Name" formControlName="fullName" required>
+            <input matInput placeholder="Name" formControlName="workspaceName" required>
         </mat-form-field>
         <p class="input-label">Email</p>
         <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="never" hideRequiredMarker="true">

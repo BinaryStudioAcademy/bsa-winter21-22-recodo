@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Recodo.API.Controllers
 {
     [ApiController]
+    [Route("api")]
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
@@ -21,13 +22,12 @@ namespace Recodo.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        [Route("api/Register")]
+        [HttpPost("Register")]
         public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
             var createdUser = await _userService.CreateUser(userDTO);
 
-            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.UserName, createdUser.Email);
+            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.WorkspaceName, createdUser.Email);
 
             var result = new AuthUserDTO 
             { 
@@ -35,8 +35,13 @@ namespace Recodo.API.Controllers
                 User = createdUser 
             };
 
-            return new JsonResult(result);
+            return Ok(result);
+        }
 
+        [HttpPost("Login")]
+        public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
+        {
+            return Ok(await _authService.Authorize(userDTO));
         }
     }
 }
