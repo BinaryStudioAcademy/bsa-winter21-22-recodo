@@ -5,7 +5,7 @@ import { TokenDoesnotExistGuard } from './guards/token-doesnot-exist.guard';
 
 const routes: Routes = [
   {
-    path: 'me',
+    path: 'personal',
     loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule),
     canActivate : [TokenExistsGuard]
   },

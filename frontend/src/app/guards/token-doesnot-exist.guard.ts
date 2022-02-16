@@ -13,7 +13,7 @@ export class TokenDoesnotExistGuard implements CanActivate {
 
   canActivate( ) : boolean {
     if(this.loginService.areTokensExist()) {
-      this.router.navigate(['/me']);
+      this.router.navigate(['/personal']);
     }
     return !this.loginService.areTokensExist();
   }

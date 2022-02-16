@@ -7,10 +7,10 @@ import { PersonalComponent } from './personal/personal.component';
 const routes: Routes = [
   { path: '', component: BaseComponent, children: [
       {
-        path: 'personal', component:PersonalComponent
+        path: '', component:PersonalComponent
       },
       {
-        path: '', redirectTo: 'personal', pathMatch: 'full'
+        path: '', redirectTo: '', pathMatch: 'full'
       }
     ]
   }
