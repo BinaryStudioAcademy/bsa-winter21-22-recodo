@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Recodo.Desktop.Main;
 
 namespace RecodoDesktop
 {
@@ -23,6 +24,9 @@ namespace RecodoDesktop
         public MainWindow()
         {
             InitializeComponent();
+            Countdown countdown = new();
+            countdown.Topmost = true;
+            countdown.Show();
         }
     }
 }
