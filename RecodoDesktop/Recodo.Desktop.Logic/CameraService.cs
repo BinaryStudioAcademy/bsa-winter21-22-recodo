@@ -65,11 +65,7 @@ namespace Recodo.Desktop.Logic
         public ICollection<string> GetCameras()
         {
             webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice); 
-            List<string> webCamsNames = new List<string>();
-            for (int i = 0; i < webCams.Length; i++)
-            {
-                webCamsNames.Add(webCams[i].Name);
-            }
+            List<string> webCamsNames = webCams.Select(el => el.Name).ToList();
             return webCamsNames;
         }
 
@@ -83,7 +79,6 @@ namespace Recodo.Desktop.Logic
                 }
                 
                 return false;
-
             }
         }
     
