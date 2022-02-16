@@ -1,0 +1,70 @@
+name: Recodo CD (dev)
+
+on:
+  push:
+    branches: [ dev ]
+  workflow_dispatch:
+
+jobs:
+  backend_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-out the repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and push backend
+        uses: docker/build-push-action@v2
+        with:
+          tags: jyuart/recodo-backend
+          context: ./backend
+          push: true
+          
+  frontend_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-out the repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push frontend
+        uses: docker/build-push-action@v2
+        with:
+          tags: jyuart/recodo-frontend
+          context: ./frontend
+          push: true
+          
+  deploy_images:
+    runs-on: ubuntu-latest
+    needs: [ backend_build, frontend_build ]
+    steps:
+    - name: Check-out the repository
+      uses: actions/checkout@v2
+      
+    - name: Update and restart containers
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: cd ~ &&
+                docker-compose -f docker-compose.apps.prod.yml stop &&
+                docker-compose -f docker-compose.apps.prod.yml pull &&
+                docker system prune -f &&
+                docker-compose -f docker-compose.apps.prod.yml up -d
