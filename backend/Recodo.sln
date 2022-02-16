@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31129.286
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.API", "Recodo.API\Recodo.API.csproj", "{0B2329C5-1949-4FED-924B-12146F16A713}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recodo.BLL", "Recodo.BLL\Recodo.BLL.csproj", "{594E0088-F661-4269-B7ED-7E0F07E547BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.BLL", "Recodo.BLL\Recodo.BLL.csproj", "{594E0088-F661-4269-B7ED-7E0F07E547BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recodo.Common", "Recodo.Common\Recodo.Common.csproj", "{C3E3FE25-1932-443F-B80C-33E047DEC211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.Common", "Recodo.Common\Recodo.Common.csproj", "{C3E3FE25-1932-443F-B80C-33E047DEC211}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recodo.DAL", "Recodo.DAL\Recodo.DAL.csproj", "{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.DAL", "Recodo.DAL\Recodo.DAL.csproj", "{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recodo.BlobAPI", "Recodo.BlobAPI\Recodo.BlobAPI.csproj", "{CED85C72-9921-4872-8569-401534059CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED85C72-9921-4872-8569-401534059CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED85C72-9921-4872-8569-401534059CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED85C72-9921-4872-8569-401534059CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED85C72-9921-4872-8569-401534059CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
