@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Recodo.BLL.Services
 {
-    class FolderService : BaseService
+    public class FolderService : BaseService
     {
         public FolderService(RecodoDbContext context, IMapper mapper) : base (context, mapper)
         {
