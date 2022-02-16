@@ -46,4 +46,9 @@ export class LoginService extends ResourceService<UserLoginDto> {
         localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));
     }
   }
+
+  public logOut() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
 }
