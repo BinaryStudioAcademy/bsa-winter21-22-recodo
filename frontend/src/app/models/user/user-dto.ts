@@ -1,5 +1,5 @@
 export interface UserDto {
-    id: number;
-    email: string;
-    userName: string;
+    id : number;
+    email : string;
+    workspaceName : string;
 }
