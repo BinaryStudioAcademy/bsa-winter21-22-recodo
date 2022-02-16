@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Recodo.Desktop.Logic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Recodo.Desktop.Main
@@ -8,8 +9,11 @@ namespace Recodo.Desktop.Main
     /// </summary>
     public partial class StickPanel : Window
     {
-        public StickPanel()
+        private readonly RecorderService _recorderService;
+        public StickPanel(RecorderService recorderService)
         {
+            _recorderService = recorderService;
+
             InitializeComponent();
             this.Top = 70;
             this.Left = 0;

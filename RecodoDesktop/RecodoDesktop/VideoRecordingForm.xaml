@@ -140,7 +140,7 @@
             </StackPanel>
             <ComboBox Grid.Row="8" Grid.Column="1" Width="110.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,14,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light">Auto (720p)</ComboBox>
 
-            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37">
+            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37" Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock FontSize="15" Height="18" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">Start recording</TextBlock>
                     <TextBlock FontWeight="Light" FontSize="12" VerticalAlignment="Bottom" Margin="13.78,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">5 minutes limit</TextBlock>

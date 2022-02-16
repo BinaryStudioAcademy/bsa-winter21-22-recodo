@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recodo.Desktop.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,10 @@ namespace Recodo.Desktop.Main
     /// </summary>
     public partial class VideoRecordingForm : Window
     {
-        public VideoRecordingForm()
+        private readonly RecorderService _recorderService;
+        public VideoRecordingForm(RecorderService recorderService)
         {
+            _recorderService = recorderService;
             InitializeComponent();
         }
 
@@ -28,5 +31,11 @@ namespace Recodo.Desktop.Main
         {
             this.DragMove();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
