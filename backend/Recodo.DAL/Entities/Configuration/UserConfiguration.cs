@@ -16,7 +16,7 @@ namespace Recodo.DAL.Entities.Configuration
             builder.Property(p => p.Email).IsRequired();
             builder.HasIndex(p => p.Email).IsUnique();
             builder.Property(p => p.Password).IsRequired();
-            builder.Property(p => p.UserName).IsRequired();
+            builder.Property(p => p.WorkspaceName).IsRequired();
             builder.Property(p => p.Salt).IsRequired();
             builder.HasMany(p => p.Permissions).WithMany(p => p.Users);
             builder.HasMany(p => p.Teams).WithMany(p => p.Users);
