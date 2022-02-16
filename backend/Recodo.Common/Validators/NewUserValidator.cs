@@ -7,7 +7,7 @@ namespace Recodo.Common.Validators
     {
         public NewUserValidator()
         {
-            RuleFor(x => x.UserName).Length(2,20);
+            RuleFor(x => x.WorkspaceName).Length(2,20);
             RuleFor(x => x.Email).EmailAddress();
             RuleFor(x => x.Password).Length(8, 32);
         }

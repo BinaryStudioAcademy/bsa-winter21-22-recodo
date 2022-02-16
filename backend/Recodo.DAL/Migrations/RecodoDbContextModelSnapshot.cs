@@ -232,7 +232,7 @@ namespace Recodo.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("WorkspaceName")
                         .IsRequired()
                         .HasColumnType("text");
 

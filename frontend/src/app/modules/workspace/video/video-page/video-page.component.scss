@@ -1,0 +1,16 @@
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  button {
+    margin-left: 10px;
+    border-radius: 8px;
+  }
+}
+
+.reactions-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}

@@ -17,7 +17,6 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
     };
 
     public register(user: UserRegisterDto) {
-        debugger
         return this.handleAuthResponse(this.add<UserRegisterDto,AuthUserDto>(user));
     }
 
