@@ -22,12 +22,18 @@ export class LoginService extends ResourceService<UserLoginDto> {
     return '/Login';
   }
 
+  public logout() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.user = { } as UserDto;
+  }
+
   public login(user : UserLoginDto) {
     return this.handleAuthResponse(this.add<UserLoginDto,AuthUserDto>(user));
   }
 
-  public areTokensExist() {
-    return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
+  public areTokensExist() : boolean {
+    return !!localStorage.getItem('accessToken') && !!localStorage.getItem('refreshToken');
   }
 
   private handleAuthResponse(observable: Observable<HttpResponse<AuthUserDto>>) {
