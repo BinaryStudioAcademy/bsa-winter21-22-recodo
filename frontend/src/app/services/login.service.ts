@@ -26,10 +26,10 @@ export class LoginService extends ResourceService<UserLoginDto> {
     return this.handleAuthResponse(this.add<UserLoginDto, AuthUserDto>(user));
   }
 
-  public areTokensExist() {
+  public areTokensExist(): boolean {
     return (
-      localStorage.getItem('accessToken') &&
-      localStorage.getItem('refreshToken')
+      !!localStorage.getItem('accessToken') &&
+      !!localStorage.getItem('refreshToken')
     );
   }
 

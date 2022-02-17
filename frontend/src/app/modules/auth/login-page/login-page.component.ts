@@ -53,7 +53,7 @@ export class LoginPageComponent implements OnInit {
     this.loginService.login(_user).subscribe((responce) => {
       this.currentUser = responce;
       if(this.loginService.areTokensExist()) {
-        this.router.navigate(['me/']);
+        this.router.navigate(['/personal']);
       }
     });
   }
