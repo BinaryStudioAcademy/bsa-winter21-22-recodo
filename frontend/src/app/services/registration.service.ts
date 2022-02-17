@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TokenDto } from '../models/token/token-dto';
 import { AuthUserDto } from '../models/user/auth-user-dto';
 import { UserDto } from '../models/user/user-dto';
