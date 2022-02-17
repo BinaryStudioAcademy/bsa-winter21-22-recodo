@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NewFolder } from 'src/app/models/folder/new-folder';
+import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 
 @Component({
   selector: 'app-content',
@@ -11,7 +11,7 @@ export class PersonalComponent {
   public src = '../../assets/icons/test-user-logo.png';
   public isFolderFormShow = false;
   folderForm : FormGroup = {} as FormGroup;
-  folder : NewFolder = {} as NewFolder;
+  folder : NewFolderDto = {} as NewFolderDto;
 
   //now i can`t get current user and his team cause not implementer this services
   //it's mock team and user id
