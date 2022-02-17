@@ -41,10 +41,7 @@ namespace Recodo.Desktop.Main
         private async Task GetToken(string endpoint)
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            var auth = new AuthorizationService
-            {
-                Endpoint = endpoint
-            };
+            var auth = new AuthorizationService(endpoint);
             var authResult = await auth.Authorize();
             this.ProgressPanel.Visibility = Visibility.Hidden;
             this.Activate();
