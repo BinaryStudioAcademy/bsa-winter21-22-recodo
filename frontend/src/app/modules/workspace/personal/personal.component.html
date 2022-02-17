@@ -17,10 +17,10 @@
   </div>
 </div>
 <h2>Folders</h2>
-<mat-card class="folder-form-container" *ngIf="isFolderFormShow">
-  <div class="folder-form" [formGroup]="folderForm">
+<mat-card class="folder-form-container" *ngIf="isFolderFormShow" >
+  <div class="folder-form" [formGroup]="folderForm" (keydown.enter)="createFolder()">
     <mat-form-field class="input-form" appearance="legacy" color="warn" floatLabel="never" hideRequiredMarker="true">
-      <input matInput placeholder="Enter a title"  formControlName="name">
+      <input matInput placeholder="Enter a folder title"  formControlName="name">
     </mat-form-field>
   </div>
 </mat-card>

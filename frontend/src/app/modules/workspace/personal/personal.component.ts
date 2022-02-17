@@ -17,9 +17,7 @@ export class PersonalComponent {
   //it's mock team and user id
   team : number = 1;
   user : number = 4;
-  constructor(private formBuilder: FormBuilder) {}
-
-  OnInit(): void {
+  constructor(private formBuilder: FormBuilder) {
     this.validateForm();
   }
 
@@ -39,6 +37,7 @@ export class PersonalComponent {
     this.folder.name = this.folderForm.value['name'];
     this.folder.authorId = this.user;
     this.folder.teamId = this.team;
+    this.folderForm.setValue({ 'name': ''});
   }
 
   showNewFolderForm() {
