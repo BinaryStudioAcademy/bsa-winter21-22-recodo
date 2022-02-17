@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { BaseRoutingModule } from './workspace-routing.module';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { BaseRoutingModule } from './workspace-routing.module';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatDividerModule,
   ]
 })
 export class WorkspaceModule { }

@@ -6,7 +6,16 @@ mat-toolbar{
     height: 115px;
     justify-content: center;
 }
-
+mat-sidenav {
+    height: 50vh;
+    width: 15vw;
+    border-right: none;
+    background: #B6445D;
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
 button{
     border: 0;
     outline: none;
@@ -27,4 +36,15 @@ button{
 .additional-icons{
     margin-left: auto;
     margin-right: 5px;
+}
+
+.workspace-button{
+    float: left;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background: #FB6D3A;
+    color: white;
+    height: 36px;
+    text-align: center;
 }

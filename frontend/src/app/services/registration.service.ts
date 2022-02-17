@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { TokenDto } from '../models/token/token-dto';
 import { AuthUserDto } from '../models/user/auth-user-dto';
 import { UserDto } from '../models/user/user-dto';
@@ -12,6 +12,8 @@ import { ResourceService } from './resource.service';
   })
 export class RegistrationService extends ResourceService<UserRegisterDto> {
 
+    private user: UserDto = {} as UserDto;
+    
     getResourceUrl(): string {
         return '/Register'
     };
@@ -38,5 +40,18 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
             localStorage.setItem('accessToken', JSON.stringify(tokens.accessToken));
             localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));
         }
+    }
+
+    public getUser() {
+        return this.getUserFromToken().pipe(
+                map((resp) => {
+                    this.user = resp.body as UserDto;
+                    return this.user;
+                })
+            );
+    }
+
+    private getUserFromToken() {
+        return this.getFullRequest<UserDto>(`users/fromToken`);
     }
 }

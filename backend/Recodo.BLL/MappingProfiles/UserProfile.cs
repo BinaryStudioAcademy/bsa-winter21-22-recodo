@@ -8,8 +8,8 @@ namespace Recodo.BLL.MappingProfiles
     {
         public UserProfile()
         {
-            CreateMap<NewUserDTO, User>();
-            CreateMap<User, UserDTO>();
+            CreateMap<NewUserDTO, User>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

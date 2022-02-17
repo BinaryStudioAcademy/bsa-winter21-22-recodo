@@ -7,9 +7,17 @@
             <button  mat-icon-button> 
                 <mat-icon svgIcon="bell"></mat-icon>
             </button>
-            <button mat-button class="user">
+            <button mat-button class="user" (click)="toggleUserPersonalPanel()">
                 <img src="../../assets/icons/test-user-logo.png" alt="UserAvatar" class="user-image">
             </button>
         </div>       
     </mat-toolbar-row>
+    <mat-sidenav *ngIf="isUserPanelOpen; else closed" mode="over" opened position="end">
+        <img src="../../assets/icons/test-user-logo.png" alt="UserAvatar" class="user-image">
+        <p>{{this.user.workspaceName}}</p>
+        <button mat-button class="workspace-button" (click)="toggleUserPersonalPanel()">Close</button>
+    </mat-sidenav>
+    <ng-template #closed>
+        <mat-sidenav mode="over" position="end"></mat-sidenav>
+    </ng-template>
 </mat-toolbar>
