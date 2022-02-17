@@ -33,27 +33,18 @@ namespace Recodo.Desktop.Main
         {
             InitializeComponent();
             this.deviceId = deviceId;
-
         }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
-            try
+            var v = _cameraService.QueryFrame();
+            if (v != null)
             {
-                this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
                 {
-                    Mat m = new Mat();  // обьект для хранения картинки
-                    _cameraService.Retrieve(m);
-                    if (_cameraService.Retrieve(m))
-                    {
-                        imageBox.Source = Convert(m.ToImage<Bgr, byte>().Flip(Emgu.CV.CvEnum.FlipType.Horizontal).ToBitmap());
-                    }
+                    imageBox.Source = Convert(v.ToBitmap());
                 });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error!");
-            }
+            }           
         }
 
         private BitmapImage Convert(Bitmap src)
@@ -72,7 +63,6 @@ namespace Recodo.Desktop.Main
         {
             try
             {
-                _cameraService.selectedCameraId = deviceId-1;
                 _cameraService.ImageGrabbed += Capture_ImageGrabbed;
                 _cameraService.Notify += Close;
                 _cameraService.StartCapture(deviceId - 1);

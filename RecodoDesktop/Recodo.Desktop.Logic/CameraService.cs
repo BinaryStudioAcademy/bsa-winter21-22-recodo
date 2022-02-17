@@ -11,13 +11,12 @@ namespace Recodo.Desktop.Logic
 {
     public class CameraService
     {
-        private static CameraService instance;
+        private static CameraService _instance;
 
-        private VideoCapture capture = null;    // храним захватываемые данные с видеокамеры
-        private DsDevice[] webCams = null;
-        public int selectedCameraId = -1;
+        private VideoCapture _capture;
+        private DsDevice[] _webCams;
 
-        public bool Capturing { get; private set; }
+        public bool isCapturing { get; private set; }
 
         public event EventHandler ImageGrabbed;
 
@@ -32,40 +31,41 @@ namespace Recodo.Desktop.Logic
 
         public static CameraService GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new CameraService();
-            }
-
-            return instance;
+            return _instance ??= new CameraService();
         }
 
         public void StartCapture(int selectedCameraId)
         {
-            Capturing = true;
-            capture = new VideoCapture(selectedCameraId);
-            capture.ImageGrabbed += ImageGrabbed;
-            capture.Start();
+            isCapturing = true;
+            _capture ??= new VideoCapture(selectedCameraId, VideoCapture.API.DShow);
+
+            if (_capture == null)
+            {
+                return;
+            }
+
+            _capture.ImageGrabbed += ImageGrabbed;
+            _capture.Start();
         }
 
         public void StopCapture()
         {
-            if (Capturing)
+            if (isCapturing)
             {
-                capture.ImageGrabbed -= ImageGrabbed;
+                _capture.ImageGrabbed -= ImageGrabbed;
                 Notify.Invoke();
-                capture.Pause();
-                capture.Stop();
-                capture.Dispose();
-                capture = null;
-                Capturing = false;
+                _capture.Pause();
+                _capture.Stop();
+                _capture.Dispose();
+                _capture = null;
+                isCapturing = false;
             }
         }
 
         public ICollection<string> GetCameras()
         {
-            webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice); 
-            List<string> webCamsNames = webCams.Select(el => el.Name).ToList();
+            _webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice); 
+            List<string> webCamsNames = _webCams.Select(el => el.Name).ToList();
             return webCamsNames;
         }
 
@@ -73,13 +73,21 @@ namespace Recodo.Desktop.Logic
         {
             lock (new object())
             {
-                if (capture != null)
+                if (_capture != null)
                 {
-                    return capture.Retrieve(m);
-                }
-                
+                    return _capture.Retrieve(m);
+                }         
                 return false;
             }
+        }
+
+        public Mat QueryFrame()
+        {
+            if (_capture != null)
+            {
+                return _capture.QueryFrame();
+            }
+            return null;
         }
     
     }
