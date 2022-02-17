@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -18,7 +19,7 @@ import { VideoPlayerComponent } from './video/video-player/video-player.componen
 import { VideoReactionsComponent } from './video/video-reactions/video-reactions.component';
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { VimeModule } from "@vime/angular";
+import { VimeModule } from '@vime/angular';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,8 @@ import { VimeModule } from "@vime/angular";
   imports: [
     CommonModule,
     BaseRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NewFolder } from 'src/app/models/folder/new-folder';
 
 @Component({
   selector: 'app-content',
@@ -7,5 +9,39 @@ import { Component } from '@angular/core';
 })
 export class PersonalComponent {
   public src = '../../assets/icons/test-user-logo.png';
-  constructor() {}
+  public isFolderFormShow = false;
+  folderForm : FormGroup = {} as FormGroup;
+  folder : NewFolder = {} as NewFolder;
+
+  //now i can`t get current user and his team cause not implementer this services
+  //it's mock team and user id
+  team : number = 1;
+  user : number = 4;
+  constructor(private formBuilder: FormBuilder) {}
+
+  OnInit(): void {
+    this.validateForm();
+  }
+
+  private validateForm() {
+    this.folderForm = this.formBuilder.group({
+      name: [, {
+        validators: [
+          Validators.required
+        ],
+        updateOn: 'change',
+      }],
+    });
+  }
+
+  createFolder() {
+    this.isFolderFormShow = false;
+    this.folder.name = this.folderForm.value['name'];
+    this.folder.authorId = this.user;
+    this.folder.teamId = this.team;
+  }
+
+  showNewFolderForm() {
+    this.isFolderFormShow = true;
+  }
 }
