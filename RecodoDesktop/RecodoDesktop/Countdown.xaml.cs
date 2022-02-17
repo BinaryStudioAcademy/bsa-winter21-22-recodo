@@ -1,3 +1,4 @@
+using Recodo.Desktop.Logic;
 using System;
 using System.Windows;
 using System.Windows.Threading;
@@ -6,32 +7,35 @@ namespace Recodo.Desktop.Main
 {
 	public partial class Countdown : Window
 	{
-        DispatcherTimer _timer;
-        TimeSpan _time;
-        public delegate void FinishTimerMethod();
-		public Countdown(FinishTimerMethod finishTimerMethod = null)
+        private RecorderService _recorderService;
+        DispatcherTimer Timer;
+        TimeSpan time = TimeSpan.FromSeconds(3);
+
+		public Countdown(RecorderService recorderService)
 		{
 			InitializeComponent();
-            TimerStart(finishTimerMethod);
+            _recorderService = recorderService;
+            Timer = new DispatcherTimer();
+            Timer.Interval = new System.TimeSpan(0, 0, 1);
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
+            countdown.Content = time.Seconds.ToString();
         }
-        public void TimerStart(FinishTimerMethod finishTimerMethod)
+
+        private void Timer_Tick(object sender, System.EventArgs e)
         {
-            _time = TimeSpan.FromSeconds(3);
-            _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
-                {
-                    countdown.Content = _time.Seconds.ToString();
-                    if (_time == TimeSpan.Zero) 
-                    {
-                        _timer.Stop();
-                        Hide();
-                        if (finishTimerMethod != null)
-                        {
-                           finishTimerMethod();
-                        }
-                    }
-                    _time = _time.Add(TimeSpan.FromSeconds(-1));                    
-                }, Application.Current.Dispatcher);
-			_timer.Start();
+            time = time.Add(TimeSpan.FromSeconds(-1));
+
+            if (time != TimeSpan.Zero)
+            {
+                countdown.Content = time.Seconds.ToString();
+            }
+            else
+            {
+                Timer.Stop();
+                this.Hide();
+                _recorderService.StartRecording();
+            }
         }
-	}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ScreenRecorderLib;
@@ -8,34 +9,68 @@ namespace Recodo.Desktop.Logic
 {
     public class RecorderService
     {
-        private Recorder _rec;
-        private RecorderConfiguration configuration = new RecorderConfiguration();
-
-        public void CreateRecording()
+        private RecorderConfiguration _options;
+        public void Configure(RecorderConfiguration options)
         {
-            string videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
-            _rec = Recorder.CreateRecorder(configuration.GetOptions());
-            _rec.OnRecordingComplete += Rec_OnRecordingComplete;
-            _rec.OnRecordingFailed += Rec_OnRecordingFailed;
-            _rec.OnStatusChanged += Rec_OnStatusChanged;
-            //Record to a file
-            videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
-            _rec.Record(videoPath);
+            _options = options;
         }
 
-        public void EndRecording()
+        private Recorder rec;
+        public event Action StartRec;
+
+        public void StartRecording()
         {
-            _rec.Stop();
+            List<RecordingSourceBase> source = new List<RecordingSourceBase>();
+            source.Add(Recorder.GetWindows().FirstOrDefault(w => w.Title == _options.RecorderWindowTitle));
+
+            var opts = new RecorderOptions
+            {
+                AudioOptions = new AudioOptions
+                {
+                    AudioInputDevice = Recorder.GetSystemAudioDevices(AudioDeviceSource.InputDevices)
+                    .FirstOrDefault(d=>d.FriendlyName == _options.SelectedAudioInputDevice)?
+                    .DeviceName,
+
+                    AudioOutputDevice = Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices)
+                    .FirstOrDefault(d => d.FriendlyName == _options.SelectedAudioOutputDevice)?
+                    .DeviceName,
+
+                    IsAudioEnabled = _options.IsAudioEnable,
+                    IsInputDeviceEnabled = true,
+                    IsOutputDeviceEnabled = true,
+                },
+                SourceOptions = new SourceOptions
+                {
+                    RecordingSources = source
+                }
+            };
+
+            rec = Recorder.CreateRecorder(opts);
+            rec.OnRecordingFailed += Rec_OnRecordingFailed;
+            rec.OnRecordingComplete += Rec_OnRecordingComplete;
+            rec.OnStatusChanged += Rec_OnStatusChanged;
+            rec.Record(Path.ChangeExtension(Path.GetTempFileName(), ".mp4"));
+
+            StartRec?.Invoke();
         }
 
-        public List<AudioDevice> GetInputAudioDevices()
+        public void StopRecording()
         {
-            return Recorder.GetSystemAudioDevices(AudioDeviceSource.InputDevices);
+            rec.Stop();
         }
 
-        public List<AudioDevice> GetOutputAudioDevices()
+        public List<string> GetInputAudioDevices()
         {
-            return Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices);
+            return Recorder.GetSystemAudioDevices(AudioDeviceSource.InputDevices)
+                ?.Select(d=>d.FriendlyName)
+                ?.ToList();
+        }
+
+        public List<string> GetOutputAudioDevices()
+        {
+            return Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices)
+                ?.Select(d => d.FriendlyName)
+                ?.ToList();
         }
 
         public List<RecordingSourceBase> GetDisplays()
@@ -46,12 +81,9 @@ namespace Recodo.Desktop.Logic
             return sources;
         }
 
-        public List<RecordingSourceBase> GetWindows()
-        {
-            var sources = new List<RecordingSourceBase>();
-            sources.AddRange(Recorder.GetWindows());
-
-            return sources;
+        public List<string> GetWindows()
+        { 
+            return Recorder.GetWindows().Select(w => w.Title).ToList();
         }
 
         public List<RecordingSourceBase> GetCameras()
@@ -62,20 +94,29 @@ namespace Recodo.Desktop.Logic
             return sources;
         }
 
-        private void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
+        private static void Rec_OnStatusChanged(object sender, RecordingStatusEventArgs e)
         {
-            //Get the file path if recorded to a file
-            string path = e.FilePath;
+            switch (e.Status)
+            {
+                case RecorderStatus.Recording:
+                    break;
+                case RecorderStatus.Paused:
+                    break;
+                case RecorderStatus.Finishing:
+                    break;
+                default:
+                    break;
+            }
         }
-        private void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
+
+        private static void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
+        {
+            string filePath = e.FilePath;
+        }
+
+        private static void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
         {
             string error = e.Error;
         }
-        private void Rec_OnStatusChanged(object sender, RecordingStatusEventArgs e)
-        {
-            RecorderStatus status = e.Status;
-        }
-
-
     }
 }

@@ -22,7 +22,7 @@ namespace RecodoDesktop
             services.AddSingleton<RecorderService>();
             services.AddSingleton<VideoRecordingForm>();
             services.AddSingleton<StickPanel>();
-            services.AddSingleton<MainWindow>();
+            //services.AddSingleton<Countdown>();
         }
 
         void App_Startup(object sender, StartupEventArgs e)
