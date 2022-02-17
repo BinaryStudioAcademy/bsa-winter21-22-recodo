@@ -10,7 +10,7 @@ import { AuthUserDto } from '../models/auth/auth-user-dto';
 @Injectable({
   providedIn: 'root',
 })
-export class ExternalAuthService  {
+export class ExternalAuthService {
   private readonly APIUrl = environment.apiUrl;
 
   constructor(
@@ -25,8 +25,7 @@ export class ExternalAuthService  {
         const user: SocialUser = { ...res };
         this.validateExternalAuth(user);
       },
-      (error) => {
-        console.log(error);
+      () => {
       }
     );
   };
@@ -44,9 +43,8 @@ export class ExternalAuthService  {
         localStorage.setItem('refreshToken', JSON.stringify(data.token.refreshToken));
         this.router.navigate(['/personal']);
       },
-      error: (e) => {
+      error: () => {
         this.signOutExternal();
-        console.log(e);
       },
     });
   }
