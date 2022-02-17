@@ -7,10 +7,10 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-content',
   templateUrl: './personal.component.html',
-  styleUrls: ['./personal.component.scss']
+  styleUrls: ['./personal.component.scss'],
 })
 export class PersonalComponent {
-
+  public src = '../../assets/icons/test-user-logo.png';
   public currentUser: UserDto = {} as UserDto;
   private unsubscribe$ = new Subject<void>();
   constructor(private registrationService: RegistrationService) { 
@@ -23,5 +23,4 @@ export class PersonalComponent {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((user) => (this.currentUser = user));;
 }
-
 }
