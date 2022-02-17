@@ -107,7 +107,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonPause" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonPause" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="ButtonPause_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -141,7 +141,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonDelete" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonDelete" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>

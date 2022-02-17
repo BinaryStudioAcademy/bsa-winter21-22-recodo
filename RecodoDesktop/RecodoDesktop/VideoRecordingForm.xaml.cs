@@ -73,8 +73,9 @@ namespace Recodo.Desktop.Main
         private void RecordableWindows_Initialized(object sender, EventArgs e)
         {
             recordableWindows = _recorderService.GetWindows();
+            recordableWindows.Add("Full screen");
             this.RecordableWindows.ItemsSource = recordableWindows;
-            this.RecordableWindows.SelectedIndex = 0;
+            this.RecordableWindows.SelectedIndex = recordableWindows.Count-1;
         }
 
         private void RecordableWindows_SelectionChanged(object sender, SelectionChangedEventArgs e)

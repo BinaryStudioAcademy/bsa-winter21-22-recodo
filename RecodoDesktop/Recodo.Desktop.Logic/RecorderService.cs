@@ -15,7 +15,7 @@ namespace Recodo.Desktop.Logic
             _options = options;
         }
 
-        private Recorder rec;
+        private Recorder recorder;
         public event Action StartRec;
 
         public void StartRecording()
@@ -28,7 +28,7 @@ namespace Recodo.Desktop.Logic
                 AudioOptions = new AudioOptions
                 {
                     AudioInputDevice = Recorder.GetSystemAudioDevices(AudioDeviceSource.InputDevices)
-                    .FirstOrDefault(d=>d.FriendlyName == _options.SelectedAudioInputDevice)?
+                    .FirstOrDefault(d => d.FriendlyName == _options.SelectedAudioInputDevice)?
                     .DeviceName,
 
                     AudioOutputDevice = Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices)
@@ -39,24 +39,34 @@ namespace Recodo.Desktop.Logic
                     IsInputDeviceEnabled = true,
                     IsOutputDeviceEnabled = true,
                 },
-                SourceOptions = new SourceOptions
-                {
-                    RecordingSources = source
-                }
+                SourceOptions = new SourceOptions { RecordingSources = source }.RecordingSources.FirstOrDefault() == null ? SourceOptions.MainMonitor : new SourceOptions { RecordingSources = source }
             };
 
-            rec = Recorder.CreateRecorder(opts);
-            rec.OnRecordingFailed += Rec_OnRecordingFailed;
-            rec.OnRecordingComplete += Rec_OnRecordingComplete;
-            rec.OnStatusChanged += Rec_OnStatusChanged;
-            rec.Record(Path.ChangeExtension(Path.GetTempFileName(), ".mp4"));
+            recorder = Recorder.CreateRecorder(opts);
+            recorder.OnRecordingFailed += Rec_OnRecordingFailed;
+            recorder.OnRecordingComplete += Rec_OnRecordingComplete;
+            recorder.OnStatusChanged += Rec_OnStatusChanged;
+            recorder.Record(Path.ChangeExtension(Path.GetTempFileName(), ".mp4"));
 
             StartRec?.Invoke();
         }
 
+        public void PauseRecording()
+        {
+            if(recorder?.Status == RecorderStatus.Paused)
+            {
+                recorder?.Resume();
+            }
+            else
+            {
+                recorder?.Pause();
+            }
+            
+        }
+
         public void StopRecording()
         {
-            rec.Stop();
+            recorder?.Stop();
         }
 
         public List<string> GetInputAudioDevices()

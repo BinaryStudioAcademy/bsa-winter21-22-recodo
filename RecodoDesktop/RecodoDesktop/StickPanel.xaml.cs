@@ -68,9 +68,16 @@ namespace Recodo.Desktop.Main
             _recorderService.StopRecording();
             Timer.Stop();
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ButtonPause_Click(object sender, RoutedEventArgs e)
+        {
+            _recorderService.PauseRecording();
+            //Timer.Stop();
         }
     }
 }
