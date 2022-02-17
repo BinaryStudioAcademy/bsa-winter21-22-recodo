@@ -8,16 +8,18 @@ namespace Recodo.Desktop.Logic
 {
     public class DefaultBrowser
     {
-        private readonly AuthorizationOptions _options;
-        public DefaultBrowser(AuthorizationOptions options)
+        private readonly string _url;
+        private readonly string _redirectUrl;
+        public DefaultBrowser(string url, string redirectUrl)
         {
-            _options = options;
+            _url = url;
+            _redirectUrl = redirectUrl;
         }
 
         public async Task<string> InvokeAsync(CancellationToken cancellationToken = default)
         {
-            using var listener = new LoopbackHttpListener(_options.RedirectUrl);
-            Open(_options.GetAuthRequestUrl());
+            using var listener = new LoopbackHttpListener(_redirectUrl);
+            Open(_url);
 
             try
             {

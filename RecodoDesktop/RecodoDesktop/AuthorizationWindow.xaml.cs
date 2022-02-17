@@ -30,18 +30,25 @@ namespace Recodo.Desktop.Main
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
+            await GetToken("http://127.0.0.1:4200/login");
+        }
+
+        private async void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            await GetToken("http://127.0.0.1:4200/register");
+        }
+
+        private async Task GetToken(string endpoint)
+        {
             this.ProgressPanel.Visibility = Visibility.Visible;
-            var auth = new AuthorizationService(new AuthorizationOptions());
+            var auth = new AuthorizationService
+            {
+                Endpoint = endpoint
+            };
             var authResult = await auth.Authorize();
             this.ProgressPanel.Visibility = Visibility.Hidden;
             this.Activate();
-            MessageBox.Show($"Code: {authResult}\n");
-        }
-
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.ProgressPanel.Visibility = Visibility.Visible;
-            DefaultBrowser.Open("https://recodo.westeurope.cloudapp.azure.com/");
+            MessageBox.Show($"Code: {authResult.AccessToken}\n");
         }
     }
 }
