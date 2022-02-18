@@ -16,8 +16,9 @@ body {
   box-sizing: border-box;
 }
 
-.input-form .mat-form-field-flex {
-  background-color: white;
+.input-form .mat-form-field-wrapper .mat-form-field-flex {
+    background-color: white;
+    padding: 0 .75em 0 .75em;
 }
 
 .button-accent {

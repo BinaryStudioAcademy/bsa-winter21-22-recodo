@@ -1,5 +1,5 @@
 .to-login-container {
-    margin-top: 15%;
+    margin-top: 10%;
     h2 {
         color: #732939;
         font-size: 26px;
@@ -9,7 +9,7 @@
     }
     .already-registered {
         margin: 0;
-        margin-top: 3%;
+        margin-top: 2%;
         color: #777;
         font-size: 13px;
         font-weight: 500;
@@ -21,12 +21,11 @@
 }
 
 .registration-form {
-    margin-top: 40px;
+    margin-top: 5%;
     width: 360px;
 
     .input-label {
         margin: 0;
-        margin-bottom: 2%;
         font-size: 13px;
         font-weight: 600;
         color: #2c2c2c;
@@ -34,7 +33,6 @@
 
     .input-form {
         width: 100%;
-
         .password-icon {
             color: grey;
         }
@@ -43,7 +41,7 @@
     .registation-buttons {
         display: flex;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 5%;
         width: 100%;
         justify-content: space-between;
 
