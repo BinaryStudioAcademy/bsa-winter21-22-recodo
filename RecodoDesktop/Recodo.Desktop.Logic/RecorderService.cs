@@ -53,15 +53,15 @@ namespace Recodo.Desktop.Logic
 
         public void PauseRecording()
         {
-            if(recorder?.Status == RecorderStatus.Paused)
+            recorder?.Pause();
+        }
+
+        public void ResumeRecording()
+        {
+            if (recorder?.Status == RecorderStatus.Paused)
             {
                 recorder?.Resume();
             }
-            else
-            {
-                recorder?.Pause();
-            }
-            
         }
 
         public void StopRecording()
