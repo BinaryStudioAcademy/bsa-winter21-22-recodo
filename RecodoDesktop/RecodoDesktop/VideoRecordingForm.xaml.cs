@@ -82,5 +82,17 @@ namespace Recodo.Desktop.Main
         {
             _options.RecorderWindowTitle = this.RecordableWindows.SelectedItem.ToString(); 
         }
+
+        private void RecordingQuality_Initialized(object sender, EventArgs e)
+        {
+            List<string> quality = new List<string>();
+            quality.Add("4к HD");
+            quality.Add("1440p HD");
+            quality.Add("1080p HD");
+            quality.Add("Auto (720p)");
+             
+            this.RecordingQuality.ItemsSource = quality;
+            this.RecordingQuality.SelectedIndex = quality.Count - 1;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Recodo.Desktop.Logic
                     IsInputDeviceEnabled = true,
                     IsOutputDeviceEnabled = true,
                 },
-                SourceOptions = new SourceOptions { RecordingSources = source }.RecordingSources.FirstOrDefault() == null ? SourceOptions.MainMonitor : new SourceOptions { RecordingSources = source }
+                SourceOptions = source.FirstOrDefault() == null ? SourceOptions.MainMonitor : new SourceOptions { RecordingSources = source }
             };
 
             recorder = Recorder.CreateRecorder(opts);

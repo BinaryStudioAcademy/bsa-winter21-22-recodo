@@ -107,7 +107,7 @@
             </Button>
 
             <Border  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Margin="34.62,0,27.32,0" Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                <ComboBox SelectedIndex="0" Width="400" Height="37.89"  materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left">Screen and camera</ComboBox>
+                <ComboBox SelectedIndex="0" Width="400" Height="37.89"  materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left">Screen only</ComboBox>
             </Border>
 
             <Border  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="34.62,6.58,27.32,10" Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
@@ -141,7 +141,7 @@
                 <Image  Height="8.32" Width="8.32" Source="Icons/online.png"/>
                 <TextBlock  FontSize="13" FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="13.32,0,0,0">Internet speed is good</TextBlock>
             </StackPanel>
-            <ComboBox Grid.Row="8" Grid.Column="1" Width="110.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,14,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light">Auto (720p)</ComboBox>
+            <ComboBox Name="RecordingQuality" Grid.Row="8" Grid.Column="1" Width="110.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,14,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light" Initialized="RecordingQuality_Initialized"></ComboBox>
 
             <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37" Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
