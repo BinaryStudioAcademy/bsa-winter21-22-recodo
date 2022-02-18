@@ -27,7 +27,7 @@ namespace Recodo.API.Controllers
         {
             var createdUser = await _userService.CreateUser(userDTO);
 
-            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.UserName, createdUser.Email);
+            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.WorkspaceName, createdUser.Email);
 
             var result = new AuthUserDTO 
             { 

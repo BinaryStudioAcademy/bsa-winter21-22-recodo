@@ -1,6 +1,6 @@
-export interface User{
-    id:number;
-    email:string;
-    userName:string;
-    avatarLink:string;
+export interface User {
+    id : number;
+    email : string;
+    workspaceName : string;
+    avatarLink : string;
 }

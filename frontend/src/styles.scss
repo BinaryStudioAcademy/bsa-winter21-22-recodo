@@ -1,13 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0;}
-*{
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+@import '~@vime/core/themes/default.css';
+
+@import '~@vime/core/themes/light.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 .input-form .mat-form-field-wrapper .mat-form-field-flex {
     background-color: white;
     padding: 0 .75em 0 .75em;
 }
+
+.button-accent {
+  color: white;
+  background: #fb6d3a;
+  border: 1px solid #fb6d3a !important;
+}
+
+.button-outlined {
+  color: black;
+  background: #f4e9e9;
+  border: 1px solid #fb6d3a !important;
+}
+
+.button-disabled {
+  background: #e0d8d7;
+  color: #989898;
+  border: 1px solid #e0d8d7 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+

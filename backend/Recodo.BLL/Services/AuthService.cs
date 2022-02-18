@@ -37,7 +37,7 @@ namespace Recodo.BLL.Services
                 throw new InvalidUserNameOrPasswordException();
             }
 
-            var token = await GenerateAccessToken(userEntity.Id, userEntity.UserName, userEntity.Email);
+            var token = await GenerateAccessToken(userEntity.Id, userEntity.WorkspaceName, userEntity.Email);
             var user = _mapper.Map<UserDTO>(userEntity);
 
             return new AuthUserDTO

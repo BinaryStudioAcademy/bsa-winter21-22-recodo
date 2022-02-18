@@ -28,7 +28,7 @@ export class RegisterFormComponent {
 
   private validateForm() {
     this.registerForm = this.formBuilder.group({
-      fullName: [, {
+      workspaceName: [, {
         validators: [
           Validators.required,
           Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$')
@@ -64,7 +64,7 @@ export class RegisterFormComponent {
   public registerUser() {
     let userRegisterDto : UserRegisterDto = {
       email: this.registerForm.controls['email'].value,
-      userName: this.registerForm.controls['fullName'].value,
+      workspaceName: this.registerForm.controls['workspaceName'].value,
       password: this.registerForm.controls['password'].value
     }
     this.registrationService.register(userRegisterDto).subscribe((responce) => {
