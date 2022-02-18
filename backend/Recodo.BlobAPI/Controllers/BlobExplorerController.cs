@@ -54,12 +54,13 @@ namespace Recodo.BlobAPI.Controllers
 
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(id.ToString());
 
-            using (var fileStream )
-            {
+            
 
-            }
+            MemoryStream stream = new MemoryStream();
 
-            await blockBlob.DownloadToStreamAsync();
+            await blockBlob.DownloadToStreamAsync(stream);
+
+
         }
 
         [HttpPost]
