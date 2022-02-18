@@ -13,7 +13,7 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
         FontFamily="{DynamicResource MaterialDesignFont}"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -120,7 +120,7 @@
                     <Image Height="15" Width="20" Source="Icons/camera.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
                 <Border Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                    <ComboBox SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left">Screen and camera</ComboBox>
+                    <ComboBox x:Name="cameraComboBox" SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left" SelectionChanged="cameraComboBox_SelectionChanged">Screen and camera</ComboBox>
                 </Border>
             </StackPanel>
 

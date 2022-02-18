@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recodo.Desktop.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,9 @@ namespace Recodo.Desktop.Main
     /// </summary>
     public partial class VideoRecordingForm : Window
     {
+        private bool videoFormOpened = false;
+
+        CameraService _cameraService = CameraService.GetInstance();
         public VideoRecordingForm()
         {
             InitializeComponent();
@@ -27,6 +31,38 @@ namespace Recodo.Desktop.Main
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> devices = _cameraService.GetCameras().ToList();
+            for (int i = 0; i < devices.Count; i++)
+            {
+                cameraComboBox.Items.Add(devices[i]);
+            }
+        }
+
+        private void cameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+                {
+                VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
+            
+                if (!videoFormOpened)
+                {
+                        videoFormOpened = true;
+                        return;
+                }
+                if (cameraComboBox.SelectedIndex != 0)
+                {
+                        _cameraService.StopCapture();
+                        videoForm.Show();
+                }
+                else
+                {
+                        _cameraService.StopCapture();               
+                }
+            });
         }
     }
 }
