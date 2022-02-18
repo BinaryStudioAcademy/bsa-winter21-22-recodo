@@ -28,6 +28,11 @@
 	  <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
 	</ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<Resource Include="Icons\bell.png" />
 		<Resource Include="Icons\camera.png" />
@@ -52,5 +57,6 @@
 		<Resource Include="Icons\Panel\refresh_focus.png" />
 		<Resource Include="Icons\Panel\stop_focus.png" />
 	</ItemGroup>
+
 
 </Project>
