@@ -14,5 +14,6 @@ namespace Recodo.Desktop.Logic
         public string SelectedAudioInputDevice { get; set; }
         public string SelectedAudioOutputDevice { get; set; }
         public string RecorderWindowTitle { get; set; }
+        public Tuple<int, int> Resolution { get; set; }
     }
 }

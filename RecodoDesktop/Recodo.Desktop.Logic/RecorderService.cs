@@ -23,7 +23,7 @@ namespace Recodo.Desktop.Logic
             List<RecordingSourceBase> source = new List<RecordingSourceBase>();
             source.Add(Recorder.GetWindows().FirstOrDefault(w => w.Title == _options.RecorderWindowTitle));
 
-            var opts = new RecorderOptions
+            var options = new RecorderOptions
             {
                 AudioOptions = new AudioOptions
                 {
@@ -39,10 +39,18 @@ namespace Recodo.Desktop.Logic
                     IsInputDeviceEnabled = true,
                     IsOutputDeviceEnabled = true,
                 },
-                SourceOptions = source.FirstOrDefault() == null ? SourceOptions.MainMonitor : new SourceOptions { RecordingSources = source }
+                SourceOptions = source.FirstOrDefault() == null 
+                ? SourceOptions.MainMonitor 
+                : new SourceOptions { RecordingSources = source },
+                OutputOptions = new OutputOptions
+                {
+                    RecorderMode = RecorderMode.Video,
+                    OutputFrameSize = new ScreenSize(_options.Resolution.Item1, _options.Resolution.Item2),
+                    Stretch = StretchMode.Uniform,
+                }
             };
 
-            recorder = Recorder.CreateRecorder(opts);
+            recorder = Recorder.CreateRecorder(options);
             recorder.OnRecordingFailed += Rec_OnRecordingFailed;
             recorder.OnRecordingComplete += Rec_OnRecordingComplete;
             recorder.OnStatusChanged += Rec_OnStatusChanged;

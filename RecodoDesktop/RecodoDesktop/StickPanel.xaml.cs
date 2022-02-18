@@ -24,7 +24,7 @@ namespace Recodo.Desktop.Main
 
             TimeLabel.Content = TimeSpan.FromSeconds(0).ToString(@"m\:ss");
 
-            this.Top = 70;
+            this.Top = (SystemParameters.PrimaryScreenHeight - this.Height)/ 2;
             this.Left = 0;
             this.Topmost = true;
             this.ShowInTaskbar = true;
@@ -60,19 +60,18 @@ namespace Recodo.Desktop.Main
             {
                 this.DragMove();
             }
-            catch (System.Exception)
+            catch (Exception)
             { }
         }
 
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
             _recorderService.StopRecording();
-            Timer?.Stop();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            if (Timer is not null)
+            {
+                Timer.Stop();
+                this.Close();
+            }
         }
 
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
