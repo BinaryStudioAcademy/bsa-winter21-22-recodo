@@ -15,7 +15,7 @@ namespace Recodo.BlobAPI.Controllers
     {
         private readonly string connectionString = "UseDevelopmentStorage=true";
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<IActionResult> GetBlobs()
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -43,8 +43,8 @@ namespace Recodo.BlobAPI.Controllers
             return Ok(allBlobs);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetFile(int id)
+        [HttpGet]
+        public async Task<FileResult> GetFile(int id)
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
 
@@ -60,7 +60,7 @@ namespace Recodo.BlobAPI.Controllers
 
             await blockBlob.DownloadToStreamAsync(stream);
 
-
+            return File(stream, "application/jpg", id.ToString());
         }
 
         [HttpPost]
