@@ -13,11 +13,10 @@ namespace Recodo.BlobAPI.Controllers
     [ApiController]
     public class BlobExplorerController : ControllerBase
     {
-        private readonly string connectionString = "";
+        private readonly string connectionString = "UseDevelopmentStorage=true";
 
-
-       [HttpGet]
-       public async Task<IActionResult> GetBlobs()
+        [HttpGet]
+        public async Task<IActionResult> GetBlobs()
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
 
@@ -39,9 +38,28 @@ namespace Recodo.BlobAPI.Controllers
                     }
                 }
                 blobContinuationToken = response.ContinuationToken;
-            } while (blobContinuationToken != null);     
+            } while (blobContinuationToken != null);
 
-            return Ok();
+            return Ok(allBlobs);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetFile(int id)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(id.ToString());
+
+            using (var fileStream )
+            {
+
+            }
+
+            await blockBlob.DownloadToStreamAsync();
         }
 
         [HttpPost]
@@ -71,11 +89,6 @@ namespace Recodo.BlobAPI.Controllers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
-
-            
-
-            Uri uri = new Uri(id.ToString());
-            string filename = Path.GetFileName(uri.LocalPath);
 
             var blob = container.GetBlockBlobReference(id.ToString());
 
