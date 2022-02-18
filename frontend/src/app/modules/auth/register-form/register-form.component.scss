@@ -33,9 +33,6 @@
 
     .input-form {
         width: 100%;
-        ::ng-deep .mat-form-field-flex {
-            padding: 0 .75em 0 .75em;
-        }
         .password-icon {
             color: grey;
         }
