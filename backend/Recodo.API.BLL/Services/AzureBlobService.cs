@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Recodo.API.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,5 +56,14 @@ namespace Recodo.API.BLL.Services
 
 			await blob.DeleteIfExistsAsync();
 		}
-	}
+
+        public async Task<Stream> DownloadAsync(int id)
+        {
+			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+
+			var blob = blobContainer.GetBlockBlobReference(id.ToString());
+
+			return await blob.OpenReadAsync();
+		}
+    }
 }

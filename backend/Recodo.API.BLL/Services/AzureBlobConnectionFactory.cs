@@ -28,8 +28,7 @@ namespace Recodo.API.BLL.Services
                 return _blobContainer;
             }
 
-            //TODO: move it to asppsettings file
-            var containerName = "recodo-container";
+            var containerName = _configuration.GetSection("ContainerName").Value;
 
             if (string.IsNullOrWhiteSpace(containerName))
             {
@@ -68,7 +67,6 @@ namespace Recodo.API.BLL.Services
             _blobClient = storageAccount.CreateCloudBlobClient();
 
             return _blobClient;
-
         }
     }
 }

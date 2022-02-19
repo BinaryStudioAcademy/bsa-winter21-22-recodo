@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Recodo.API.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,75 +8,34 @@ using System.Threading.Tasks;
 
 namespace Recodo.BlobAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Blob")]
     [ApiController]
     public class BlobExplorerController : ControllerBase
     {
-        private readonly string connectionString = "UseDevelopmentStorage=true";
+        private readonly IAzureBlobService _blobService;
+
+        public BlobExplorerController(IAzureBlobService blobService)
+        {
+            _blobService = blobService;
+        }
 
         [HttpGet("list")]
         public async Task<IActionResult> GetBlobs()
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
-
-            List<Uri> allBlobs = new List<Uri>();
-            BlobContinuationToken blobContinuationToken = null;
-            do
-            {
-                var response = await container.ListBlobsSegmentedAsync(blobContinuationToken);
-
-                foreach (IListBlobItem blob in response.Results)
-                {
-                    if (blob.GetType() == typeof(CloudBlockBlob))
-                    {
-                        allBlobs.Add(blob.Uri);
-                    }
-                }
-                blobContinuationToken = response.ContinuationToken;
-            } while (blobContinuationToken != null);
-
-            return Ok(allBlobs);
+            return Ok(await _blobService.ListAsync());
         }
 
         [HttpGet]
-        public async Task<FileResult> GetFile(int id)
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(id.ToString());
-
-            
-
-            MemoryStream stream = new MemoryStream();
-
-            await blockBlob.DownloadToStreamAsync(stream);
-
-            return File(stream, "application/jpg", id.ToString());
+        public async Task<FileStreamResult> GetFile(int id)
+        {      
+            return File(await _blobService.DownloadAsync(id), "application/mp4", id.ToString()+".mp4");
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(int id, IFormFile files)
+        [RequestFormLimits(MultipartBodyLengthLimit = 157286400)]
+        public async Task<IActionResult> UploadFile(int id, IFormFile file)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(id.ToString());
-
-            using (var fileStream = files.OpenReadStream())
-            {
-                await blockBlob.UploadFromStreamAsync(fileStream);
-            }
+            await _blobService.UploadAsync(id, file);
 
             return Ok();
         }
@@ -85,18 +43,9 @@ namespace Recodo.BlobAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFile(int id)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("recodo-test");
-
-            var blob = container.GetBlockBlobReference(id.ToString());
-
-            await blob.DeleteIfExistsAsync();
+            await _blobService.DeleteAsync(id);
 
             return NoContent();
-
         }
     }
 }
