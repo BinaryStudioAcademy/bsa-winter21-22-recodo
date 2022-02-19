@@ -18,7 +18,7 @@ export class LoginPageComponent implements OnInit {
   public hidePass = true;
   public hideConfirmPass = true;
   public currentUser:UserDto = {} as UserDto;
-  redirectUrl : string |undefined;
+  redirectUrl : string | undefined;
 
   constructor(
     private router : Router,
