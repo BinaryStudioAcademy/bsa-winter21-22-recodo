@@ -28,12 +28,19 @@
         height="30"
       />
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button click="addReaction(ReactionType.Like)">
       <img
         src="../../../../../assets/img/ThumbsUp.png"
         width="30"
         height="30"
       />
+      <mat-icon
+        matBadge="{{ Likes.length }}"
+        matBadgeColor="accent"
+        matBadgeSize="medium"
+        [matBadgeHidden]="Likes.length === 0"
+        aria-label="Like"
+      ></mat-icon>
     </button>
     <button mat-icon-button>
       <img
