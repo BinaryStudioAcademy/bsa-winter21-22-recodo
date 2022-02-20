@@ -9,6 +9,12 @@
             <img src="../../../../assets/icons/logo.svg" alt="logo" />
             <div class="to-login-container">
                 <h2>Sign in to Recodo</h2>
+                <p class="dont-have-account">
+                    Don't have an account?
+                    <button routerLink="/register">
+                        <span> Register</span>
+                    </button>
+                </p>
             </div>
             <form class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)">
                 <p class="input-label">Email</p>

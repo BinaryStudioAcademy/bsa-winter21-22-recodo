@@ -2,7 +2,12 @@
     <img src="../../../../assets/icons/logo.svg" alt="logo" />
     <div class="to-login-container">
         <h2>Create an account</h2>
-        <p class="already-registered">Already registered? <span>Log in</span></p>
+        <p class="already-registered">
+            Already registered? 
+            <button routerLink="/login">
+                <span> Log in</span>
+            </button>
+        </p>
     </div>
     <form class="registration-form" [formGroup]="registerForm" action="" (submit)="registerUser()">
         <p class="input-label">Workspace name</p>
