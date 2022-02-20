@@ -11,12 +11,12 @@ const routes: Routes = [
     component: BaseComponent,
     children: [
       {
-        path: 'personal',
+        path: '',
         component: PersonalComponent,
       },
       {
         path: '',
-        redirectTo: 'personal',
+        redirectTo: '',
         pathMatch: 'full',
       },
       {
