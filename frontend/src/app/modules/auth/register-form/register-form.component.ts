@@ -28,36 +28,26 @@ export class RegisterFormComponent {
 
   private validateForm() {
     this.registerForm = this.formBuilder.group({
-      workspaceName: [, {
-        validators: [
-          Validators.required,
+      workspaceName: [, 
+          [Validators.required,
           Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
-          Validators.maxLength(30)
-        ],
-        updateOn: 'change'
-      }],
-      email: [, {
-        validators: [
-          Validators.required,
-          Validators.email
-        ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
-          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30)]
+      ],
+      email: [, 
+          [Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]
+      ],
+      confirmPassword: [, 
+        [Validators.required],
+      ],
+      password: [,
+          [Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\‘:;<>,.?/~_+-=|]+)$'),
-        ],
-        updateOn: 'change'  
-      }],
-      confirmPassword: [, {
-        validators: [
-          Validators.required
-        ],
-        updateOn: 'change'
-      }],
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$')],//‘
+      ],
     }, {
       validator: passwordMatchValidator
     });
