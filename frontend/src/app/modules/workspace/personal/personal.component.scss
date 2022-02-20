@@ -245,7 +245,8 @@ button{
 }
     
 .folder-form-container{
-  width: 25%;
+  max-width: 340px;
+  margin-bottom: 10%;
   .input-form{
     width: 95%;
   }
