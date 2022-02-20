@@ -96,18 +96,12 @@
     padding: 0;
   
     .left-part {
-      background: #b6445d;
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .center-part{
       background: #f4e9e9;      
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 40px;
     }
   
     .right-part {
@@ -116,6 +110,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 40px;
     }
   }
   
