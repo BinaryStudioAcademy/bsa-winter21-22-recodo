@@ -25,6 +25,13 @@ body {
     padding: 0 .75em 0 .75em;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px white inset !important;
+}
+
 .button-accent {
   color: white;
   background: #fb6d3a;
