@@ -31,7 +31,8 @@ export class RegisterFormComponent {
       workspaceName: [, {
         validators: [
           Validators.required,
-          Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$')
+          Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
+          Validators.maxLength(30)
         ],
         updateOn: 'change'
       }],
