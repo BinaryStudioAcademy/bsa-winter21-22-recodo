@@ -17,7 +17,7 @@ export class FolderService extends ResourceService<NewFolderDto> {
   }
 
   getResourceUrl(): string {
-    return '/folder'
+    return '/folders'
   };
 
   public create(folder : NewFolderDto) {
