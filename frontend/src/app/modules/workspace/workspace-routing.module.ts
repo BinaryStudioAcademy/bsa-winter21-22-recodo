@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { PersonalComponent } from './personal/personal.component';
+import { SettingsComponent } from './settings/settings.component';
 import { VideoPageComponent } from './video/video-page/video-page.component';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: 'personal',
         component: PersonalComponent,
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
       },
       {
         path: '',

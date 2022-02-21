@@ -18,7 +18,9 @@ import { VideoPlayerComponent } from './video/video-player/video-player.componen
 import { VideoReactionsComponent } from './video/video-reactions/video-reactions.component';
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { VimeModule } from "@vime/angular";
+import { VimeModule } from '@vime/angular';
+import { SettingsComponent } from './settings/settings.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { VimeModule } from "@vime/angular";
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,8 @@ import { VimeModule } from "@vime/angular";
     MatListModule,
     SharedModule,
     VimeModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class WorkspaceModule {}

@@ -8,22 +8,21 @@ import { UserDto } from 'src/app/models/user/user-dto';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
-
-  @Input() userLoginDto : UserLoginDto = {} as UserLoginDto;
-  public loginForm : FormGroup = {} as FormGroup;
+  @Input() userLoginDto: UserLoginDto = {} as UserLoginDto;
+  public loginForm: FormGroup = {} as FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
-  public currentUser:UserDto = {} as UserDto;
+  public currentUser: UserDto = {} as UserDto;
 
   constructor(
-    private router : Router,
-    private formBuilder : FormBuilder,
-    private loginService : LoginService
-  ) { }
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit() {
     this.validateForm();
@@ -31,28 +30,32 @@ export class LoginPageComponent implements OnInit {
 
   private validateForm() {
     this.loginForm = this.formBuilder.group({
-      email: [, {
-        validators: [
-          Validators.required,
-          Validators.email
-        ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-        ],
-        updateOn: 'change'
-      }],
+      email: [
+        ,
+        {
+          validators: [Validators.required, Validators.email],
+          updateOn: 'change',
+        },
+      ],
+      password: [
+        ,
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(8),
+            // Disabled for debug
+            //Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+          ],
+          updateOn: 'change',
+        },
+      ],
     });
   }
 
-  public signIn(_user : UserLoginDto) {
+  public signIn(_user: UserLoginDto) {
     this.loginService.login(_user).subscribe((responce) => {
       this.currentUser = responce;
-      if(this.loginService.areTokensExist()) {
+      if (this.loginService.areTokensExist()) {
         this.router.navigate(['/personal']);
       }
     });
