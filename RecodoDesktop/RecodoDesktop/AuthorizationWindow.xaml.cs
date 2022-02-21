@@ -1,6 +1,7 @@
 ﻿using Recodo.Desktop.Logic;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -29,13 +30,13 @@ namespace Recodo.Desktop.Main
         }
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
-        {
-            await GetToken("http://127.0.0.1:4200/login");
+        {       
+            await GetToken(ConfigurationManager.AppSettings["loginUrl"]);
         }
 
         private async void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            await GetToken("http://127.0.0.1:4200/register");
+            await GetToken(ConfigurationManager.AppSettings["registerUrl"]);
         }
 
         private async Task GetToken(string endpoint)
