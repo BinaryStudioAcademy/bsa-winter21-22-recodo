@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 })
 export class PersonalComponent {
   public src = '../../assets/icons/test-user-logo.png';
+  isGrid = true;
   constructor() {}
 }

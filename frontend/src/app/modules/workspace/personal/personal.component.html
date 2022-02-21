@@ -11,13 +11,20 @@
     <button mat-button>Screenshots</button>
   </div>
   <div class="header-links-right">
+    <mat-button-toggle-group class="view-toggle-group" #group = "matButtonToggleGroup" value="grid">
+      <mat-button-toggle value ="grid" class="grid-toggle-button">
+        <mat-icon svgIcon="grid"></mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value ="list" class="list-toggle-button">
+        <mat-icon svgIcon="list"></mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
     <button mat-button class="button-disabled">Export Insights</button>
     <button mat-button class="button-outlined">New Folder</button>
     <button mat-button class="button-accent">New Video</button>
   </div>
 </div>
-
-<mat-list>
+<mat-list *ngIf="group.value === 'grid'">
   <mat-list-item>
     <div matLine class="item-header">
       <img
