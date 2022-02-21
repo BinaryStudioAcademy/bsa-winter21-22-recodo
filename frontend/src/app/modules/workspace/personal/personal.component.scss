@@ -113,17 +113,6 @@ mat-list-item:nth-child(3) {
   margin-bottom: 30px;
 }
 
-.header-links-left {
-  float: left;
-  button {
-    margin-right: 10px;
-    border-radius: 0px;
-    &:hover {
-      border-bottom: 2px solid #fb6d3a;
-    }
-  }
-}
-
 .header-links-right {
   float: right;
   margin-left: auto;
@@ -200,10 +189,17 @@ mat-list-item:nth-child(3) {
 
 .header-links-left{
     float: left;
-    button{
+    button:disabled{
+        background: none;
+        color: #AEA8A6;
+    }
+
+    button {
         border-bottom:2px solid #F4E9E9;
         margin-right: 10px;
         border-radius: 0px;
+    }
+    .videos-button {
         &:hover{border-bottom:2px solid #FB6D3A;}
     }
 }
