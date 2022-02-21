@@ -13,17 +13,35 @@
             </div>
             <form class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)">
                 <p class="input-label">Email</p>
-                <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="never" hideRequiredMarker="true">
+                <mat-form-field class="input-form" appearance="fill" hideRequiredMarker="true">
                     <input type="email" matInput placeholder="user@gmail.com" [(ngModel)]="userLoginDto.email" formControlName="email">
                 </mat-form-field>
+                <div class="errors">
+                    <span *ngIf="
+                        loginForm.controls['email'].touched &&
+                        loginForm.controls['email'].errors">
+                        <small *ngIf="loginForm.controls['email'].errors['required']">
+                            Email is a required property
+                        </small>
+                        <small *ngIf="loginForm.controls['email'].errors['pattern']">
+                            Invalid email
+                        </small>
+                    </span>
+                </div>
+
                 <p class="input-label">Password</p>
-                <mat-form-field class="input-form" appearance="fill" color="warn" hideRequiredMarker="true">
+                <mat-form-field class="input-form" appearance="fill" hideRequiredMarker="true">
                     <input [type]="hidePass ? 'password' : 'text'" matInput minlength="8" placeholder="password"
                          [(ngModel)]="userLoginDto.password" formControlName="password">
                     <mat-icon class="password-icon" matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' :
                         'visibility_off'}}
                     </mat-icon>
                 </mat-form-field>
+                <div class="errors">
+                    <small *ngIf=" loginForm.controls['password'].touched && loginForm.controls['password'].errors && loginForm.controls['password'].errors['required']">
+                        Password is a required property
+                    </small>
+                </div>
                 
                 <div class="registation-buttons">
                     <button class="submit-button" mat-button type="submit" [disabled]="!loginForm.valid">Sign In</button>

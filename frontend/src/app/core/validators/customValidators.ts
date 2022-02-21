@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export function passwordMatchValidator(control: AbstractControl) {
     const password: string = control.get('password')?.value; // get password from our password form control
@@ -9,3 +9,21 @@ export function passwordMatchValidator(control: AbstractControl) {
         control.get('confirmPassword')?.setErrors({ NoPassswordMatch: true });
     }
 }
+
+export function cannotContainSpace(control: AbstractControl) : ValidationErrors | null {  
+    if((control.value as string)?.indexOf(' ') >= 0){  
+        return {cannotContainSpace: true}  
+    }  
+
+    return null;  
+}
+
+export function startsOrEndWithSpace(control: AbstractControl) : ValidationErrors | null {  
+    if(
+        (control.value as string)?.startsWith(' ') ||
+        (control.value as string)?.endsWith(' ')){  
+        return {startsOrEndWithSpace: true}  
+    }  
+
+    return null;  
+}  

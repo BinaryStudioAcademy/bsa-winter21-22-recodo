@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
+import { cannotContainSpace, passwordMatchValidator, startsOrEndWithSpace} from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
 import {UserRegisterDto} from 'src/app/models/user/user-register-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
@@ -30,23 +30,28 @@ export class RegisterFormComponent {
     this.registerForm = this.formBuilder.group({
       workspaceName: [, 
           [Validators.required,
-          Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
+          Validators.pattern('^[a-zA-Z\`\'][a-zA-Z-\`\' ]+[a-zA-Z\`\']?$'),
           Validators.minLength(3),
-          Validators.maxLength(30)]
+          Validators.maxLength(30),
+          startsOrEndWithSpace
+        ],
       ],
-      email: [, 
-          [Validators.required,
-          Validators.email,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]
+      email: [, [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ]
       ],
-      confirmPassword: [, 
-        [Validators.required],
+      confirmPassword: [, [
+          Validators.required,
+        ],
       ],
-      password: [,
-          [Validators.required,
+      password: [, [
+          Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$')],//‘
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'),
+          cannotContainSpace
+        ],
       ],
     }, {
       validator: passwordMatchValidator
