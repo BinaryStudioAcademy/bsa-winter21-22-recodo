@@ -32,6 +32,7 @@ namespace Recodo.API.Middleware
                     InvalidUserNameOrPasswordException => (int)HttpStatusCode.Unauthorized,
                     ExpiredRefreshTokenException => (int)HttpStatusCode.Unauthorized,
                     InvalidTokenException => (int)HttpStatusCode.Unauthorized,
+                    ExistUserException => (int)HttpStatusCode.BadRequest,
                     _ => (int)HttpStatusCode.InternalServerError
                 };
 
