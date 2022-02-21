@@ -15,7 +15,9 @@ export class TokenDoesnotExistGuard implements CanActivate {
     if(this.loginService.areTokensExist() ) {
       let redirect_url = route.queryParams['redirect_url'];
       if (redirect_url) {
-        window.location.href= `${redirect_url}?access_token=${localStorage.getItem('accessToken')}`;
+        this.router.navigate(['/']).then( () => {
+          window.location.href= `${redirect_url}?access_token=${localStorage.getItem('accessToken')}`
+        });
       }
       else {
         this.router.navigate(['/personal']);

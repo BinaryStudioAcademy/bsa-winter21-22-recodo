@@ -60,7 +60,9 @@ export class LoginPageComponent implements OnInit {
       if(this.loginService.areTokensExist()) {
         if (this.redirectUrl)
         {
-          window.location.href= `${this.redirectUrl}?access_token=${localStorage.getItem('accessToken')}`;
+          this.router.navigate(['/']).then( () => {
+            window.location.href= `${this.redirectUrl}?access_token=${localStorage.getItem('accessToken')}`
+          });
         }
         else {
           this.router.navigate(['/personal']);
