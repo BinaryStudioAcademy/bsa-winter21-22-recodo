@@ -7,7 +7,7 @@
           <img (error)="errorHandler($event)" src="{{ this.avatar }}" />
         </div>
         <input
-          (change)="handleFileInput($event.target)"
+          (change)="handleFileInput($event)"
           hidden
           class="file-hide"
           #file

@@ -90,8 +90,9 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  errorHandler(event: any) {
-    event.target.src = '../../assets/icons/test-user-logo.png';
+  errorHandler(event: Event) {
+    const target = event.target as HTMLInputElement;
+    target.src = '../../assets/icons/test-user-logo.png';
   }
 
   saveNewInfoToDb() {}
@@ -133,8 +134,9 @@ export class SettingsComponent implements OnInit {
     this.avatar = '';
   }
 
-  public handleFileInput(target: any) {
-    this.imageFile = target.files[0];
+  public handleFileInput(event: Event) {
+    let target = event.target as HTMLInputElement;
+    this.imageFile = target.files?.item(0) as File;
 
     if (!this.imageFile) {
       target.value = '';
@@ -142,7 +144,7 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.imageFile.size / 1000000 > 5) {
-      window.alert("Image can't be heavier than ~5MB");
+      window.alert('Image can`t be heavier than ~5MB');
       target.value = '';
       return;
     }
