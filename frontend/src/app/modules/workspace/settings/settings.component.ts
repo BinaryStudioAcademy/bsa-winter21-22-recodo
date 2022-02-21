@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import jwt_decode from 'jwt-decode';
-import { of, switchMap } from 'rxjs';
-import { GyazoUpload } from 'src/app/models/gyazo';
-import { GyazoService } from 'src/app/services/gyazo.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -18,16 +16,16 @@ export class SettingsComponent implements OnInit {
   public settingsForm2: FormGroup = {} as FormGroup;
   public avatar!: string;
 
-  public oldName: any = '';
-  public oldEmail: any = '';
-  public userId: any;
-  public name: any;
+  public oldName: string = '';
+  public oldEmail: string = '';
+  public userId: string = '';
+  public name: string = '';
   public imageFile!: File;
 
   constructor(
-    private gyazoService: GyazoService,
     private formBuilder: FormBuilder,
-    private httpService: HttpClient
+    private httpService: HttpClient,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +37,11 @@ export class SettingsComponent implements OnInit {
     let token = localStorage.getItem('accessToken') || '';
 
     if (token) {
-      let decoded: any = jwt_decode(token);
+      let decoded: { name: string; email: string; id: string } =
+        jwt_decode(token);
 
       this.name = decoded.name;
-      this.oldName = name;
+      this.oldName = this.name;
       this.oldEmail = decoded.email;
       this.userId = decoded.id;
     }
@@ -53,7 +52,11 @@ export class SettingsComponent implements OnInit {
       workspaceName: [
         this.name,
         {
-          validators: [Validators.required, Validators.minLength(4)],
+          validators: [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.pattern('^[a-zA-Z0-9]+$'),
+          ],
         },
       ],
     });
@@ -62,19 +65,26 @@ export class SettingsComponent implements OnInit {
       email: [
         this.oldEmail,
         {
-          validators: [Validators.required, Validators.minLength(6)],
+          validators: [Validators.required, Validators.email],
         },
       ],
       passOld: [
         ,
         {
-          validators: [Validators.required, Validators.minLength(8)],
+          validators: [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern('^[a-zA-Z0-9]+$'),
+          ],
         },
       ],
       passNew: [
         ,
         {
-          validators: [Validators.minLength(8)],
+          validators: [
+            Validators.minLength(8),
+            Validators.pattern('^[a-zA-Z0-9]$'),
+          ],
         },
       ],
     });
@@ -84,27 +94,38 @@ export class SettingsComponent implements OnInit {
     event.target.src = '../../assets/icons/test-user-logo.png';
   }
 
-  saveNewInfoToDb(avatarLink: any) {
+  saveNewInfoToDb() {}
+
+  saveNewInfo() {
     let workspaceName = this.settingsForm1.controls['workspaceName'].value;
-    let avatar = this.imageFile;
 
     const data = new FormData();
     data.append('id', this.userId);
     data.append('workspaceName', workspaceName);
     data.append('avatar', this.imageFile);
 
-    this.httpService.post(`${this.APIUrl}/User/Update`, data).subscribe({
-      next: (data) => {
+    this.userService.updateInfo('Update', data).subscribe({
+      next: () => {
         window.alert('done');
       },
-      error: (data) => {
+      error: () => {
         window.alert('error');
       },
     });
   }
 
-  saveNewInfo() {
-    return this.saveNewInfoToDb(null);
+  onSelect(event: { addedFiles: File[] }) {
+    let added = event.addedFiles;
+    if (added?.length > 0) {
+      this.imageFile = added[0];
+
+      const reader = new FileReader();
+      reader.addEventListener(
+        'load',
+        () => (this.avatar = reader.result as string)
+      );
+      reader.readAsDataURL(this.imageFile);
+    }
   }
 
   saveNewInfoCancel() {
@@ -121,7 +142,7 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.imageFile.size / 1000000 > 5) {
-      window.alert(`Image can't be heavier than ~5MB`);
+      window.alert("Image can't be heavier than ~5MB");
       target.value = '';
       return;
     }
@@ -148,10 +169,10 @@ export class SettingsComponent implements OnInit {
         PasswordNew: passNew,
       })
       .subscribe({
-        next: (data) => {
+        next: () => {
           window.alert('done');
         },
-        error: (data) => {
+        error: () => {
           window.alert('error');
         },
       });
@@ -166,37 +187,27 @@ export class SettingsComponent implements OnInit {
   resetPassword() {
     let userId = this.userId;
 
-    this.httpService
-      .post(`${this.APIUrl}/User/ResetPassword`, {
-        id: userId,
-      })
-      .subscribe({
-        next: (data) => {
-          window.alert('done');
-        },
-        error: (data) => {
-          window.alert('error');
-        },
-      });
+    this.userService.resetPassword('ResetPassword', { id: userId }).subscribe({
+      next: () => {
+        window.alert('done');
+      },
+      error: () => {
+        window.alert('error');
+      },
+    });
 
     return false;
   }
 
   deleteUser() {
     let userId = this.userId;
-
-    this.httpService
-      .post(`${this.APIUrl}/User/DeleteUser`, {
-        userId,
-      })
-      .subscribe({
-        next: (data) => {
-          window.alert('done');
-          localStorage.removeItem('accessToken');
-        },
-        error: (data) => {
-          window.alert('error');
-        },
-      });
+    this.userService.deleteUser('DeleteUser', { id: userId }).subscribe({
+      next: () => {
+        window.alert('done');
+      },
+      error: () => {
+        window.alert('error');
+      },
+    });
   }
 }

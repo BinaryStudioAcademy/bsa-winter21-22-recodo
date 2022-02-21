@@ -43,8 +43,7 @@ export class LoginPageComponent implements OnInit {
           validators: [
             Validators.required,
             Validators.minLength(8),
-            // Disabled for debug
-            //Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+            Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
           ],
           updateOn: 'change',
         },

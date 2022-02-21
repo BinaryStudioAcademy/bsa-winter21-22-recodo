@@ -34,8 +34,7 @@ export class RegisterFormComponent {
           {
             validators: [
               Validators.required,
-              // Disabled for debug
-              // Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$')
+              Validators.pattern("^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$"),
             ],
             updateOn: 'change',
           },
@@ -53,8 +52,7 @@ export class RegisterFormComponent {
             validators: [
               Validators.required,
               Validators.minLength(8),
-              // Disabled for debug
-              // Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+              Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
             ],
             updateOn: 'change',
           },

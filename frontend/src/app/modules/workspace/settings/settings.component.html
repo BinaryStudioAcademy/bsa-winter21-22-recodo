@@ -17,6 +17,9 @@
         <div class="avatar-box__upload" (click)="file.click()">
           <img src="../../../../assets/img/Add-Avatar.png" />
         </div>
+        <ngx-dropzone class="box-dropzone" (change)="onSelect($event)">
+          <ngx-dropzone-label>Or drop it</ngx-dropzone-label>
+        </ngx-dropzone>
       </div>
 
       <div class="name-box">
@@ -80,12 +83,6 @@
             formControlName="email"
           />
         </mat-form-field>
-        <div
-          class="invalid-block"
-          *ngIf="settingsForm2.controls['email']?.invalid"
-        >
-          Email min length is 6
-        </div>
       </div>
       <div class="name-box name-box--col">
         <p class="input-label">Current Password</p>
@@ -103,12 +100,6 @@
             placeholder="Current Password"
           />
         </mat-form-field>
-        <div
-          class="invalid-block"
-          *ngIf="settingsForm2.controls['passOld']?.invalid"
-        >
-          Password min length is 8
-        </div>
       </div>
       <div class="name-box name-box--col">
         <p class="input-label">New Password</p>

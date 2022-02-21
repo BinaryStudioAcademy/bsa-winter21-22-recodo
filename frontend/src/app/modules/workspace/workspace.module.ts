@@ -21,6 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SettingsComponent,
   ],
   imports: [
+    NgxDropzoneModule,
     CommonModule,
     BaseRoutingModule,
     MatToolbarModule,
