@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { cannotContainSpace, passwordMatchValidator, startsOrEndWithSpace} from 'src/app/core/validators/customValidators';
+import {
+  cannotContainSpace,
+  passwordMatchValidator,
+  startsOrEndWithSpace} from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
 import {UserRegisterDto} from 'src/app/models/user/user-register-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
@@ -28,7 +31,7 @@ export class RegisterFormComponent {
 
   private validateForm() {
     this.registerForm = this.formBuilder.group({
-      workspaceName: [, 
+      workspaceName: [,
           [Validators.required,
           Validators.pattern('^[a-zA-Z\`\'][a-zA-Z-\`\' ]+[a-zA-Z\`\']?$'),
           Validators.minLength(3),
@@ -49,7 +52,9 @@ export class RegisterFormComponent {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'),
+          Validators.pattern(
+            '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'
+            ),
           cannotContainSpace
         ],
       ],
