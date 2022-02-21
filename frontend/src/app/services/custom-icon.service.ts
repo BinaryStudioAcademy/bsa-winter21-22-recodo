@@ -79,5 +79,20 @@ export class CustomIconService {
         '../assets/icons/Star.svg'
       )
     );
+
+    //Toggle button group  icons
+    this.matIconRegistry.addSvgIcon(
+      'list',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/layoutList.svg'
+      )
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'grid',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/layoutGrid.svg'
+      )
+    );
   }
 }
