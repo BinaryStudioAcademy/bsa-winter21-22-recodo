@@ -4,6 +4,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PersonalComponent } from './personal/personal.component';
 import { BaseComponent } from './base/base.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,6 +35,7 @@ import { VimeModule } from '@vime/angular';
   imports: [
     CommonModule,
     BaseRoutingModule,
+    MatButtonToggleModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
