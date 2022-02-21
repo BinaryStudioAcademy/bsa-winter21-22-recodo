@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Recodo.BLL.Exceptions;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos.Auth;
 using Recodo.Common.Dtos.User;
@@ -47,7 +48,7 @@ namespace Recodo.API.Controllers
             var payload = await _authService.VerifyGoogleToken(externalAuth);
             if (payload == null)
             {
-                return BadRequest("Invalid External Authentication.");
+                throw new VerifyGoogleTokenException();
             }
 
             var createdUser = await _userService.CreateGoogleUser(externalAuth, payload);
