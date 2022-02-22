@@ -24,7 +24,7 @@
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Name="ProgressPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="98,0,0,0" Visibility="Hidden">
             <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" x:Name="DeterminateCircularProgress" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12 12 12 12" />
-            <TextBlock  VerticalAlignment="Center">Opening your default browser</TextBlock>
+            <TextBlock Name="BrowserState" VerticalAlignment="Center">Opening your default browser</TextBlock>
         </StackPanel>
     </Grid>
 </Window>

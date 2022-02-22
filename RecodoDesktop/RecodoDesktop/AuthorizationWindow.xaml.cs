@@ -1,21 +1,7 @@
 ﻿using Recodo.Desktop.Logic;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Recodo.Desktop.Main
 {
@@ -43,10 +29,16 @@ namespace Recodo.Desktop.Main
         {
             this.ProgressPanel.Visibility = Visibility.Visible;
             var auth = new AuthorizationService(endpoint);
-            var authResult = await auth.Authorize();
-            this.ProgressPanel.Visibility = Visibility.Hidden;
+            try
+            {
+                var authResult = await auth.Authorize();
+                this.ProgressPanel.Visibility = Visibility.Hidden;
+            }
+            catch
+            {
+                this.BrowserState.Text = "Some went wrong, please try";
+            }
             this.Activate();
-            MessageBox.Show($"Code: {authResult.AccessToken}\n");
         }
     }
 }
