@@ -2,29 +2,28 @@ mat-list {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 2px;
+  row-gap: 20px;
 }
 .mat-list > * {
   flex: 0 0 33.33%;
 }
 
 mat-list-item {
+  display: flex;
+  align-items: center;
   justify-content: center;
   height: 370px;
   max-width: 340px;
   color: black;
   background: white;
   border-radius: 10px;
-  margin-right: auto;
-  margin-bottom: 15px;
   border: 2px solid white;
 }
 
 mat-list-item:hover {
   border: 2px solid #fb6d3a;
-}
-
-mat-list-item:nth-child(3) {
-  margin-right: 0px;
 }
 
 .mat-line {
@@ -240,3 +239,10 @@ button{
     border:1px solid #E0D8D7;
 }
     
+.folder-form-container{
+  max-width: 340px;
+  margin-bottom: 10%;
+  .input-form{
+    width: 95%;
+  }
+}
