@@ -16,6 +16,11 @@ namespace Recodo.DAL.Entities.Configuration
             builder.HasOne(p => p.Team).WithMany().HasForeignKey(p => p.TeamId);
             builder.HasOne(p => p.Author).WithMany().HasForeignKey(p => p.AuthorId);
             builder.Property(p => p.Name).IsRequired();
+            builder.HasOne(p => p.Parent)
+                .WithMany(p => p.SubFolders)
+                .HasForeignKey(p => p.ParentId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

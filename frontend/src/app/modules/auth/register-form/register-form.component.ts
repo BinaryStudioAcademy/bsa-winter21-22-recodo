@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
+import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class RegisterFormComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private externalAuthService: ExternalAuthService
   ) {
     this.validateForm();
   }
@@ -34,7 +36,7 @@ export class RegisterFormComponent {
           {
             validators: [
               Validators.required,
-              Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
+              Validators.pattern("^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$"),
             ],
             updateOn: 'change',
           },
@@ -84,4 +86,8 @@ export class RegisterFormComponent {
       }
     });
   }
+
+  public googleLogin = () => {
+    this.externalAuthService.signInWithGoogle();
+  };
 }

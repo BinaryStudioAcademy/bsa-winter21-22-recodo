@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Recodo.BLL.Exceptions;
 using Recodo.BLL.Services.Abstract;
+using Recodo.Common.Dtos.Auth;
 using Recodo.Common.Dtos.User;
 using Recodo.Common.Security;
 using Recodo.DAL.Context;
@@ -14,7 +16,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
-
 
 namespace Recodo.BLL.Services
 {
@@ -124,6 +125,29 @@ namespace Recodo.BLL.Services
 
             _context.Users.Remove(userEntity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<UserDTO> CreateGoogleUser(ExternalAuthDto userRegisterDTO,
+            GoogleJsonWebSignature.Payload payload)
+        {
+            var userEntity = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == payload.Email);
+
+            if (userEntity == null)
+            {
+                var newUserDTO = new NewUserDTO
+                {
+                    Email = payload.Email,
+                    Password = userRegisterDTO.IdToken,
+                    WorkspaceName = userRegisterDTO.WorkspaceName
+                };
+
+                return await CreateUser(newUserDTO);
+            }
+            else
+            {
+                return _mapper.Map<UserDTO>(userEntity);
+            }
         }
     }
 }

@@ -25,6 +25,7 @@
     "@vime/core": "^5.3.1",
     "jwt-decode": "^3.1.2",
     "ngx-dropzone": "^3.1.0",
+    "angularx-social-login": "^4.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
