@@ -28,8 +28,8 @@ export class RegisterFormComponent implements OnInit {
     private router : Router,
     private route : ActivatedRoute,
     private formBuilder: FormBuilder,
-    private registrationService: RegistrationService) {
-  }
+    private registrationService: RegistrationService,
+    private externalAuthService: ExternalAuthService) {}
 
   ngOnInit() {
     this.validateForm();
