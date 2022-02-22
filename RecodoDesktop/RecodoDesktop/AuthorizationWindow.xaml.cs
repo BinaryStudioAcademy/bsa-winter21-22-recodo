@@ -36,7 +36,8 @@ namespace Recodo.Desktop.Main
             }
             catch
             {
-                this.BrowserState.Text = "Some went wrong, please try";
+                this.DeterminateCircularProgress.Visibility = Visibility.Hidden;
+                this.BrowserState.Text = "Some went wrong, please try again..";
             }
             this.Activate();
         }
