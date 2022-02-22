@@ -94,5 +94,13 @@ export class CustomIconService {
         '../assets/icons/layoutGrid.svg'
       )
     );
+
+    //List view folder icon
+    this.matIconRegistry.addSvgIcon(
+      'folder',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/folder.svg'
+      )
+    );
   }
 }
