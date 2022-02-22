@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Recodo.FIle.BLL.Interfaces
 {
-    internal interface IRequestService
+    public interface IRequestService
     {
         Task<string> SendSaveRequest(string token);
-        Task SendGetRequest(int id, string token);
-        Task SendFinishRequest(int videoId);
+        Task SendGetRequest(string token);
+        Task<HttpResponseMessage> SendFinishRequest(int videoId);
     }
 }

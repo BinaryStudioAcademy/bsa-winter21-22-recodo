@@ -28,19 +28,19 @@ namespace Recodo.FIle.BLL.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task SendGetRequest(int id, string token)
+        public async Task SendGetRequest(string token)
         {
             Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
 
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
-                $"File?id={id}"));
+                $"File"));
             if (response.IsSuccessStatusCode == false)
             {
                 throw new Exception("Invalid user");
             }
         }
 
-        public async Task SendFinishRequest(int videoId)
+        public async Task<HttpResponseMessage> SendFinishRequest(int videoId)
         {
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, BaseUrl +
                 $"File?id={videoId}"));
@@ -48,6 +48,7 @@ namespace Recodo.FIle.BLL.Services
             {
                 throw new Exception("Error");
             }
+            return response;
         }
 
 

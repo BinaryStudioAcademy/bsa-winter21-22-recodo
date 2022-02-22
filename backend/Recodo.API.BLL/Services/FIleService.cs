@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Recodo.API.BLL.Interfaces;
+using Recodo.FIle.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,18 +15,15 @@ using System.Threading.Tasks;
 
 namespace Recodo.API.BLL.Services
 {
-    public class FIleService : IAzureBlobService
+    public class FileService : IFileService
     {
         private readonly IAzureBlobConnectionFactory _azureBlobConnectionFactory;
+		private readonly IRequestService _requestService;
 
-		private static HttpClient Client { get; set; } = new HttpClient();
-
-		private static string BaseUrl = new string(@"https://localhost:44316/api/");
-
-
-		public FIleService(IAzureBlobConnectionFactory azureBlobConnectionFactory)
+		public FileService(IAzureBlobConnectionFactory azureBlobConnectionFactory, IRequestService requestService)
         {
             _azureBlobConnectionFactory = azureBlobConnectionFactory;
+			_requestService = requestService;
         }
 
 		public async Task<IEnumerable<Uri>> ListAsync()
@@ -47,34 +46,15 @@ namespace Recodo.API.BLL.Services
 
 		public async Task UploadAsync(IFormFile files, string token)
 		{
-			Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
-
-			var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Post, BaseUrl +
-				$"File"));
-			if (response.IsSuccessStatusCode == false)
-			{
-				throw new Exception("Error");
-			}
-			var id = await response.Content.ReadAsStringAsync();
-
-			//Need to receive videoId from response
+			var id = await _requestService.SendSaveRequest(token);
 
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 			var blob = blobContainer.GetBlockBlobReference(id);
 
-			using (var fileStream = files.OpenReadStream())
-			{
-				await blob.UploadFromStreamAsync(fileStream);
-			}
+			await using var fileStream = files.OpenReadStream();
+			await blob.UploadFromStreamAsync(fileStream);
 
-			response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, BaseUrl +
-				$"File?id={id}"));
-			if (response.IsSuccessStatusCode == false)
-			{
-				throw new Exception("Error");
-			}
-			//Put id
-
+			var response = await _requestService.SendFinishRequest(Convert.ToInt32(id));	
 		}
 
 		public async Task DeleteAsync(int id)
@@ -88,16 +68,11 @@ namespace Recodo.API.BLL.Services
 
         public async Task<Stream> DownloadAsync(int id, string token)
         {
-			var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
-				$"File?id={id}"));
-			if (response.IsSuccessStatusCode == false)
-			{
-				throw new Exception("Invalid user");
-			}
+			await _requestService.SendGetRequest(token);
 
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 
-			var blob = blobContainer.GetBlockBlobReference(id.ToString());
+			var blob = blobContainer.GetBlockBlobReference(id.ToString());		
 
 			return await blob.OpenReadAsync();
 		}

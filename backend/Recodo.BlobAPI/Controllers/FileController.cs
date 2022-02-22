@@ -14,9 +14,9 @@ namespace Recodo.BlobAPI.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private readonly IAzureBlobService _blobService;
+        private readonly IFileService _blobService;
 
-        public FileController(IAzureBlobService blobService)
+        public FileController(IFileService blobService)
         {
             _blobService = blobService;
         }

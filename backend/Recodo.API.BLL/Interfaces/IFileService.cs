@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Recodo.API.BLL.Interfaces
 {
-    public interface IAzureBlobService
+    public interface IFileService
     {
         Task<IEnumerable<Uri>> ListAsync();
         Task UploadAsync(IFormFile files, string token);
