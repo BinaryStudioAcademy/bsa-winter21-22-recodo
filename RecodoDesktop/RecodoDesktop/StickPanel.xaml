@@ -9,7 +9,7 @@
         AllowsTransparency ="True"
         WindowStyle = "None"
         ResizeMode="NoResize"
-        Title="StickPanel" Height="313.86" Width="70">
+        Title="StickPanel" Height="270" Width="56">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
@@ -25,8 +25,8 @@
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Margin" Value="0,1,0,1" />
-                <Setter Property="Height" Value="52" />
-                <Setter Property="Width" Value="52" />
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Width" Value="40" />
             </Style>
 
             <FontFamily x:Key="Poppins-SemiBold">/fonts/Poppins-SemiBold</FontFamily>
@@ -36,10 +36,10 @@
 
     <Border BorderThickness="0" CornerRadius="0,20,20,0" Background="#732939">
         <Grid>
-            <StackPanel Height="345" Grid.ColumnSpan="2" Margin="0,0,0,0">
-                <Label FontFamily="{StaticResource Poppins-SemiBold}" FontWeight="Bold" Name="TimeLabel" Margin="0 10 0 0" Foreground="#E0748B" HorizontalContentAlignment="Center" FontSize="13">5:00</Label>
+            <StackPanel Height="260" Grid.ColumnSpan="2" Margin="0,0,0,0">
+                <Label FontFamily="{StaticResource Poppins-SemiBold}" FontWeight="Bold" Name="TimeLabel" Margin="0 10 0 0" Foreground="#E0748B" HorizontalContentAlignment="Center" FontSize="13"></Label>
 
-                <Button Name="ButtonStop" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonStop" Click="Button_Stop_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -58,7 +58,7 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="15">
+                        <Image Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/stop.png" />
@@ -73,7 +73,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonRefresh" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonRefresh" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -92,7 +92,7 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="15">
+                        <Image Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/refresh.png" />
@@ -107,7 +107,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonPause" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonPause" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="ButtonPause_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -126,13 +126,13 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="15">
+                        <Image Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/pause.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="Icons/panel/pause_focus.png" />
+                                            <Setter Property="Source" Value="Icons/Panel/pause_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -141,7 +141,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonDelete" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonDelete" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -160,7 +160,7 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="15">
+                        <Image Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/delete.png" />
@@ -175,7 +175,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonEdit" Click="Button_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonEdit" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -194,7 +194,7 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="15">
+                        <Image Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/edit.png" />

@@ -7,10 +7,14 @@
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
+  button{
+     &:hover{
+       cursor:pointer
+      }
+  }
 }
+
 * {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -19,6 +23,13 @@ body {
 .input-form .mat-form-field-wrapper .mat-form-field-flex {
     background-color: white;
     padding: 0 .75em 0 .75em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px white inset !important;
 }
 
 .button-accent {

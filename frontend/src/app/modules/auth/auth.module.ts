@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     MatIconModule,
     ReactiveFormsModule,
     AuthRoutingModule,
+    NgxTrimDirectiveModule
   ]
 })
 export class AuthModule { }

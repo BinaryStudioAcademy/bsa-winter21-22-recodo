@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="ScreenRecorderLib" Version="5.1.0" />
     <PackageReference Include="DirectShowLib.Standard" Version="2.1.0" />
     <PackageReference Include="Emgu.CV" Version="4.5.5.4823" />
     <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.5.4823" />
