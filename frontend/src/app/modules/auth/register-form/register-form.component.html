@@ -16,15 +16,14 @@
         </mat-form-field>
         <div class="errors">
             <span *ngIf="
-                registerForm.controls['workspaceName'].touched &&
-                registerForm.controls['workspaceName'].errors">
-                <small *ngIf="registerForm.controls['workspaceName'].errors['required']">
+                registerForm.controls['workspaceName'].touched">
+                <small *ngIf="registerForm.controls['workspaceName'].errors?.['required']">
                     Workspace is a required property.
                 </small>
                 <small *ngIf="
-                    registerForm.controls['workspaceName'].errors['minlength'] ||
-                    registerForm.controls['workspaceName'].errors['maxlength'] ||
-                    registerForm.controls['workspaceName'].errors['startsOrEndWithSpace']">
+                    registerForm.controls['workspaceName'].errors?.['minlength'] ||
+                    registerForm.controls['workspaceName'].errors?.['maxlength'] ||
+                    registerForm.controls['workspaceName'].errors?.['startsOrEndWithSpace']">
                  Must be 3-30 characters without start and end spaces.
                 </small>
             </span>
@@ -36,12 +35,11 @@
         </mat-form-field>
         <div class="errors">
             <span *ngIf="
-                registerForm.controls['email'].touched &&
-                registerForm.controls['email'].errors">
-                <small *ngIf="registerForm.controls['email'].errors['required']">
+                registerForm.controls['email'].touched">
+                <small *ngIf="registerForm.controls['email'].errors?.['required']">
                     Email is a required property
                 </small>
-                <small *ngIf="registerForm.controls['email'].errors['pattern']">
+                <small *ngIf="registerForm.controls['email'].errors?.['pattern']">
                     Invalid email
                 </small>
             </span>
@@ -57,16 +55,15 @@
         </mat-form-field>
         <div class="errors">
             <span *ngIf="
-                registerForm.controls['password'].touched &&
-                registerForm.controls['password'].errors">
-                <small *ngIf="registerForm.controls['password'].errors['required']">
+                registerForm.controls['password'].touched">
+                <small *ngIf="registerForm.controls['password'].errors?.['required']">
                     Password is a required property
                 </small>
                 <small *ngIf=" 
-                    registerForm.controls['password'].errors['pattern'] || 
-                    registerForm.controls['password'].errors['minlength'] ||
-                    registerForm.controls['password'].errors['maxlength'] ||
-                    registerForm.controls['password'].errors['cannotContainSpace']">
+                    registerForm.controls['password'].errors?.['pattern'] || 
+                    registerForm.controls['password'].errors?.['minlength'] ||
+                    registerForm.controls['password'].errors?.['maxlength'] ||
+                    registerForm.controls['password'].errors?.['cannotContainSpace']">
                     At least 1 digit and 1 letter, 8-20 characters without spaces
                 </small>
             </span>
@@ -81,7 +78,7 @@
             </mat-icon>
         </mat-form-field>
         <div class="errors">
-            <small *ngIf=" registerForm.controls['confirmPassword'].touched && registerForm.controls['confirmPassword'].errors && registerForm.controls['confirmPassword'].errors['NoPassswordMatch']">
+            <small *ngIf=" registerForm.controls['confirmPassword'].touched && registerForm.controls['confirmPassword'].errors?.['NoPassswordMatch']">
                 Passwords do not match
             </small>
         </div>

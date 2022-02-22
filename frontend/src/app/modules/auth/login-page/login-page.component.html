@@ -18,12 +18,11 @@
                 </mat-form-field>
                 <div class="errors">
                     <span *ngIf="
-                        loginForm.controls['email'].touched &&
-                        loginForm.controls['email'].errors">
-                        <small *ngIf="loginForm.controls['email'].errors['required']">
+                        loginForm.controls['email'].touched">
+                        <small *ngIf="loginForm.controls['email'].errors?.['required']">
                             Email is a required property
                         </small>
-                        <small *ngIf="loginForm.controls['email'].errors['pattern']">
+                        <small *ngIf="loginForm.controls['email'].errors?.['pattern']">
                             Invalid email
                         </small>
                     </span>
@@ -38,7 +37,7 @@
                     </mat-icon>
                 </mat-form-field>
                 <div class="errors">
-                    <small *ngIf=" loginForm.controls['password'].touched && loginForm.controls['password'].errors && loginForm.controls['password'].errors['required']">
+                    <small *ngIf=" loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']">
                         Password is a required property
                     </small>
                 </div>
