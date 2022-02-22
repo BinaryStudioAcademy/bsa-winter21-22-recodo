@@ -20,9 +20,11 @@ namespace Recodo.Desktop.Logic
             return resolutions[nameOfResolution];
         }
 
-        public static List<string> GetNamesOfResolutions()
+        public static List<string> GetNamesOfResolutions(double width, double height)
         {
-            return resolutions.Keys.ToList();
+            return resolutions.Where(r => r.Value.Item1 <= width)
+                .Select(r => r.Key)
+                .ToList();
         }
     }
 }

@@ -91,14 +91,6 @@ namespace Recodo.Desktop.Logic
                 ?.ToList();
         }
 
-        public List<RecordingSourceBase> GetDisplays()
-        {
-            var sources = new List<RecordingSourceBase>();
-            sources.AddRange(Recorder.GetDisplays());
-
-            return sources;
-        }
-
         public List<string> GetWindows()
         { 
             return Recorder.GetWindows().Select(w => w.Title).ToList();

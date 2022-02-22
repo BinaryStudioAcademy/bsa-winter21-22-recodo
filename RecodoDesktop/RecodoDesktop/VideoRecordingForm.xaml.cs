@@ -85,7 +85,10 @@ namespace Recodo.Desktop.Main
 
         private void RecordingResolution_Initialized(object sender, EventArgs e)
         {
-            var resolutions = RecorderHelper.GetNamesOfResolutions();
+            double width = SystemParameters.PrimaryScreenWidth;
+            double height = SystemParameters.PrimaryScreenHeight;
+
+            var resolutions = RecorderHelper.GetNamesOfResolutions(width, height);
             this.RecordingResolution.ItemsSource = resolutions;
             this.RecordingResolution.SelectedIndex = resolutions.Count - 1;
         }

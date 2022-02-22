@@ -51,6 +51,7 @@ namespace Recodo.Desktop.Main
             {
                 Timer.Stop();
                 _recorderService.StopRecording();
+                this.Close();
             }
         }
 
