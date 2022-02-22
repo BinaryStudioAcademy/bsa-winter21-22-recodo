@@ -13,7 +13,7 @@ namespace Recodo.API.BLL.Interfaces
     {
         Task<IEnumerable<Uri>> ListAsync();
         Task UploadAsync(IFormFile files, string token);
-        Task<Stream> DownloadAsync(int id);
+        Task<Stream> DownloadAsync(int id, string token);
         Task DeleteAsync(int id);
 
     }

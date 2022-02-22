@@ -86,7 +86,7 @@ namespace Recodo.API.BLL.Services
 			await blob.DeleteIfExistsAsync();
 		}
 
-        public async Task<Stream> DownloadAsync(int id)
+        public async Task<Stream> DownloadAsync(int id, string token)
         {
 			var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
 				$"File?id={id}"));
@@ -94,7 +94,6 @@ namespace Recodo.API.BLL.Services
 			{
 				throw new Exception("Invalid user");
 			}
-
 
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 

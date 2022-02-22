@@ -30,7 +30,8 @@ namespace Recodo.BlobAPI.Controllers
         [HttpGet]
         public async Task<FileStreamResult> GetFile(int id)
         {
-            return File(await _blobService.DownloadAsync(id), "application/mp4", id.ToString()+".mp4");
+            var accessToken = Request.Headers[HeaderNames.Authorization];
+            return File(await _blobService.DownloadAsync(id, accessToken), "application/mp4", id.ToString()+".mp4");
         }
 
         [HttpPost]

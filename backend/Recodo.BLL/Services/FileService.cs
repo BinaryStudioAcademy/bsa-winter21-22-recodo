@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
@@ -22,16 +23,26 @@ namespace Recodo.BLL.Services
         public async Task<int> SaveVideo(int authorId)
         {
             Video newVideo = new Video();
+            newVideo.IsSaving = true;
             newVideo.AuthorId = authorId;
             newVideo.CreatedAt = DateTime.Now;
             newVideo.Name = "Video";
 
             await _context.AddAsync(newVideo);
-            await _context.SaveChangesAsync();  
+            await _context.SaveChangesAsync();
 
             return newVideo.Id;
         }
-        
 
+        public async Task FinishLoadingFile(int id)
+        {
+            var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == id);
+            if (video == null)
+            {
+                throw new Exception("Invalid id");
+            }
+
+            video.IsSaving = false;
+        }
     }
 }
