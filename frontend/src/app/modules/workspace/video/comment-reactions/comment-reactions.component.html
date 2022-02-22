@@ -7,10 +7,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(4)"
+        matBadge="GetReactions(ReactionType.Fun)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(4).length === 0"
+        [matBadgeHidden]="GetReactions(ReactionType.Fun).length === 0"
         aria-label="Fun"
       ></mat-icon>
     </button>
@@ -21,10 +21,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(5)"
+        matBadge="GetReactions(ReactionType.Astonishment)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(5).length === 0"
+        [matBadgeHidden]="GetReactions(ReactionType.Astonishment).length === 0"
         aria-label="Astonishment"
       ></mat-icon>
     </button>
@@ -35,10 +35,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(3)"
+        matBadge="GetReactions(ReactionType.Love)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(3).length === 0"
+        [matBadgeHidden]="GetReactions(ReactionType.Love).length === 0"
         aria-label="Love"
       ></mat-icon>
     </button>
@@ -49,10 +49,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(6)"
+        matBadge="GetReactions(ReactionType.Magically)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(6).length === 0"
+        [matBadgeHidden]="GetReactions(ReactionType.Magically).length === 0"
         aria-label="Magically"
       ></mat-icon>
     </button>
@@ -63,10 +63,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(0)"
+        matBadge="GetReactions(ReactionType.Like)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions().length === 0"
+        [matBadgeHidden]="Likes.length === 0"
         aria-label="Like"
       ></mat-icon>
     </button>
@@ -77,10 +77,10 @@
         height="30"
       />
       <mat-icon
-        matBadge="GetReactions(1)"
+        matBadge="GetReactions(ReactionType.Dislike)"
         matBadgeColor="accent"
         matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(1).length === 0"
+        [matBadgeHidden]="GetReactions(ReactionType.Dislike).length === 0"
         aria-label="Dislike"
       ></mat-icon>
     </button>

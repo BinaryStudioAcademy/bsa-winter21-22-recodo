@@ -10,7 +10,18 @@
     </button>
   </div>
   <app-video-player></app-video-player>
-  <app-video-reactions class="reactions-container"></app-video-reactions>
+  <app-video-comments
+    [comment]="testComment"
+    [currentUser]="currentUser"
+    [deleteComment]="deleteComment"
+    [editComment]="editComment"
+  ></app-video-comments>
+  <app-video-reactions
+    class="reactions-container"
+    [video]="this.currentVideo"
+    [user]="this.currentUser"
+  >
+  </app-video-reactions>
   <h1><strong>Screenshot 11 February 2022</strong></h1>
   <app-video-description
     [username]="'Username'"

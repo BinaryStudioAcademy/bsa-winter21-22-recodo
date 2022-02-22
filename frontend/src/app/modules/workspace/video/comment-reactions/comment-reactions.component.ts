@@ -1,32 +1,34 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { Comment } from 'src/app/models/comment/comment';
 import { ReactionType } from 'src/app/models/common/reaction-type';
+import { CommentReactionDTO } from 'src/app/models/reaction/comment-reaction';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
 import { User } from 'src/app/models/user/user';
-import { VideoDTO } from 'src/app/models/video/video-dto';
+import { CommentReactionService } from 'src/app/services/comment-reaction.service';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 
 @Component({
-  selector: 'app-video-reactions',
-  templateUrl: './video-reactions.component.html',
-  styleUrls: ['./video-reactions.component.scss'],
+  selector: 'app-comment-reactions',
+  templateUrl: './comment-reactions.component.html',
+  styleUrls: ['./comment-reactions.component.scss'],
 })
-export class VideoReactionsComponent {
-  @Input() public video: VideoDTO;
+export class CommentReactionsComponent {
+  @Input() public comment: Comment;
   @Input() public user: User;
-  public allReactions: VideoReactionDTO[];
+  public allReactions: CommentReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
-  constructor(private reactionsService: VideoReactionService) {
+  constructor(private reactionsService: CommentReactionService) {
     this.reactionsService
-      .GetCurrentVideo()
+      .GetCurrentComment()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response: any) => {
-          this.video = response.body;
+          this.comment = response.body;
         },
       });
-    this.allReactions = this.video?.reactions;
+    this.allReactions = this.comment.reactions;
     this.updateReactions();
   }
 
@@ -35,20 +37,24 @@ export class VideoReactionsComponent {
   }
 
   public addReaction(reactionType: ReactionType) {
-    if (this.user != null && this.video != null) {
-      this.reactionsService.reactVideo(this.video.id, reactionType, this.user);
+    if (this.user != null && this.comment != null) {
+      this.reactionsService.reactVideo(
+        this.comment.id,
+        reactionType,
+        this.user
+      );
     }
     this.updateReactions();
   }
 
   public GetReactions(reactionType: ReactionType) {
-    const reactions: VideoReactionDTO[] = this.allReactions.filter(
+    const reactions: CommentReactionDTO[] = this.allReactions.filter(
       (x) => x.reaction == reactionType
     );
     return reactions;
   }
 
   private updateReactions() {
-    this.allReactions = this.video.reactions;
+    this.allReactions = this.comment.reactions;
   }
 }

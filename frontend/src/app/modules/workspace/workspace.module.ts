@@ -20,6 +20,8 @@ import { VideoDescriptionComponent } from './video/video-description/video-descr
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
 import { MatBadgeModule } from '@angular/material/badge';
+import { VideoCommentsComponent } from './video/video-comments/video-comments.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    VideoCommentsComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     SharedModule,
     VimeModule,
     MatBadgeModule,
+    FormsModule,
   ],
 })
 export class WorkspaceModule {}

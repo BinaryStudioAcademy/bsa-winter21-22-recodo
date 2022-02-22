@@ -2,9 +2,9 @@ using Recodo.Common.Enums;
 
 namespace Recodo.Common.Dtos.Reactions 
 {
-    public class VideoReactionDTO
+    public class CommentReactionDTO
     {
-        public int VideoId { get; set; }
+        public int CommentId { get; set; }
         public int UserId { get; set; }
         public Reaction Reaction { get; set; }
     }

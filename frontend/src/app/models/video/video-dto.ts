@@ -1,3 +1,4 @@
+import { Comment } from '../comment/comment';
 import { VideoReactionDTO } from '../reaction/video-reaction-dto';
 
 export interface VideoDTO {
@@ -9,4 +10,5 @@ export interface VideoDTO {
   createdAt: Date;
   folderId: number;
   reactions: VideoReactionDTO[];
+  comments: Comment[];
 }

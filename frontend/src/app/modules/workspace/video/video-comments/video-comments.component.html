@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-header>
+    <img mat-card-avatar src="{{ comment.author.avatarLink }}" alt="Avatar" />
+    <mat-card-title>{{ comment.author.workspaceName }} </mat-card-title>
+    <div>{{ comment.createdAt | date: "d/M/yy, h:mm a" }}</div>
+  </mat-card-header>
+  <mat-card-content *ngIf="!isEditingMode">
+    <p>{{ comment.body }}</p>
+  </mat-card-content>
+  <mat-card-content *ngIf="isEditingMode">
+    <mat-form-field>
+      <textarea
+        [(ngModel)]="comment.body"
+        matInput
+        placeholder="Write something..."
+      ></textarea>
+    </mat-form-field>
+    <button
+      mat-icon-button
+      color="primary"
+      matTooltip="Post it"
+      (click)="onEditComment()"
+    >
+      <mat-icon aria-label="Send">send</mat-icon>
+    </button>
+  </mat-card-content>
+  <mat-card-actions class="actions-buttons" align="end">
+    <button
+      mat-icon-button
+      color="accent"
+      *ngIf="currentUser?.id === comment.author.id"
+      (click)="toggleIsEditingMode()"
+    >
+      <mat-icon aria-label="Edit">edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      *ngIf="currentUser?.id === comment.author.id"
+      (click)="onDeleteComment()"
+    >
+      <mat-icon aria-label="Delete">delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
