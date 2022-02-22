@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Recodo.API.Extensions;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos.Comment;
+using Recodo.Common.Dtos.Reactions;
+using Recodo.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +17,7 @@ namespace Recodo.API.Controllers
     public class CommentController: ControllerBase
     {
         private readonly CommentService _commentService;
+        private readonly ReactionService _reactionService;
         public CommentController(CommentService commentService)
         {
             _commentService = commentService;
@@ -43,6 +47,15 @@ namespace Recodo.API.Controllers
         {
             await _commentService.DeleteComment(id);
             return NoContent();
+        }
+
+        [HttpPost("react")]
+        public async Task<IActionResult> ReactComment(NewCommentReactionDTO reaction)
+        {
+            reaction.UserId = this.GetUserIdFromToken();
+
+            await _reactionService.ReactComment(reaction);
+            return Ok();
         }
     }
 }
