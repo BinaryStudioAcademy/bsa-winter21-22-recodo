@@ -30,6 +30,39 @@ mat-list-item:hover {
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
+.folder-table {
+  width: 100%;
+  background-color: #f4e9e9;
+  img{
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.mat-row:nth-child(even) {
+  background-color: #cfc7c6;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+.icon-text-cell {
+  display: flex;
+  align-items:center;
+  .cell-text{
+    margin-left: 5%;
+  }
+  img{
+    height: 24px;
+    width: 24px;
+  }
+}
+.mat-row:hover .mat-cell {
+  background-color: #E0D8D7;
+}
+
 .screenshot-image {
   width: 300px;
   height: 225px;

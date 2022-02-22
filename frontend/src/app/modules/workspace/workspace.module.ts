@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table'  
 import { BaseRoutingModule } from './workspace-routing.module';
 import { VideoPageComponent } from './video/video-page/video-page.component';
 import { VideoPlayerComponent } from './video/video-player/video-player.component';
@@ -47,6 +48,7 @@ import { VimeModule } from '@vime/angular';
     MatCardModule,
     MatInputModule,
     MatListModule,
+    MatTableModule,
     SharedModule,
     VimeModule,
   ],
