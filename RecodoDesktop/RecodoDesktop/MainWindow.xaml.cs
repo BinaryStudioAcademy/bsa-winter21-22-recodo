@@ -24,9 +24,7 @@ namespace RecodoDesktop
         public MainWindow()
         {
             InitializeComponent();
-            Countdown countdown = new();
-            countdown.Topmost = true;
-            countdown.Show();
+            this.Hide();
         }
     }
 }

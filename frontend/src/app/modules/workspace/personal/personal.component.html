@@ -7,8 +7,8 @@
 </div>
 <div class="page-header-links">
   <div class="header-links-left">
-    <button mat-button>Videos</button>
-    <button mat-button>Screenshots</button>
+    <button class="videos-button" mat-button>Videos</button>
+    <button [disabled]="true" class="screenshots-button">Screenshots</button>
   </div>
   <div class="header-links-right">
     <mat-button-toggle-group class="view-toggle-group" #group = "matButtonToggleGroup" value="grid">

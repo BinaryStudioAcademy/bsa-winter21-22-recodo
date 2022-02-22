@@ -33,21 +33,18 @@ export class LoginPageComponent implements OnInit {
 
   private validateForm() {
     this.loginForm = this.formBuilder.group({
-      email: [, {
-        validators: [
+      email: [, [
           Validators.required,
-          Validators.email
-        ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+        ]
+      ],
+      password: [, [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+          Validators.maxLength(20),
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
         ],
-        updateOn: 'change'
-      }],
+      ],
     });
   }
 
