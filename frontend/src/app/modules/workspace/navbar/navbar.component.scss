@@ -1,50 +1,30 @@
-mat-toolbar{
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #732939;
-    height: 115px;
-    justify-content: center;
-}
-mat-sidenav {
-    height: 50vh;
-    width: 15vw;
-    border-right: none;
-    background: #B6445D;
-    color: white;
-    border-radius: 10px;
-    padding: 16px;
-    text-align: center;
-}
-button{
-    border: 0;
-    outline: none;
-    background: transparent;
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #732939;
+  height: 115px;
+  justify-content: center;
 }
 
-.user{
-    font-size: 0.8rem;
+button {
+  border: 0;
+  outline: none;
+  background: transparent;
 }
 
-.user-image{
-    border-radius: 50%;
-    width: 65px;
-    height: 65px;
-    border: 3px solid #FB6D3A;;
+.user-avatar-button {
+  padding-bottom: 0.5rem;
 }
 
-.additional-icons{
-    margin-left: auto;
-    margin-right: 5px;
+.user-image {
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  border: 3px solid #fb6d3a;
 }
 
-.workspace-button{
-    float: left;
-    width: 100%;
-    border-radius: 8px;
-    border: none;
-    background: #FB6D3A;
-    color: white;
-    height: 36px;
-    text-align: center;
+.additional-icons {
+  margin-left: auto;
+  margin-right: 5px;
 }

@@ -1,17 +1,23 @@
-import { Component, Input} from '@angular/core';
-import { UserDto } from 'src/app/models/user/user-dto';
+import { Component, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  @Input() public user: UserDto = {} as UserDto
-  public isUserPanelOpen = false;
-  constructor() { }
+  @ViewChild(MatMenuTrigger)
+  contextMenu?: MatMenuTrigger;
+  constructor(private loginService: LoginService) {}
+  onContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    this.contextMenu?.menu.focusFirstItem('mouse');
+    this.contextMenu?.openMenu();
+  }
 
-  public toggleUserPersonalPanel() {
-    this.isUserPanelOpen = !this.isUserPanelOpen
+  onLogOut() {
+    this.loginService.logOut();
   }
 }
