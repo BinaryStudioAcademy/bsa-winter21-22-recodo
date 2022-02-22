@@ -12,6 +12,7 @@ namespace Recodo.DAL.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
+        public bool IsSaving { get; set; }
         public int AuthorId { get; set; }
         public User Author { get; set; }
         public DateTime CreatedAt { get; set; }

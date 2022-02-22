@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Recodo.DAL.Context;
@@ -9,9 +10,10 @@ using Recodo.DAL.Context;
 namespace Recodo.DAL.Migrations
 {
     [DbContext(typeof(RecodoDbContext))]
-    partial class RecodoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220222134328_AddIsSavingFlagToVideo")]
+    partial class AddIsSavingFlagToVideo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
