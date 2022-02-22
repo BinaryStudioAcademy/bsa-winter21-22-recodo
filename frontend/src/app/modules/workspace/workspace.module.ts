@@ -21,7 +21,6 @@ import { VideoDescriptionComponent } from './video/video-description/video-descr
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
 import { SettingsComponent } from './settings/settings.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import jwt_decode from 'jwt-decode';
+import { UserUpdateDto } from 'src/app/models/user/user-update-dto';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -54,8 +55,9 @@ export class SettingsComponent implements OnInit {
         {
           validators: [
             Validators.required,
-            Validators.minLength(4),
-            Validators.pattern('^[a-zA-Z0-9]+$'),
+            Validators.minLength(3),
+            Validators.maxLength(20),
+            Validators.pattern("^[a-zA-Z`'][a-zA-Z-`' ]+[a-zA-Z`']?$"),
           ],
         },
       ],
@@ -74,7 +76,10 @@ export class SettingsComponent implements OnInit {
           validators: [
             Validators.required,
             Validators.minLength(8),
-            Validators.pattern('^[a-zA-Z0-9]+$'),
+            Validators.maxLength(20),
+            Validators.pattern(
+              '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&(){}[]\\:;<>,‘.?/~_+-=|]+)$'
+            ),
           ],
         },
       ],
@@ -82,8 +87,12 @@ export class SettingsComponent implements OnInit {
         ,
         {
           validators: [
+            Validators.required,
             Validators.minLength(8),
-            Validators.pattern('^[a-zA-Z0-9]$'),
+            Validators.maxLength(20),
+            Validators.pattern(
+              '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&(){}[]\\:;<>,‘.?/~_+-=|]+)$'
+            ),
           ],
         },
       ],
@@ -94,8 +103,6 @@ export class SettingsComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     target.src = '../../assets/icons/test-user-logo.png';
   }
-
-  saveNewInfoToDb() {}
 
   saveNewInfo() {
     let workspaceName = this.settingsForm1.controls['workspaceName'].value;
@@ -143,7 +150,7 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    if (this.imageFile.size / 1000000 > 5) {
+    if (this.imageFile.size / 1024 / 1024 > 5) {
       window.alert('Image can`t be heavier than ~5MB');
       target.value = '';
       return;
@@ -163,21 +170,21 @@ export class SettingsComponent implements OnInit {
     let passNew = this.settingsForm2.controls['passNew'].value;
     let userId = this.userId;
 
-    this.httpService
-      .post(`${this.APIUrl}/User/UpdatePassword`, {
-        id: userId,
-        email,
-        PasswordCurrent: passCurrent,
-        PasswordNew: passNew,
-      })
-      .subscribe({
-        next: () => {
-          window.alert('done');
-        },
-        error: () => {
-          window.alert('error');
-        },
-      });
+    let userUpdateDto: UserUpdateDto = {
+      id: userId,
+      email,
+      passwordCurrent: passCurrent,
+      passwordNew: passNew,
+    };
+
+    this.userService.updatePassword('UpdatePassword', userUpdateDto).subscribe({
+      next: () => {
+        window.alert('done');
+      },
+      error: () => {
+        window.alert('error');
+      },
+    });
   }
 
   saveNewPassCancel() {

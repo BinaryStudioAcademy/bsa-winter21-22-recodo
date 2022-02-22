@@ -48,7 +48,7 @@ namespace Recodo.BLL.Services
             var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
             if (userEntity == null) { return; }
 
-            userEntity.WorkspaceName = userDto.WorkspaceName ?? userDto.WorkspaceName;
+            userEntity.WorkspaceName = userDto.WorkspaceName ?? userEntity.WorkspaceName;
 
 
             if (avatar != null)
