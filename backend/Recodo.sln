@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.Common", "Recodo.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.DAL", "Recodo.DAL\Recodo.DAL.csproj", "{0125C1CB-A379-4356-8DC8-FB17B6EB3C98}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.BlobAPI", "Recodo.BlobAPI\Recodo.BlobAPI.csproj", "{CED85C72-9921-4872-8569-401534059CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.FileAPI", "Recodo.BlobAPI\Recodo.FileAPI.csproj", "{CED85C72-9921-4872-8569-401534059CA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recodo.API.BLL", "Recodo.API.BLL\Recodo.API.BLL.csproj", "{FE13AB2B-806C-4B56-8808-B0B333607BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recodo.FIle.BLL", "Recodo.API.BLL\Recodo.FIle.BLL.csproj", "{FE13AB2B-806C-4B56-8808-B0B333607BD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

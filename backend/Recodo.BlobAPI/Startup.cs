@@ -29,7 +29,7 @@ namespace Recodo.BlobAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
-            services.AddSingleton<IAzureBlobService, AzureBlobService>();
+            services.AddSingleton<IAzureBlobService, FIleService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

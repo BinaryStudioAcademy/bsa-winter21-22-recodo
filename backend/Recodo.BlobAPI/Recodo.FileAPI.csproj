@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Recodo.API.BLL\Recodo.API.BLL.csproj" />
+    <ProjectReference Include="..\Recodo.API.BLL\Recodo.FIle.BLL.csproj" />
   </ItemGroup>
 
 </Project>

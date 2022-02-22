@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ namespace Recodo.API.BLL.Interfaces
     public interface IAzureBlobService
     {
         Task<IEnumerable<Uri>> ListAsync();
-        Task UploadAsync(int id, IFormFile files);
+        Task UploadAsync(IFormFile files, string token);
         Task<Stream> DownloadAsync(int id);
         Task DeleteAsync(int id);
 

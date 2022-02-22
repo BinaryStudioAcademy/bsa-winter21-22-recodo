@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Recodo.API.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Recodo.BlobAPI.Controllers
 {
     [Route("api/Blob")]
     [ApiController]
-    public class BlobExplorerController : ControllerBase
+    public class FileController : ControllerBase
     {
         private readonly IAzureBlobService _blobService;
 
-        public BlobExplorerController(IAzureBlobService blobService)
+        public FileController(IAzureBlobService blobService)
         {
             _blobService = blobService;
         }
@@ -27,7 +29,7 @@ namespace Recodo.BlobAPI.Controllers
 
         [HttpGet]
         public async Task<FileStreamResult> GetFile(int id)
-        {      
+        {
             return File(await _blobService.DownloadAsync(id), "application/mp4", id.ToString()+".mp4");
         }
 
@@ -35,7 +37,8 @@ namespace Recodo.BlobAPI.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 157286400)]
         public async Task<IActionResult> UploadFile(int id, IFormFile file)
         {
-            await _blobService.UploadAsync(id, file);
+            var accessToken = Request.Headers[HeaderNames.Authorization];
+            await _blobService.UploadAsync(file, accessToken.FirstOrDefault());
 
             return Ok();
         }
