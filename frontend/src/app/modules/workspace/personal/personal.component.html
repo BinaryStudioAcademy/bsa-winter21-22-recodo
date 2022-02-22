@@ -20,10 +20,19 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
     <button mat-button class="button-disabled">Export Insights</button>
-    <button mat-button class="button-outlined">New Folder</button>
+    <button mat-button class="button-outlined" (click)="showNewFolderForm()" >New Folder</button>
     <button mat-button class="button-accent">New Video</button>
   </div>
 </div>
+<h2>Folders</h2>
+<mat-card class="folder-form-container" *ngIf="isFolderFormShow" >
+  <div class="folder-form" [formGroup]="folderForm" (keydown.enter)="createFolder()">
+    <mat-form-field class="input-form" appearance="legacy" color="warn" floatLabel="never" hideRequiredMarker="true">
+      <input matInput placeholder="Enter a folder title"  formControlName="name">
+    </mat-form-field>
+  </div>
+</mat-card>
+
 <mat-list *ngIf="group.value === 'grid'">
   <mat-list-item>
     <div matLine class="item-header">
