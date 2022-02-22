@@ -1,48 +1,47 @@
 <div class="flex-container">
-    <div class="left-part">
-        <div>
-            <img src="../../../../assets/icons/white-dots.svg">
-        </div>
-    </div>
-    <div class="center-part">
-        <div class="login-container">
-            <img src="../../../../assets/icons/logo.svg" alt="logo" />
-            <div class="to-login-container">
-                <h2>Sign in to Recodo</h2>
-            </div>
-            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)">
-                <p class="input-label">Email</p>
-                <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="never" hideRequiredMarker="true">
-                    <input type="email" matInput placeholder="user@gmail.com" [(ngModel)]="userLoginDto.email" formControlName="email">
-                </mat-form-field>
-                <p class="input-label">Password</p>
-                <mat-form-field class="input-form" appearance="fill" color="warn" hideRequiredMarker="true">
-                    <input [type]="hidePass ? 'password' : 'text'" matInput minlength="8" placeholder="password"
-                         [(ngModel)]="userLoginDto.password" formControlName="password">
-                    <mat-icon class="password-icon" matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' :
-                        'visibility_off'}}
-                    </mat-icon>
-                </mat-form-field>
-                
-                <div class="registation-buttons">
-                    <button class="submit-button" mat-button type="submit" [disabled]="!loginForm.valid">Sign In</button>
-                    <p>
-                        Or sign in with
-                    </p>
-                    <button class="login-with-button">
-                        <img src="../../../../assets/icons/googleButton.svg" alt="google">
-                    </button>
-                    <button class="login-with-button">
-                        <img src="../../../../assets/icons/facebookButton.svg" alt="facebook">
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="right-part">
-        <div>
-            <img src="../../../../assets/icons/white-dots.svg">
-        </div>
-    </div>
+  <div class="left-part">
+      <div>
+          <img src="../../../../assets/icons/white-dots.svg">
+      </div>
   </div>
-
+  <div class="center-part">
+      <div class="login-container">
+          <img src="../../../../assets/icons/logo.svg" alt="logo" />
+          <div class="to-login-container">
+              <h2>Sign in to Recodo</h2>
+          </div>
+          <form class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)">
+              <p class="input-label">Email</p>
+              <mat-form-field class="input-form" appearance="fill" color="warn" floatLabel="never" hideRequiredMarker="true">
+                  <input type="email" matInput placeholder="user@gmail.com" [(ngModel)]="userLoginDto.email" formControlName="email">
+              </mat-form-field>
+              <p class="input-label">Password</p>
+              <mat-form-field class="input-form" appearance="fill" color="warn" hideRequiredMarker="true">
+                  <input [type]="hidePass ? 'password' : 'text'" matInput minlength="8" placeholder="password"
+                       [(ngModel)]="userLoginDto.password" formControlName="password">
+                  <mat-icon class="password-icon" matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' :
+                      'visibility_off'}}
+                  </mat-icon>
+              </mat-form-field>
+              
+              <div class="registation-buttons">
+                  <button class="submit-button" mat-button type="submit" [disabled]="!loginForm.valid">Sign In</button>
+                  <p>
+                      Or sign in with
+                  </p>
+                  <button (click)="googleLogin()" class="login-with-button">
+                      <img src="../../../../assets/icons/googleButton.svg" alt="google">
+                  </button>
+                  <button class="login-with-button">
+                      <img src="../../../../assets/icons/facebookButton.svg" alt="facebook">
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
+  <div class="right-part">
+      <div>
+          <img src="../../../../assets/icons/white-dots.svg">
+      </div>
+  </div>
+</div>

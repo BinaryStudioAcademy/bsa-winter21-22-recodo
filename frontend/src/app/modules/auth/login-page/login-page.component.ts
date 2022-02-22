@@ -4,6 +4,7 @@ import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
 import { LoginService } from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
+import { ExternalAuthService } from 'src/app/services/external-auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -24,8 +25,9 @@ export class LoginPageComponent implements OnInit {
     private router : Router,
     private route : ActivatedRoute,
     private formBuilder : FormBuilder,
-    private loginService : LoginService
-  ) {}
+    private loginService : LoginService,
+    private externalAuthService: ExternalAuthService
+  ) { }
 
   ngOnInit() {
     this.validateForm();
@@ -70,4 +72,8 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
+
+  public googleLogin = () => {
+    this.externalAuthService.signInWithGoogle();
+  };
 }

@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
-import {UserRegisterDto} from 'src/app/models/user/user-register-dto';
+import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
+import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+  styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
 
@@ -35,46 +36,56 @@ export class RegisterFormComponent implements OnInit {
   }
 
   private validateForm() {
-    this.registerForm = this.formBuilder.group({
-      workspaceName: [, {
-        validators: [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$')
+    this.registerForm = this.formBuilder.group(
+      {
+        workspaceName: [
+          ,
+          {
+            validators: [
+              Validators.required,
+              Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
+            ],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-      email: [, {
-        validators: [
-          Validators.required,
-          Validators.email
+        email: [
+          ,
+          {
+            validators: [Validators.required, Validators.email],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        password: [
+          ,
+          {
+            validators: [
+              Validators.required,
+              Validators.minLength(8),
+              Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+            ],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-      confirmPassword: [, {
-        validators: [
-          Validators.required
+        confirmPassword: [
+          ,
+          {
+            validators: [Validators.required],
+            updateOn: 'change',
+          },
         ],
-        updateOn: 'change'
-      }],
-    }, {
-      validator: passwordMatchValidator
-    });
+      },
+      {
+        validator: passwordMatchValidator,
+      }
+    );
   }
 
   public registerUser() {
-    let userRegisterDto : UserRegisterDto = {
+    let userRegisterDto: UserRegisterDto = {
       email: this.registerForm.controls['email'].value,
       workspaceName: this.registerForm.controls['workspaceName'].value,
-      password: this.registerForm.controls['password'].value
-    }
+      password: this.registerForm.controls['password'].value,
+    };
     this.registrationService.register(userRegisterDto).subscribe((responce) => {
       this.currentUser = responce;
       if(this.registrationService.areTokensExist()) {
@@ -90,4 +101,8 @@ export class RegisterFormComponent implements OnInit {
       }
     });
   }
+
+  public googleLogin = () => {
+    this.externalAuthService.signInWithGoogle();
+  };
 }
