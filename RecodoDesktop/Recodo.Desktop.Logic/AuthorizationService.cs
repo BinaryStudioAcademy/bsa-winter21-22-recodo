@@ -10,12 +10,16 @@ namespace Recodo.Desktop.Logic
     public class AuthorizationService
     {
         readonly private DefaultBrowser _browser;
-        readonly private string _redirect_url = $"http://{IPAddress.Loopback}:{GetRandomUnusedPort()}/";
-        readonly Dictionary<string, string> authRequestParams = new();
+        readonly private string _redirect_url;
+        readonly Dictionary<string, string> _authRequestParams;
 
         public AuthorizationService(string endpoint)
         {
-            authRequestParams.Add("redirect_url", _redirect_url);
+            _redirect_url = $"http://{IPAddress.Loopback}:{GetRandomUnusedPort()}/";
+            _authRequestParams = new Dictionary<string, string>
+            {
+                { "redirect_url", _redirect_url }
+            };
 
             _browser = new DefaultBrowser(GetAuthRequestUrl(endpoint), _redirect_url);          
         }
@@ -28,7 +32,7 @@ namespace Recodo.Desktop.Logic
 
         private string GetAuthRequestUrl(string endpoint)
         {
-            return QueryHelpers.AddQueryString(endpoint, authRequestParams);
+            return QueryHelpers.AddQueryString(endpoint, _authRequestParams);
         }
 
         private static Token ParseRawAuthResult(string result)

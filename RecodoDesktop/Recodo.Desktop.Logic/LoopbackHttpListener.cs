@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace Recodo.Desktop.Logic
     {
         const int DefaultTimeout = 60 * 3;
         readonly IWebHost _host;
-        readonly TaskCompletionSource<string> _source = new();
+        readonly TaskCompletionSource<string> _source;
         readonly string _url;
 
         public string Url => _url;
@@ -22,7 +21,7 @@ namespace Recodo.Desktop.Logic
         public LoopbackHttpListener(string url)
         {
             _url = url;
-
+            _source = new TaskCompletionSource<string>();
             _host = new WebHostBuilder()
                 .UseKestrel()
                 .UseUrls(_url)
