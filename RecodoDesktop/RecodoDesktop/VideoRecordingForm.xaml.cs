@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using ScreenRecorderLib;
 
 namespace Recodo.Desktop.Main
 {
@@ -28,6 +27,9 @@ namespace Recodo.Desktop.Main
         private List<string> recordableWindows;
 
         private bool inputAudiButtonIsActive = true;
+        private bool videoFormOpened = false;
+        CameraService _cameraService = CameraService.GetInstance();
+        
         public VideoRecordingForm(RecorderService recorderService)
         {
             _recorderService = recorderService;
@@ -98,6 +100,38 @@ namespace Recodo.Desktop.Main
             var selectedResolutionName = RecordingResolution.SelectedItem.ToString();
             var selectedResolution = RecorderHelper.GetResolutionByName(selectedResolutionName);
             _options.Resolution = selectedResolution;
+        }
+        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> devices = _cameraService.GetCameras().ToList();
+            for (int i = 0; i < devices.Count; i++)
+            {
+                cameraComboBox.Items.Add(devices[i]);
+            }
+        }
+
+        private void cameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
+            
+                if (!videoFormOpened)
+                {
+                        videoFormOpened = true;
+                        return;
+                }
+                if (cameraComboBox.SelectedIndex != 0)
+                {
+                        _cameraService.StopCapture();
+                        videoForm.Show();
+                }
+                else
+                {
+                        _cameraService.StopCapture();               
+                }
+            });
         }
     }
 }

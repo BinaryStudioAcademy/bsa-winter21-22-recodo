@@ -13,7 +13,7 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
         FontFamily="{DynamicResource MaterialDesignFont}"
-        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -129,13 +129,7 @@
                     <DynamicResource ResourceKey="Camera"/>
                 </Button>
                 <Border Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                    <ComboBox Name="VideoDevices" SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left">
-                        <ComboBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
-                                <Setter Property="Width" Value="354"/>
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
-                    </ComboBox>
+                    <ComboBox x:Name="cameraComboBox" SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left" SelectionChanged="cameraComboBox_SelectionChanged">Screen and camera</ComboBox>
                 </Border>
             </StackPanel>
 
