@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { passwordMatchValidator } from 'src/app/core/validators/customValidators';
+import {
+  cannotContainSpace,
+  passwordMatchValidator,
+  startsOrEndWithSpace} from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
@@ -29,48 +32,37 @@ export class RegisterFormComponent {
   }
 
   private validateForm() {
-    this.registerForm = this.formBuilder.group(
-      {
-        workspaceName: [
-          ,
-          {
-            validators: [
-              Validators.required,
-              Validators.pattern('^[a-zA-Z\'][a-zA-Z-\' ]+[a-zA-Z\']?$'),
-            ],
-            updateOn: 'change',
-          },
+    this.registerForm = this.formBuilder.group({
+      workspaceName: [,
+          [Validators.required,
+          Validators.pattern('^[а-яА-ЯёЁa-zA-Z\`\'][а-яА-ЯёЁa-zA-Z-\`\' ]+[а-яА-ЯёЁa-zA-Z\`\']?$'),
+          Validators.minLength(3),
+          Validators.maxLength(30),
+          startsOrEndWithSpace
         ],
-        email: [
-          ,
-          {
-            validators: [Validators.required, Validators.email],
-            updateOn: 'change',
-          },
+      ],
+      email: [, [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ]
+      ],
+      confirmPassword: [, [
+          Validators.required,
         ],
-        password: [
-          ,
-          {
-            validators: [
-              Validators.required,
-              Validators.minLength(8),
-              Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-            ],
-            updateOn: 'change',
-          },
+      ],
+      password: [, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(20),
+          Validators.pattern(
+            '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'
+            ),
+          cannotContainSpace
         ],
-        confirmPassword: [
-          ,
-          {
-            validators: [Validators.required],
-            updateOn: 'change',
-          },
-        ],
-      },
-      {
-        validator: passwordMatchValidator,
-      }
-    );
+      ],
+    }, {
+      validator: passwordMatchValidator
+    });
   }
 
   public registerUser() {

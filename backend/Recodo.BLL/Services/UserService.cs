@@ -8,6 +8,9 @@ using Recodo.Common.Security;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
+using System.Linq;
+using Recodo.Common.Security;
+using Recodo.BLL.Exceptions;
 using System.Threading.Tasks;
 
 namespace Recodo.BLL.Services
@@ -28,6 +31,13 @@ namespace Recodo.BLL.Services
             var salt = SecurityHelper.GetRandomBytes();
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.Password = SecurityHelper.HashPassword(userRegisterDTO.Password, salt);
+
+            
+            var existUser = _context.Users.FirstOrDefault(u => u.Email == userRegisterDTO.Email);
+            if (existUser != null)
+            {
+                throw new ExistUserException(userRegisterDTO.Email);
+            }
 
             _context.Users.Add(userEntity);
             await _context.SaveChangesAsync();

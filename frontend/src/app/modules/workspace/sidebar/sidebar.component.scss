@@ -16,36 +16,6 @@ mat-nav-list{
     margin-right: 35px;
 }
 
-.logo-image{
-    float: left;
-    width: 56px;
-    height: 56px;
-    background: #B6445D;
-    border-radius: 32px;
-    
-    img {
-    position: absolute;
-    margin-left: 17px;
-    margin-top: 13px;
-    }
-    .imgA {
-    z-index: 1;
-    }
-    .imgB {
-        padding-left: 7.5px;
-        padding-top: 5px;
-    z-index: 3;
-    }
-}
-
-.logo-text{
-    float: left;
-    color: #fff;
-    font-size: 1.8rem;
-    padding-left: 10px;
-    padding-top: 19px;
-}
-
 .mat-list-item{
     
     color: #fff;
@@ -73,7 +43,7 @@ mat-nav-list{
     background: #B6445D;
     padding: 10px;
     margin-bottom:35px;
-    margin-top: 31px;
+    margin-top: 25px;
     border-radius: 10px;
 }
 
