@@ -9,9 +9,6 @@ using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
 using System.Linq;
-using Recodo.Common.Security;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Recodo.BLL.Exceptions;
 using System.Threading.Tasks;
 
