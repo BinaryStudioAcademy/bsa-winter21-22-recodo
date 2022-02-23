@@ -11,6 +11,10 @@ using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
 using System.Linq;
+using Recodo.Common.Security;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Recodo.BLL.Exceptions;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
 
@@ -50,6 +54,13 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
 
             return _mapper.Map<UserDTO>(userEntity);
+        }
+
+        public async Task<UserDTO> GetUserById(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == userId);
+            var userDto = _mapper.Map<UserDTO>(user);
+            return userDto;
         }
 
         public async Task<UserDTO> CreateGoogleUser(ExternalAuthDto userRegisterDTO,

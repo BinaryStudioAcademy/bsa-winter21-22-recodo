@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Recodo.API.Extensions;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos.User;
 using System.Threading.Tasks;
@@ -30,6 +32,16 @@ namespace Recodo.API.Controllers
         {
             await _userService.ResetPasswordDone(user);
             return NoContent();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("fromToken")]
+        public async Task<IActionResult> GetUserFromToken()
+        {
+            var user = await _userService.GetUserById(this.GetUserIdFromToken());
+
+            return Ok(user);
         }
     }
 }
