@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Recodo.API.BLL.Interfaces;
 using Recodo.API.BLL.Services;
+using Recodo.FIle.BLL.Interfaces;
+using Recodo.FIle.BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,7 @@ namespace Recodo.BlobAPI
         {
             services.AddSingleton<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<IRequestService, RequestService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

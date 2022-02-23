@@ -10,7 +10,7 @@ namespace Recodo.FIle.BLL.Interfaces
     public interface IRequestService
     {
         Task<string> SendSaveRequest(string token);
-        Task SendGetRequest(string token);
+        Task SendGetRequest(int id ,string token);
         Task<HttpResponseMessage> SendFinishRequest(int videoId);
     }
 }

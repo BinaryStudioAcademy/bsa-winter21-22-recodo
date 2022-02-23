@@ -36,7 +36,7 @@ namespace Recodo.BlobAPI.Controllers
 
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 157286400)]
-        public async Task<IActionResult> UploadFile(int id, IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
             await _blobService.UploadAsync(file, accessToken.FirstOrDefault());

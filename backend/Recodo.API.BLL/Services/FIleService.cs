@@ -68,7 +68,7 @@ namespace Recodo.API.BLL.Services
 
         public async Task<Stream> DownloadAsync(int id, string token)
         {
-			await _requestService.SendGetRequest(token);
+			await _requestService.SendGetRequest(id, token);
 
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 
