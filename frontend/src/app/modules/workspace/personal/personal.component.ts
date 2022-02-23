@@ -29,21 +29,7 @@ export class PersonalComponent implements OnInit {
   folder : FolderDto = {} as FolderDto;
 
   private unsubscribe$ = new Subject<void>();
-
-  constructor(private registrationService: RegistrationService,
-    private formBuilder: FormBuilder,
-    private folderService: FolderService) {
-    this.getAutorithedUser();
-  }
-
-  private getAutorithedUser() {
-    return this.registrationService
-    .getUser()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((user) => (this.currentUser = user));;
-}
-
-  //now i can`t get current user and his team cause not implementer this services
+ //now i can`t get current user and his team cause not implementer this services
   //it's mock team and user id
   team : number = 1;
   user : number = 4;
@@ -51,12 +37,22 @@ export class PersonalComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
   dataSource = ELEMENT_DATA;
-  constructor(private formBuilder: FormBuilder, private folderService: FolderService)
-  {}
+  constructor(
+    private registrationService: RegistrationService,
+    private formBuilder: FormBuilder,
+    private folderService: FolderService ) {}
 
   ngOnInit(): void {
+    this.getAutorithedUser();
     this.validateForm();
   }
+
+  private getAutorithedUser() {
+    return this.registrationService
+    .getUser()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user) => (this.currentUser = user));;
+ }
 
   private validateForm() {
     this.folderForm = this.formBuilder.group({
