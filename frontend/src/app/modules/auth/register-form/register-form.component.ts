@@ -54,9 +54,7 @@ export class RegisterFormComponent {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern(
-            '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'
-            ),
+          Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/),
           cannotContainSpace
         ],
       ],
@@ -75,6 +73,13 @@ export class RegisterFormComponent {
       this.currentUser = responce;
       if (this.registrationService.areTokensExist()) {
         this.router.navigate(['/login']);
+      }
+    },(error) => {
+      if(error.status === 401) {
+        alert('This email already exists');
+      }
+      else {
+        alert('Error');
       }
     });
   }

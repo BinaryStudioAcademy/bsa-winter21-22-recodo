@@ -42,19 +42,31 @@ export class LoginPageComponent implements OnInit {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
+          Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/)
         ],
       ],
     });
   }
 
-  public signIn(_user : UserLoginDto) {
-    this.loginService.login(_user).subscribe((responce) => {
-      this.currentUser = responce;
-      if(this.loginService.areTokensExist()) {
-        this.router.navigate(['/personal']);
-      }
-    });
+  public signIn(_user: UserLoginDto) {
+    this.loginService.login(_user)
+      .subscribe((response) => {
+        this.currentUser = response;
+        if(this.loginService.areTokensExist()) {
+          this.router.navigate(['/personal']);
+        }
+      },
+      (error) => {
+        if(error.status === 404) {
+          alert('No user was found with this email');
+        }
+        else if(error.status === 401) {
+          alert('Incorrect password');
+        }
+        else {
+          alert('Error');
+        }
+      });
   }
 
   public googleLogin = () => {
