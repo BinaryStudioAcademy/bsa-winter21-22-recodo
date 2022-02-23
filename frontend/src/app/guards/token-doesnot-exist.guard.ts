@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 
 @Injectable({
@@ -11,9 +11,17 @@ export class TokenDoesnotExistGuard implements CanActivate {
     private router : Router
   ) { }
 
-  canActivate( ) : boolean {
-    if(this.loginService.areTokensExist()) {
-      this.router.navigate(['/personal']);
+  canActivate(route: ActivatedRouteSnapshot) : boolean {
+    if(this.loginService.areTokensExist() ) {
+      let redirect_url = route.queryParams['redirect_url'];
+      if (redirect_url) {
+        this.router.navigate(['/']).then( () => {
+          window.location.href= `${redirect_url}?access_token=${localStorage.getItem('accessToken')}`
+        });
+      }
+      else {
+        this.router.navigate(['/personal']);
+      }
     }
     return !this.loginService.areTokensExist();
   }

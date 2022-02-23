@@ -1,5 +1,9 @@
+:host ::ng-deep .mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+}
+
 .to-login-container {
-    margin-top: 10%;
+    margin-top: 6%;
     h2 {
         color: #732939;
         font-size: 26px;
@@ -7,21 +11,30 @@
         margin-bottom: 0;
         font-family: "Poppins", sans-serif;
     }
-    .already-registered {
+    .dont-have-account {
         margin: 0;
-        margin-top: 3%;
+        margin-top: 4%;
         color: #777;
         font-size: 13px;
         font-weight: 500;
-        span {
-            color: #732939;
-            font-weight: 600;
+        button{
+            border: none;
+            background: none;
+            margin: 0px;
+            padding: 0px;
+            span {
+                color: #732939;
+                font-weight: 600;
+                &:hover {
+                    color: #B6445D;
+                }
+            }
         }
     }
 }
 
 .login-form {
-    margin-top: 40px;
+    margin-top: 5%;
     width: 360px;
 
     .input-label {
@@ -40,6 +53,15 @@
         }
     }
 
+    .errors {
+        width: 100%;
+        min-height: 25px;
+        
+        small {
+            color: red;
+        }
+    }
+
     .registation-buttons {
         display: flex;
         align-items: center;
@@ -48,7 +70,6 @@
         justify-content: space-between;
 
         .submit-button {
-            cursor: pointer;
             padding: 15px 45px;
             font-weight: 600;
             border-radius: 5px;
@@ -58,14 +79,17 @@
         }
         button:disabled {
             cursor: default;
+            background: #e0d8d7;
+            color: #989898;
+            border: 1px solid #e0d8d7;
         }
 
         p {
             margin: 0;
+            margin-left: auto;
             font-size: 13px;
             font-weight: 500;
             color: #777;
-            margin: 0;
         }
 
         .login-with-button {
@@ -75,6 +99,7 @@
             border-radius: 50%;
             background-color: transparent;
             height: min-content;
+            padding-left: 4%;
         }
     }
 }
@@ -87,18 +112,12 @@
     padding: 0;
   
     .left-part {
-      background: #b6445d;
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .center-part{
       background: #f4e9e9;      
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 40px;
     }
   
     .right-part {
@@ -107,6 +126,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 40px;
     }
   }
   

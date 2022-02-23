@@ -22,6 +22,7 @@ namespace Recodo.API.Extensions
 
             services.AddScoped<AuthService>();
             services.AddScoped<UserService>();
+            services.AddScoped<FolderService>();
         }
 
         public static void RegisterAutoMapper(this IServiceCollection services)

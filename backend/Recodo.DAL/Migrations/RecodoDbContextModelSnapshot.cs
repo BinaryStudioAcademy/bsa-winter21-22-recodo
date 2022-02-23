@@ -77,12 +77,17 @@ namespace Recodo.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("TeamId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("TeamId");
 
@@ -374,6 +379,11 @@ namespace Recodo.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Recodo.DAL.Entities.Folder", "Parent")
+                        .WithMany("SubFolders")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Recodo.DAL.Entities.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
@@ -381,6 +391,8 @@ namespace Recodo.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+
+                    b.Navigation("Parent");
 
                     b.Navigation("Team");
                 });
@@ -487,6 +499,11 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
+                {
+                    b.Navigation("SubFolders");
                 });
 #pragma warning restore 612, 618
         }

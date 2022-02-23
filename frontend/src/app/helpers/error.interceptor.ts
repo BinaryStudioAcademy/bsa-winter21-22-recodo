@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((response) => {
         if (response.status === 401) {
           this.router.navigate(['/']);
-          this.loginService.logout();
+          this.loginService.logOut();
         }
 
         const error = response.error
