@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { UserDto } from 'src/app/models/user/user-dto';
+import { RegistrationService } from 'src/app/services/registration.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
@@ -19,9 +22,26 @@ const ELEMENT_DATA = [
 })
 export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
+
+  public currentUser: UserDto = {} as UserDto;
   public isFolderFormShow = false;
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
+
+  private unsubscribe$ = new Subject<void>();
+
+  constructor(private registrationService: RegistrationService,
+    private formBuilder: FormBuilder,
+    private folderService: FolderService) {
+    this.getAutorithedUser();
+  }
+
+  private getAutorithedUser() {
+    return this.registrationService
+    .getUser()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user) => (this.currentUser = user));;
+}
 
   //now i can`t get current user and his team cause not implementer this services
   //it's mock team and user id
