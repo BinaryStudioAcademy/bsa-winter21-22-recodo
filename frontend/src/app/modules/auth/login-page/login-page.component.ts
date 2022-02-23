@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-login-page',
@@ -24,7 +25,8 @@ export class LoginPageComponent implements OnInit {
     private router : Router,
     private formBuilder : FormBuilder,
     private loginService : LoginService,
-    private externalAuthService: ExternalAuthService
+    private externalAuthService: ExternalAuthService,
+    private snackbarService: SnackBarService
   ) { }
 
   ngOnInit() {
@@ -58,13 +60,13 @@ export class LoginPageComponent implements OnInit {
       },
       (error) => {
         if(error.status === 404) {
-          alert('No user was found with this email');
+          this.snackbarService.openSnackBar('No user was found with this email');
         }
         else if(error.status === 401) {
-          alert('Incorrect password');
+          this.snackbarService.openSnackBar('Incorrect password');
         }
         else {
-          alert('Error');
+          this.snackbarService.openSnackBar('Error');
         }
       });
   }

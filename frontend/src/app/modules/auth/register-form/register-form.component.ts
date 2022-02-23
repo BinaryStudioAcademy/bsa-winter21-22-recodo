@@ -9,6 +9,7 @@ import { UserDto } from 'src/app/models/user/user-dto';
 import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-register-form',
@@ -26,7 +27,8 @@ export class RegisterFormComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private externalAuthService: ExternalAuthService
+    private externalAuthService: ExternalAuthService,
+    private snackbarService: SnackBarService
   ) {
     this.validateForm();
   }
@@ -76,10 +78,10 @@ export class RegisterFormComponent {
       }
     },(error) => {
       if(error.status === 401) {
-        alert('This email already exists');
+        this.snackbarService.openSnackBar('This email already exists');
       }
       else {
-        alert('Error');
+        this.snackbarService.openSnackBar('Error');
       }
     });
   }
