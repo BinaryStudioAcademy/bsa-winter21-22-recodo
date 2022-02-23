@@ -9,6 +9,7 @@ import { UserDto } from 'src/app/models/user/user-dto';
 import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-register-form',
@@ -29,7 +30,8 @@ export class RegisterFormComponent implements OnInit {
     private route : ActivatedRoute,
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private externalAuthService: ExternalAuthService) {}
+    private externalAuthService: ExternalAuthService,
+    private snackbarService: SnackBarService) {}
 
   ngOnInit() {
     this.validateForm();
@@ -61,9 +63,7 @@ export class RegisterFormComponent implements OnInit {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern(
-            '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&`\\(\\)\\{\\}\\[\\]\\\\:;<>,‘.?/~_+-=|]+)$'
-            ),
+          Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/),
           cannotContainSpace
         ],
       ],
@@ -90,6 +90,13 @@ export class RegisterFormComponent implements OnInit {
         else {
           this.router.navigate(['/login']);
         }
+      }
+    },(error) => {
+      if(error.status === 401) {
+        this.snackbarService.openSnackBar('This email already exists');
+      }
+      else {
+        this.snackbarService.openSnackBar('Error');
       }
     });
   }
