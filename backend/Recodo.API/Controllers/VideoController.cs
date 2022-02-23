@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Recodo.API.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/[controller]")]
     public class VideoController: ControllerBase
     {
         private readonly VideoService _videoService;

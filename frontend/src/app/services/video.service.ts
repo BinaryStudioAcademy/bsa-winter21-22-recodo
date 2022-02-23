@@ -3,32 +3,21 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Comment } from '../models/comment/comment';
 import { NewComment } from '../models/comment/new-comment';
+import { VideoDTO } from '../models/video/video-dto';
 import { ResourceService } from './resource.service';
 
 @Injectable({ providedIn: 'root' })
-export class CommentService extends ResourceService<Comment> {
+export class VideoService extends ResourceService<VideoDTO> {
   getResourceUrl(): string {
     return '';
   }
-  public routePrefix = '/api/comments';
+  public routePrefix = '/api/video';
 
   constructor(override httpClient: HttpClient, private router: Router) {
     super(httpClient);
   }
 
-  public createComment(comment: NewComment) {
-    return this.add(comment);
-  }
-
-  public editComment(comment: Comment) {
-    return this.update(comment);
-  }
-
-  public deleteComment(commentId: number) {
-    return this.delete(commentId);
-  }
-
-  public getAllComments() {
+  public getAllVideos() {
     return this.getFullRequest();
   }
 }

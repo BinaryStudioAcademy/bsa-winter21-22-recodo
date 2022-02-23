@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Recodo.API.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;

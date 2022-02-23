@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Recodo.API.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/[controller]")]
     public class CommentController: ControllerBase
     {
         private readonly CommentService _commentService;
