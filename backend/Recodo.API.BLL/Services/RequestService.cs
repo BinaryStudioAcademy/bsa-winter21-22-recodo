@@ -28,29 +28,20 @@ namespace Recodo.FIle.BLL.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task SendGetRequest(int videoId, string token)
+        public async Task<bool> SendGetRequest(int videoId, string token)
         {
             Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
 
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
                 $"File?id={videoId}"));
-            if (response.IsSuccessStatusCode == false)
-            {
-                throw new Exception("Invalid user");
-            }
+            return response.IsSuccessStatusCode;
         }
 
-        public async Task<HttpResponseMessage> SendFinishRequest(int videoId)
+        public async Task<bool> SendFinishRequest(int videoId)
         {
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, BaseUrl +
                 $"File?id={videoId}"));
-            if (response.IsSuccessStatusCode == false)
-            {
-                throw new Exception("Error");
-            }
-            return response;
+            return response.IsSuccessStatusCode;
         }
-
-
     }
 }

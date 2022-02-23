@@ -28,10 +28,13 @@ namespace Recodo.BlobAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<FileStreamResult> GetFile(int id)
+        public async Task<IActionResult> GetFile(int id)
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
-            return File(await _blobService.DownloadAsync(id, accessToken), "application/mp4", id.ToString()+".mp4");
+            var (response, errorCode) = await _blobService.DownloadAsync(id, accessToken);
+            if (errorCode.HasValue)
+                return Unauthorized();
+            return Ok(File(response, "application/mp4", id.ToString()+".mp4"));
         }
 
         [HttpPost]
@@ -39,9 +42,12 @@ namespace Recodo.BlobAPI.Controllers
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
-            await _blobService.UploadAsync(file, accessToken.FirstOrDefault());
+            if (await _blobService.UploadAsync(file, accessToken.FirstOrDefault()))
+            {
+                return Ok();
+            }
 
-            return Ok();
+            return BadRequest();
         }
 
         [HttpDelete]

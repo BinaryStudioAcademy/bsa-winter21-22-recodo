@@ -44,7 +44,7 @@ namespace Recodo.API.BLL.Services
 			return allBlobs;
 		}
 
-		public async Task UploadAsync(IFormFile files, string token)
+		public async Task<bool> UploadAsync(IFormFile files, string token)
 		{
 			var id = await _requestService.SendSaveRequest(token);
 
@@ -54,7 +54,7 @@ namespace Recodo.API.BLL.Services
 			await using var fileStream = files.OpenReadStream();
 			await blob.UploadFromStreamAsync(fileStream);
 
-			var response = await _requestService.SendFinishRequest(Convert.ToInt32(id));	
+			return await _requestService.SendFinishRequest(Convert.ToInt32(id));	
 		}
 
 		public async Task DeleteAsync(int id)
@@ -66,15 +66,20 @@ namespace Recodo.API.BLL.Services
 			await blob.DeleteIfExistsAsync();
 		}
 
-        public async Task<Stream> DownloadAsync(int id, string token)
+        public async Task<(Stream response, int? errorCode)> DownloadAsync(int id, string token)
         {
-			await _requestService.SendGetRequest(id, token);
+			if (await _requestService.SendGetRequest(id, token))
+            {
+				var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 
-			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+				var blob = blobContainer.GetBlockBlobReference(id.ToString());
 
-			var blob = blobContainer.GetBlockBlobReference(id.ToString());		
-
-			return await blob.OpenReadAsync();
+				return (await blob.OpenReadAsync(), null);
+			}
+			else
+            {
+				return (null, 403);
+            }
 		}
     }
 }
