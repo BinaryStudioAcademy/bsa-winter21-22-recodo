@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
+import { FolderDialogComponent } from '../folder/folder-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 const ELEMENT_DATA = [
@@ -24,7 +26,6 @@ export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
 
   public currentUser: UserDto = {} as UserDto;
-  public isFolderFormShow = false;
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
 
@@ -37,14 +38,15 @@ export class PersonalComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
   dataSource = ELEMENT_DATA;
+
   constructor(
     private registrationService: RegistrationService,
     private formBuilder: FormBuilder,
-    private folderService: FolderService ) {}
+    private folderService: FolderService,
+    public dialog: MatDialog ) {}
 
   ngOnInit(): void {
     this.getAutorithedUser();
-    this.validateForm();
   }
 
   private getAutorithedUser() {
@@ -53,34 +55,27 @@ export class PersonalComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((user) => (this.currentUser = user));;
  }
+ createFolder(name: string) {
+   let newfolder : NewFolderDto = {
+   name: name,
+   parentId: this.currentFolder,
+   authorId: this.user,
+   teamId: this.team
+ }
 
-  private validateForm() {
-    this.folderForm = this.formBuilder.group({
-      name: [, {
-        validators: [
-          Validators.required
-        ],
-        updateOn: 'change',
-      }],
-    });
-  }
-
-  createFolder() {
-    let newfolder : NewFolderDto = {
-      name: this.folderForm.controls['name'].value,
-      parentId: this.currentFolder,
-      authorId: this.user,
-      teamId: this.team
-    }
-
-    this.folderService.add(newfolder).subscribe((response) => {
+   this.folderService.add(newfolder).subscribe((response) => {
       this.folder = response.body as FolderDto;
-      this.isFolderFormShow = false;
-      this.folderForm.setValue({ 'name': ''});
     });
   }
 
   showNewFolderForm() {
-    this.isFolderFormShow = true;
+    const dialogRef = this.dialog.open(FolderDialogComponent, {
+      width: '250px',
+      data: {name: 'Untitled folder'},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.createFolder(result)
+    });
   }
 }
