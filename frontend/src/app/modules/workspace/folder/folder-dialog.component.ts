@@ -2,13 +2,13 @@ import {Component, Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
-  animal: string;
   name: string;
 }
 
 @Component({
   selector: 'app-folder-dialog',
-  templateUrl: 'folder-dialog-component.html',
+  templateUrl: 'folder-dialog.component.html',
+  styleUrls: ['folder-dialog.component.scss'],
 })
 export class FolderDialogComponent {
   constructor(
