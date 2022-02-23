@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FolderDialogComponent } from './folder/folder-dialog.component'
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PersonalComponent } from './personal/personal.component';
 import { BaseComponent } from './base/base.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +29,7 @@ import { VimeModule } from '@vime/angular';
 
 @NgModule({
   declarations: [
+    FolderDialogComponent,
     NavbarComponent,
     SidebarComponent,
     PersonalComponent,
@@ -42,6 +45,7 @@ import { VimeModule } from '@vime/angular';
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
+    MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
