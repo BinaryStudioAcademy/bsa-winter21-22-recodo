@@ -34,7 +34,7 @@ namespace Recodo.BLL.Services
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.Password = SecurityHelper.HashPassword(userRegisterDTO.Password, salt);
 
-            
+
             var existUser = _context.Users.FirstOrDefault(u => u.Email == userRegisterDTO.Email);
             if (existUser != null)
             {
@@ -53,7 +53,7 @@ namespace Recodo.BLL.Services
             var userDto = _mapper.Map<UserDTO>(user);
             return userDto;
         }
-        
+
         public async Task<UserDTO> CreateGoogleUser(ExternalAuthDto userRegisterDTO,
             GoogleJsonWebSignature.Payload payload)
         {
@@ -76,5 +76,5 @@ namespace Recodo.BLL.Services
                 return _mapper.Map<UserDTO>(userEntity);
             }
         }
-    
+    }
 }
