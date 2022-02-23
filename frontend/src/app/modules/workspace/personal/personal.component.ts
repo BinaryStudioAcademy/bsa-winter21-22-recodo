@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
@@ -23,7 +22,10 @@ export class PersonalComponent implements OnInit {
   folder : FolderDto = {} as FolderDto;
 
   private unsubscribe$ = new Subject<void>();
-  constructor(private registrationService: RegistrationService) { 
+
+  constructor(private registrationService: RegistrationService,
+    private formBuilder: FormBuilder,
+    private folderService: FolderService) {
     this.getAutorithedUser();
   }
 
@@ -39,8 +41,6 @@ export class PersonalComponent implements OnInit {
   team : number = 1;
   user : number = 4;
   currentFolder : number | undefined;
-  constructor(private formBuilder: FormBuilder, private folderService: FolderService)
-  {}
 
   ngOnInit(): void {
     this.validateForm();
