@@ -8,6 +8,13 @@ import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
 
 
+const ELEMENT_DATA = [
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 }
+];
+
 @Component({
   selector: 'app-content',
   templateUrl: './personal.component.html',
@@ -41,6 +48,11 @@ export class PersonalComponent implements OnInit {
   team : number = 1;
   user : number = 4;
   currentFolder : number | undefined;
+
+  displayedColumns: string[] = ['name', 'owner', 'details'];
+  dataSource = ELEMENT_DATA;
+  constructor(private formBuilder: FormBuilder, private folderService: FolderService)
+  {}
 
   ngOnInit(): void {
     this.validateForm();
