@@ -13,7 +13,7 @@ import { ResourceService } from './resource.service';
 export class RegistrationService extends ResourceService<UserRegisterDto> {
 
     private user: UserDto = {} as UserDto;
-    
+
     getResourceUrl(): string {
         return '/Register'
     };
@@ -52,6 +52,6 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
     }
 
     private getUserFromToken() {
-        return this.getFullRequest<UserDto>(`users/fromToken`);
+        return this.getFullRequest<UserDto>('users/fromToken');
     }
 }

@@ -60,7 +60,9 @@ export abstract class ResourceService<T> {
   }
 
   public getFullRequest<TRequest>(url: string, httpParams?: HttpParams): Observable<HttpResponse<TRequest>> {
-    return this.httpClient.get<TRequest>(`${environment.apiUrl}/${url}`, { observe: 'response', headers: this.getHeaders(), params: httpParams });
+    return this.httpClient.get<TRequest>(`${environment.apiUrl}/${url}`, {
+      observe: 'response', headers: this.getHeaders(), params: httpParams
+    });
   }
   private getHeaders() {
     return this.headers
