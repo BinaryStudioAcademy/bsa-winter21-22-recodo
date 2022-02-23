@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -20,9 +20,11 @@ export class LoginPageComponent implements OnInit {
   public hidePass = true;
   public hideConfirmPass = true;
   public currentUser:UserDto = {} as UserDto;
+  redirectUrl : string | undefined;
 
   constructor(
     private router : Router,
+    private route : ActivatedRoute,
     private formBuilder : FormBuilder,
     private loginService : LoginService,
     private externalAuthService: ExternalAuthService,
@@ -31,6 +33,9 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm();
+    this.route.queryParams.subscribe(params => {
+      this.redirectUrl = params['redirect_url'];
+    });
   }
 
   private validateForm() {
@@ -55,7 +60,15 @@ export class LoginPageComponent implements OnInit {
       .subscribe((response) => {
         this.currentUser = response;
         if(this.loginService.areTokensExist()) {
-          this.router.navigate(['/personal']);
+          if (this.redirectUrl)
+          {
+            this.router.navigate(['/']).then( () => {
+            window.location.href= `${this.redirectUrl}?access_token=${localStorage.getItem('accessToken')}`
+            });
+          }
+          else {
+            this.router.navigate(['/personal']);
+          }
         }
       },
       (error) => {

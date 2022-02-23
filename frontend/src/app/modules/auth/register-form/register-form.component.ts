@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   cannotContainSpace,
   passwordMatchValidator,
@@ -16,21 +16,28 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterFormComponent {
+export class RegisterFormComponent implements OnInit {
+
   public registerForm: FormGroup = {} as FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
-  public currentUser: UserDto = {} as UserDto;
+  public currentUser:UserDto = {} as UserDto;
+  redirectUrl : string | undefined;
 
   constructor(
-    private router: Router,
+    private router : Router,
+    private route : ActivatedRoute,
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private externalAuthService: ExternalAuthService,
-    private snackbarService: SnackBarService
-  ) {
+    private snackbarService: SnackBarService) {}
+
+  ngOnInit() {
     this.validateForm();
+    this.route.queryParams.subscribe(params => {
+      this.redirectUrl = params['redirect_url'];
+    });
   }
 
   private validateForm() {
@@ -73,8 +80,16 @@ export class RegisterFormComponent {
     };
     this.registrationService.register(userRegisterDto).subscribe((responce) => {
       this.currentUser = responce;
-      if (this.registrationService.areTokensExist()) {
-        this.router.navigate(['/login']);
+      if(this.registrationService.areTokensExist()) {
+        if (this.redirectUrl)
+        {
+          this.router.navigate(['/']).then( () => {
+            window.location.href= `${this.redirectUrl}?access_token=${localStorage.getItem('accessToken')}`
+          });
+        }
+        else {
+          this.router.navigate(['/login']);
+        }
       }
     },(error) => {
       if(error.status === 401) {
