@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Recodo.BLL.Services;
 using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -30,8 +26,8 @@ namespace Recodo.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFile(int id)
         {
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);           
-            //await _fileService.GetFile(Convert.ToInt32(userId), id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);           
+            await _fileService.GetFile(Convert.ToInt32(userId), id);
             return Ok();
         }
 
