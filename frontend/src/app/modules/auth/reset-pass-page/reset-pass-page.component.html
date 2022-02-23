@@ -3,7 +3,7 @@
     <div class="login-container">
       <img src="../../../../assets/icons/logo.svg" alt="logo" />
       <div class="to-login-container">
-        <h2>Sign in to Recodo</h2>
+        <h2>Reset password</h2>
         <p class="dont-have-account">
           Don't have an account?
           <button routerLink="/register">
@@ -14,7 +14,7 @@
       <form
         class="login-form"
         [formGroup]="loginForm"
-        (ngSubmit)="signIn(loginForm.value)"
+        (ngSubmit)="resetPassword(loginForm.value)"
       >
         <p class="input-label">Email</p>
         <mat-form-field
@@ -40,54 +40,19 @@
             </small>
           </span>
         </div>
-
-        <p class="input-label">
-          Password
-          <a routerLink="/reset-password" href="#" class="forgot-password"
-            >(Forgot password)</a
-          >
-        </p>
-        <mat-form-field
-          class="input-form"
-          appearance="fill"
-          hideRequiredMarker="true"
-        >
-          <input
-            [type]="hidePass ? 'password' : 'text'"
-            matInput
-            minlength="8"
-            placeholder="password"
-            [(ngModel)]="userLoginDto.password"
-            formControlName="password"
-          />
-          <mat-icon
-            class="password-icon"
-            matSuffix
-            (click)="hidePass = !hidePass"
-            >{{ hidePass ? 'visibility' : 'visibility_off' }}
-          </mat-icon>
-        </mat-form-field>
-        <div class="errors">
-          <small
-            *ngIf=" loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
-          >
-            Password is a required property
-          </small>
-        </div>
-
-        <div class="registation-buttons">
+        <div *ngIf="!isDone" class="registation-buttons">
           <button
             class="submit-button"
             mat-button
             type="submit"
             [disabled]="!loginForm.valid"
           >
-            Sign In
+            Reset
           </button>
-          <p>Or sign in with</p>
-          <button class="login-with-button">
-            <img src="../../../../assets/icons/googleButton.svg" alt="google" />
-          </button>
+        </div>
+        <div *ngIf="isDone">
+          If such an email is registered in the database, then the recovery link
+          was sent to the mail
         </div>
       </form>
     </div>

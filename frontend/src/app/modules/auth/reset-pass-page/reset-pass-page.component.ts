@@ -5,25 +5,28 @@ import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  selector: 'app-reset-pass',
+  templateUrl: './reset-pass-page.component.html',
+  styleUrls: ['./reset-pass-page.component.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class ResetPassPageComponent implements OnInit {
   @Input() userLoginDto: UserLoginDto = {} as UserLoginDto;
   public loginForm: FormGroup = {} as FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
+  public isDone: boolean = false;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private loginService: LoginService,
-    private externalAuthService: ExternalAuthService
+    private externalAuthService: ExternalAuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -39,28 +42,13 @@ export class LoginPageComponent implements OnInit {
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ],
       ],
-      password: [
-        ,
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(20),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-        ],
-      ],
     });
   }
 
-  public signIn(_user: UserLoginDto) {
-    this.loginService.login(_user).subscribe((responce) => {
-      this.currentUser = responce;
-      if (this.loginService.areTokensExist()) {
-        this.router.navigate(['/personal']);
-      }
+  public resetPassword(_user: UserLoginDto) {
+    let email = _user.email;
+    this.userService.resetPassword(email).subscribe(() => {
+      this.isDone = true;
     });
   }
-
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
-  };
 }

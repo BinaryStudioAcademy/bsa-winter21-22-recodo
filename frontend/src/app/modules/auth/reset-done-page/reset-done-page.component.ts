@@ -1,57 +1,54 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   cannotContainSpace,
   passwordMatchValidator,
-  startsOrEndWithSpace,
 } from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
-import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import jwt_decode from 'jwt-decode';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
+  selector: 'app-reset-done',
+  templateUrl: './reset-done-page.component.html',
+  styleUrls: ['./reset-done-page.component.scss'],
 })
-export class RegisterFormComponent {
+export class ResetDonePageComponent {
   public registerForm: FormGroup = {} as FormGroup;
+  public email: string = '-';
+  public token: string = '';
 
   public hidePass = true;
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private externalAuthService: ExternalAuthService
+    private externalAuthService: ExternalAuthService,
+    private userService: UserService
   ) {
     this.validateForm();
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.token = params['token'];
+      let decoded: { name: string; email: string; id: string } = jwt_decode(
+        this.token
+      );
+      this.email = decoded.email;
+    });
   }
 
   private validateForm() {
     this.registerForm = this.formBuilder.group(
       {
-        workspaceName: [
-          ,
-          [
-            Validators.required,
-            Validators.pattern("^[a-zA-Z`'][a-zA-Z-`' ]+[a-zA-Z`']?$"),
-            Validators.minLength(3),
-            Validators.maxLength(30),
-            startsOrEndWithSpace,
-          ],
-        ],
-        email: [
-          ,
-          [
-            Validators.required,
-            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-          ],
-        ],
         confirmPassword: [, [Validators.required]],
         password: [
           ,
@@ -71,20 +68,10 @@ export class RegisterFormComponent {
   }
 
   public registerUser() {
-    let userRegisterDto: UserRegisterDto = {
-      email: this.registerForm.controls['email'].value,
-      workspaceName: this.registerForm.controls['workspaceName'].value,
-      password: this.registerForm.controls['password'].value,
-    };
-    this.registrationService.register(userRegisterDto).subscribe((responce) => {
-      this.currentUser = responce;
-      if (this.registrationService.areTokensExist()) {
+    this.userService
+      .resetPasswordDone(this.email, this.registerForm.value.password)
+      .subscribe(() => {
         this.router.navigate(['/login']);
-      }
-    });
+      });
   }
-
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
-  };
 }
