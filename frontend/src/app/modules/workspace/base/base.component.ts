@@ -17,7 +17,7 @@ export class BaseComponent {
   constructor(private customService:CustomIconService,
     private registrationService: RegistrationService) {
     this.customService.init();
-    
+
     this.registrationService.getUser()
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((user) => (this.currentUser = user));;
