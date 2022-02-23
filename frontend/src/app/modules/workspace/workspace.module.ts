@@ -14,12 +14,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { BaseRoutingModule } from './workspace-routing.module';
+import { MatDividerModule } from '@angular/material/divider';
 import { VideoPageComponent } from './video/video-page/video-page.component';
 import { VideoPlayerComponent } from './video/video-player/video-player.component';
 import { VideoReactionsComponent } from './video/video-reactions/video-reactions.component';
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { VimeModule } from '@vime/angular';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatDividerModule,
     MatCardModule,
     MatInputModule,
     MatListModule,
