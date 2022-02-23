@@ -4,6 +4,7 @@ import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
+import { ExternalAuthService } from 'src/app/services/external-auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,7 +23,8 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private router : Router,
     private formBuilder : FormBuilder,
-    private loginService : LoginService
+    private loginService : LoginService,
+    private externalAuthService: ExternalAuthService
   ) { }
 
   ngOnInit() {
@@ -31,21 +33,18 @@ export class LoginPageComponent implements OnInit {
 
   private validateForm() {
     this.loginForm = this.formBuilder.group({
-      email: [, {
-        validators: [
+      email: [, [
           Validators.required,
-          Validators.email
-        ],
-        updateOn: 'change',
-      }],
-      password: [, {
-        validators: [
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+        ]
+      ],
+      password: [, [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+          Validators.maxLength(20),
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
         ],
-        updateOn: 'change'
-      }],
+      ],
     });
   }
 
@@ -57,4 +56,8 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
+
+  public googleLogin = () => {
+    this.externalAuthService.signInWithGoogle();
+  };
 }

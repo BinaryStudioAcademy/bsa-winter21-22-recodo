@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Recodo.BLL.Exceptions;
 using Recodo.BLL.Services;
+using Recodo.Common.Dtos.Auth;
 using Recodo.Common.Dtos.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
@@ -29,10 +27,10 @@ namespace Recodo.API.Controllers
 
             var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.WorkspaceName, createdUser.Email);
 
-            var result = new AuthUserDTO 
-            { 
-                Token = token, 
-                User = createdUser 
+            var result = new AuthUserDTO
+            {
+                Token = token,
+                User = createdUser
             };
 
             return Ok(result);
@@ -42,6 +40,27 @@ namespace Recodo.API.Controllers
         public async Task<ActionResult<AuthUserDTO>> Login([FromBody] LoginUserDTO userDTO)
         {
             return Ok(await _authService.Authorize(userDTO));
+        }
+
+        [HttpPost("GoogleLogin")]
+        public async Task<IActionResult> GoogleLogin([FromBody] ExternalAuthDto externalAuth)
+        {
+            var payload = await _authService.VerifyGoogleToken(externalAuth);
+            if (payload == null)
+            {
+                throw new VerifyGoogleTokenException();
+            }
+
+            var createdUser = await _userService.CreateGoogleUser(externalAuth, payload);
+            var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.WorkspaceName, createdUser.Email);
+
+            var result = new AuthUserDTO
+            {
+                Token = token,
+                User = createdUser
+            };
+
+            return new JsonResult(result);
         }
     }
 }
