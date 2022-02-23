@@ -28,12 +28,12 @@ namespace Recodo.FIle.BLL.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task SendGetRequest(string token)
+        public async Task SendGetRequest(int videoId, string token)
         {
             Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
 
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
-                $"File"));
+                $"File?id={videoId}"));
             if (response.IsSuccessStatusCode == false)
             {
                 throw new Exception("Invalid user");

@@ -44,5 +44,14 @@ namespace Recodo.BLL.Services
 
             video.IsSaving = false;
         }
+        public async Task GetFile(int userId, int videoId)
+        {
+            var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
+            if (video.AuthorId != userId)
+            {
+                throw new Exception("Invalid id");
+            }            
+        }
+
     }
 }
