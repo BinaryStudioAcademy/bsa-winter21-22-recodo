@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((response) => {
         let handled: boolean = false;
 
-        if (response instanceof HttpErrorResponse) { 
+        if (response instanceof HttpErrorResponse) {
           if (!(response.error instanceof ErrorEvent)) {
             switch (response.status) {
               case 401:

@@ -59,15 +59,13 @@ export class LoginPageComponent implements OnInit {
         }
       },
       (error) => {
-        if(error.status === 404) {
-          this.snackbarService.openSnackBar('No user was found with this email');
-        }
-        else if(error.status === 401) {
-          this.snackbarService.openSnackBar('Incorrect password');
-        }
-        else {
-          this.snackbarService.openSnackBar('Error');
-        }
+        switch (error.status) {
+          case 401:
+            this.snackbarService.openSnackBar('Incorrect password');
+            break;
+          case 404:
+            this.snackbarService.openSnackBar('No user was found with this email');
+          }
       });
   }
 
