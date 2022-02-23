@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ReactionType } from '../models/common/reaction-type';
 import { VideoReactionDTO } from '../models/reaction/video-reaction-dto';
 import { User } from '../models/user/user';
 import { VideoDTO } from '../models/video/video-dto';
 import { ResourceService } from './resource.service';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class VideoReactionService extends ResourceService<VideoDTO> {
   private currentVideo?: VideoDTO;
   private unsubscribe$ = new Subject<void>();

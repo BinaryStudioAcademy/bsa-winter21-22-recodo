@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Comment } from '../models/comment/comment';
@@ -7,6 +8,9 @@ import { CommentReactionDTO } from '../models/reaction/comment-reaction';
 import { User } from '../models/user/user';
 import { ResourceService } from './resource.service';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class CommentReactionService extends ResourceService<Comment> {
   private currentComment: Comment;
   private unsubscribe$ = new Subject<void>();

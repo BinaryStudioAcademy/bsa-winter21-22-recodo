@@ -22,7 +22,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
 import { MatBadgeModule } from '@angular/material/badge';
 import { VideoCommentsComponent } from './video/video-comments/video-comments.component';
-import { FormsModule } from '@angular/forms';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 import { CommentReactionService } from 'src/app/services/comment-reaction.service';
 import { CommentService } from 'src/app/services/comment.service';
