@@ -1,0 +1,25 @@
+﻿<Window x:Class="Recodo.Desktop.Main.VideoForm2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Recodo.Desktop.Main"
+        mc:Ignorable="d"
+        MouseDown="Window_MouseDown"
+        AllowsTransparency ="True"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Title="VideoForm2" Height="280" Width="280">
+    <Window.Background>
+        <SolidColorBrush Opacity="0" Color="White"/>
+    </Window.Background>
+    <Grid>
+        <Border BorderThickness="0" CornerRadius="180,180,180,180" Background="White">
+            <Border x:Name="mBorder" Margin="10" BorderThickness="0" CornerRadius="180,180,180,180" >
+                <Border Margin="10" BorderThickness="0" CornerRadius="180,180,180,180" Background="White">
+                    <Image Margin="10" x:Name="imageBox" Source="/camera_preview.png" />
+                </Border>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

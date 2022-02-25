@@ -7,6 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove="camera_preview.png" />
 		<None Remove="Icons\bell.png" />
 		<None Remove="Icons\camera.png" />
 		<None Remove="Icons\home.png" />
@@ -21,23 +22,25 @@
 
 	<ItemGroup>
 		<PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-    <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
-    <ProjectReference Include="..\Recodo.Desktop.Models\Recodo.Desktop.Models.csproj" />
-  </ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+		<ProjectReference Include="..\Recodo.Desktop.Models\Recodo.Desktop.Models.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+		<ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
 	</ItemGroup>
 
 
-  <ItemGroup>
-    <ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="camera_preview.png" />
 		<Resource Include="Icons\bell.png" />
 		<Resource Include="Icons\camera.png" />
+		<Resource Include="Icons\camera_preview.png" />
 		<Resource Include="Icons\home.png" />
 		<Resource Include="Icons\image.png" />
 		<Resource Include="Icons\menu.png" />
