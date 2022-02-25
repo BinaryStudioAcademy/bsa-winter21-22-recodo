@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recodo.Desktop.Main"
         mc:Ignorable="d"
-        Title="VideoForm" Height="450" Width="800" Loaded="Window_Loaded">
+        MouseDown="Window_MouseDown"
+        AllowsTransparency ="True"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Title="VideoForm" Height="280" Width="280" Loaded="Window_Loaded">
+    <Window.Background>
+        <SolidColorBrush Opacity="0" Color="White"/>
+    </Window.Background>
     <Grid>
-        <Image x:Name="imageBox" />
+        <Border BorderThickness="0" CornerRadius="180,180,180,180" Background="White">
+            <Border x:Name="mBorder" Margin="10" BorderThickness="0" CornerRadius="180,180,180,180" >
+                <Border Margin="10" BorderThickness="0" CornerRadius="180,180,180,180" Background="White">
+                    <Ellipse Height="220" Width="220" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="imageBox" Stretch="UniformToFill" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Border>
+            </Border>
+        </Border>
     </Grid>
 </Window>
