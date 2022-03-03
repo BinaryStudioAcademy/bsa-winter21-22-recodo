@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {
   cannotContainSpace,
   passwordMatchValidator,
-  startsOrEndWithSpace} from 'src/app/core/validators/customValidators';
+  startsOrEndWithSpace,
+} from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { UserRegisterDto } from 'src/app/models/user/user-register-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
@@ -17,59 +18,69 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
-
   public registerForm: FormGroup = {} as FormGroup;
 
   public hidePass = true;
   public hideConfirmPass = true;
-  public currentUser:UserDto = {} as UserDto;
-  redirectUrl : string | undefined;
+  public currentUser: UserDto = {} as UserDto;
+  redirectUrl: string | undefined;
 
   constructor(
-    private router : Router,
-    private route : ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private externalAuthService: ExternalAuthService,
-    private snackbarService: SnackBarService) {}
+    private snackbarService: SnackBarService
+  ) {}
 
   ngOnInit() {
     this.validateForm();
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.redirectUrl = params['redirect_url'];
     });
   }
 
   private validateForm() {
-    this.registerForm = this.formBuilder.group({
-      workspaceName: [,
-          [Validators.required,
-          Validators.pattern('^[а-яА-ЯёЁa-zA-Z\`\'][а-яА-ЯёЁa-zA-Z-\`\' ]+[а-яА-ЯёЁa-zA-Z\`\']?$'),
-          Validators.minLength(3),
-          Validators.maxLength(30),
-          startsOrEndWithSpace
+    this.registerForm = this.formBuilder.group(
+      {
+        workspaceName: [
+          ,
+          [
+            Validators.required,
+            Validators.pattern(
+              '^[а-яА-ЯёЁa-zA-Z\`\'][а-яА-ЯёЁa-zA-Z-\`\' ]+[а-яА-ЯёЁa-zA-Z\`\']?$'
+            ),
+            Validators.minLength(3),
+            Validators.maxLength(30),
+            startsOrEndWithSpace,
+          ],
         ],
-      ],
-      email: [, [
-          Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ]
-      ],
-      confirmPassword: [, [
-          Validators.required,
+        email: [
+          ,
+          [
+            Validators.required,
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          ],
         ],
-      ],
-      password: [, [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(20),
-          Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/),
-          cannotContainSpace
+        confirmPassword: [, [Validators.required]],
+        password: [
+          ,
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(20),
+            Validators.pattern(
+              /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/
+            ),
+            cannotContainSpace,
+          ],
         ],
-      ],
-    }, {
-      validator: passwordMatchValidator
-    });
+      },
+      {
+        validator: passwordMatchValidator,
+      }
+    );
   }
 
   public registerUser() {
@@ -78,26 +89,26 @@ export class RegisterFormComponent implements OnInit {
       workspaceName: this.registerForm.controls['workspaceName'].value,
       password: this.registerForm.controls['password'].value,
     };
-    this.registrationService.register(userRegisterDto).subscribe((responce) => {
-      this.currentUser = responce;
-      if(this.registrationService.areTokensExist()) {
-        if (this.redirectUrl)
-        {
-          this.router.navigate(['/']).then( () => {
-            window.location.href= `${this.redirectUrl}?access_token=${localStorage.getItem('accessToken')}`
+    this.registrationService.register(userRegisterDto).subscribe({
+      next: (responce) => {
+        this.currentUser = responce;
+        if (this.registrationService.areTokensExist()) {
+          this.router.navigate(['/personal']).then(() => {
+            if (this.redirectUrl) {
+              window.location.href = `${
+                this.redirectUrl
+              }?access_token=${localStorage.getItem('accessToken')}`;
+            }
           });
         }
-        else {
-          this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this.snackbarService.openSnackBar('This email already exists');
+        } else {
+          this.snackbarService.openSnackBar('Error');
         }
-      }
-    },(error) => {
-      if(error.status === 401) {
-        this.snackbarService.openSnackBar('This email already exists');
-      }
-      else {
-        this.snackbarService.openSnackBar('Error');
-      }
+      },
     });
   }
 
