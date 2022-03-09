@@ -22,11 +22,13 @@ namespace Recodo.BLL.Services
 
         public async Task<int> SaveVideo(int authorId)
         {
-            Video newVideo = new Video();
-            newVideo.IsSaving = true;
-            newVideo.AuthorId = authorId;
-            newVideo.CreatedAt = DateTime.Now;
-            newVideo.Name = "Video";
+            Video newVideo = new Video()
+            {
+                IsSaving = true,
+                AuthorId = authorId,
+                CreatedAt = DateTime.Now,
+                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}"
+            };
 
             await _context.AddAsync(newVideo);
             await _context.SaveChangesAsync();
@@ -39,7 +41,7 @@ namespace Recodo.BLL.Services
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == id);
             if (video == null)
             {
-                throw new Exception("Invalid id");
+                throw new Exception("Video with such identifier is not found.");
             }
 
             video.IsSaving = false;
@@ -47,9 +49,13 @@ namespace Recodo.BLL.Services
         public async Task GetFile(int userId, int videoId)
         {
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
+            if (video == null)
+            {
+                throw new Exception("Video with such identifier is not found.");
+            }
             if (video.AuthorId != userId)
             {
-                throw new Exception("Invalid id");
+                throw new Exception("User doesn't have acces to this video.");
             }            
         }
 

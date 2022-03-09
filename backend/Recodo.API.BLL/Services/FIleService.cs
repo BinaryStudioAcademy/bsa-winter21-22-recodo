@@ -19,32 +19,14 @@ namespace Recodo.API.BLL.Services
     {
         private readonly IAzureBlobConnectionFactory _azureBlobConnectionFactory;
 		private readonly IRequestService _requestService;
-
+ 
 		public FileService(IAzureBlobConnectionFactory azureBlobConnectionFactory, IRequestService requestService)
-        {
-            _azureBlobConnectionFactory = azureBlobConnectionFactory;
-			_requestService = requestService;
-        }
-
-		public async Task<IEnumerable<Uri>> ListAsync()
 		{
-			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
-			var allBlobs = new List<Uri>();
-			BlobContinuationToken blobContinuationToken = null;
-			do
-			{
-				var response = await blobContainer.ListBlobsSegmentedAsync(blobContinuationToken);
-				foreach (IListBlobItem blob in response.Results)
-				{
-					if (blob.GetType() == typeof(CloudBlockBlob))
-						allBlobs.Add(blob.Uri);
-				}
-				blobContinuationToken = response.ContinuationToken;
-			} while (blobContinuationToken != null);
-			return allBlobs;
+			_azureBlobConnectionFactory = azureBlobConnectionFactory;
+			_requestService = requestService;
 		}
 
-		public async Task<bool> UploadAsync(IFormFile files, string token)
+		public async Task<string> UploadAsync(IFormFile files, string token)
 		{
 			var id = await _requestService.SendSaveRequest(token);
 

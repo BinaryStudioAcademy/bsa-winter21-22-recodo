@@ -1,4 +1,5 @@
-﻿using Microsoft.Net.Http.Headers;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
 using Recodo.FIle.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,15 @@ namespace Recodo.FIle.BLL.Services
     public class RequestService : IRequestService
     {
         private static HttpClient Client { get; set; } = new HttpClient();
+        private readonly IConfiguration _configuration;
 
-        private static string BaseUrl = new string(@"https://localhost:44316/api/");
+        private string BaseUrl;
+
+        public RequestService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            BaseUrl = _configuration["MainApiUrl"];
+        }
 
         public async Task<string> SendSaveRequest(string token)
         {
@@ -37,11 +45,16 @@ namespace Recodo.FIle.BLL.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> SendFinishRequest(int videoId)
+        public async Task<string> SendFinishRequest(int videoId)
         {
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, BaseUrl +
                 $"File?id={videoId}"));
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                return videoId.ToString();
+            }
+
+            return null;
         }
     }
 }

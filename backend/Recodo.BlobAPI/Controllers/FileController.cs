@@ -21,12 +21,6 @@ namespace Recodo.BlobAPI.Controllers
             _blobService = blobService;
         }
 
-        [HttpGet("list")]
-        public async Task<IActionResult> GetBlobs()
-        {
-            return Ok(await _blobService.ListAsync());
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetFile(int id)
         {
@@ -38,13 +32,14 @@ namespace Recodo.BlobAPI.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 157286400)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
-            if (await _blobService.UploadAsync(file, accessToken.FirstOrDefault()))
+            var id = await _blobService.UploadAsync(file, accessToken.FirstOrDefault());
+            if (id != null)
             {
-                return Ok();
+                return Ok(id);
             }
 
             return BadRequest();
