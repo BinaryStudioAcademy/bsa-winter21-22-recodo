@@ -12,7 +12,7 @@ namespace Recodo.FIle.BLL.Services
 {
     public class RequestService : IRequestService
     {
-        private static HttpClient Client { get; set; } = new HttpClient();
+        private HttpClient Client { get; set; } = new HttpClient();
         private readonly IConfiguration _configuration;
 
         private string BaseUrl;
