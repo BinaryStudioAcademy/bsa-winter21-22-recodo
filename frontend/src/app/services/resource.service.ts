@@ -79,6 +79,7 @@ export abstract class ResourceService<T> {
   private handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }
+
   public getFullRequest<TRequest>(
     url: string,
     httpParams?: HttpParams
@@ -89,6 +90,7 @@ export abstract class ResourceService<T> {
       params: httpParams,
     });
   }
+
   private getHeaders() {
     return this.headers;
   }

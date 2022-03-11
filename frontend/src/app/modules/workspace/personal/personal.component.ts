@@ -8,6 +8,13 @@ import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
 
 
+const ELEMENT_DATA = [
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 }
+];
+
 @Component({
   selector: 'app-content',
   templateUrl: './personal.component.html',
@@ -22,11 +29,22 @@ export class PersonalComponent implements OnInit {
   folder : FolderDto = {} as FolderDto;
 
   private unsubscribe$ = new Subject<void>();
+ //now i can`t get current user and his team cause not implementer this services
+  //it's mock team and user id
+  team : number = 1;
+  user : number = 4;
+  currentFolder : number | undefined;
 
-  constructor(private registrationService: RegistrationService,
+  displayedColumns: string[] = ['name', 'owner', 'details'];
+  dataSource = ELEMENT_DATA;
+  constructor(
+    private registrationService: RegistrationService,
     private formBuilder: FormBuilder,
-    private folderService: FolderService) {
+    private folderService: FolderService ) {}
+
+  ngOnInit(): void {
     this.getAutorithedUser();
+    this.validateForm();
   }
 
   private getAutorithedUser() {
@@ -34,17 +52,7 @@ export class PersonalComponent implements OnInit {
     .getUser()
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((user) => (this.currentUser = user));;
-}
-
-  //now i can`t get current user and his team cause not implementer this services
-  //it's mock team and user id
-  team : number = 1;
-  user : number = 4;
-  currentFolder : number | undefined;
-
-  ngOnInit(): void {
-    this.validateForm();
-  }
+ }
 
   private validateForm() {
     this.folderForm = this.formBuilder.group({

@@ -58,6 +58,6 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
   }
 
   private getUserFromToken() {
-    return this.getFullRequest<UserDto>(`user/fromToken`);
+    return this.getFullRequest<UserDto>('users/fromToken');
   }
 }
