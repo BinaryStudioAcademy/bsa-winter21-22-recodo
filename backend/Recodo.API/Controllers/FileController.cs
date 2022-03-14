@@ -27,7 +27,7 @@ namespace Recodo.API.Controllers
         public async Task<IActionResult> GetFile(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);           
-            await _fileService.GetFile(Convert.ToInt32(userId), id);
+            await _fileService.CheckAccessToFile(Convert.ToInt32(userId), id);
             return Ok();
         }
 
