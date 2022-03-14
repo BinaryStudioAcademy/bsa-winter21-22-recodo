@@ -31,7 +31,7 @@ namespace Recodo.BlobAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
-            services.AddSingleton<IFileService, FileService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IRequestService, RequestService>();
 
             services.AddControllers();
