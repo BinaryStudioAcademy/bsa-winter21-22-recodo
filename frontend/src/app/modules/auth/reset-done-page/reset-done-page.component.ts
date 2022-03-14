@@ -10,6 +10,7 @@ import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 import jwt_decode from 'jwt-decode';
 import { UserService } from 'src/app/services/user.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-reset-done',
@@ -29,9 +30,8 @@ export class ResetDonePageComponent {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private registrationService: RegistrationService,
-    private externalAuthService: ExternalAuthService,
-    private userService: UserService
+    private userService: UserService,
+    private loginService: LoginService
   ) {
     this.validateForm();
   }
@@ -69,9 +69,10 @@ export class ResetDonePageComponent {
 
   public registerUser() {
     this.userService
-      .resetPasswordDone(this.email, this.registerForm.value.password)
-      .subscribe(() => {
-        this.router.navigate(['/login']);
+      .resetPasswordFinish(this.email, this.registerForm.value.password)
+      .subscribe((data) => {
+        this.loginService.setTokens(data.body!.token);
+        this.router.navigate(['/personal']);
       });
   }
 }

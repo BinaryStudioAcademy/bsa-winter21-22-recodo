@@ -22,10 +22,7 @@ export class ResetPassPageComponent implements OnInit {
   public isDone: boolean = false;
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private externalAuthService: ExternalAuthService,
     private userService: UserService
   ) {}
 

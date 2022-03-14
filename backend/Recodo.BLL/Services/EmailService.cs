@@ -1,34 +1,23 @@
-﻿using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
-using MimeKit;
-using System;
+﻿using Microsoft.Extensions.Configuration;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
 namespace Thread_.NET.BLL.Services
 {
     public class EmailService
     {
-        public static async Task SendEmailAsync(string email, string subject, string message, IConfiguration configuration)
+        public static async Task SendEmailAsync(string toEmail, string subject, string message, IConfiguration configuration)
         {
-            var emailMessage = new MimeMessage();
+            string apiKey = configuration["SendGridKey"];
+            string fromEmail = configuration["SendGridFromEmail"];
+            var client = new SendGridClient(apiKey);
 
-            emailMessage.From.Add(new MailboxAddress("admin@recodo.com", "admin@recodo.com"));
-            emailMessage.To.Add(new MailboxAddress(email, email));
-            emailMessage.Subject = subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
-            {
-                Text = message
-            };
+            var from = new EmailAddress(fromEmail, "Admin Recodo");
+            var to = new EmailAddress(toEmail, toEmail);
 
-            using (var client = new SmtpClient())
-            {
-                await client.ConnectAsync(configuration["SmtpServer"], Convert.ToInt32(configuration["SmtpPort"]), false);
-                await client.AuthenticateAsync(configuration["SmtpLogin"], configuration["SmtpPassword"]);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
-            }
-
-            Console.WriteLine(message);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
+            await client.SendEmailAsync(msg);
         }
     }
 }

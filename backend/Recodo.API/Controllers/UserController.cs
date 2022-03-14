@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
 using Recodo.BLL.Services;
-using Recodo.Common.Dtos.User;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
@@ -20,18 +19,20 @@ namespace Recodo.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword(UpdateUserDTO user)
+        [HttpPost("ResetPassword/{email}")]
+        public async Task<IActionResult> ResetPassword(string email)
         {
-            await _userService.ResetPassword(user.Email);
+            await _userService.ResetPassword(email);
             return NoContent();
         }
 
-        [HttpPost("ResetPasswordDone")]
-        public async Task<IActionResult> ResetPasswordDone(UpdateUserDTO user)
+        [HttpPost("ResetPasswordFinish/{email}/{newPass}")]
+        public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
         {
-            await _userService.ResetPasswordDone(user);
-            return NoContent();
+            var loginDto = await _userService.ResetPasswordFinish(email, newPass);
+            var auth = await _authService.Authorize(loginDto, false);
+
+            return Ok(auth);
         }
 
         [HttpGet]

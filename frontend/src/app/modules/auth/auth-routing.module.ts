@@ -20,7 +20,7 @@ const routes: Routes = [
     component: ResetPassPageComponent,
   },
   {
-    path: 'reset-done',
+    path: 'reset-finish',
     component: ResetDonePageComponent,
   },
   {
