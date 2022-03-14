@@ -32,7 +32,7 @@ namespace Recodo.BlobAPI
         {
             services.AddSingleton<IAzureBlobConnectionFactory, AzureBlobConnectionFactory>();
             services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<IRequestService, RequestService>();
+            services.AddScoped<IRequestService, RequestService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
