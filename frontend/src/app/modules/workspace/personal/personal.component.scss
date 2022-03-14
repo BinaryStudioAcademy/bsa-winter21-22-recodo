@@ -30,6 +30,39 @@ mat-list-item:hover {
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
+.folder-table {
+  width: 100%;
+  background-color: #f4e9e9;
+  img{
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.mat-row:nth-child(even) {
+  background-color: #cfc7c6;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+.icon-text-cell {
+  display: flex;
+  align-items:center;
+  .cell-text{
+    margin-left: 5%;
+  }
+  img{
+    height: 24px;
+    width: 24px;
+  }
+}
+.mat-row:hover .mat-cell {
+  background-color: #E0D8D7;
+}
+
 .screenshot-image {
   width: 300px;
   height: 225px;
@@ -211,6 +244,27 @@ mat-list-item:hover {
         padding-left: 20px;
         padding-right: 20px;
         border-radius: 8px;
+    }
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle{
+      border-left: none;
+    }
+    .mat-button-toggle-checked{
+      border-bottom:3px solid #FB6D3A;
+      mat-icon{
+        filter: brightness(0%);
+      }
+    }
+    .view-toggle-group{
+      border: none;
+      margin-right: 10px;
+      mat-button-toggle{
+        background-color: #f4e9e9;
+        margin-right: 10px;
+        mat-icon{
+          height: 15px;
+          width: 15px;
+        }
+      }
     }
 }
 

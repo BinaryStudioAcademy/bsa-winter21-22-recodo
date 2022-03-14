@@ -12,6 +12,8 @@ import { ResourceService } from './resource.service';
   })
 export class RegistrationService extends ResourceService<UserRegisterDto> {
 
+    private user: UserDto = {} as UserDto;
+
     getResourceUrl(): string {
         return '/Register'
     };
@@ -38,5 +40,18 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
             localStorage.setItem('accessToken', JSON.stringify(tokens.accessToken));
             localStorage.setItem('refreshToken', JSON.stringify(tokens.refreshToken));
         }
+    }
+
+    public getUser() {
+        return this.getUserFromToken().pipe(
+                map((resp) => {
+                    this.user = resp.body as UserDto;
+                    return this.user;
+                })
+            );
+    }
+
+    private getUserFromToken() {
+        return this.getFullRequest<UserDto>('users/fromToken');
     }
 }

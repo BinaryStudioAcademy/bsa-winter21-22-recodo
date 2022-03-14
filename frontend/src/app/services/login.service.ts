@@ -14,7 +14,9 @@ import { ResourceService } from './resource.service';
 export class LoginService extends ResourceService<UserLoginDto> {
   private user: UserDto = {} as UserDto;
 
-  constructor(override httpClient: HttpClient, private router: Router) {
+  constructor(
+    override httpClient: HttpClient,
+    private router: Router) {
     super(httpClient);
   }
 

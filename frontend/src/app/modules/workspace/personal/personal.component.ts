@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { UserDto } from 'src/app/models/user/user-dto';
+import { RegistrationService } from 'src/app/services/registration.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
+
+
+const ELEMENT_DATA = [
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
+  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 }
+];
 
 @Component({
   selector: 'app-content',
@@ -11,21 +22,37 @@ import { FolderService } from 'src/app/services/folder.service';
 })
 export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
+
+  public currentUser: UserDto = {} as UserDto;
   public isFolderFormShow = false;
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
 
-  //now i can`t get current user and his team cause not implementer this services
+  private unsubscribe$ = new Subject<void>();
+ //now i can`t get current user and his team cause not implementer this services
   //it's mock team and user id
   team : number = 1;
   user : number = 4;
   currentFolder : number | undefined;
-  constructor(private formBuilder: FormBuilder, private folderService: FolderService)
-  {}
+
+  displayedColumns: string[] = ['name', 'owner', 'details'];
+  dataSource = ELEMENT_DATA;
+  constructor(
+    private registrationService: RegistrationService,
+    private formBuilder: FormBuilder,
+    private folderService: FolderService ) {}
 
   ngOnInit(): void {
+    this.getAutorithedUser();
     this.validateForm();
   }
+
+  private getAutorithedUser() {
+    return this.registrationService
+    .getUser()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user) => (this.currentUser = user));;
+ }
 
   private validateForm() {
     this.folderForm = this.formBuilder.group({
