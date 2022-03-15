@@ -29,5 +29,17 @@ namespace Recodo.BLL.Services
 
             return videos;
         }
+
+        public async Task<List<VideoDTO>> GetVideosByUserIdWithoutFolder(int userId)
+        {
+            var videoEntities = await _context.Videos.AsNoTracking()
+                .Include(video => video.Reactions)
+                .Where(v => v.AuthorId == userId && v.FolderId == null)
+                .ToListAsync();
+
+            var videos = _mapper.Map<List<VideoDTO>>(videoEntities);
+
+            return videos;
+        }
     }
 }

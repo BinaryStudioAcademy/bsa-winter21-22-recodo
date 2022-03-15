@@ -20,6 +20,14 @@ export class VideoService extends ResourceService<VideoDto> {
     );
   }
 
+  public getAllVideosWithoutFolderByUserId(id: number) {
+    return this.getFullRequest<VideoDto>(`videos/user/${id}`).pipe(
+      map((resp) => {
+        return resp.body as unknown as VideoDto[];
+      })
+    );
+  }
+
   constructor(override httpClient: HttpClient) {
     super(httpClient);
    }
