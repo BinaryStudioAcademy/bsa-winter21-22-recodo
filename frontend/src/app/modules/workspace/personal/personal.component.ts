@@ -23,6 +23,7 @@ export class PersonalComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger = {} as MatMenuTrigger;
 
   public currentUser: UserDto = {} as UserDto;
+  public avatarLink: string = '';
   public isFolderFormShow = false;
   public isFolderRouteActive = false;
   folderForm : FormGroup = {} as FormGroup;
@@ -34,8 +35,6 @@ export class PersonalComponent implements OnInit {
   public videos: VideoDto[] = [];
 
   private unsubscribe$ = new Subject<void>();
-
-  currentFolder : number | undefined;
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
   
@@ -67,6 +66,9 @@ export class PersonalComponent implements OnInit {
     .getUser()
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((user) => {
+      if(user.avatarLink === null) {
+        user.avatarLink = '../../assets/icons/test-user-logo.png';
+      }
       this.currentUser = user;
       this.getFolders();
       this.videoService.getAllVideosWithoutFolderByUserId(user.id).
