@@ -61,6 +61,11 @@ export class PersonalComponent implements OnInit {
     );
   }
 
+  private getVideos(id: number) {
+    return this.videoService.getAllVideosWithoutFolderByUserId(id).
+        subscribe(res => this.videos = res)
+  }
+
   private getAutorithedUser() {
     return this.registrationService
     .getUser()
@@ -71,8 +76,7 @@ export class PersonalComponent implements OnInit {
       }
       this.currentUser = user;
       this.getFolders();
-      this.videoService.getAllVideosWithoutFolderByUserId(user.id).
-        subscribe(res => this.videos = res)
+      this.getVideos(user.id);
     });;
  }
 
@@ -132,6 +136,10 @@ export class PersonalComponent implements OnInit {
      currentDate.getMonth(),
      currentDate.getDate()) - Date.UTC(dateSent.getFullYear(),
      dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
+  }
+
+  public deleteVideo(id: number) {
+    this.videoService.delete(id).subscribe(() => this.getVideos(this.currentUser.id));
   }
 
 }

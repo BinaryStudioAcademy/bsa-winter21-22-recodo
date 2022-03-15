@@ -28,6 +28,10 @@ export class VideoService extends ResourceService<VideoDto> {
     );
   }
 
+  public deleteVideo(id: number) {
+    return this.delete(id);
+  }
+
   constructor(override httpClient: HttpClient) {
     super(httpClient);
    }

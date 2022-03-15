@@ -18,15 +18,25 @@ namespace Recodo.API.Controllers
         {
             _videoService = videoService;
         }
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
         {
             return Ok(await _videoService.GetVideosByFolderId(id));
         }
+
         [HttpGet("user/{id:int}")]
         public async Task<ActionResult<List<VideoDTO>>> GetVideosByUserIdWithoutFolder(int id)
         {
             return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _videoService.Delete(id);
+            return NoContent();
+        }
+
     }
 }

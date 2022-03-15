@@ -82,10 +82,11 @@
         </button>
       </div>
     </div>
+    <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
+      <button mat-menu-item (click)="deleteVideo(video.id)">Delete</button>
+    </mat-menu>
   </mat-list-item>
-  <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
-    <button mat-menu-item>Delete</button>
-  </mat-menu>
+  
 </mat-list>
 
 <table mat-table *ngIf="group.value === 'list' && videos !== undefined" [dataSource]="videos" class="folder-table">

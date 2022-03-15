@@ -18,13 +18,17 @@ export class FolderComponent {
   @Input() currentUser: UserDto = {} as UserDto
 
   public videos: VideoDto[] = [];
+  public folderId: number = 0;
   displayedColumns: string[] = ['name', 'owner', 'details'];
 
   constructor(
-    route: ActivatedRoute,
-    videoService: VideoService) {
+    private route: ActivatedRoute,
+    private videoService: VideoService) {
       route.params.pipe(map(p => p['id']))
-      .subscribe(id=>videoService.getAllVideosByFolderId(id).subscribe(res => this.videos = res));
+      .subscribe(id => {
+        this.getVideos(id);
+        this.folderId = id;
+      });
     }
 
   public calculateDiff(dateSent: Date) {
@@ -40,6 +44,14 @@ export class FolderComponent {
   public onMenuTriggered() {
     this.menuTrigger?.menu.focusFirstItem('mouse');
     this.menuTrigger?.openMenu();
+  }
+
+  public deleteVideo(id: number) {
+    this.videoService.delete(id).subscribe(() => this.getVideos(this.folderId));
+  }
+
+  private getVideos(id: number) {
+    return this.videoService.getAllVideosByFolderId(id).subscribe(res => this.videos = res)
   }
 
 }

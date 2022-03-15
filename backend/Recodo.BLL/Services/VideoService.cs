@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Recodo.Common.Dtos;
 using Microsoft.EntityFrameworkCore;
-
+using Recodo.BLL.Exceptions;
+using Recodo.DAL.Entities;
 
 namespace Recodo.BLL.Services
 {
@@ -40,6 +41,19 @@ namespace Recodo.BLL.Services
             var videos = _mapper.Map<List<VideoDTO>>(videoEntities);
 
             return videos;
+        }
+
+        public async Task Delete(int videoId)
+        {
+            var videoEntity = await _context.Videos.FirstOrDefaultAsync(v => v.Id == videoId);
+
+            if(videoEntity is null)
+            {
+                throw new NotFoundException(nameof(Video), videoId);
+            }
+
+            _context.Videos.Remove(videoEntity);
+            await _context.SaveChangesAsync();
         }
     }
 }
