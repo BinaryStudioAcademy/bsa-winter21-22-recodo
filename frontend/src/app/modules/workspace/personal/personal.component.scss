@@ -323,7 +323,7 @@ button{
   margin-right: 1%;
   margin-bottom: 1%;
   &:hover{
-    background: #E7DDDD;
+    background: white;//#E7DDDD;
     cursor: pointer;
   }
 }
@@ -332,11 +332,12 @@ mat-menu-item {
   margin-left: 20px;
 }
 
-::ng-deep .customize {
-  background: #F4E9E9;
+::ng-deep .item-menu {
+  background: #fff;
   button {
-    text-align: center;
+    text-align: left;
     font-weight: 500;
+    text-align: center;
   }
 }
 
@@ -344,4 +345,19 @@ mat-menu-item {
   cursor: pointer;
   color: black;
   text-decoration: none;
+}
+
+.emptyData {
+  display: block;
+  float: right;
+  width: 100%;
+  text-align: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.folder-active {
+  background-color: white;
 }
