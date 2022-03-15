@@ -9,12 +9,31 @@ import { FolderService } from 'src/app/services/folder.service';
 import { FolderDialogComponent } from '../folder/folder-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-
 const ELEMENT_DATA = [
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 }
+  {
+    name: 'Screenshot name Screenshot name Screenshot name',
+    owner: 'Volodymyr',
+    parentId: undefined,
+    teamId: 4,
+  },
+  {
+    name: 'Screenshot name Screenshot name Screenshot name',
+    owner: 'Volodymyr',
+    parentId: undefined,
+    teamId: 4,
+  },
+  {
+    name: 'Screenshot name Screenshot name Screenshot name',
+    owner: 'Volodymyr',
+    parentId: undefined,
+    teamId: 4,
+  },
+  {
+    name: 'Screenshot name Screenshot name Screenshot name',
+    owner: 'Volodymyr',
+    parentId: undefined,
+    teamId: 4,
+  },
 ];
 
 @Component({
@@ -26,15 +45,15 @@ export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
 
   public currentUser: UserDto = {} as UserDto;
-  folderForm : FormGroup = {} as FormGroup;
-  folder : FolderDto = {} as FolderDto;
+  folderForm: FormGroup = {} as FormGroup;
+  folder: FolderDto = {} as FolderDto;
 
   private unsubscribe$ = new Subject<void>();
- //now i can`t get current user and his team cause not implementer this services
+  //now i can`t get current user and his team cause not implementer this services
   //it's mock team and user id
-  team : number = 1;
-  user : number = 4;
-  currentFolder : number | undefined;
+  team: number = 1;
+  user: number = 4;
+  currentFolder: number | undefined;
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
   dataSource = ELEMENT_DATA;
@@ -43,7 +62,8 @@ export class PersonalComponent implements OnInit {
     private registrationService: RegistrationService,
     private formBuilder: FormBuilder,
     private folderService: FolderService,
-    public dialog: MatDialog ) {}
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getAutorithedUser();
@@ -51,19 +71,19 @@ export class PersonalComponent implements OnInit {
 
   private getAutorithedUser() {
     return this.registrationService
-    .getUser()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((user) => (this.currentUser = user));;
- }
- createFolder(name: string) {
-   let newfolder : NewFolderDto = {
-   name: name,
-   parentId: this.currentFolder,
-   authorId: this.user,
-   teamId: this.team
- }
+      .getUser()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user) => (this.currentUser = user));
+  }
+  createFolder(name: string) {
+    let newfolder: NewFolderDto = {
+      name: name,
+      parentId: this.currentFolder,
+      authorId: this.user,
+      teamId: this.team,
+    };
 
-   this.folderService.add(newfolder).subscribe((response) => {
+    this.folderService.add(newfolder).subscribe((response) => {
       this.folder = response.body as FolderDto;
     });
   }
@@ -71,11 +91,11 @@ export class PersonalComponent implements OnInit {
   showNewFolderForm() {
     const dialogRef = this.dialog.open(FolderDialogComponent, {
       width: '250px',
-      data: {name: 'Untitled folder'},
+      data: { name: '' },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.createFolder(result)
+    dialogRef.afterClosed().subscribe((result) => {
+      this.createFolder(result);
     });
   }
 }
