@@ -16,7 +16,7 @@ namespace Recodo.DAL.Entities
         public int AuthorId { get; set; }
         public User Author { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int FolderId { get; set; }
+        public int? FolderId { get; set; }
         public ICollection<VideoReaction> Reactions { get; set; }
     }
 }
