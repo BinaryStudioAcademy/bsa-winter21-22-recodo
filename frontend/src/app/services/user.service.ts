@@ -26,12 +26,12 @@ export class UserService extends ResourceService<UserDto> {
     return '/User';
   }
 
-  public resetPassword(subUrl: string, user: { id: string }) {
-    return this.addWithUrl<{ id: string }, {}>(subUrl, user);
+  public resetPassword(subUrl: string) {
+    return this.addWithUrl<{}, {}>(subUrl, {});
   }
 
-  public deleteUser(subUrl: string, user: { id: string }) {
-    return this.addWithUrl<{ id: string }, {}>(subUrl, user);
+  public deleteUser(subUrl: string) {
+    return this.addWithUrl<{}, {}>(subUrl, {});
   }
 
   public updateInfo(subUrl: string, data: FormData) {

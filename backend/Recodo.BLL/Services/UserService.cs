@@ -3,6 +3,7 @@ using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Recodo.BLL.Exceptions;
 using Recodo.BLL.Services.Abstract;
 using Recodo.Common.Dtos.Auth;
@@ -13,7 +14,6 @@ using Recodo.DAL.Entities;
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
 
@@ -69,11 +69,9 @@ namespace Recodo.BLL.Services
                         var response = await client.PostAsync(url, multipartContent);
                         var stringResponse = await response.Content.ReadAsStringAsync();
 
-                        AvatarDTO json = JsonSerializer.Deserialize<AvatarDTO>(stringResponse);
-                        userEntity.AvatarLink = json.thumb_url;
+                        AvatarDTO json = JsonConvert.DeserializeObject<AvatarDTO>(stringResponse);
+                        userEntity.AvatarLink = json.ThumbUrl;
                     }
-
-                    //userDto.Avatar
                 }
             }
 
@@ -104,9 +102,9 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task ResetPassword(UpdateUserDTO userDto)
+        public async Task ResetPassword(int userId)
         {
-            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (userEntity == null) { return; }
 
             string newPassword = Guid.NewGuid().ToString().Substring(0, 10);
@@ -118,9 +116,9 @@ namespace Recodo.BLL.Services
             await EmailService.SendEmailAsync(userEntity.Email, "New Password", message);
         }
 
-        public async Task DeleteUser(UpdateUserDTO userDto)
+        public async Task DeleteUser(int userId)
         {
-            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (userEntity == null) { return; }
 
             _context.Users.Remove(userEntity);

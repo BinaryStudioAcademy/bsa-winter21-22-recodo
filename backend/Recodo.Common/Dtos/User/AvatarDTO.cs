@@ -1,7 +1,10 @@
-﻿namespace Recodo.Common.Dtos.User
+﻿using Newtonsoft.Json;
+
+namespace Recodo.Common.Dtos.User
 {
     public class AvatarDTO
     {
-        public string thumb_url { get; set; }
+        [JsonProperty("thumb_url")]
+        public string ThumbUrl { get; set; }
     }
 }

@@ -26,24 +26,24 @@ namespace Recodo.API.Controllers
             return NoContent();
         }
 
-        [HttpPost("UpdatePassword")]
+        [HttpPost("Update-Password")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserDTO userDTO)
         {
             await _userService.UpdateUserPassword(userDTO);
             return NoContent();
         }
 
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] UpdateUserDTO userDTO)
+        [HttpPost("Reset-Password/{userId:int}")]
+        public async Task<IActionResult> ResetPassword(int userId)
         {
-            await _userService.ResetPassword(userDTO);
+            await _userService.ResetPassword(userId);
             return NoContent();
         }
 
-        [HttpPost("DeleteUser")]
-        public async Task<IActionResult> DeleteUser([FromBody] UpdateUserDTO userDTO)
+        [HttpPost("Delete-User/{userId:int}")]
+        public async Task<IActionResult> DeleteUser(int userId)
         {
-            await _userService.DeleteUser(userDTO);
+            await _userService.DeleteUser(userId);
             return NoContent();
         }
     }

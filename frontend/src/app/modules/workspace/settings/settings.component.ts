@@ -13,8 +13,8 @@ import { environment } from 'src/environments/environment';
 })
 export class SettingsComponent implements OnInit {
   private readonly APIUrl = environment.apiUrl;
-  public settingsForm1: FormGroup = {} as FormGroup;
-  public settingsForm2: FormGroup = {} as FormGroup;
+  public formAvatar: FormGroup = {} as FormGroup;
+  public formPassword: FormGroup = {} as FormGroup;
   public avatar!: string;
 
   public oldName: string = '';
@@ -49,7 +49,7 @@ export class SettingsComponent implements OnInit {
   }
 
   initForms() {
-    this.settingsForm1 = this.formBuilder.group({
+    this.formAvatar = this.formBuilder.group({
       workspaceName: [
         this.name,
         {
@@ -63,7 +63,7 @@ export class SettingsComponent implements OnInit {
       ],
     });
 
-    this.settingsForm2 = this.formBuilder.group({
+    this.formPassword = this.formBuilder.group({
       email: [
         this.oldEmail,
         {
@@ -77,9 +77,7 @@ export class SettingsComponent implements OnInit {
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(20),
-            Validators.pattern(
-              '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&(){}[]\\:;<>,‘.?/~_+-=|]+)$'
-            ),
+            Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
           ],
         },
       ],
@@ -90,9 +88,7 @@ export class SettingsComponent implements OnInit {
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(20),
-            Validators.pattern(
-              '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@\\#$%^&(){}[]\\:;<>,‘.?/~_+-=|]+)$'
-            ),
+            Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
           ],
         },
       ],
@@ -105,7 +101,7 @@ export class SettingsComponent implements OnInit {
   }
 
   saveNewInfo() {
-    let workspaceName = this.settingsForm1.controls['workspaceName'].value;
+    let workspaceName = this.formAvatar.controls['workspaceName'].value;
 
     const data = new FormData();
     data.append('id', this.userId);
@@ -137,7 +133,7 @@ export class SettingsComponent implements OnInit {
   }
 
   saveNewInfoCancel() {
-    this.settingsForm1.controls['workspaceName'].setValue(this.oldName);
+    this.formAvatar.controls['workspaceName'].setValue(this.oldName);
     this.avatar = '';
   }
 
@@ -165,9 +161,9 @@ export class SettingsComponent implements OnInit {
   }
 
   saveNewPass() {
-    let email = this.settingsForm2.controls['email'].value;
-    let passCurrent = this.settingsForm2.controls['passOld'].value;
-    let passNew = this.settingsForm2.controls['passNew'].value;
+    let email = this.formPassword.controls['email'].value;
+    let passCurrent = this.formPassword.controls['passOld'].value;
+    let passNew = this.formPassword.controls['passNew'].value;
     let userId = this.userId;
 
     let userUpdateDto: UserUpdateDto = {
@@ -177,26 +173,28 @@ export class SettingsComponent implements OnInit {
       passwordNew: passNew,
     };
 
-    this.userService.updatePassword('UpdatePassword', userUpdateDto).subscribe({
-      next: () => {
-        window.alert('done');
-      },
-      error: () => {
-        window.alert('error');
-      },
-    });
+    this.userService
+      .updatePassword('Update-Password', userUpdateDto)
+      .subscribe({
+        next: () => {
+          window.alert('done');
+        },
+        error: () => {
+          window.alert('error');
+        },
+      });
   }
 
   saveNewPassCancel() {
-    this.settingsForm2.controls['email'].setValue(this.oldEmail);
-    this.settingsForm2.controls['passOld'].setValue('');
-    this.settingsForm2.controls['passNew'].setValue('');
+    this.formPassword.controls['email'].setValue(this.oldEmail);
+    this.formPassword.controls['passOld'].setValue('');
+    this.formPassword.controls['passNew'].setValue('');
   }
 
   resetPassword() {
     let userId = this.userId;
 
-    this.userService.resetPassword('ResetPassword', { id: userId }).subscribe({
+    this.userService.resetPassword(`Reset-Password/${userId}`).subscribe({
       next: () => {
         window.alert('done');
       },
@@ -210,7 +208,7 @@ export class SettingsComponent implements OnInit {
 
   deleteUser() {
     let userId = this.userId;
-    this.userService.deleteUser('DeleteUser', { id: userId }).subscribe({
+    this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
       next: () => {
         window.alert('done');
       },
