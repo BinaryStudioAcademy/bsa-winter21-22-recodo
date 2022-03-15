@@ -81,6 +81,8 @@ mat-list-item:hover {
   margin-left: auto;
 }
 
+
+
 .item-photo {
   img {
     margin-bottom: 10px;
@@ -299,4 +301,47 @@ button{
   .input-form{
     width: 95%;
   }
+}
+
+.folders {
+  width: 100%;
+  display: block;
+}
+.folder{
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  max-width: 250px;
+  color: black;
+  background: #F4E9E9;
+  border-radius: 10px;
+  border: 2px solid grey;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  &:hover{
+    background: #E7DDDD;
+    cursor: pointer;
+  }
+}
+
+mat-menu-item {
+  margin-left: 20px;
+}
+
+::ng-deep .customize {
+  background: #F4E9E9;
+  button {
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.navigate {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
 }

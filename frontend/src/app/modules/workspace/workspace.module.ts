@@ -23,6 +23,7 @@ import { VideoReactionsComponent } from './video/video-reactions/video-reactions
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
+import { FolderComponent } from './folder/folder.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { VimeModule } from '@vime/angular';
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    FolderComponent,
   ],
   imports: [
     CommonModule,
