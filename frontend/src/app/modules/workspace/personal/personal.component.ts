@@ -8,14 +8,9 @@ import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
+import { VideoDto } from 'src/app/models/video/video-dto';
+import { VideoService } from 'src/app/services/video.service';
 
-
-const ELEMENT_DATA = [
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 },
-  { name: 'Screenshot name Screenshot name Screenshot name', owner: 'Volodymyr',parentId: undefined, teamId: 4 }
-];
 
 @Component({
   selector: 'app-content',
@@ -36,19 +31,20 @@ export class PersonalComponent implements OnInit {
   selectedFolderName: string = '';
   selectedFolderId: number | undefined;
 
+  public videos: VideoDto[] = [];
+
   private unsubscribe$ = new Subject<void>();
- //now i can`t get current user and his team cause not implementer this services
-  //it's mock team and user id
-  team : number = 1;
+
   currentFolder : number | undefined;
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
-  dataSource = ELEMENT_DATA;
+  
   constructor(
     private registrationService: RegistrationService,
     private formBuilder: FormBuilder,
     private folderService: FolderService,
-    private route: ActivatedRoute ) {
+    private route: ActivatedRoute,
+    private videoService: VideoService ) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id=> this.selectedFolderId = id);
     }
@@ -73,6 +69,8 @@ export class PersonalComponent implements OnInit {
     .subscribe((user) => {
       this.currentUser = user;
       this.getFolders();
+      this.videoService.getAllVideosWithoutFolderByUserId(user.id).
+        subscribe(res => this.videos = res)
     });;
  }
 
@@ -91,9 +89,8 @@ export class PersonalComponent implements OnInit {
   createFolder() {
     let newfolder : NewFolderDto = {
       name: this.folderForm.controls['name'].value,
-      parentId: this.currentFolder,
       authorId: this.currentUser.id,
-      teamId: this.team
+      teamId: undefined
     }
 
     this.folderService.add(newfolder).subscribe((response) => {
@@ -123,6 +120,16 @@ export class PersonalComponent implements OnInit {
       this.selectedFolderName = '';
       this.getFolders();
     });
+  }
+
+  public calculateDiff(dateSent: Date) {
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    return Math.floor((Date.UTC(currentDate.getFullYear(),
+     currentDate.getMonth(),
+     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(),
+     dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
   }
 
 }
