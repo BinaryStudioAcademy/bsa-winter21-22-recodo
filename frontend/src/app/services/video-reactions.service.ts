@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 import { ReactionType } from '../models/common/reaction-type';
 import { NewVideoReactionDTO } from '../models/reaction/new-video-reaction';
 import { VideoReactionDTO } from '../models/reaction/video-reaction-dto';

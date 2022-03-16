@@ -8,7 +8,7 @@ import { ResourceService } from './resource.service';
 @Injectable({ providedIn: 'root' })
 export class CommentService extends ResourceService<Comment> {
   getResourceUrl(): string {
-    return '/api/comment';
+    return '/comment';
   }
 
   constructor(override httpClient: HttpClient, private router: Router) {

@@ -18,9 +18,10 @@ namespace Recodo.API.Controllers
     {
         private readonly CommentService _commentService;
         private readonly ReactionService _reactionService;
-        public CommentController(CommentService commentService)
+        public CommentController(CommentService commentService, ReactionService reactionService)
         {
             _commentService = commentService;
+            _reactionService = reactionService;
         }
 
         [HttpGet]

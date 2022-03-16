@@ -15,13 +15,14 @@ namespace Recodo.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VideoController: ControllerBase
+    public class VideoController : ControllerBase
     {
         private readonly VideoService _videoService;
         private readonly ReactionService _reactionService;
-        public VideoController(VideoService videoService)
+        public VideoController(VideoService videoService, ReactionService reactionService)
         {
             _videoService = videoService;
+            _reactionService = reactionService;
         }
 
         [HttpGet]
@@ -53,6 +54,11 @@ namespace Recodo.API.Controllers
             return NoContent();
         }
 
-        
+        [HttpPost]
+        public async Task<ActionResult<VideoDTO>> CreateVideo(NewVideoDTO newVideo)
+        {
+            var createdVideo = await _videoService.AddVideo(newVideo);
+            return Ok(createdVideo);
+        }
     }
 }

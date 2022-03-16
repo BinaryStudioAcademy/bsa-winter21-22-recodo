@@ -7,19 +7,13 @@ using Recodo.Common.Enums;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using Microsoft.AspNetCore.SignalR;
-using Recodo.BLL.Hubs;
 
 namespace Recodo.BLL.Services
 {
     public sealed class ReactionService : BaseService
     {
-        private readonly IHubContext<CommentReactionHub> _commentHub;
-        private readonly IHubContext<VideoReactionHub> _videoHub;        
-        public ReactionService(RecodoDbContext context, IMapper mapper, IHubContext<CommentReactionHub> commentHub, IHubContext<VideoReactionHub> videoHub) : base(context, mapper) 
-        {
-            _commentHub = commentHub;
-            _videoHub = videoHub;
-        }
+        public ReactionService(RecodoDbContext context, IMapper mapper) : base(context, mapper) 
+        { }
 
         public async Task ReactVideo(NewVideoReactionDTO reaction)
         {
@@ -44,7 +38,6 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
             var createdReaction = await _context.VideoReactions.FindAsync(newReaction);
             var createdReactionDTO = _mapper.Map<VideoReactionDTO>(createdReaction);            
-            await _videoHub.Clients.All.SendAsync("NewReaction", createdReactionDTO);
         }
         
         public async Task ReactComment(NewCommentReactionDTO reaction)
@@ -72,7 +65,6 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
             var createdReaction = await _context.CommentReactions.FindAsync(newReaction);
             var createdReactionDTO = _mapper.Map<CommentReactionDTO>(createdReaction);            
-            await _videoHub.Clients.All.SendAsync("NewReaction", createdReactionDTO);
         }
     }
 }

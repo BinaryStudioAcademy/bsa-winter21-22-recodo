@@ -17,5 +17,6 @@ namespace Recodo.DAL.Entities
         public DateTime CreatedAt { get; set; }
         public int FolderId { get; set; }
         public ICollection<VideoReaction> Reactions { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

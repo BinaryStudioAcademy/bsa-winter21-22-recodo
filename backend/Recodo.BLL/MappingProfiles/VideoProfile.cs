@@ -9,8 +9,9 @@ namespace Recodo.BLL.MappingProfiles
     {
         public VideoProfile()
         {
-            CreateMap<VideoDTO, Video>();
             CreateMap<Video, VideoDTO>();
+            CreateMap<NewVideoDTO, Video>()
+                .ForMember(video => video.Reactions, act => act.Ignore());
         }
     }
 }

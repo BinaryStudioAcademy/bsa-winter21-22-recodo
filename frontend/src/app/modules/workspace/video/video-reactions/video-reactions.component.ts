@@ -27,6 +27,7 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public addReaction(reactionNumber: number) {
+    console.log(reactionNumber);
     switch (reactionNumber) {
       case 1:
         this.reactionsService.reactVideo(
@@ -73,6 +74,7 @@ export class VideoReactionsComponent implements OnChanges {
       default:
         break;
     }
+    this.updateReactions();
   }
 
   public GetReactions(reactionNumber: number) {

@@ -14,8 +14,7 @@
     *ngFor="let _comment of currentVideo.comments"
     [comment]="_comment"
     [currentUser]="currentUser"
-    [deleteComment]="deleteComment"
-    [editComment]="editComment"
+    (deletedComment)="deleteComment($event)"
   ></app-video-comments>
   <app-video-reactions
     class="reactions-container"

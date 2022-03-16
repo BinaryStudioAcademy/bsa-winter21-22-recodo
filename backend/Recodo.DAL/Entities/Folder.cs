@@ -17,5 +17,6 @@ namespace Recodo.DAL.Entities
         public int TeamId { get; set; }
         public Team Team { get; set; }
         public ICollection<Folder> SubFolders { get; } = new List<Folder>();
+        public ICollection<Video> Videos { get; set; }
     }
 }

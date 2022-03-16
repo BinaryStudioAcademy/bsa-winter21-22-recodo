@@ -7,6 +7,7 @@ using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System.Collections.Generic;
 using Recodo.Common.Dtos.Video;
+using System;
 
 namespace Recodo.BLL.Services
 {
@@ -24,6 +25,15 @@ namespace Recodo.BLL.Services
         {
             var foundVideo = await _context.Videos.FindAsync(id);
             return _mapper.Map<VideoDTO>(foundVideo);
+        }
+
+        public async Task<VideoDTO> AddVideo (NewVideoDTO newVideo)
+        {
+            var video = _mapper.Map<Video>(newVideo);
+            video.CreatedAt = DateTime.Now;
+            await _context.Videos.AddAsync(video);
+            _context.SaveChanges();
+            return _mapper.Map<VideoDTO>(video);
         }
     }
 }

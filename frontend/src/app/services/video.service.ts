@@ -17,4 +17,8 @@ export class VideoService extends ResourceService<VideoDTO> {
   public getAllVideos() {
     return this.getList();
   }
+
+  public getVideoById(videoId: number) {
+    return this.get(videoId);
+  }
 }
