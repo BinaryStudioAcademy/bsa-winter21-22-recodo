@@ -61,7 +61,13 @@ export class PersonalComponent implements OnInit {
     return this.folderService.getAllFoldersByUserId(this.currentUser.id).subscribe(
       (result) => {
         this.folders = result;
-        this.selectedFolderName = ' / '+ this.folders.find(f => f.id == this.selectedFolderId)?.name;
+        var name = this.folders.find(f => f.id == this.selectedFolderId)?.name;
+        if(name === undefined) {
+          this.selectedFolderName='';
+        }
+        else {
+          this.selectedFolderName = ' / '+ name;
+        }
       }
     );
   }
