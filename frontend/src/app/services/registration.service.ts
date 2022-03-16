@@ -15,7 +15,7 @@ export class RegistrationService extends ResourceService<UserRegisterDto> {
     private user: UserDto = {} as UserDto;
 
     getResourceUrl(): string {
-        return '/Register'
+        return '/register'
     };
 
     public register(user: UserRegisterDto) {

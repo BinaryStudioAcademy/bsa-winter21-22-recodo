@@ -1,33 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { Comment } from '../models/comment/comment';
 import { ReactionType } from '../models/common/reaction-type';
-import { CommentReactionDTO } from '../models/reaction/comment-reaction';
 import { User } from '../models/user/user';
 import { ResourceService } from './resource.service';
+import { Comment } from '../models/comment/comment';
+import { CommentReactionDTO } from '../models/reaction/comment-reaction';
+import { NewCommentReactionDTO } from '../models/reaction/new-comment-reaction';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentReactionService extends ResourceService<Comment> {
-  private currentComment: Comment;
-  private unsubscribe$ = new Subject<void>();
-
   constructor(override httpClient: HttpClient, private router: Router) {
     super(httpClient);
-    this.GetCurrentComment()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (response: any) => {
-          this.currentComment = response.body;
-        },
-      });
   }
 
   getResourceUrl(): string {
-    return '';
+    return 'comment/react';
   }
 
   private checkHasReaction(
@@ -42,63 +32,58 @@ export class CommentReactionService extends ResourceService<Comment> {
     return [hasReaction, hasSuchReaction];
   }
 
-  public GetCurrentComment() {
-    return this.getFullRequest();
-  }
-
-  public reactVideo(
-    videoId: number,
+  public reactComment(
+    currentComment: Comment,
     reactionType: ReactionType,
     currentUser: User
   ) {
-    if (this.currentComment != null) {
+    if (currentComment != null) {
       const [hasReaction, hasSuchReaction] = this.checkHasReaction(
-        this.currentComment.reactions,
+        currentComment.reactions,
         currentUser,
         reactionType
       );
       if (hasReaction) {
-        this.deleteReaction(currentUser, videoId);
-        this.currentComment.reactions.push(
-          this.addNewReaction(currentUser.id, videoId, reactionType)
+        this.deleteReaction(currentUser, currentComment);
+        this.add(
+          this.addNewReaction(currentUser.id, currentComment.id, reactionType)
         );
       } else if (hasSuchReaction) {
-        this.deleteReaction(currentUser, videoId);
+        const deletedReaction = this.deleteReaction(
+          currentUser,
+          currentComment
+        );
+        if (deletedReaction != null) {
+          this.delete(deletedReaction);
+        }
       } else {
-        this.currentComment.reactions.push(
-          this.addNewReaction(currentUser.id, videoId, reactionType)
+        this.add(
+          this.addNewReaction(currentUser.id, currentComment.id, reactionType)
         );
       }
-      this.updateReactions();
     }
   }
 
   public addNewReaction(
     userId: number,
-    videoId: number,
+    commentId: number,
     reactionType: ReactionType
   ) {
-    const newReaction: CommentReactionDTO = {
-      commentId: videoId,
+    const newReaction: NewCommentReactionDTO = {
+      commentId: commentId,
       userId: userId,
       reaction: reactionType,
     };
     return newReaction;
   }
 
-  public deleteReaction(currentUser: User, commentId: number) {
-    if (this.currentComment != null) {
-      const foundReaction = this.currentComment.reactions.find(
-        (reaction) =>
-          reaction.userId === currentUser.id && reaction.commentId === commentId
-      );
-      this.currentComment.reactions.filter(
-        (reaction) => reaction != foundReaction
-      );
-    }
-  }
-
-  public updateReactions() {
-    this.update(this.currentComment);
+  public deleteReaction(currentUser: User, currentComment: Comment) {
+    const foundReaction = currentComment.reactions.find(
+      (reaction) =>
+        reaction.userId === currentUser.id &&
+        reaction.commentId === currentComment.id
+    );
+    currentComment.reactions.filter((reaction) => reaction != foundReaction);
+    return foundReaction?.id;
   }
 }

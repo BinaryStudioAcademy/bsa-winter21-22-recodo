@@ -1,8 +1,7 @@
 import { ReactionType } from '../common/reaction-type';
 
-export interface CommentReactionDTO {
-  id: number;
+export interface NewVideoReactionDTO {
   userId: number;
-  commentId: number;
+  videoId: number;
   reaction: ReactionType;
 }

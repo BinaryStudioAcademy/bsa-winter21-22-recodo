@@ -8,9 +8,8 @@ import { ResourceService } from './resource.service';
 @Injectable({ providedIn: 'root' })
 export class CommentService extends ResourceService<Comment> {
   getResourceUrl(): string {
-    return '';
+    return '/api/comment';
   }
-  public routePrefix = '/api/comments';
 
   constructor(override httpClient: HttpClient, private router: Router) {
     super(httpClient);
@@ -29,6 +28,6 @@ export class CommentService extends ResourceService<Comment> {
   }
 
   public getAllComments() {
-    return this.getFullRequest();
+    return this.getFullRequest(this.getResourceUrl());
   }
 }

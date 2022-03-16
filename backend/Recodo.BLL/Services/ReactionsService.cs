@@ -46,7 +46,7 @@ namespace Recodo.BLL.Services
             var createdReactionDTO = _mapper.Map<VideoReactionDTO>(createdReaction);            
             await _videoHub.Clients.All.SendAsync("NewReaction", createdReactionDTO);
         }
-
+        
         public async Task ReactComment(NewCommentReactionDTO reaction)
         {
             var reactions = _context.CommentReactions.Where(x => x.UserId == reaction.UserId && x.CommentId == reaction.CommentId);

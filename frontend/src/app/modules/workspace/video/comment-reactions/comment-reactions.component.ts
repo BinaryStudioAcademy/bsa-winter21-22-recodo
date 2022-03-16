@@ -5,6 +5,7 @@ import { ReactionType } from 'src/app/models/common/reaction-type';
 import { CommentReactionDTO } from 'src/app/models/reaction/comment-reaction';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
 import { User } from 'src/app/models/user/user';
+import { VideoDTO } from 'src/app/models/video/video-dto';
 import { CommentReactionService } from 'src/app/services/comment-reaction.service';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 
@@ -13,22 +14,14 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   templateUrl: './comment-reactions.component.html',
   styleUrls: ['./comment-reactions.component.scss'],
 })
-export class CommentReactionsComponent {
+export class CommentReactionsComponent implements OnChanges {
   @Input() public comment: Comment;
   @Input() public user: User;
   public allReactions: CommentReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
   constructor(private reactionsService: CommentReactionService) {
-    this.reactionsService
-      .GetCurrentComment()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (response: any) => {
-          this.comment = response.body;
-        },
-      });
-    this.allReactions = this.comment.reactions;
+    this.allReactions = this.comment?.reactions;
     this.updateReactions();
   }
 
@@ -36,25 +29,42 @@ export class CommentReactionsComponent {
     this.updateReactions();
   }
 
-  public addReaction(reactionType: ReactionType) {
-    if (this.user != null && this.comment != null) {
-      this.reactionsService.reactVideo(
-        this.comment.id,
-        reactionType,
-        this.user
-      );
+  public addReaction(reactionNumber: number) {
+    switch (reactionNumber) {
+      case 1:
+        this.reactionsService.reactComment(
+          this.comment,
+          ReactionType.Like,
+          this.user
+        );
+        break;
+      case 2:
+        this.reactionsService.reactComment(
+          this.comment,
+          ReactionType.Dislike,
+          this.user
+        );
+        break;
+      default:
+        break;
     }
-    this.updateReactions();
   }
 
-  public GetReactions(reactionType: ReactionType) {
-    const reactions: CommentReactionDTO[] = this.allReactions.filter(
-      (x) => x.reaction == reactionType
-    );
-    return reactions;
+  public GetReactions(reactionNumber: number) {
+    switch (reactionNumber) {
+      case 1:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
+          .length;
+      case 2:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Dislike
+        ).length;
+      default:
+        return 0;
+    }
   }
 
   private updateReactions() {
-    this.allReactions = this.comment.reactions;
+    this.allReactions = this.comment?.reactions;
   }
 }

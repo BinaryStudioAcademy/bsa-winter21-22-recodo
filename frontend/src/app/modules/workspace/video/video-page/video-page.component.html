@@ -11,7 +11,8 @@
   </div>
   <app-video-player></app-video-player>
   <app-video-comments
-    [comment]="testComment"
+    *ngFor="let _comment of currentVideo.comments"
+    [comment]="_comment"
     [currentUser]="currentUser"
     [deleteComment]="deleteComment"
     [editComment]="editComment"

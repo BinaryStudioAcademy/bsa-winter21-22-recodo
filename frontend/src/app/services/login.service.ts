@@ -21,7 +21,7 @@ export class LoginService extends ResourceService<UserLoginDto> {
   }
 
   getResourceUrl(): string {
-    return '/Login';
+    return '/login';
   }
 
   public login(user: UserLoginDto) {

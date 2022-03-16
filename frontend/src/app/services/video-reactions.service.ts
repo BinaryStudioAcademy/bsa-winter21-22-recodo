@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ReactionType } from '../models/common/reaction-type';
+import { NewVideoReactionDTO } from '../models/reaction/new-video-reaction';
 import { VideoReactionDTO } from '../models/reaction/video-reaction-dto';
 import { User } from '../models/user/user';
 import { VideoDTO } from '../models/video/video-dto';
@@ -12,22 +13,13 @@ import { ResourceService } from './resource.service';
   providedIn: 'root',
 })
 export class VideoReactionService extends ResourceService<VideoDTO> {
-  private currentVideo?: VideoDTO;
-  private unsubscribe$ = new Subject<void>();
 
   constructor(override httpClient: HttpClient, private router: Router) {
     super(httpClient);
-    this.GetCurrentVideo()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (response: any) => {
-          this.currentVideo = response.body;
-        },
-      });
   }
 
   getResourceUrl(): string {
-    return '';
+    return 'video/react';
   }
 
   private checkHasReaction(
@@ -42,34 +34,35 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
     return [hasReaction, hasSuchReaction];
   }
 
-  public GetCurrentVideo() {
-    return this.getFullRequest();
-  }
-
   public reactVideo(
-    videoId: number,
+    currentVideo: VideoDTO,
     reactionType: ReactionType,
     currentUser: User
   ) {
-    if (this.currentVideo != null) {
+    if (currentVideo != null) {
       const [hasReaction, hasSuchReaction] = this.checkHasReaction(
-        this.currentVideo.reactions,
+        currentVideo.reactions,
         currentUser,
         reactionType
       );
       if (hasReaction) {
-        this.deleteReaction(currentUser, videoId);
-        this.currentVideo.reactions.push(
-          this.addNewReaction(currentUser.id, videoId, reactionType)
+        this.deleteReaction(currentUser, currentVideo);
+        this.add(
+          this.addNewReaction(currentUser.id, currentVideo.id, reactionType)
         );
       } else if (hasSuchReaction) {
-        this.deleteReaction(currentUser, videoId);
+        const deletedReaction = this.deleteReaction(
+          currentUser,
+          currentVideo
+        );
+        if (deletedReaction != null) {
+          this.delete(deletedReaction);
+        }
       } else {
-        this.currentVideo.reactions.push(
-          this.addNewReaction(currentUser.id, videoId, reactionType)
+        this.add(
+          this.addNewReaction(currentUser.id, currentVideo.id, reactionType)
         );
       }
-      this.updateReactions();
     }
   }
 
@@ -78,7 +71,7 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
     videoId: number,
     reactionType: ReactionType
   ) {
-    const newReaction: VideoReactionDTO = {
+    const newReaction: NewVideoReactionDTO = {
       videoId: videoId,
       userId: userId,
       reaction: reactionType,
@@ -86,19 +79,13 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
     return newReaction;
   }
 
-  public deleteReaction(currentUser: User, videoId: number) {
-    if (this.currentVideo != null) {
-      const foundReaction = this.currentVideo.reactions.find(
-        (reaction) =>
-          reaction.userId === currentUser.id && reaction.videoId === videoId
-      );
-      this.currentVideo.reactions.filter(
-        (reaction) => reaction != foundReaction
-      );
-    }
-  }
-
-  public updateReactions() {
-    this.update(this.currentVideo);
+  public deleteReaction(currentUser: User, currentVideo: VideoDTO) {
+    const foundReaction = currentVideo.reactions.find(
+      (reaction) =>
+        reaction.userId === currentUser.id &&
+        reaction.videoId === currentVideo.id
+    );
+    currentVideo.reactions.filter((reaction) => reaction != foundReaction);
+    return foundReaction?.id;
   }
 }

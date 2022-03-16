@@ -37,6 +37,7 @@ export class VideoPageComponent {
       folderId: 1,
       reactions: [
         {
+          id: 1,
           userId: 1,
           videoId: 1,
           reaction: ReactionType.Like,
@@ -51,9 +52,25 @@ export class VideoPageComponent {
           body: 'test comment',
           reactions: [
             {
+              id: 1,
               userId: 1,
               commentId: 1,
               reaction: ReactionType.Like,
+            },
+          ],
+        },
+        {
+          id: 2,
+          createdAt: new Date('2022-02-21'),
+          videoID: 1,
+          author: this.currentUser,
+          body: 'test comment 2',
+          reactions: [
+            {
+              id: 2,
+              userId: 1,
+              commentId: 2,
+              reaction: ReactionType.Dislike,
             },
           ],
         },
@@ -96,7 +113,7 @@ export class VideoPageComponent {
           this.currentVideo.comments = this.sortCommentArray(
             this.currentVideo.comments.concat(resp.body as Comment)
           );
-          this.newComment.body = "";
+          this.newComment.body = '';
         }
       });
   }

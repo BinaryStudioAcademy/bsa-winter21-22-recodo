@@ -11,21 +11,13 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   templateUrl: './video-reactions.component.html',
   styleUrls: ['./video-reactions.component.scss'],
 })
-export class VideoReactionsComponent {
+export class VideoReactionsComponent implements OnChanges {
   @Input() public video: VideoDTO;
   @Input() public user: User;
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
   constructor(private reactionsService: VideoReactionService) {
-    this.reactionsService
-      .GetCurrentVideo()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (response: any) => {
-          this.video = response.body;
-        },
-      });
     this.allReactions = this.video?.reactions;
     this.updateReactions();
   }
@@ -34,21 +26,84 @@ export class VideoReactionsComponent {
     this.updateReactions();
   }
 
-  public addReaction(reactionType: ReactionType) {
-    if (this.user != null && this.video != null) {
-      this.reactionsService.reactVideo(this.video.id, reactionType, this.user);
+  public addReaction(reactionNumber: number) {
+    switch (reactionNumber) {
+      case 1:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Like,
+          this.user
+        );
+        break;
+      case 2:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Dislike,
+          this.user
+        );
+        break;
+      case 3:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Love,
+          this.user
+        );
+        break;
+      case 4:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Fun,
+          this.user
+        );
+        break;
+      case 5:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Astonishment,
+          this.user
+        );
+        break;
+      case 6:
+        this.reactionsService.reactVideo(
+          this.video,
+          ReactionType.Magically,
+          this.user
+        );
+        break;
+      default:
+        break;
     }
-    this.updateReactions();
   }
 
-  public GetReactions(reactionType: ReactionType) {
-    const reactions: VideoReactionDTO[] = this.allReactions.filter(
-      (x) => x.reaction == reactionType
-    );
-    return reactions;
+  public GetReactions(reactionNumber: number) {
+    switch (reactionNumber) {
+      case 1:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
+          .length;
+      case 2:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Dislike
+        ).length;
+      case 3:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Love)
+          .length;
+      case 4:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
+          .length;
+      case 5:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Astonishment
+        ).length;
+      case 6:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Magically
+        ).length;
+      default:
+        return 0;
+    }
   }
 
   private updateReactions() {
-    this.allReactions = this.video.reactions;
+    this.allReactions = this.video?.reactions;
   }
 }

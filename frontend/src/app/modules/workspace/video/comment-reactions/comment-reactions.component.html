@@ -1,99 +1,30 @@
-<mat-card class="reactions-container">
-  <div class="emojis-reaction">
-    <button mat-icon-button>
-      <img
-        src="../../../../../assets/img/FaceWithTearsOfJoy.png"
-        width="30"
-        height="30"
-      />
+<div class="emojis-reaction">
+  <button mat-icon-button click="addReaction(1)">
+    <img src="../../../../../assets/img/ThumbsUp.png" width="20" height="20" />
+    <p>
       <mat-icon
-        matBadge="GetReactions(ReactionType.Fun)"
+        matBadge="{{ GetReactions(1) }}"
         matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(ReactionType.Fun).length === 0"
-        aria-label="Fun"
-      ></mat-icon>
-    </button>
-    <button mat-icon-button>
-      <img
-        src="../../../../../assets/img/HushedFace.png"
-        width="30"
-        height="30"
-      />
-      <mat-icon
-        matBadge="GetReactions(ReactionType.Astonishment)"
-        matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(ReactionType.Astonishment).length === 0"
-        aria-label="Astonishment"
-      ></mat-icon>
-    </button>
-    <button mat-icon-button>
-      <img
-        src="../../../../../assets/img/SmilingFaceWithHeartEyes.png"
-        width="30"
-        height="30"
-      />
-      <mat-icon
-        matBadge="GetReactions(ReactionType.Love)"
-        matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(ReactionType.Love).length === 0"
-        aria-label="Love"
-      ></mat-icon>
-    </button>
-    <button mat-icon-button>
-      <img
-        src="../../../../../assets/img/RaisingHands.png"
-        width="30"
-        height="30"
-      />
-      <mat-icon
-        matBadge="GetReactions(ReactionType.Magically)"
-        matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(ReactionType.Magically).length === 0"
-        aria-label="Magically"
-      ></mat-icon>
-    </button>
-    <button mat-icon-button click="addReaction(ReactionType.Like)">
-      <img
-        src="../../../../../assets/img/ThumbsUp.png"
-        width="30"
-        height="30"
-      />
-      <mat-icon
-        matBadge="GetReactions(ReactionType.Like)"
-        matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="Likes.length === 0"
+        matBadgeSize="small"
+        [matBadgeHidden]="GetReactions(1) === 0"
         aria-label="Like"
       ></mat-icon>
-    </button>
-    <button mat-icon-button>
-      <img
-        src="../../../../../assets/img/ThumbsDown.png"
-        width="30"
-        height="30"
-      />
+    </p>
+  </button>
+  <button mat-icon-button click="addReaction(2)">
+    <img
+      src="../../../../../assets/img/ThumbsDown.png"
+      width="20"
+      height="20"
+    />
+    <p>
       <mat-icon
-        matBadge="GetReactions(ReactionType.Dislike)"
+        matBadge="{{ GetReactions(2) }}"
         matBadgeColor="accent"
-        matBadgeSize="medium"
-        [matBadgeHidden]="GetReactions(ReactionType.Dislike).length === 0"
+        matBadgeSize="small"
+        [matBadgeHidden]="GetReactions(2) === 0"
         aria-label="Dislike"
       ></mat-icon>
-    </button>
-  </div>
-  <div class="separator"></div>
-  <div class="buttons-reatcions">
-    <button mat-button>
-      <mat-icon>comment</mat-icon>
-      <span class="buton-label"> Comment</span>
-    </button>
-    <button mat-button>
-      <mat-icon>video_call</mat-icon>
-      <span class="buton-label"> Record a comment</span>
-    </button>
-  </div>
-</mat-card>
+    </p>
+  </button>
+</div>
