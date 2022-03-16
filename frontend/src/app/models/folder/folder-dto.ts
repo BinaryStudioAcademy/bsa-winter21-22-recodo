@@ -5,6 +5,5 @@ export interface FolderDto{
   name:string;
   authorId:number;
   author:UserDto;
-  teamId:number;
-  subFolders:FolderDto[];
+  teamId:number | undefined;
 }

@@ -24,6 +24,10 @@ export class FolderService extends ResourceService<NewFolderDto> {
     return this.handleResponse(this.add<NewFolderDto,FolderDto>(folder));
   }
 
+  public updateFolder(folder: FolderDto) {
+    return this.handleResponse(this.update<FolderDto, FolderDto>(folder));
+  }
+
   public deleteFolder(id: number) {
     return this.delete(id);
   }

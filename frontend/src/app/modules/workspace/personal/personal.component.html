@@ -24,13 +24,6 @@
   </div>
 </div>
 <h2><a class="navigate" [routerLink]="['']">Folders</a>{{selectedFolderName}}</h2>
-<mat-card class="folder-form-container" *ngIf="isFolderFormShow" >
-  <div class="folder-form" [formGroup]="folderForm" (keydown.enter)="createFolder()">
-    <mat-form-field class="input-form" appearance="legacy" color="warn" floatLabel="never" hideRequiredMarker="true">
-      <input matInput placeholder="Enter a folder title"  formControlName="name">
-    </mat-form-field>
-  </div>
-</mat-card>
 
 <div *ngFor="let folder of folders" class="folders" [routerLink]="['',folder.id]" (click)="folderClick(folder)">
   <div class="folder" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="folder-active">
@@ -42,6 +35,7 @@
   </div>
   <mat-menu #folderContextMenu="matMenu" xPosition="after" class="item-menu">
     <button mat-menu-item (click)="deleteFolder(folder.id)"> Delete </button>
+    <button mat-menu-item (click)="showNewFolderForm(folder)"> Rename </button>
   </mat-menu>
 </div>
 

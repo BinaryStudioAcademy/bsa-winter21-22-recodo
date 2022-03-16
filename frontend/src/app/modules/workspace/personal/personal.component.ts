@@ -2,15 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { map, Subject, takeUntil } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { VideoService } from 'src/app/services/video.service';
 import { TimeService } from 'src/app/services/time.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 
 @Component({
@@ -25,7 +27,6 @@ export class PersonalComponent implements OnInit {
 
   public currentUser: UserDto = {} as UserDto;
   public avatarLink: string = '';
-  public isFolderFormShow = false;
   public isFolderRouteActive = false;
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
@@ -41,18 +42,18 @@ export class PersonalComponent implements OnInit {
 
   constructor(
     private registrationService: RegistrationService,
-    private formBuilder: FormBuilder,
     private folderService: FolderService,
     private route: ActivatedRoute,
     private videoService: VideoService,
-    private timeService: TimeService ) {
+    private timeService: TimeService,
+    public dialog: MatDialog,
+    private router: Router ) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id=> this.selectedFolderId = id);
     }
 
   ngOnInit(): void {
     this.getAutorithedUser();
-    this.validateForm();
   }
 
   private getFolders() {
@@ -82,35 +83,52 @@ export class PersonalComponent implements OnInit {
     });;
  }
 
-  private validateForm() {
-    this.folderForm = this.formBuilder.group({
-      name: [, {
-        validators: [
-          Validators.required,
-          Validators.maxLength(30),
-        ],
-        updateOn: 'change',
-      }],
-    });
-  }
-
-  createFolder() {
-    let newfolder : NewFolderDto = {
-      name: this.folderForm.controls['name'].value,
-      authorId: this.currentUser.id,
-      teamId: undefined
-    }
-
-    this.folderService.add(newfolder).subscribe((response) => {
+  createFolder(newFolder: NewFolderDto) {
+    this.folderService.add(newFolder).subscribe((response) => {
       this.folder = response.body as FolderDto;
-      this.isFolderFormShow = false;
-      this.folderForm.setValue({ 'name': ''});
       this.getFolders();
     });
   }
 
-  showNewFolderForm() {
-    this.isFolderFormShow = true;
+  updateFolder(folderDto: FolderDto) {
+    this.folderService.updateFolder(folderDto).subscribe((response) => {
+      this.folder = response;
+      this.getFolders();
+    });
+  }
+
+  showNewFolderForm(folder?: FolderDto) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = folder === undefined ? '' : folder.name;;
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      folderName => {
+        //For creating new folder
+        if(folder === undefined) {
+          let newfolder : NewFolderDto = {
+            name: folderName,
+            authorId: this.currentUser.id,
+            teamId: undefined
+          }
+          this.createFolder(newfolder);
+        }
+        //For updating folder
+        else {
+          let folderUpdated : FolderDto = {
+            id: folder.id,
+            name: folderName,
+            authorId: this.currentUser.id,
+            author: folder.author,
+            teamId: undefined
+          }
+          this.updateFolder(folderUpdated);
+        }
+      }
+    );
   }
 
   public folderClick(folder: FolderDto) {
@@ -126,12 +144,15 @@ export class PersonalComponent implements OnInit {
   public deleteFolder(id: number) {
     this.folderService.deleteFolder(id).subscribe(()=>{
       this.selectedFolderName = '';
+      this.router.navigate(['/personal']);
       this.getFolders();
     });
   }
 
   public deleteVideo(id: number) {
-    this.videoService.delete(id).subscribe(() => this.getVideos(this.currentUser.id));
+    this.videoService.delete(id).subscribe(() => {
+      this.getVideos(this.currentUser.id);
+    });
   }
 
   public calculateTimeDifference(oldDate: Date) {
@@ -139,3 +160,4 @@ export class PersonalComponent implements OnInit {
   }
 
 }
+

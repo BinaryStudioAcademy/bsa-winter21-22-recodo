@@ -24,6 +24,8 @@ import { VideoDescriptionComponent } from './video/video-description/video-descr
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
 import { FolderComponent } from './folder/folder.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { FolderComponent } from './folder/folder.component';
     VideoReactionsComponent,
     VideoDescriptionComponent,
     FolderComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +59,7 @@ import { FolderComponent } from './folder/folder.component';
     MatTableModule,
     SharedModule,
     VimeModule,
+    MatDialogModule
   ],
 })
 export class WorkspaceModule {}
