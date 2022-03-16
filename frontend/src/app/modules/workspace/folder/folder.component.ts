@@ -43,7 +43,10 @@ export class FolderComponent {
   }
 
   public deleteVideo(id: number) {
-    this.videoService.delete(id).subscribe(() => this.getVideos(this.folderId));
+    if(confirm('Are you sure you want to delete the video ?'))
+    {
+      this.videoService.delete(id).subscribe(() => this.getVideos(this.folderId));
+    }
   }
 
   private getVideos(id: number) {

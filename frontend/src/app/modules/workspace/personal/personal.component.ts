@@ -141,18 +141,24 @@ export class PersonalComponent implements OnInit {
     this.menuTrigger?.openMenu();
   }
 
-  public deleteFolder(id: number) {
-    this.folderService.deleteFolder(id).subscribe(()=>{
-      this.selectedFolderName = '';
-      this.router.navigate(['/personal']);
-      this.getFolders();
-    });
+  public deleteFolder(id: number, name: string) {
+    if(confirm('Are you sure you want to delete folder ' + name + ' ?'))
+    {
+      this.folderService.deleteFolder(id).subscribe(()=> {
+        this.selectedFolderName = '';
+        this.router.navigate(['/personal']);
+        this.getFolders();
+      });
+    }
   }
 
   public deleteVideo(id: number) {
-    this.videoService.delete(id).subscribe(() => {
-      this.getVideos(this.currentUser.id);
-    });
+    if(confirm('Are you sure you want to delete the video ?'))
+    {
+      this.videoService.delete(id).subscribe(() => {
+        this.getVideos(this.currentUser.id);
+      });
+    }
   }
 
   public calculateTimeDifference(oldDate: Date) {
