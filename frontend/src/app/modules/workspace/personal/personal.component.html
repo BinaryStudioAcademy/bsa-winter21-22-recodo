@@ -116,9 +116,13 @@
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element"> 
-      <button mat-icon-button class="details">
+      <button mat-icon-button class="details"
+      [matMenuTriggerFor]="videoContextMenu">
         <mat-icon svgIcon="details"></mat-icon>
       </button>
+      <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
+        <button mat-menu-item (click)="deleteVideo(element.id)">Delete</button>
+      </mat-menu>
     </td>
   </ng-container>
 
