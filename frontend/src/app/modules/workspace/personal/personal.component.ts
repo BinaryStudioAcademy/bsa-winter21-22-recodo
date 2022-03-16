@@ -38,7 +38,7 @@ export class PersonalComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
-  
+
   constructor(
     private registrationService: RegistrationService,
     private formBuilder: FormBuilder,
