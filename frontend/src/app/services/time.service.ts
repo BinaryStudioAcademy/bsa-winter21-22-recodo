@@ -18,7 +18,7 @@ export class TimeService {
     let delta = Math.floor(timeSpan);
 
     if (delta < 1 * MINUTE)
-      return timeSpan == 1 ? 'one second ago' : timeSpan + ' seconds ago';
+      return timeSpan == 1 ? 'one second ago' : Math.floor(timeSpan) + ' seconds ago';
 
     if (delta < 2 * MINUTE)
       return 'a minute ago';
