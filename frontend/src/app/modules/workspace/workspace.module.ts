@@ -47,6 +47,7 @@ import { DialogComponent } from './dialog/dialog.component';
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
+    MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,

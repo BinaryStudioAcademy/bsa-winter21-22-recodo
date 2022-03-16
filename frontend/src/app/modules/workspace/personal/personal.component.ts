@@ -14,7 +14,6 @@ import { TimeService } from 'src/app/services/time.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
-
 @Component({
   selector: 'app-content',
   templateUrl: './personal.component.html',
@@ -164,6 +163,4 @@ export class PersonalComponent implements OnInit {
   public calculateTimeDifference(oldDate: Date) {
     return this.timeService.calculateTimeDifference(oldDate);
   }
-
 }
-

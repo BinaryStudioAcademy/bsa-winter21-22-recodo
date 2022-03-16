@@ -23,6 +23,7 @@
     <button mat-button class="button-accent">New Video</button>
   </div>
 </div>
+
 <h2><a class="navigate" [routerLink]="['']">Folders</a>{{selectedFolderName}}</h2>
 
 <div *ngFor="let folder of folders" class="folders" [routerLink]="['',folder.id]" (click)="folderClick(folder)">
