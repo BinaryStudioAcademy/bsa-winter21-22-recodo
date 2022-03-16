@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
+import { TimeService } from 'src/app/services/time.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class FolderComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private videoService: VideoService) {
+    private videoService: VideoService,
+    private timeService: TimeService) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id => {
         this.getVideos(id);
@@ -31,14 +33,8 @@ export class FolderComponent {
       });
     }
 
-  public calculateDiff(dateSent: Date) {
-    let currentDate = new Date();
-    dateSent = new Date(dateSent);
-
-    return Math.floor((Date.UTC(currentDate.getFullYear(),
-     currentDate.getMonth(),
-     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(),
-     dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
+  public calculateTimeDifference(oldDate: Date) {
+    return this.timeService.calculateTimeDifference(oldDate);
   }
 
   public onMenuTriggered() {

@@ -10,6 +10,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { VideoService } from 'src/app/services/video.service';
+import { TimeService } from 'src/app/services/time.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class PersonalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private folderService: FolderService,
     private route: ActivatedRoute,
-    private videoService: VideoService ) {
+    private videoService: VideoService,
+    private timeService: TimeService ) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id=> this.selectedFolderId = id);
     }
@@ -128,18 +130,12 @@ export class PersonalComponent implements OnInit {
     });
   }
 
-  public calculateDiff(dateSent: Date) {
-    let currentDate = new Date();
-    dateSent = new Date(dateSent);
-
-    return Math.floor((Date.UTC(currentDate.getFullYear(),
-     currentDate.getMonth(),
-     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(),
-     dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
-  }
-
   public deleteVideo(id: number) {
     this.videoService.delete(id).subscribe(() => this.getVideos(this.currentUser.id));
+  }
+
+  public calculateTimeDifference(oldDate: Date) {
+    return this.timeService.calculateTimeDifference(oldDate);
   }
 
 }
