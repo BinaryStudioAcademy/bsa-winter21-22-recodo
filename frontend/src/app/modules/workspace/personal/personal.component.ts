@@ -30,7 +30,7 @@ export class PersonalComponent implements OnInit {
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
   folders : FolderDto[] = [];
-  selectedFolderName: string = '';
+  selectedFolderName: string | undefined = '';
   selectedFolderId: number | undefined;
 
   public videos: VideoDto[] = [];
@@ -48,7 +48,9 @@ export class PersonalComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router ) {
       route.params.pipe(map(p => p['id']))
-      .subscribe(id=> this.selectedFolderId = id);
+      .subscribe(id=> {
+        this.selectedFolderId = id ;
+      });
     }
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class PersonalComponent implements OnInit {
     return this.folderService.getAllFoldersByUserId(this.currentUser.id).subscribe(
       (result) => {
         this.folders = result;
+        this.selectedFolderName = ' / '+ this.folders.find(f => f.id == this.selectedFolderId)?.name;
       }
     );
   }
@@ -90,8 +93,7 @@ export class PersonalComponent implements OnInit {
   }
 
   updateFolder(folderDto: FolderDto) {
-    this.folderService.updateFolder(folderDto).subscribe((response) => {
-      this.folder = response;
+    this.folderService.updateFolder(folderDto).subscribe(() => {
       this.getFolders();
     });
   }
