@@ -27,7 +27,6 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public addReaction(reactionNumber: number) {
-    console.log(reactionNumber);
     switch (reactionNumber) {
       case 1:
         this.reactionsService.reactVideo(
@@ -78,31 +77,36 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public GetReactions(reactionNumber: number) {
-    switch (reactionNumber) {
-      case 1:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
-          .length;
-      case 2:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Dislike
-        ).length;
-      case 3:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Love)
-          .length;
-      case 4:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
-          .length;
-      case 5:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Astonishment
-        ).length;
-      case 6:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Magically
-        ).length;
-      default:
-        return 0;
+    if (this.video) {
+      switch (reactionNumber) {
+        case 1:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Like
+          ).length;
+        case 2:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Dislike
+          ).length;
+        case 3:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Love
+          ).length;
+        case 4:
+          return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
+            .length;
+        case 5:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Astonishment
+          ).length;
+        case 6:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Magically
+          ).length;
+        default:
+          return 0;
+      }
     }
+    return -1;
   }
 
   private updateReactions() {

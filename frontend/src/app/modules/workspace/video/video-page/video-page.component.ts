@@ -23,7 +23,9 @@ export class VideoPageComponent {
     private videoService: VideoService
   ) {
     this.viewsNumber = 10;
-    this.videoService.getVideoById(1).subscribe((resp) => {
+    this.videoService.getVideoById(1)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((resp) => {
       if (resp.body != null) {
         this.currentVideo = resp.body;
       }
@@ -64,5 +66,13 @@ export class VideoPageComponent {
     return array.sort(
       (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)
     );
+  }
+
+  public isCurrentVideo() {
+    if (this.currentVideo) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

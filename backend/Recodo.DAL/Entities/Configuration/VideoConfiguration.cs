@@ -25,6 +25,7 @@ namespace Recodo.DAL.Entities.Configuration
                 r.Property(x => x.CreatedAt).IsRequired();
             });
             builder.HasOne<Folder>().WithMany().HasForeignKey(p => p.FolderId);
+            builder.HasMany(x => x.Comments).WithOne(x => x.Video);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Recodo.Common.Dtos.Reactions;
+﻿using Recodo.Common.Dtos.Comment;
+using Recodo.Common.Dtos.Reactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Recodo.Common.Dtos.Video
         public int UserId { get; set; }
         public int FolderId { get; set; }
         public string Link { get; set; }
-        public ICollection<VideoReactionDTO> Reactions { get; set; }
+        public ICollection<NewVideoReactionDTO> Reactions { get; set; }
+        public ICollection<NewCommentDTO> Comments { get; set; }
 
     }
 }

@@ -10,16 +10,18 @@
     </button>
   </div>
   <app-video-player></app-video-player>
-  <app-video-comments
-    *ngFor="let _comment of currentVideo.comments"
-    [comment]="_comment"
-    [currentUser]="currentUser"
-    (deletedComment)="deleteComment($event)"
-  ></app-video-comments>
+  <div *ngIf="isCurrentVideo()">
+    <app-video-comments
+      *ngFor="let _comment of currentVideo.comments"
+      [comment]="_comment"
+      [currentUser]="currentUser"
+      (deletedComment)="deleteComment($event)"
+    ></app-video-comments>
+  </div>
   <app-video-reactions
     class="reactions-container"
-    [video]="this.currentVideo"
-    [user]="this.currentUser"
+    [video]="currentVideo"
+    [user]="currentUser"
   >
   </app-video-reactions>
   <h1><strong>Screenshot 11 February 2022</strong></h1>

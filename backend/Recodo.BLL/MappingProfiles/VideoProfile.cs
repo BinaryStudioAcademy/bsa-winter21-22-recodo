@@ -11,7 +11,8 @@ namespace Recodo.BLL.MappingProfiles
         {
             CreateMap<Video, VideoDTO>();
             CreateMap<NewVideoDTO, Video>()
-                .ForMember(video => video.Reactions, act => act.Ignore());
+                .ForMember(video => video.Reactions, act => act.Ignore())
+                .ForMember(video => video.AuthorId, conf => conf.MapFrom(arg => arg.UserId));
         }
     }
 }

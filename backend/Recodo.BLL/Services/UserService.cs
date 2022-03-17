@@ -19,7 +19,7 @@ namespace Recodo.BLL.Services
 
         public UserService(RecodoDbContext context, IMapper mapper) : base(context, mapper)
         {
-
+            
         }
 
         public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)

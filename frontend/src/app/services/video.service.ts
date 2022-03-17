@@ -7,7 +7,7 @@ import { ResourceService } from './resource.service';
 @Injectable({ providedIn: 'root' })
 export class VideoService extends ResourceService<VideoDTO> {
   getResourceUrl(): string {
-    return 'video';
+    return '/video';
   }
 
   constructor(override httpClient: HttpClient, private router: Router) {

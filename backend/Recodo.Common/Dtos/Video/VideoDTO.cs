@@ -2,6 +2,7 @@ using System;
 using Recodo.Common.Dtos.User;
 using System.Collections.Generic;
 using Recodo.Common.Dtos.Reactions;
+using Recodo.Common.Dtos.Comment;
 
 namespace Recodo.Common.Dtos.Video
 {
@@ -15,5 +16,6 @@ namespace Recodo.Common.Dtos.Video
         public DateTime CreatedAt { get; set; }
         public int FolderId { get; set; }
         public ICollection<VideoReactionDTO> Reactions { get; set; }
+        public ICollection<CommentDTO> Comments { get; set; }
     }
 }

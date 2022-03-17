@@ -10,5 +10,6 @@ namespace Recodo.Common.Dtos.Comment
         public int UserId { get; set; }
         public int VideoId { get; set; }
         public string Body { get; set; }
+        public ICollection<NewCommentReactionDTO> Reactions { get; set; }
     }
 }
