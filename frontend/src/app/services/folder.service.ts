@@ -33,7 +33,7 @@ export class FolderService extends ResourceService<NewFolderDto> {
   }
 
   public getAllFoldersByUserId(id: number) {
-    return this.getFullRequest<NewFolderDto>(`folders/${id}`).pipe(
+    return this.getFullRequest<FolderDto[]>(`folders/${id}`).pipe(
       map((resp) => {
         return resp.body as unknown as FolderDto[];
       })

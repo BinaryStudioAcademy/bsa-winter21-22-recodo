@@ -61,7 +61,7 @@ export class PersonalComponent implements OnInit {
     return this.folderService.getAllFoldersByUserId(this.currentUser.id).subscribe(
       (result) => {
         this.folders = result;
-        var name = this.folders.find(f => f.id == this.selectedFolderId)?.name;
+        let name = this.folders.find(f => f.id == this.selectedFolderId)?.name;
         if(name === undefined) {
           this.selectedFolderName='';
         }
@@ -105,10 +105,10 @@ export class PersonalComponent implements OnInit {
   }
 
   showNewFolderForm(folder?: FolderDto) {
-    const dialogConfig = new MatDialogConfig();
+    const dialogConfig = new MatDialogConfig;
 
     dialogConfig.autoFocus = true;
-    dialogConfig.data = folder === undefined ? '' : folder.name;;
+    dialogConfig.data = folder === undefined ? '' : folder.name;
 
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 

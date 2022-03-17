@@ -38,20 +38,22 @@ namespace Recodo.BLL.Services
                 throw new NotFoundException(nameof(Folder));
             }
 
-            var folders = _mapper.Map<List<FolderDTO>>(foldersEntities);
-
-            return folders;
+            return _mapper.Map<List<FolderDTO>>(foldersEntities);
         }
 
         public async Task Delete(int id)
         {
             if (id < 0)
+            {
                 throw new NotFoundException(nameof(Folder), id);
+            }
 
             var folderEntity = await _context.Folders.FirstOrDefaultAsync(f => f.Id == id);
 
-            if(folderEntity is null)
+            if (folderEntity is null)
+            {
                 throw new NotFoundException(nameof(Folder), id);
+            }
 
             _context.Folders.Remove(folderEntity);
             await _context.SaveChangesAsync();
@@ -62,7 +64,9 @@ namespace Recodo.BLL.Services
             var folderEntity = await _context.Folders.FirstOrDefaultAsync(f => f.Id == folder.Id);
 
             if (folderEntity is null)
+            {
                 throw new NotFoundException(nameof(Folder), folder.Id);
+            }
 
             folderEntity.Name = folder.Name;
             folderEntity.AuthorId = folder.AuthorId;
