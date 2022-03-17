@@ -1,40 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { map, Subject, takeUntil } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
-import { FolderDialogComponent } from '../folder/folder-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-
-const ELEMENT_DATA = [
-  {
-    name: 'Screenshot name Screenshot name Screenshot name',
-    owner: 'Volodymyr',
-    parentId: undefined,
-    teamId: 4,
-  },
-  {
-    name: 'Screenshot name Screenshot name Screenshot name',
-    owner: 'Volodymyr',
-    parentId: undefined,
-    teamId: 4,
-  },
-  {
-    name: 'Screenshot name Screenshot name Screenshot name',
-    owner: 'Volodymyr',
-    parentId: undefined,
-    teamId: 4,
-  },
-  {
-    name: 'Screenshot name Screenshot name Screenshot name',
-    owner: 'Volodymyr',
-    parentId: undefined,
-    teamId: 4,
-  },
-];
+import { MatMenuTrigger } from '@angular/material/menu';
+import { ActivatedRoute, Router } from '@angular/router';
+import { VideoDto } from 'src/app/models/video/video-dto';
+import { VideoService } from 'src/app/services/video.service';
+import { TimeService } from 'src/app/services/time.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-content',
@@ -44,58 +22,153 @@ const ELEMENT_DATA = [
 export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
 
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger = {} as MatMenuTrigger;
+
   public currentUser: UserDto = {} as UserDto;
-  folderForm: FormGroup = {} as FormGroup;
-  folder: FolderDto = {} as FolderDto;
+  public avatarLink: string = '';
+  public isFolderRouteActive = false;
+  folderForm : FormGroup = {} as FormGroup;
+  folder : FolderDto = {} as FolderDto;
+  folders : FolderDto[] = [];
+  selectedFolderName: string | undefined = '';
+  selectedFolderId: number | undefined;
+
+  public videos: VideoDto[] = [];
 
   private unsubscribe$ = new Subject<void>();
-  //now i can`t get current user and his team cause not implementer this services
-  //it's mock team and user id
-  team: number = 1;
-  user: number = 4;
-  currentFolder: number | undefined;
 
   displayedColumns: string[] = ['name', 'owner', 'details'];
-  dataSource = ELEMENT_DATA;
 
   constructor(
     private registrationService: RegistrationService,
-    private formBuilder: FormBuilder,
     private folderService: FolderService,
-    public dialog: MatDialog
-  ) {}
+    private route: ActivatedRoute,
+    private videoService: VideoService,
+    private timeService: TimeService,
+    public dialog: MatDialog,
+    private router: Router ) {
+      route.params.pipe(map(p => p['id']))
+      .subscribe(id=> {
+        this.selectedFolderId = id ;
+      });
+    }
 
   ngOnInit(): void {
     this.getAutorithedUser();
   }
 
+  private getFolders() {
+    return this.folderService.getAllFoldersByUserId(this.currentUser.id).subscribe(
+      (result) => {
+        this.folders = result;
+        let name = this.folders.find(f => f.id == this.selectedFolderId)?.name;
+        if(name === undefined) {
+          this.selectedFolderName='';
+        }
+        else {
+          this.selectedFolderName = ' / '+ name;
+        }
+      }
+    );
+  }
+
+  private getVideos(id: number) {
+    return this.videoService.getAllVideosWithoutFolderByUserId(id).
+        subscribe(res => this.videos = res)
+  }
+
   private getAutorithedUser() {
     return this.registrationService
-      .getUser()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => (this.currentUser = user));
-  }
-  createFolder(name: string) {
-    let newfolder: NewFolderDto = {
-      name: name,
-      parentId: this.currentFolder,
-      authorId: this.user,
-      teamId: this.team,
-    };
+    .getUser()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user) => {
+      if(user.avatarLink === null) {
+        user.avatarLink = '../../assets/icons/test-user-logo.png';
+      }
+      this.currentUser = user;
+      this.getFolders();
+      this.getVideos(user.id);
+    });;
+ }
 
-    this.folderService.add(newfolder).subscribe((response) => {
+  createFolder(newFolder: NewFolderDto) {
+    this.folderService.add(newFolder).subscribe((response) => {
       this.folder = response.body as FolderDto;
+      this.getFolders();
     });
   }
 
-  showNewFolderForm() {
-    const dialogRef = this.dialog.open(FolderDialogComponent, {
-      width: '250px',
-      data: { name: '' },
+  updateFolder(folderDto: FolderDto) {
+    this.folderService.updateFolder(folderDto).subscribe(() => {
+      this.getFolders();
     });
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.createFolder(result);
-    });
+  showNewFolderForm(folder?: FolderDto) {
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = folder === undefined ? '' : folder.name;
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      folderName => {
+        //For creating new folder
+        if(folder === undefined) {
+          let newfolder : NewFolderDto = {
+            name: folderName,
+            authorId: this.currentUser.id,
+            teamId: undefined
+          }
+          this.createFolder(newfolder);
+        }
+        //For updating folder
+        else {
+          let folderUpdated : FolderDto = {
+            id: folder.id,
+            name: folderName,
+            authorId: this.currentUser.id,
+            author: folder.author,
+            teamId: undefined
+          }
+          this.updateFolder(folderUpdated);
+        }
+      }
+    );
+  }
+
+  public folderClick(folder: FolderDto) {
+    this.selectedFolderName = ' / '+folder.name;
+    this.isFolderRouteActive = true;
+  }
+
+  public onMenuTriggered() {
+    this.menuTrigger?.menu.focusFirstItem('mouse');
+    this.menuTrigger?.openMenu();
+  }
+
+  public deleteFolder(id: number, name: string) {
+    if(confirm('Are you sure you want to delete folder ' + name + ' ?'))
+    {
+      this.folderService.deleteFolder(id).subscribe(()=> {
+        this.selectedFolderName = '';
+        this.router.navigate(['/personal']);
+        this.getFolders();
+      });
+    }
+  }
+
+  public deleteVideo(id: number) {
+    if(confirm('Are you sure you want to delete the video ?'))
+    {
+      this.videoService.delete(id).subscribe(() => {
+        this.getVideos(this.currentUser.id);
+      });
+    }
+  }
+
+  public calculateTimeDifference(oldDate: Date) {
+    return this.timeService.calculateTimeDifference(oldDate);
   }
 }

@@ -25,4 +25,6 @@ mat-drawer-container {
   border-radius: 10px;
   background: #f4e9e9;
   padding: 50px;
+  min-height: calc(100% - 120px);
+  min-width: 700px;
 }

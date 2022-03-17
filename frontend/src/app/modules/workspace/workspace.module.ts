@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FolderDialogComponent } from './folder/folder-dialog.component'
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PersonalComponent } from './personal/personal.component';
 import { BaseComponent } from './base/base.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialogModule } from '@angular/material/dialog'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,11 +23,13 @@ import { VideoReactionsComponent } from './video/video-reactions/video-reactions
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
+import { FolderComponent } from './folder/folder.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 @NgModule({
   declarations: [
-    FolderDialogComponent,
     NavbarComponent,
     SidebarComponent,
     PersonalComponent,
@@ -38,6 +38,8 @@ import { VimeModule } from '@vime/angular';
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    FolderComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { VimeModule } from '@vime/angular';
     MatTableModule,
     SharedModule,
     VimeModule,
+    MatDialogModule
   ],
 })
 export class WorkspaceModule {}
