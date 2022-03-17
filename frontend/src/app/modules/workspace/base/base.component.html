@@ -3,7 +3,7 @@
         <app-sidebar [user]="this.currentUser"></app-sidebar>
     </mat-drawer>
     <mat-drawer-content>
-        <app-navbar></app-navbar>
+        <app-navbar [user]="this.currentUser"></app-navbar>
         <div class="content mat-elevation-z4">
             <router-outlet></router-outlet>
         </div>    

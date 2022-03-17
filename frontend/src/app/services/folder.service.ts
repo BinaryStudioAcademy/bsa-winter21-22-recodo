@@ -21,10 +21,26 @@ export class FolderService extends ResourceService<NewFolderDto> {
   };
 
   public create(folder : NewFolderDto) {
-    return this.handleAuthResponse(this.add<NewFolderDto,FolderDto>(folder));
+    return this.handleResponse(this.add<NewFolderDto,FolderDto>(folder));
   }
 
-  private handleAuthResponse(observable: Observable<HttpResponse<FolderDto>>) {
+  public updateFolder(folder: FolderDto) {
+    return this.handleResponse(this.update<FolderDto, FolderDto>(folder));
+  }
+
+  public deleteFolder(id: number) {
+    return this.delete(id);
+  }
+
+  public getAllFoldersByUserId(id: number) {
+    return this.getFullRequest<FolderDto[]>(`folders/${id}`).pipe(
+      map((resp) => {
+        return resp.body as unknown as FolderDto[];
+      })
+    );
+  }
+
+  private handleResponse(observable: Observable<HttpResponse<FolderDto>>) {
     return observable.pipe(
         map((resp) => {
             this.folder = resp.body as FolderDto;

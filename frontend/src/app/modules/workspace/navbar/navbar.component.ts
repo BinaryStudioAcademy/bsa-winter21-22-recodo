@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { UserDto } from 'src/app/models/user/user-dto';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
+  @Input() public user: UserDto = {} as UserDto
   @ViewChild(MatMenuTrigger)
   contextMenu?: MatMenuTrigger;
   constructor(private loginService: LoginService) {}
