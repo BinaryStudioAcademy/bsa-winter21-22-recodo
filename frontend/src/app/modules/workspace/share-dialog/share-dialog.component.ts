@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MailService } from 'src/app/services/mail.service';
 import { ToastrService } from 'ngx-toastr';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   templateUrl: './share-dialog.component.html',
@@ -22,6 +23,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private snackBarService: SnackBarService,
     private dialogRef: MatDialogRef<ShareDialogComponent>,
     private matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,7 +53,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.matDialog.closeAll();
-        this.toastr.success(`Link was successfully sended to ${this.email}!`);
+        this.snackBarService.openSnackBar('Email was successfully sent!');
       });
   }
 }
