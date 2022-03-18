@@ -6,6 +6,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { Subject, takeUntil } from 'rxjs';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { VideoService } from 'src/app/services/video.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-video-page',
@@ -14,22 +15,26 @@ import { VideoService } from 'src/app/services/video.service';
 })
 export class VideoPageComponent {
   public viewsNumber: number;
+  public videoId: number;
   public currentVideo: VideoDTO;
   public currentUser: User;
   public newComment = {} as NewComment;
   private unsubscribe$ = new Subject<void>();
   constructor(
     private commentService: CommentService,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private activateRoute: ActivatedRoute
   ) {
     this.viewsNumber = 10;
-    this.videoService.getVideoById(1)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((resp) => {
-      if (resp.body != null) {
-        this.currentVideo = resp.body;
-      }
-    });
+    this.videoId = activateRoute.snapshot.params['videoId'];
+    this.videoService
+      .getVideoById(this.videoId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((resp) => {
+        if (resp.body != null) {
+          this.currentVideo = resp.body;
+        }
+      });
   }
 
   public deleteComment(commentId: number) {
