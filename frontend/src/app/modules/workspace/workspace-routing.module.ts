@@ -13,7 +13,6 @@ const routes: Routes = [
       {
         path: '',
         component: PersonalComponent,
-
       },
       {
         path: '',
@@ -21,13 +20,13 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'video',
+        path: 'video/:videoId',
         component: VideoPageComponent,
       },
       {
         path: ':id',
         component: PersonalComponent,
-      }
+      },
     ],
   },
 ];
