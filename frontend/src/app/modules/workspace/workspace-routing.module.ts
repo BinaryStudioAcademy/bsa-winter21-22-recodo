@@ -20,7 +20,7 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'video',
+        path: 'video/:videoId',
         component: VideoPageComponent,
       },
     ],
