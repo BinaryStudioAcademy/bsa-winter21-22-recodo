@@ -1,4 +1,5 @@
 ﻿using Recodo.Desktop.Logic;
+using Recodo.Desktop.Models.Auth;
 using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,14 +16,16 @@ namespace Recodo.Desktop.Main
             InitializeComponent();
         }
 
+        private Token token;
+
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {       
-            await GetToken(ConfigurationManager.AppSettings["loginUrl"]);
+            await GetToken(ConfigurationManager.AppSettings["recodoUrl"] + "login");
         }
 
         private async void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            await GetToken(ConfigurationManager.AppSettings["registerUrl"]);
+            await GetToken(ConfigurationManager.AppSettings["recodoUrl"] + "register");
         }
 
         private async Task GetToken(string endpoint)
@@ -31,7 +34,7 @@ namespace Recodo.Desktop.Main
             var auth = new AuthorizationService(endpoint);
             try
             {
-                var authResult = await auth.Authorize();
+                token = await auth.Authorize();
                 this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
@@ -39,7 +42,11 @@ namespace Recodo.Desktop.Main
                 this.DeterminateCircularProgress.Visibility = Visibility.Hidden;
                 this.BrowserState.Text = "Some went wrong, please try again..";
             }
-            this.Activate();
+
+            this.Hide();
+            RecorderService recorderService = new RecorderService(token);
+            VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
+            recordingForm.Show();
         }
     }
 }

@@ -55,7 +55,6 @@ namespace Recodo.Desktop.Main
         private void AudioDevices_Initialized(object sender, EventArgs e)
         {
             audioDevices = _recorderService.GetInputAudioDevices();
-
             this.AudioDevices.ItemsSource = audioDevices;
             this.AudioDevices.SelectedIndex = 0;
         }
@@ -116,20 +115,16 @@ namespace Recodo.Desktop.Main
             this.Dispatcher.Invoke(() =>
             {
                 VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
-            
-                if (!videoFormOpened)
-                {
-                        videoFormOpened = true;
-                        return;
-                }
+                
                 if (cameraComboBox.SelectedIndex != 0)
                 {
-                        _cameraService.StopCapture();
-                        videoForm.Show();
+                    _cameraService.StartCapture(cameraComboBox.SelectedIndex-1);
+                    videoForm.Show();
                 }
                 else
                 {
-                        _cameraService.StopCapture();               
+                    _cameraService.StopCapture();
+                    videoForm.Hide();
                 }
             });
         }
