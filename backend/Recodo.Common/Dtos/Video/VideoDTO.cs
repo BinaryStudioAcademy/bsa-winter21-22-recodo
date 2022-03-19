@@ -12,6 +12,7 @@ namespace Recodo.Common.Dtos.Video
         public string Name { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
+        public int AuthorId { get; set; }
         public UserDTO Author { get; set; }
         public DateTime CreatedAt { get; set; }
         public int FolderId { get; set; }
