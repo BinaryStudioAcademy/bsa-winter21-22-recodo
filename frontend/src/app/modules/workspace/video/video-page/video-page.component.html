@@ -21,7 +21,7 @@
   <app-video-reactions
     class="reactions-container"
     [video]="currentVideo"
-    [user]="currentUser"
+    (newReaction)="updateVideo()"
   >
   </app-video-reactions>
   <h1><strong>Screenshot 11 February 2022</strong></h1>

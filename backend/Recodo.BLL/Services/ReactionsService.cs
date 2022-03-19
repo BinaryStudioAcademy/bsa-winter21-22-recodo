@@ -17,16 +17,12 @@ namespace Recodo.BLL.Services
 
         public async Task ReactVideo(NewVideoReactionDTO reaction)
         {
-            var reactions = _context.VideoReactions.Where(x => x.UserId == reaction.UserId && x.VideoId == reaction.VideoId);
-
-            if (reactions.Any())
+            var video = await _context.Videos.FindAsync(reaction.VideoId);
+            if (video.Reactions.Any())
             {
-                _context.VideoReactions.RemoveRange(reactions);
+                video.Reactions.Clear();
                 await _context.SaveChangesAsync();
-                if(reactions.First().Reaction == reaction.Reaction)
-                {
-                    return;
-                }
+                return;
             }
             var newReaction = new VideoReaction
             {
@@ -34,10 +30,9 @@ namespace Recodo.BLL.Services
                 Reaction = reaction.Reaction,
                 UserId = reaction.UserId
             };
-            _context.VideoReactions.Add(newReaction);
+            video.Reactions.Add(newReaction);
             await _context.SaveChangesAsync();
-            var createdReaction = await _context.VideoReactions.FindAsync(newReaction);
-            var createdReactionDTO = _mapper.Map<VideoReactionDTO>(createdReaction);            
+            var createdReactionDTO = _mapper.Map<VideoReactionDTO>(newReaction);            
         }
         
         public async Task ReactComment(NewCommentReactionDTO reaction)

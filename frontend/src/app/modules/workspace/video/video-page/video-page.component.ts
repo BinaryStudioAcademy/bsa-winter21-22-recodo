@@ -27,14 +27,7 @@ export class VideoPageComponent {
   ) {
     this.viewsNumber = 10;
     this.videoId = activateRoute.snapshot.params['videoId'];
-    this.videoService
-      .getVideoById(this.videoId)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((resp) => {
-        if (resp.body != null) {
-          this.currentVideo = resp.body;
-        }
-      });
+    this.updateVideo();
   }
 
   public deleteComment(commentId: number) {
@@ -79,5 +72,17 @@ export class VideoPageComponent {
     } else {
       return false;
     }
+  }
+
+  public updateVideo() {
+    this.videoService
+      .getVideoById(this.videoId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((resp) => {
+        console.log(resp);
+        if (resp.body != null) {
+          this.currentVideo = resp.body;
+        }
+      });
   }
 }

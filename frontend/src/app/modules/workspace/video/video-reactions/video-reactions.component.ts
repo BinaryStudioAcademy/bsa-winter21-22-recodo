@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
@@ -13,7 +19,7 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
 })
 export class VideoReactionsComponent implements OnChanges {
   @Input() public video: VideoDTO;
-  @Input() public user: User;
+  @Output() newReaction = new EventEmitter<boolean>();
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
@@ -27,47 +33,48 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public addReaction(reactionNumber: number) {
+    console.log(this.video);
     switch (reactionNumber) {
       case 1:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Like,
-          this.user
+          this.video.authorId
         );
         break;
       case 2:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Dislike,
-          this.user
+          this.video.authorId
         );
         break;
       case 3:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Love,
-          this.user
+          this.video.authorId
         );
         break;
       case 4:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Fun,
-          this.user
+          this.video.authorId
         );
         break;
       case 5:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Astonishment,
-          this.user
+          this.video.authorId
         );
         break;
       case 6:
         this.reactionsService.reactVideo(
           this.video,
           ReactionType.Magically,
-          this.user
+          this.video.authorId
         );
         break;
       default:
@@ -77,39 +84,35 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public GetReactions(reactionNumber: number) {
-    if (this.video) {
-      switch (reactionNumber) {
-        case 1:
-          return this.allReactions.filter(
-            (x) => x.reaction == ReactionType.Like
-          ).length;
-        case 2:
-          return this.allReactions.filter(
-            (x) => x.reaction == ReactionType.Dislike
-          ).length;
-        case 3:
-          return this.allReactions.filter(
-            (x) => x.reaction == ReactionType.Love
-          ).length;
-        case 4:
-          return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
-            .length;
-        case 5:
-          return this.allReactions.filter(
-            (x) => x.reaction == ReactionType.Astonishment
-          ).length;
-        case 6:
-          return this.allReactions.filter(
-            (x) => x.reaction == ReactionType.Magically
-          ).length;
-        default:
-          return 0;
-      }
+    switch (reactionNumber) {
+      case 1:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
+          .length;
+      case 2:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Dislike
+        ).length;
+      case 3:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Love)
+          .length;
+      case 4:
+        return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
+          .length;
+      case 5:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Astonishment
+        ).length;
+      case 6:
+        return this.allReactions.filter(
+          (x) => x.reaction == ReactionType.Magically
+        ).length;
+      default:
+        return 0;
     }
-    return -1;
   }
 
   private updateReactions() {
     this.allReactions = this.video?.reactions;
+    this.newReaction.emit(true)
   }
 }
