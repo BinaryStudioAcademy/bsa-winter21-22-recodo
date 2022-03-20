@@ -57,7 +57,7 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserPassword(UpdateUserDTO userDto)
+        public async Task UpdateUserPasswordEmail(UpdateUserDTO userDto)
         {
             var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
             if (userEntity == null) { return; }

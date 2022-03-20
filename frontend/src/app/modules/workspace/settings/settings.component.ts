@@ -178,7 +178,7 @@ export class SettingsComponent implements OnInit {
     };
 
     this.userService
-      .updatePassword('Update-Password', userUpdateDto)
+      .updatePassword('Update-Password-Email', userUpdateDto)
       .subscribe({
         next: () => {
           window.alert('done');

@@ -26,10 +26,10 @@ namespace Recodo.API.Controllers
             return NoContent();
         }
 
-        [HttpPost("Update-Password")]
-        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserDTO userDTO)
+        [HttpPost("Update-Password-Email")]
+        public async Task<IActionResult> UpdatePasswordEmail([FromBody] UpdateUserDTO userDTO)
         {
-            await _userService.UpdateUserPassword(userDTO);
+            await _userService.UpdateUserPasswordEmail(userDTO);
             return NoContent();
         }
 
