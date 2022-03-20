@@ -88,7 +88,8 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  public googleLogin = () => {
+  public googleLogin = (event: FocusEvent) => {
+    event.preventDefault();
     this.externalAuthService.signInWithGoogle();
   };
 }
