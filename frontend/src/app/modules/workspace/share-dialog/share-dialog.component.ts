@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
   MatDialog,

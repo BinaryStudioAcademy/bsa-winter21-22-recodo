@@ -7,11 +7,7 @@
     <button mat-icon-button>
       <mat-icon svgIcon="details"></mat-icon>
     </button>
-    <button
-      mat-icon-button
-      [cdkCopyToClipboard]="this.link"
-      (click)="openSnackBar()"
-    >
+    <button mat-icon-button (click)="openSharingPropertiesDialog()">
       <mat-icon svgIcon="share-link"></mat-icon>
     </button>
   </div>

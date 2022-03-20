@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { ShareDialogComponent } from '../modules/workspace/share-dialog/share-dialog.component';
+import { SharePropertiesComponent } from '../modules/workspace/share-properties-dialog/share-properties.component';
 
 @Injectable({ providedIn: 'root' })
 export class SendDialogService implements OnDestroy {
@@ -24,5 +25,21 @@ export class SendDialogService implements OnDestroy {
   public ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  public openSharePropertiesDialog(
+    link: string,
+    checked: boolean,
+    videoId: number
+  ) {
+    this.dialog.open(SharePropertiesComponent, {
+      data: { link, checked, videoId },
+      minWidth: 400,
+      autoFocus: true,
+      backdropClass: 'dialog-backdrop',
+      position: {
+        top: '500',
+      },
+    });
   }
 }

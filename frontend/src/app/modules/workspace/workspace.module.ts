@@ -29,6 +29,8 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { SharePropertiesComponent } from './share-properties-dialog/share-properties.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     FolderComponent,
     DialogComponent,
     ShareDialogComponent,
+    SharePropertiesComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +69,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatDialogModule,
     ToastrModule.forRoot(),
     ClipboardModule,
+    MatFormFieldModule,
   ],
 })
 export class WorkspaceModule {}

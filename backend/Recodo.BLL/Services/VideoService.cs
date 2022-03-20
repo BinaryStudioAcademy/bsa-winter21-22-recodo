@@ -55,5 +55,25 @@ namespace Recodo.BLL.Services
             _context.Videos.Remove(videoEntity);
             await _context.SaveChangesAsync();
         }
+        public async Task Update(VideoDTO video)
+        {
+            var foundVideo = await _context.Videos.FirstOrDefaultAsync(v => v.Id == video.Id);
+            if (foundVideo is null)
+            {
+                throw new NotFoundException(nameof(Video), foundVideo.Id);
+            }
+            foundVideo.IsPrivate = video.IsPrivate;
+            _context.Videos.Update(foundVideo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<VideoDTO> GetVideoById(int id)
+        {
+            var videoEntity = await _context.Videos.AsNoTracking()
+                .Include(video => video.Reactions)
+                .Where(v => v.Id == id)
+                .FirstOrDefaultAsync();
+            return _mapper.Map<VideoDTO>(videoEntity);
+        }
     }
 }

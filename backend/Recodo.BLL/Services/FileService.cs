@@ -24,6 +24,7 @@ namespace Recodo.BLL.Services
         {
             Video newVideo = new Video()
             {
+                IsPrivate = true,
                 IsSaving = true,
                 AuthorId = authorId,
                 CreatedAt = DateTime.Now,

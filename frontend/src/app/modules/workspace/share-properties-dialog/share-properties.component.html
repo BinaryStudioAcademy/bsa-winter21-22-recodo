@@ -1,0 +1,43 @@
+<h2 mat-dialog-title class="title">
+  {{ title }}
+</h2>
+<div mat-dialog-content>
+  <p>Link: {{ link }}</p>
+</div>
+<div class="main-content">
+  <p>
+    This video is
+    {{
+      this.checked
+        ? "public (any user can see this video)"
+        : "private (only you can see this video)"
+    }}.
+  </p>
+  <button
+    class="button-accent"
+    mat-raised-button
+    *ngIf="this.checked"
+    (click)="changeProperty()"
+  >
+    Make video private
+  </button>
+  <button
+    class="button-accent"
+    mat-raised-button
+    *ngIf="!this.checked"
+    (click)="changeProperty()"
+  >
+    Make video public
+  </button>
+</div>
+<div class="actions">
+  <button mat-raised-button (click)="close()">Back</button>
+  <button
+    class="button-outlined"
+    mat-raiser-button
+    [cdkCopyToClipboard]="this.link"
+    (click)="openSnackBar()"
+  >
+    Copy video link
+  </button>
+</div>

@@ -11,15 +11,21 @@ namespace Recodo.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VideosController : ControllerBase
+    public class VideoController : ControllerBase
     {
         private readonly VideoService _videoService;
-        public VideosController(VideoService videoService)
+        public VideoController(VideoService videoService)
         {
             _videoService = videoService;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<VideoDTO>> GetVideoById(int id)
+        {
+            return Ok(await _videoService.GetVideoById(id));
+        }
+        
+        [HttpGet("{id:int}/videos")]
         public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
         {
             return Ok(await _videoService.GetVideosByFolderId(id));
@@ -38,5 +44,11 @@ namespace Recodo.API.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] VideoDTO video)
+        {
+            await _videoService.Update(video);
+            return NoContent();
+        }
     }
 }
