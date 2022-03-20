@@ -20,13 +20,12 @@ export class ExternalAuthService {
   ) {}
 
   public signInWithGoogle = () => {
-    this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (res) => {
+    return this.googleAuthService
+      .signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((res) => {
         const user: SocialUser = { ...res };
         this.validateExternalAuth(user);
-      },
-      (e) => {}
-    );
+      });
   };
 
   public signOutExternal = () => {
