@@ -1,14 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
-import { User } from 'src/app/models/user/user';
 import { VideoDTO } from 'src/app/models/video/video-dto';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 
@@ -17,7 +10,7 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   templateUrl: './video-reactions.component.html',
   styleUrls: ['./video-reactions.component.scss'],
 })
-export class VideoReactionsComponent implements OnChanges {
+export class VideoReactionsComponent {
   @Input() public video: VideoDTO;
   @Output() newReaction = new EventEmitter<boolean>();
   public allReactions: VideoReactionDTO[];
@@ -28,12 +21,7 @@ export class VideoReactionsComponent implements OnChanges {
     this.updateReactions();
   }
 
-  public ngOnChanges() {
-    this.updateReactions();
-  }
-
   public addReaction(reactionNumber: number) {
-    console.log(this.video);
     switch (reactionNumber) {
       case 1:
         this.reactionsService.reactVideo(
@@ -84,6 +72,9 @@ export class VideoReactionsComponent implements OnChanges {
   }
 
   public GetReactions(reactionNumber: number) {
+    if (!this.allReactions) {
+      this.updateReactions();
+    }
     switch (reactionNumber) {
       case 1:
         return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
@@ -113,6 +104,6 @@ export class VideoReactionsComponent implements OnChanges {
 
   private updateReactions() {
     this.allReactions = this.video?.reactions;
-    this.newReaction.emit(true)
+    this.newReaction.emit(true);
   }
 }

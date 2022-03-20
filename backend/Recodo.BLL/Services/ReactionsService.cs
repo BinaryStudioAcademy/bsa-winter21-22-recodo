@@ -20,9 +20,17 @@ namespace Recodo.BLL.Services
             var video = await _context.Videos.FindAsync(reaction.VideoId);
             if (video.Reactions.Any())
             {
-                video.Reactions.Clear();
-                await _context.SaveChangesAsync();
-                return;
+                if (reaction.Reaction == video.Reactions.FirstOrDefault().Reaction)
+                {   
+                    video.Reactions.Clear();
+                    await _context.SaveChangesAsync();
+                    return;
+                }
+                else
+                {
+                    video.Reactions.Clear();
+                    await _context.SaveChangesAsync();
+                }
             }
             var newReaction = new VideoReaction
             {

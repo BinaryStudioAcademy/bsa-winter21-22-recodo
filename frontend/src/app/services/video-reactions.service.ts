@@ -44,13 +44,17 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
         reactionType
       );
       if (hasReaction) {
-        this.deleteReaction(userId, currentVideo);
-        this.add(this.addNewReaction(userId, currentVideo.id, reactionType))
-          .subscribe();
+        const deletedReaction = this.deleteReaction(userId, currentVideo);
+        if (deletedReaction != null) {
+          this.delete(deletedReaction).subscribe();
+        }
+        this.add(
+          this.addNewReaction(userId, currentVideo.id, reactionType)
+        ).subscribe();
       } else if (hasSuchReaction) {
         const deletedReaction = this.deleteReaction(userId, currentVideo);
         if (deletedReaction != null) {
-          this.delete(deletedReaction);
+          this.delete(deletedReaction).subscribe();
         }
       } else {
         return this.add(
