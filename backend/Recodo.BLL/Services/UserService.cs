@@ -3,7 +3,6 @@ using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Recodo.BLL.Exceptions;
 using Recodo.BLL.Services.Abstract;
 using Recodo.Common.Dtos.Auth;
@@ -12,8 +11,6 @@ using Recodo.Common.Security;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
-using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
 
@@ -21,10 +18,12 @@ namespace Recodo.BLL.Services
 {
     public class UserService : BaseService
     {
+        private readonly ImageService _imageService;
         private readonly IConfiguration _configuration;
 
-        public UserService(RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
+        public UserService(ImageService imageService, RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
         {
+            _imageService = imageService;
             _configuration = configuration;
         }
 
@@ -49,30 +48,9 @@ namespace Recodo.BLL.Services
             if (userEntity == null) { return; }
 
             userEntity.WorkspaceName = userDto.WorkspaceName ?? userEntity.WorkspaceName;
-
-
             if (avatar != null)
             {
-                using (var client = new HttpClient())
-                {
-                    var url = "https://upload.gyazo.com/api/upload?access_token=" + _configuration["GyazoKey"];
-
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await avatar.CopyToAsync(memoryStream);
-                        var avatarImage = memoryStream.ToArray();
-
-                        ByteArrayContent byteContent = new ByteArrayContent(avatarImage);
-                        var multipartContent = new MultipartFormDataContent();
-                        multipartContent.Add(byteContent, "imagedata", "imagedata");
-
-                        var response = await client.PostAsync(url, multipartContent);
-                        var stringResponse = await response.Content.ReadAsStringAsync();
-
-                        AvatarDTO json = JsonConvert.DeserializeObject<AvatarDTO>(stringResponse);
-                        userEntity.AvatarLink = json.ThumbUrl;
-                    }
-                }
+                userEntity.AvatarLink = await _imageService.UploadToGyazo(avatar, _configuration["GyazoKey"]);
             }
 
             _context.Users.Update(userEntity);
@@ -113,7 +91,7 @@ namespace Recodo.BLL.Services
             userEntity.Password = SecurityHelper.HashPassword(newPassword, salt);
 
             string message = "Temp password: " + newPassword;
-            await EmailService.SendEmailAsync(userEntity.Email, "New Password", message);
+            await EmailService.SendEmailAsync(userEntity.Email, "New Password", message, _configuration);
         }
 
         public async Task DeleteUser(int userId)
