@@ -32,7 +32,7 @@
         ></mat-icon>
       </p>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="addReaction(3)">
       <img
         src="../../../../../assets/img/SmilingFaceWithHeartEyes.png"
         width="30"
@@ -48,7 +48,7 @@
         ></mat-icon>
       </p>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="addReaction(6)">
       <img
         src="../../../../../assets/img/RaisingHands.png"
         width="30"
@@ -64,7 +64,7 @@
         ></mat-icon>
       </p>
     </button>
-    <button mat-icon-button click="addReaction(ReactionType.Like)">
+    <button mat-icon-button  (click)="addReaction(1)">
       <img
         src="../../../../../assets/img/ThumbsUp.png"
         width="30"
@@ -80,7 +80,7 @@
         ></mat-icon>
       </p>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="addReaction(2)">
       <img
         src="../../../../../assets/img/ThumbsDown.png"
         width="30"

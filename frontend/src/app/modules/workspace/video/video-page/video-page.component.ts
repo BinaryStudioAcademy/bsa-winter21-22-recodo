@@ -79,7 +79,6 @@ export class VideoPageComponent {
       .getVideoById(this.videoId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
-        console.log(resp);
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }
