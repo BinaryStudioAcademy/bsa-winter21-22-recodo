@@ -6,7 +6,6 @@ using Recodo.Common.Dtos.Reactions;
 using Recodo.Common.Enums;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Recodo.BLL.Services
 {
