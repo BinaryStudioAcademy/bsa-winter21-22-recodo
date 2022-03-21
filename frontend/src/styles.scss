@@ -69,3 +69,24 @@ input:-webkit-autofill:active {
   background: #434343;
   box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%), inset -2px -2px 2px rgb(0 0 0 / 25%);
 }
+
+::selection {
+  background: #b6445d;
+}
+
+mat-select-min-line ng-tns-c111-2 ng-star-inserted{
+	font-weight: bold;
+}
+
+.not-empty-select.mat-selected {
+  color: green !important;
+}
+
+.not-empty-select.mat-selected {
+	color: white;
+	font-size: 30px;
+}
+
+.mat-select-value-text {
+	color: white;
+}

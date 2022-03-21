@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
 import { BaseRoutingModule } from './workspace-routing.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { VideoPageComponent } from './video/video-page/video-page.component';
@@ -26,7 +26,10 @@ import { VimeModule } from '@vime/angular';
 import { FolderComponent } from './folder/folder.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
-
+import { MatSelect } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { TeamInviteComponent } from './team-invite/team-invite.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { DialogComponent } from './dialog/dialog.component';
     VideoDescriptionComponent,
     FolderComponent,
     DialogComponent,
+    TeamInviteComponent,
+    InviteFinishComponent,
   ],
   imports: [
     CommonModule,
@@ -60,7 +65,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatTableModule,
     SharedModule,
     VimeModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
   ],
 })
 export class WorkspaceModule {}

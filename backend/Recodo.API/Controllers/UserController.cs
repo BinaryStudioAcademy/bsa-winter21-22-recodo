@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
 using Recodo.BLL.Services;
@@ -26,5 +25,17 @@ namespace Recodo.API.Controllers
 
             return Ok(user);
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("AddToTeam")]
+        public async Task<IActionResult> AddToTeam([FromQuery] string authorEmail)
+        {
+            await _userService.AddToTeam(this.GetUserIdFromToken(), authorEmail);
+
+            return NoContent();
+        }
+
     }
 }

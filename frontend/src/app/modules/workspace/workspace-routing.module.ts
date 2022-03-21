@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { PersonalComponent } from './personal/personal.component';
 import { VideoPageComponent } from './video/video-page/video-page.component';
 
@@ -13,8 +14,8 @@ const routes: Routes = [
       {
         path: '',
         component: PersonalComponent,
-
       },
+      { path: 'inviteteam/:email', component: InviteFinishComponent },
       {
         path: '',
         redirectTo: '',
@@ -27,7 +28,7 @@ const routes: Routes = [
       {
         path: ':id',
         component: PersonalComponent,
-      }
+      },
     ],
   },
 ];
