@@ -29,6 +29,10 @@ namespace Recodo.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Configure();
+            modelBuilder.Entity<Comment>()
+            .HasOne(p => p.Video)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(p => p.VideoId);
         }
     }
 }

@@ -29,6 +29,7 @@ export class VideoReactionsComponent {
           ReactionType.Like,
           this.video.authorId
         );
+        window.location.reload();
         break;
       case 2:
         this.reactionsService.reactVideo(
@@ -36,6 +37,7 @@ export class VideoReactionsComponent {
           ReactionType.Dislike,
           this.video.authorId
         );
+        window.location.reload();
         break;
       case 3:
         this.reactionsService.reactVideo(
@@ -43,6 +45,7 @@ export class VideoReactionsComponent {
           ReactionType.Love,
           this.video.authorId
         );
+        window.location.reload();
         break;
       case 4:
         this.reactionsService.reactVideo(
@@ -50,6 +53,7 @@ export class VideoReactionsComponent {
           ReactionType.Fun,
           this.video.authorId
         );
+        window.location.reload();
         break;
       case 5:
         this.reactionsService.reactVideo(
@@ -57,6 +61,7 @@ export class VideoReactionsComponent {
           ReactionType.Astonishment,
           this.video.authorId
         );
+        window.location.reload();
         break;
       case 6:
         this.reactionsService.reactVideo(
@@ -74,31 +79,35 @@ export class VideoReactionsComponent {
   public GetReactions(reactionNumber: number) {
     if (!this.allReactions) {
       this.updateReactions();
-    }
-    switch (reactionNumber) {
-      case 1:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
-          .length;
-      case 2:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Dislike
-        ).length;
-      case 3:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Love)
-          .length;
-      case 4:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
-          .length;
-      case 5:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Astonishment
-        ).length;
-      case 6:
-        return this.allReactions.filter(
-          (x) => x.reaction == ReactionType.Magically
-        ).length;
-      default:
-        return 0;
+      return 0;
+    } else {
+      switch (reactionNumber) {
+        case 1:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Like
+          ).length;
+        case 2:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Dislike
+          ).length;
+        case 3:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Love
+          ).length;
+        case 4:
+          return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
+            .length;
+        case 5:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Astonishment
+          ).length;
+        case 6:
+          return this.allReactions.filter(
+            (x) => x.reaction == ReactionType.Magically
+          ).length;
+        default:
+          return 0;
+      }
     }
   }
 
