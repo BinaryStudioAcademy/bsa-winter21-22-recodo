@@ -24,10 +24,34 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v2
         with:
+          file: ./backend/Dockerfile.API
           tags: jyuart/recodo-backend
           context: ./backend
           push: true
+
+  file_api_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-out the repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           
+      - name: Build and push file API
+        uses: docker/build-push-action@v2
+        with:
+          file: ./backend/Dockerfile.FileAPI
+          tags: jyuart/recodo-file-api
+          context: ./backend
+          push: true
+
   frontend_build:
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +73,7 @@ jobs:
           tags: jyuart/recodo-frontend
           context: ./frontend
           push: true
-          
+
   deploy_images:
     runs-on: ubuntu-latest
     needs: [ backend_build, frontend_build ]
