@@ -12,8 +12,9 @@ const routes: Routes = [
     component: BaseComponent,
     children: [
       {
-        path: 'personal',
+        path: '',
         component: PersonalComponent,
+
       },
       {
         path: 'settings',
@@ -21,13 +22,17 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'personal',
+        redirectTo: '',
         pathMatch: 'full',
       },
       {
         path: 'video',
         component: VideoPageComponent,
       },
+      {
+        path: ':id',
+        component: PersonalComponent,
+      }
     ],
   },
 ];

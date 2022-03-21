@@ -11,6 +11,8 @@ using Recodo.Common.Security;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
+using System.Linq;
+using Recodo.BLL.Exceptions;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
 
@@ -35,6 +37,13 @@ namespace Recodo.BLL.Services
             var salt = SecurityHelper.GetRandomBytes();
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.Password = SecurityHelper.HashPassword(userRegisterDTO.Password, salt);
+
+
+            var existUser = _context.Users.FirstOrDefault(u => u.Email == userRegisterDTO.Email);
+            if (existUser != null)
+            {
+                throw new ExistUserException(userRegisterDTO.Email);
+            }
 
             _context.Users.Add(userEntity);
             await _context.SaveChangesAsync();
@@ -101,6 +110,11 @@ namespace Recodo.BLL.Services
 
             _context.Users.Remove(userEntity);
             await _context.SaveChangesAsync();
+        public async Task<UserDTO> GetUserById(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == userId);
+            var userDto = _mapper.Map<UserDTO>(user);
+            return userDto;
         }
 
         public async Task<UserDTO> CreateGoogleUser(ExternalAuthDto userRegisterDTO,

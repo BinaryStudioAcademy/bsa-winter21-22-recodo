@@ -3,9 +3,6 @@ using Emgu.CV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Recodo.Desktop.Logic
 {
@@ -16,7 +13,7 @@ namespace Recodo.Desktop.Logic
         private VideoCapture _capture;
         private DsDevice[] _webCams;
 
-        public bool isCapturing { get; private set; }
+        public bool IsCapturing { get; private set; }
 
         public event EventHandler ImageGrabbed;
 
@@ -36,7 +33,7 @@ namespace Recodo.Desktop.Logic
 
         public void StartCapture(int selectedCameraId)
         {
-            isCapturing = true;
+            IsCapturing = true;
             _capture ??= new VideoCapture(selectedCameraId, VideoCapture.API.DShow);
 
             if (_capture == null)
@@ -50,7 +47,7 @@ namespace Recodo.Desktop.Logic
 
         public void StopCapture()
         {
-            if (isCapturing)
+            if (IsCapturing)
             {
                 _capture.ImageGrabbed -= ImageGrabbed;
                 Notify.Invoke();
@@ -58,13 +55,13 @@ namespace Recodo.Desktop.Logic
                 _capture.Stop();
                 _capture.Dispose();
                 _capture = null;
-                isCapturing = false;
+                IsCapturing = false;
             }
         }
 
         public ICollection<string> GetCameras()
         {
-            _webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice); 
+            _webCams = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
             List<string> webCamsNames = _webCams.Select(el => el.Name).ToList();
             return webCamsNames;
         }
@@ -76,7 +73,7 @@ namespace Recodo.Desktop.Logic
                 if (_capture != null)
                 {
                     return _capture.Retrieve(m);
-                }         
+                }
                 return false;
             }
         }
@@ -89,6 +86,6 @@ namespace Recodo.Desktop.Logic
             }
             return null;
         }
-    
+
     }
 }

@@ -7,10 +7,15 @@
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
+  overflow-x: hidden;
+  button{
+     &:hover{
+       cursor:pointer
+      }
+  }
 }
+
 * {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -19,6 +24,13 @@ body {
 .input-form .mat-form-field-wrapper .mat-form-field-flex {
     background-color: white;
     padding: 0 .75em 0 .75em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px white inset !important;
 }
 
 .button-accent {
@@ -43,3 +55,17 @@ body {
   width: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 1em;
+	background-color: rgba($color: #1a0c0c3d, $alpha: 0.2)
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(90deg,#434343,#434343 1px,#111 0,#111);
+ }
+
+
+::-webkit-scrollbar-thumb {
+  background: #434343;
+  box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%), inset -2px -2px 2px rgb(0 0 0 / 25%);
+}

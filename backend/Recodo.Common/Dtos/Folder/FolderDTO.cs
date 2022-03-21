@@ -8,7 +8,6 @@ namespace Recodo.Common.Dtos.Folder
         public string Name { get; set; }
         public int AuthorId { get; set; }
         public int? ParentId { get; set; }
-        public int TeamId { get; set; }
-        public ICollection<FolderDTO> SubFolders { get; } = new List<FolderDTO>();
+        public int? TeamId { get; set; }
     }
 }

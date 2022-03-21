@@ -79,5 +79,34 @@ export class CustomIconService {
         '../assets/icons/Star.svg'
       )
     );
+     this.matIconRegistry.addSvgIcon(
+       'vertical-dots',
+       this.domSanitizer.bypassSecurityTrustResourceUrl(
+         '../assets/icons/verticalDots.svg'
+       )
+     );
+
+    //Toggle button group  icons
+    this.matIconRegistry.addSvgIcon(
+      'list',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/layoutList.svg'
+      )
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'grid',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/layoutGrid.svg'
+      )
+    );
+
+    //List view folder icon
+    this.matIconRegistry.addSvgIcon(
+      'folder',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/folder.svg'
+      )
+    );
   }
 }

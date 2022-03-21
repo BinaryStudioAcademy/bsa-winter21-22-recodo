@@ -1,8 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { map, Subject, takeUntil } from 'rxjs';
+import { UserDto } from 'src/app/models/user/user-dto';
+import { RegistrationService } from 'src/app/services/registration.service';
+import { FormGroup } from '@angular/forms';
 import { FolderDto } from 'src/app/models/folder/folder-dto';
 import { NewFolderDto } from 'src/app/models/folder/new-folder-dto';
 import { FolderService } from 'src/app/services/folder.service';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { ActivatedRoute, Router } from '@angular/router';
+import { VideoDto } from 'src/app/models/video/video-dto';
+import { VideoService } from 'src/app/services/video.service';
+import { TimeService } from 'src/app/services/time.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-content',
@@ -11,49 +21,154 @@ import { FolderService } from 'src/app/services/folder.service';
 })
 export class PersonalComponent implements OnInit {
   public src = '../../assets/icons/test-user-logo.png';
-  public isFolderFormShow = false;
+
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger = {} as MatMenuTrigger;
+
+  public currentUser: UserDto = {} as UserDto;
+  public avatarLink: string = '';
+  public isFolderRouteActive = false;
   folderForm : FormGroup = {} as FormGroup;
   folder : FolderDto = {} as FolderDto;
+  folders : FolderDto[] = [];
+  selectedFolderName: string | undefined = '';
+  selectedFolderId: number | undefined;
 
-  //now i can`t get current user and his team cause not implementer this services
-  //it's mock team and user id
-  team : number = 1;
-  user : number = 4;
-  currentFolder : number | undefined;
-  constructor(private formBuilder: FormBuilder, private folderService: FolderService)
-  {}
+  public videos: VideoDto[] = [];
 
-  ngOnInit(): void {
-    this.validateForm();
-  }
+  private unsubscribe$ = new Subject<void>();
 
-  private validateForm() {
-    this.folderForm = this.formBuilder.group({
-      name: [, {
-        validators: [
-          Validators.required
-        ],
-        updateOn: 'change',
-      }],
-    });
-  }
+  displayedColumns: string[] = ['name', 'owner', 'details'];
 
-  createFolder() {
-    let newfolder : NewFolderDto = {
-      name: this.folderForm.controls['name'].value,
-      parentId: this.currentFolder,
-      authorId: this.user,
-      teamId: this.team
+  constructor(
+    private registrationService: RegistrationService,
+    private folderService: FolderService,
+    private route: ActivatedRoute,
+    private videoService: VideoService,
+    private timeService: TimeService,
+    public dialog: MatDialog,
+    private router: Router ) {
+      route.params.pipe(map(p => p['id']))
+      .subscribe(id=> {
+        this.selectedFolderId = id ;
+      });
     }
 
-    this.folderService.add(newfolder).subscribe((response) => {
+  ngOnInit(): void {
+    this.getAutorithedUser();
+  }
+
+  private getFolders() {
+    return this.folderService.getAllFoldersByUserId(this.currentUser.id).subscribe(
+      (result) => {
+        this.folders = result;
+        let name = this.folders.find(f => f.id == this.selectedFolderId)?.name;
+        if(name === undefined) {
+          this.selectedFolderName='';
+        }
+        else {
+          this.selectedFolderName = ' / '+ name;
+        }
+      }
+    );
+  }
+
+  private getVideos(id: number) {
+    return this.videoService.getAllVideosWithoutFolderByUserId(id).
+        subscribe(res => this.videos = res)
+  }
+
+  private getAutorithedUser() {
+    return this.registrationService
+    .getUser()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user) => {
+      if(user.avatarLink === null) {
+        user.avatarLink = '../../assets/icons/test-user-logo.png';
+      }
+      this.currentUser = user;
+      this.getFolders();
+      this.getVideos(user.id);
+    });;
+ }
+
+  createFolder(newFolder: NewFolderDto) {
+    this.folderService.add(newFolder).subscribe((response) => {
       this.folder = response.body as FolderDto;
-      this.isFolderFormShow = false;
-      this.folderForm.setValue({ 'name': ''});
+      this.getFolders();
     });
   }
 
-  showNewFolderForm() {
-    this.isFolderFormShow = true;
+  updateFolder(folderDto: FolderDto) {
+    this.folderService.updateFolder(folderDto).subscribe(() => {
+      this.getFolders();
+    });
+  }
+
+  showNewFolderForm(folder?: FolderDto) {
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = folder === undefined ? '' : folder.name;
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      folderName => {
+        //For creating new folder
+        if(folder === undefined) {
+          let newfolder : NewFolderDto = {
+            name: folderName,
+            authorId: this.currentUser.id,
+            teamId: undefined
+          }
+          this.createFolder(newfolder);
+        }
+        //For updating folder
+        else {
+          let folderUpdated : FolderDto = {
+            id: folder.id,
+            name: folderName,
+            authorId: this.currentUser.id,
+            author: folder.author,
+            teamId: undefined
+          }
+          this.updateFolder(folderUpdated);
+        }
+      }
+    );
+  }
+
+  public folderClick(folder: FolderDto) {
+    this.selectedFolderName = ' / '+folder.name;
+    this.isFolderRouteActive = true;
+  }
+
+  public onMenuTriggered() {
+    this.menuTrigger?.menu.focusFirstItem('mouse');
+    this.menuTrigger?.openMenu();
+  }
+
+  public deleteFolder(id: number, name: string) {
+    if(confirm('Are you sure you want to delete folder ' + name + ' ?'))
+    {
+      this.folderService.deleteFolder(id).subscribe(()=> {
+        this.selectedFolderName = '';
+        this.router.navigate(['/personal']);
+        this.getFolders();
+      });
+    }
+  }
+
+  public deleteVideo(id: number) {
+    if(confirm('Are you sure you want to delete the video ?'))
+    {
+      this.videoService.delete(id).subscribe(() => {
+        this.getVideos(this.currentUser.id);
+      });
+    }
+  }
+
+  public calculateTimeDifference(oldDate: Date) {
+    return this.timeService.calculateTimeDifference(oldDate);
   }
 }
