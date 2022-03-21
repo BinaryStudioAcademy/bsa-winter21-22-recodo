@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -6,8 +6,6 @@ import {
   passwordMatchValidator,
 } from 'src/app/core/validators/customValidators';
 import { UserDto } from 'src/app/models/user/user-dto';
-import { ExternalAuthService } from 'src/app/services/external-auth.service';
-import { RegistrationService } from 'src/app/services/registration.service';
 import jwt_decode from 'jwt-decode';
 import { UserService } from 'src/app/services/user.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -17,7 +15,7 @@ import { LoginService } from 'src/app/services/login.service';
   templateUrl: './reset-done-page.component.html',
   styleUrls: ['./reset-done-page.component.scss'],
 })
-export class ResetDonePageComponent {
+export class ResetDonePageComponent implements OnInit {
   public registerForm: FormGroup = {} as FormGroup;
   public email: string = '-';
   public token: string = '';

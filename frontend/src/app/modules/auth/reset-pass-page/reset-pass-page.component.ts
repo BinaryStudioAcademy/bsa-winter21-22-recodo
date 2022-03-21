@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { UserLoginDto } from 'src/app/models/auth/user-login-dto';
-import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
-import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({

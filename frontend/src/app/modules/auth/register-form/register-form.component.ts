@@ -48,7 +48,7 @@ export class RegisterFormComponent implements OnInit {
           ,
           [
             Validators.required,
-            Validators.pattern("^[a-zA-Z`'][a-zA-Z-`' ]+[a-zA-Z`']?$"),
+            Validators.pattern('^[а-яА-ЯёЁa-zA-Z\`\'][а-яА-ЯёЁa-zA-Z-\`\' ]+[а-яА-ЯёЁa-zA-Z\`\']?$'),
             Validators.minLength(3),
             Validators.maxLength(30),
             startsOrEndWithSpace,
