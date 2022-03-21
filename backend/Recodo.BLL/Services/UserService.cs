@@ -12,7 +12,6 @@ using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
 using System.Linq;
-using Recodo.BLL.Exceptions;
 using System.Threading.Tasks;
 using Thread_.NET.BLL.Services;
 
@@ -110,6 +109,8 @@ namespace Recodo.BLL.Services
 
             _context.Users.Remove(userEntity);
             await _context.SaveChangesAsync();
+        }
+
         public async Task<UserDTO> GetUserById(int userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == userId);

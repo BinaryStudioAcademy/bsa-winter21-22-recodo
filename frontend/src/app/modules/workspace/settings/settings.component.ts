@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import jwt_decode from 'jwt-decode';
 import { UserUpdateDto } from 'src/app/models/user/user-update-dto';
+import { LoginService } from 'src/app/services/login.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -25,8 +26,9 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpClient,
-    private userService: UserService
+    private loginService: LoginService,
+    private userService: UserService,
+    private snackbarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,8 @@ export class SettingsComponent implements OnInit {
             Validators.required,
             Validators.minLength(3),
             Validators.maxLength(20),
-            Validators.pattern("^[a-zA-Z`'][a-zA-Z-`' ]+[a-zA-Z`']?$"),
+            // prettier-ignore
+            Validators.pattern('^[a-zA-Z`\'][a-zA-Z-`\' ]+[a-zA-Z`\']?$'),
           ],
         },
       ],
@@ -114,10 +117,12 @@ export class SettingsComponent implements OnInit {
 
     this.userService.updateInfo('Update', data).subscribe({
       next: () => {
-        window.alert('done');
+        this.snackbarService.openSnackBar('Settings saved successfully');
       },
       error: () => {
-        window.alert('error');
+        this.snackbarService.openSnackBar(
+          'Settings not saved. Something went wrong'
+        );
       },
     });
   }
@@ -151,7 +156,7 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.imageFile.size / 1024 / 1024 > 5) {
-      window.alert('Image can`t be heavier than ~5MB');
+      this.snackbarService.openSnackBar('Image can`t be heavier than ~5MB');
       target.value = '';
       return;
     }
@@ -181,10 +186,12 @@ export class SettingsComponent implements OnInit {
       .updatePassword('Update-Password-Email', userUpdateDto)
       .subscribe({
         next: () => {
-          window.alert('done');
+          this.snackbarService.openSnackBar('Settings saved successfully');
         },
         error: () => {
-          window.alert('error');
+          this.snackbarService.openSnackBar(
+            'Settings not saved. Something went wrong'
+          );
         },
       });
   }
@@ -200,10 +207,12 @@ export class SettingsComponent implements OnInit {
 
     this.userService.resetPassword(`Reset-Password/${userId}`).subscribe({
       next: () => {
-        window.alert('done');
+        this.snackbarService.openSnackBar('Password reseted successfully');
       },
       error: () => {
-        window.alert('error');
+        this.snackbarService.openSnackBar(
+          'Password not reseted. Something went wrong'
+        );
       },
     });
 
@@ -214,10 +223,13 @@ export class SettingsComponent implements OnInit {
     let userId = this.userId;
     this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
       next: () => {
-        window.alert('done');
+        this.loginService.logOut();
+        this.snackbarService.openSnackBar('User deleted successfully');
       },
       error: () => {
-        window.alert('error');
+        this.snackbarService.openSnackBar(
+          'User not deleted. Something went wrong'
+        );
       },
     });
   }
