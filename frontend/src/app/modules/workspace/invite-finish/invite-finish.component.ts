@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -14,6 +15,7 @@ export class InviteFinishComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private userService: UserService,
     protected httpClient: HttpClient,
     protected snackBarService: SnackBarService
   ) {}
@@ -27,12 +29,12 @@ export class InviteFinishComponent implements OnInit {
   }
 
   joinToTeam() {
-    let url = environment.apiUrl + '/Users/AddToTeam?authorEmail=' + this.email;
-    this.httpClient.get(url).subscribe({
+    this.userService.addToTeam(this.email).subscribe({
+      next: () => {
+        this.snackBarService.openSnackBar('Successfully added to team');
+      },
       error: () => {
-        this.snackBarService.openSnackBar(
-          'Unable to add current user to teams'
-        );
+        this.snackBarService.openSnackBar('Unable to add current user to team');
       },
     });
   }

@@ -26,7 +26,6 @@ import { VimeModule } from '@vime/angular';
 import { FolderComponent } from './folder/folder.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
-import { MatSelect } from '@angular/material/select';
 import { MatSelectModule } from '@angular/material/select';
 import { TeamInviteComponent } from './team-invite/team-invite.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';

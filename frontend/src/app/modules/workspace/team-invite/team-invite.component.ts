@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -6,7 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './team-invite.component.html',
   styleUrls: ['./team-invite.component.scss'],
 })
-export class TeamInviteComponent implements OnInit {
+export class TeamInviteComponent {
   url: string = '';
 
   constructor(
@@ -15,8 +15,6 @@ export class TeamInviteComponent implements OnInit {
   ) {
     this.url = data;
   }
-
-  ngOnInit(): void {}
 
   close() {
     this.dialogRef.close();

@@ -1,15 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TeamDto } from 'src/app/models/user/team-dto';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { TeamInviteComponent } from '../team-invite/team-invite.component';
 import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnChanges {
   @Input() public user: UserDto = {} as UserDto;
   selectedCriteria: TeamDto | undefined;
   members: number | undefined;
@@ -30,9 +31,9 @@ export class SidebarComponent {
     this.members = this.selectedCriteria?.memberCount;
   }
 
-  onChange(e: any) {
+  onChange() {
     this.selectedCriteria = this.user.teams.filter(
-      (t) => t.name === e.value
+      (t) => t.name === this.value
     )[0];
 
     this.value = this.selectedCriteria.name;
@@ -42,7 +43,8 @@ export class SidebarComponent {
   showInvite() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.data = 'http://localhost:4200/inviteteam/' + this.user.email;
+    dialogConfig.data =
+      environment.clientUrl + '/inviteteam/' + this.user.email;
 
     this.dialog.open(TeamInviteComponent, dialogConfig);
   }

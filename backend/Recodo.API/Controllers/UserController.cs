@@ -29,8 +29,8 @@ namespace Recodo.API.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("AddToTeam")]
-        public async Task<IActionResult> AddToTeam([FromQuery] string authorEmail)
+        [Route("AddToTeam/{authorEmail}")]
+        public async Task<IActionResult> AddToTeam(string authorEmail)
         {
             await _userService.AddToTeam(this.GetUserIdFromToken(), authorEmail);
 

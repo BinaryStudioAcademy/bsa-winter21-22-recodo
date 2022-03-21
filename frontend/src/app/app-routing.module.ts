@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TokenExistsGuard } from './guards/token-exists.guard';
 import { TokenDoesnotExistGuard } from './guards/token-doesnot-exist.guard';
-import { InviteFinishComponent } from './modules/workspace/invite-finish/invite-finish.component';
 
 const routes: Routes = [
   {

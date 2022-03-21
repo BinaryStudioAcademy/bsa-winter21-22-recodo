@@ -5,31 +5,20 @@
 
   <div class="workspace-container">
     <div class="workspace-user">
-      <!-- <mat-form-field class="teams" appearance="fill"> -->
-      <!-- <select matNativeControl (change)="onChange($event)">
-        <option
-          class="others"
-          *ngFor="let team of this.user.teams"
-          [value]="team.name"
-        >
-          {{ team.name }}
-        </option>
-      </select> -->
       <mat-form-field class="teams-box" appearance="fill">
         <mat-label>Team:</mat-label>
         <mat-select
           style="color: red"
           class="select-cls"
-          [(value)]="value"
           [(ngModel)]="value"
-          (selectionChange)="onChange($event)"
+          (selectionChange)="onChange()"
         >
           <mat-option
             class="opt"
-            *ngFor="let food of this.user.teams"
-            [value]="food.name"
+            *ngFor="let team of this.user.teams"
+            [value]="team.name"
           >
-            {{ food.name }}
+            {{ team.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
