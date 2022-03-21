@@ -61,7 +61,7 @@ namespace Recodo.Desktop.Main
                 this.Topmost = true;
                 this.ShowInTaskbar = true;
 
-                //imageBox.Source = new BitmapImage(new Uri(@"\Icons\camera_preview.png"));
+
                 LinearGradientBrush gradientBrush = new LinearGradientBrush(
                     System.Windows.Media.Color.FromRgb(255, 0, 0),
                     System.Windows.Media.Color.FromRgb(246, 149, 120),
