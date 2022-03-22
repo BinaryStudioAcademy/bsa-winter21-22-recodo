@@ -30,6 +30,7 @@ namespace Recodo.BLL.JWT
             {
                  new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
                  new Claim(JwtRegisteredClaimNames.Email, email),
+                 new Claim(JwtRegisteredClaimNames.Name, userName),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst("id")
@@ -45,7 +46,7 @@ namespace Recodo.BLL.JWT
 
             return _jwtSecurityTokenHandler.WriteToken(jwt);
         }
-        
+
         public string GenerateRefreshToken()
         {
             return Convert.ToBase64String(SecurityHelper.GetRandomBytes());

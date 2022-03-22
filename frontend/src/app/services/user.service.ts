@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDto } from '../models/user/user-dto';
+import { UserUpdateDto } from '../models/user/user-update-dto';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -20,12 +21,28 @@ export class UserService extends ResourceService<UserDto> {
 
   getResourceUrl(): string {
     if (this.subUrl) {
-      return '/Users' + this.subUrl;
+      return '/User' + this.subUrl;
     }
-    return '/Users';
+    return '/User';
   }
 
   public addToTeam(email: string) {
     return this.getWithUrl(email, 'AddToTeam');
+  }
+
+  public resetPassword(subUrl: string) {
+    return this.addWithUrl<{}, {}>(subUrl, {});
+  }
+
+  public deleteUser(subUrl: string) {
+    return this.addWithUrl<{}, {}>(subUrl, {});
+  }
+
+  public updateInfo(subUrl: string, data: FormData) {
+    return this.addWithUrl<FormData, {}>(subUrl, data);
+  }
+
+  public updatePassword(subUrl: string, data: UserUpdateDto) {
+    return this.addWithUrl<UserUpdateDto, {}>(subUrl, data);
   }
 }
