@@ -7,4 +7,5 @@ export interface VideoDto {
   folderId: number;
   createdAt: Date;
   isPrivate: boolean;
+  sharedEmails: string[];
 }

@@ -15,5 +15,6 @@ namespace Recodo.Common.Dtos
         public int FolderId { get; set; }
         public bool IsPrivate { get; set; }
         public ICollection<VideoReactionDTO> Reactions { get; set; }
+        public List<string> SharedEmails { get; set; }
     }
 }

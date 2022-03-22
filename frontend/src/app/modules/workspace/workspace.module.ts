@@ -31,6 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { SharePropertiesComponent } from './share-properties-dialog/share-properties.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     DialogComponent,
     ShareDialogComponent,
     SharePropertiesComponent,
+    SharedVideoPageComponent,
   ],
   imports: [
     CommonModule,

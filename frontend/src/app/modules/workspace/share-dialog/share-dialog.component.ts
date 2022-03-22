@@ -10,6 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 import { MailService } from 'src/app/services/mail.service';
 import { ToastrService } from 'ngx-toastr';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { VideoService } from 'src/app/services/video.service';
+import { VideoDto } from 'src/app/models/video/video-dto';
 
 @Component({
   templateUrl: './share-dialog.component.html',
@@ -19,6 +21,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
   public email = {} as string;
   public link = {} as string;
   public title: string;
+  public videoId = {} as number;
+  public currentVideo = {} as VideoDto;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -26,6 +30,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private snackBarService: SnackBarService,
     private dialogRef: MatDialogRef<ShareDialogComponent>,
     private matDialog: MatDialog,
+    private videoService: VideoService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private mailService: MailService,
     private toastr: ToastrService
@@ -36,6 +41,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.link = this.data.link;
+    this.videoId = this.data.videoId;
   }
 
   public ngOnDestroy() {
@@ -55,5 +61,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.matDialog.closeAll();
         this.snackBarService.openSnackBar('Email was successfully sent!');
       });
+    this.videoService.getVideoById(this.videoId).subscribe((resp) => {
+      if (resp.body) {
+        this.currentVideo = resp.body;
+      }
+    });
+    this.currentVideo.sharedEmails.push(this.email);
+    this.videoService.update(this.currentVideo).subscribe();
   }
 }

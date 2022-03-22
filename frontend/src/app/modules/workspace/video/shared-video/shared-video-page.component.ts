@@ -6,11 +6,11 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
-  selector: 'app-video-page',
-  templateUrl: './video-page.component.html',
-  styleUrls: ['./video-page.component.scss'],
+  selector: 'app-shared-video-page',
+  templateUrl: './shared-video-page.component.html',
+  styleUrls: ['./shared-video-page.component.scss'],
 })
-export class VideoPageComponent {
+export class SharedVideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
   public link: string;

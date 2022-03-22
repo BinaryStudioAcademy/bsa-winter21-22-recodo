@@ -10,9 +10,9 @@ export class SendDialogService implements OnDestroy {
 
   public constructor(private dialog: MatDialog) {}
 
-  public openSendDialog(link: string) {
+  public openSendDialog(link: string, videoId: number) {
     this.dialog.open(ShareDialogComponent, {
-      data: { link },
+      data: { link, videoId },
       minWidth: 300,
       autoFocus: true,
       backdropClass: 'dialog-backdrop',

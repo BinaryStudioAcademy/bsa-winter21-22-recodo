@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { VideoDto } from 'src/app/models/video/video-dto';
+import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoService } from 'src/app/services/video.service';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../../../services/login.service';
+import { RegistrationService } from '../../../services/registration.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoAccessGuard implements CanActivate {
-  private currentVideo = {} as VideoDto;
+  private currentUser = {} as UserDto;
   constructor(
     private videoService: VideoService,
     private loginService: LoginService,
+    private registrationService: RegistrationService,
     private router: Router
   ) {}
 
@@ -20,12 +22,11 @@ export class VideoAccessGuard implements CanActivate {
       .getVideoById(route.params['videoId'])
       .subscribe((resp) => {
         if (resp.body) {
-          this.currentVideo = resp.body;
+          if (!resp.body.isPrivate) {
+            this.router.navigate(['']);
+          }
         }
       });
-    if (this.currentVideo.isPrivate) {
-      this.router.navigate(['/personal']);
-    }
-    return !this.loginService.areTokensExist();
+    return true;
   }
 }
