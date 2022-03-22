@@ -130,11 +130,5 @@ namespace Recodo.Desktop.Main
                 }
             });
         }
-
-        private void CanvasButton_Click(object sender, RoutedEventArgs e)
-        {
-            DrawingWindow drawingWindow = new DrawingWindow(_options);
-            drawingWindow.Show();
-        }
     }
 }
