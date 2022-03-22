@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
+  selector: 'app-share-properties',
   templateUrl: './share-properties.component.html',
   styleUrls: ['./share-properties.component.scss'],
 })
@@ -28,7 +26,7 @@ export class SharePropertiesComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private videoService: VideoService
   ) {
-    this.title = 'Set sharing properties';
+    this.title = 'Get link';
   }
 
   public ngOnInit() {

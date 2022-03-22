@@ -14,10 +14,11 @@ import { VideoService } from 'src/app/services/video.service';
 import { VideoDto } from 'src/app/models/video/video-dto';
 
 @Component({
-  templateUrl: './share-dialog.component.html',
-  styleUrls: ['./share-dialog.component.scss'],
+  selector: 'app-share-by-email',
+  templateUrl: './share-by-email-dialog.component.html',
+  styleUrls: ['./share-by-email-dialog.component.scss'],
 })
-export class ShareDialogComponent implements OnInit, OnDestroy {
+export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
   public email = {} as string;
   public link = {} as string;
   public title: string;
@@ -28,15 +29,15 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private snackBarService: SnackBarService,
-    private dialogRef: MatDialogRef<ShareDialogComponent>,
+    private dialogRef: MatDialogRef<ShareByEmailDialogComponent>,
     private matDialog: MatDialog,
     private videoService: VideoService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private mailService: MailService,
     private toastr: ToastrService
   ) {
-    this.title = 'Write the email of the person you want to send the post to';
-    this.email = 'Write email';
+    this.title = 'Share video with other users';
+    this.email = 'Write an email';
   }
 
   public ngOnInit() {

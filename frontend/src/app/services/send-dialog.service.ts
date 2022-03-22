@@ -1,8 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { ShareDialogComponent } from '../modules/workspace/share-dialog/share-dialog.component';
-import { SharePropertiesComponent } from '../modules/workspace/share-properties-dialog/share-properties.component';
+import { SharingVideoDialogComponent } from '../modules/workspace/sharing-propetries/sharing-video/sharing-video-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class SendDialogService implements OnDestroy {
@@ -10,36 +9,17 @@ export class SendDialogService implements OnDestroy {
 
   public constructor(private dialog: MatDialog) {}
 
-  public openSendDialog(link: string, videoId: number) {
-    this.dialog.open(ShareDialogComponent, {
-      data: { link, videoId },
-      minWidth: 300,
+  public openSendDialog(link: string, videoId: number, checked: boolean) {
+    this.dialog.open(SharingVideoDialogComponent, {
+      data: { link, videoId, checked },
+      minWidth: 600,
       autoFocus: true,
       backdropClass: 'dialog-backdrop',
-      position: {
-        top: '500',
-      },
     });
   }
 
   public ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  public openSharePropertiesDialog(
-    link: string,
-    checked: boolean,
-    videoId: number
-  ) {
-    this.dialog.open(SharePropertiesComponent, {
-      data: { link, checked, videoId },
-      minWidth: 400,
-      autoFocus: true,
-      backdropClass: 'dialog-backdrop',
-      position: {
-        top: '500',
-      },
-    });
   }
 }

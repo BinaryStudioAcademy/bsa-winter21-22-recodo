@@ -32,18 +32,10 @@ export class VideoPageComponent {
   }
 
   public openSendDialog() {
-    this.sendDialogService.openSendDialog(this.link, this.videoId);
+    this.sendDialogService.openSendDialog(this.link, this.videoId, this.checked);
   }
 
   public openSnackBar() {
     this.snackBarService.openSnackBar('Link was successfully copied!');
-  }
-
-  public openSharingPropertiesDialog() {
-    this.sendDialogService.openSharePropertiesDialog(
-      this.link,
-      this.checked,
-      this.videoId
-    );
   }
 }

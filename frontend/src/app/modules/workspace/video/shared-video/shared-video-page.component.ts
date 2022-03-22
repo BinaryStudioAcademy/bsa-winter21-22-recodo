@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SendDialogService } from 'src/app/services/send-dialog.service';
 import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
@@ -17,7 +16,6 @@ export class SharedVideoPageComponent {
   public checked: boolean = false;
   constructor(
     private activateRoute: ActivatedRoute,
-    private sendDialogService: SendDialogService,
     private snackBarService: SnackBarService,
     private videoService: VideoService
   ) {
@@ -30,20 +28,7 @@ export class SharedVideoPageComponent {
       }
     });
   }
-
-  public openSendDialog() {
-    this.sendDialogService.openSendDialog(this.link, this.videoId);
-  }
-
   public openSnackBar() {
     this.snackBarService.openSnackBar('Link was successfully copied!');
-  }
-
-  public openSharingPropertiesDialog() {
-    this.sendDialogService.openSharePropertiesDialog(
-      this.link,
-      this.checked,
-      this.videoId
-    );
   }
 }
