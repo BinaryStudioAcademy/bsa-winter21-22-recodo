@@ -1,23 +1,12 @@
 ﻿using Emgu.CV;
-using Emgu.CV.Structure;
 using Recodo.Desktop.Logic;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Recodo.Desktop.Main
 {
@@ -42,9 +31,9 @@ namespace Recodo.Desktop.Main
             {
                 Dispatcher.Invoke(() =>
                 {
-                    imageBox.Source = Convert(v.ToBitmap());
+                    imageBox.ImageSource = Convert(v.ToBitmap());
                 });
-            }           
+            }
         }
 
         private BitmapImage Convert(Bitmap src)
@@ -66,6 +55,18 @@ namespace Recodo.Desktop.Main
                 _cameraService.ImageGrabbed += Capture_ImageGrabbed;
                 _cameraService.Notify += Close;
                 _cameraService.StartCapture(deviceId - 1);
+
+                this.Top = (SystemParameters.PrimaryScreenHeight - this.Height) * 0.9;
+                this.Left = 20;
+                this.Topmost = true;
+                this.ShowInTaskbar = true;
+
+
+                LinearGradientBrush gradientBrush = new LinearGradientBrush(
+                    System.Windows.Media.Color.FromRgb(255, 0, 0),
+                    System.Windows.Media.Color.FromRgb(246, 149, 120),
+                    new System.Windows.Point(0.75, 0), new System.Windows.Point(0.25, 1));
+                mBorder.Background = gradientBrush;
             }
             catch (Exception ex)
             {
@@ -73,5 +74,14 @@ namespace Recodo.Desktop.Main
             }
         }
 
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception)
+            { }
+        }
     }
 }
