@@ -34,7 +34,6 @@ namespace Recodo.Desktop.Main
 
         public VideoRecordingForm()
         {
-            _recorderService = new RecorderService();
             _options = new RecorderConfiguration();
 
             InitializeComponent();
@@ -130,6 +129,12 @@ namespace Recodo.Desktop.Main
                     videoForm.Hide();
                 }
             });
+        }
+
+        private void CanvasButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawingWindow drawingWindow = new DrawingWindow(_options);
+            drawingWindow.Show();
         }
     }
 }
