@@ -14,6 +14,6 @@ namespace Recodo.API.BLL.Interfaces
         Task<string> UploadAsync(IFormFile files, string token);
         Task<(Stream response, int? errorCode)> DownloadAsync(int id, string token);
         Task DeleteAsync(int id);
-
+        Task<string> GetUrlAsync(int id, string token);
     }
 }

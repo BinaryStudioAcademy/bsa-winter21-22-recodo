@@ -63,5 +63,20 @@ namespace Recodo.API.BLL.Services
 				return (null, 403);
             }
 		}
+
+		public async Task<string> GetUrlAsync(int id, string token)
+        {
+			if (await _requestService.SendGetRequest(id, token))
+			{
+				var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+
+				var blob = blobContainer.GetBlockBlobReference(id.ToString());
+
+				var uri = blob.Uri.AbsoluteUri;
+
+				return uri;
+			}
+			return null;
+		}
     }
 }
