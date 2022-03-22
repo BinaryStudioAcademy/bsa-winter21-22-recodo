@@ -33,7 +33,10 @@ namespace Recodo.Desktop.Main
             else
             {
                 Timer.Stop();
+                StickPanel stickPanel = new StickPanel(_recorderService);
+                stickPanel.Show();
                 this.Hide();
+
                 _recorderService.StartRecording();
             }
         }

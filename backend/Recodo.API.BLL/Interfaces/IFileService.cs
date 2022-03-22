@@ -11,7 +11,7 @@ namespace Recodo.API.BLL.Interfaces
 {
     public interface IFileService
     {
-        Task<string> UploadAsync(IFormFile files, string token);
+        Task<string> UploadAsync(Stream files, string token, int videoId);
         Task<(Stream response, int? errorCode)> DownloadAsync(int id, string token);
         Task DeleteAsync(int id);
 

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './base/base.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { PersonalComponent } from './personal/personal.component';
+import { SettingsComponent } from './settings/settings.component';
 import { VideoPageComponent } from './video/video-page/video-page.component';
 
 const routes: Routes = [
@@ -17,12 +18,16 @@ const routes: Routes = [
       },
       { path: 'inviteteam/:email', component: InviteFinishComponent },
       {
+        path: 'settings',
+        component: SettingsComponent,
+      },
+      {
         path: '',
         redirectTo: '',
         pathMatch: 'full',
       },
       {
-        path: 'video',
+        path: 'video/:id',
         component: VideoPageComponent,
       },
       {

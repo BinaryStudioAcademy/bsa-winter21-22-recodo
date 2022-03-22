@@ -53,7 +53,7 @@ namespace Recodo.API.BLL.Services
                 return _blobClient;
             }
 
-            var connectionString = _configuration.GetConnectionString("BlobConnection");
+            var connectionString = _configuration.GetConnectionString("BlobConnectionString");
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw new ArgumentException("Configuration must contain StorageConnectionString");

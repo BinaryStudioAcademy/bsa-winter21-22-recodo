@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Recodo.BLL.Services;
 using System;
 using System.Security.Claims;
@@ -18,9 +19,11 @@ namespace Recodo.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveFile(int id)
+        public async Task<IActionResult> SaveFile()
         {
-            return Ok(await _fileService.SaveVideo(id));
+            Request.Headers.TryGetValue(HeaderNames.Authorization, out Microsoft.Extensions.Primitives.StringValues value);
+            var token = value.ToString();
+            return Ok(await _fileService.SaveVideo(token));
         }
 
         [HttpGet]

@@ -33,13 +33,25 @@ namespace Recodo.BlobAPI.Controllers
 
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile()
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
-            var id = await _blobService.UploadAsync(file, accessToken.FirstOrDefault());
-            if (id != null)
+            int videoId = 0;
+            try
             {
-                return Ok(id);
+                var headerResult = Request.Headers["videoId"].First().ToString();
+                videoId = Convert.ToInt32(headerResult);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            Stream file = Request.Body;
+            var responseId = await _blobService.UploadAsync(file, accessToken, videoId);
+            if (responseId != null)
+            {
+                return Ok(responseId);
             }
 
             return BadRequest();
