@@ -43,9 +43,7 @@
 
         <p class="input-label">
           Password
-          <a routerLink="/reset-password" href="#" class="forgot-password"
-            >(Forgot password)</a
-          >
+          <a routerLink="/reset-password" href="#" class="forgot-password">(Forgot password)</a>
         </p>
         <mat-form-field
           class="input-form"
@@ -85,7 +83,7 @@
             Sign In
           </button>
           <p>Or sign in with</p>
-          <button class="login-with-button">
+          <button (click)="googleLogin($event)" class="login-with-button">
             <img src="../../../../assets/icons/googleButton.svg" alt="google" />
           </button>
         </div>

@@ -111,7 +111,10 @@ export class RegisterFormComponent implements OnInit {
     });
   }
 
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
+  public googleLogin = (event: FocusEvent) => {
+    event.preventDefault();
+    this.externalAuthService.signInWithGoogle().catch(() => {
+      this.snackbarService.openSnackBar('Unable to register using Google');
+    });
   };
 }

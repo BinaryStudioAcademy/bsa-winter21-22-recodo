@@ -86,7 +86,10 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
+  public googleLogin = (event: FocusEvent) => {
+    event.preventDefault();
+    this.externalAuthService.signInWithGoogle().catch(() => {
+      this.snackbarService.openSnackBar('Unable to login using Google');
+    });
   };
 }
