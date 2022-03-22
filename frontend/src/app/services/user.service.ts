@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthUserDto } from '../models/auth/auth-user-dto';
 import { UserDto } from '../models/user/user-dto';
+import { UserUpdateDto } from '../models/user/user-update-dto';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -40,5 +41,17 @@ export class UserService extends ResourceService<UserDto> {
         passwordNew: password,
       }
     );
+  }
+
+  public deleteUser(subUrl: string) {
+    return this.addWithUrl<{}, {}>(subUrl, {});
+  }
+
+  public updateInfo(subUrl: string, data: FormData) {
+    return this.addWithUrl<FormData, {}>(subUrl, data);
+  }
+
+  public updatePassword(subUrl: string, data: UserUpdateDto) {
+    return this.addWithUrl<UserUpdateDto, {}>(subUrl, data);
   }
 }

@@ -43,6 +43,20 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
+  getWithUrl(id: string | number, subUrl: string): Observable<HttpResponse<T>> {
+    return this.httpClient
+      .get<T>(`${this.APIUrl}/${subUrl}/${id}`, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
+
+  add<TRequest, TResponse>(
+    resource: TRequest
+  ): Observable<HttpResponse<TResponse>> {
+    return this.httpClient.post<TResponse>(`${this.APIUrl}`, resource, {
+      observe: 'response',
+    });
+  }
+
   addWithUrl<TRequest, TResponse>(
     subUrl: string,
     resource: TRequest
@@ -51,14 +65,7 @@ export abstract class ResourceService<T> {
       .post<TResponse>(`${this.APIUrl}/${subUrl}`, resource, {
         observe: 'response',
       })
-      .pipe(catchError(this.handleError));
-  }
 
-  add<TRequest, TResponse>(
-    resource: TRequest
-  ): Observable<HttpResponse<TResponse>> {
-    return this.httpClient
-      .post<TResponse>(`${this.APIUrl}`, resource, { observe: 'response' })
       .pipe(catchError(this.handleError));
   }
 
@@ -90,7 +97,6 @@ export abstract class ResourceService<T> {
       params: httpParams,
     });
   }
-
   private getHeaders() {
     return this.headers;
   }

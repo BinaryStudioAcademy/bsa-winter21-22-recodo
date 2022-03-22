@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Google.Apis.Auth;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Recodo.BLL.Exceptions;
@@ -20,13 +21,15 @@ namespace Recodo.BLL.Services
     {
         private readonly AuthService _authService;
         private readonly IConfiguration _configuration;
+        private readonly ImageService _imageService;
 
         public UserService(RecodoDbContext context, IMapper mapper, AuthService authService,
-            IConfiguration configuration)
+            IConfiguration configuration, ImageService imageService)
             : base(context, mapper)
         {
             _authService = authService;
             _configuration = configuration;
+            _imageService = imageService;
         }
 
         public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)
@@ -49,6 +52,67 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
 
             return _mapper.Map<UserDTO>(userEntity);
+        }
+
+        public async Task UpdateUser(UpdateUserDTO userDto, IFormFile avatar)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+            if (userEntity == null) { return; }
+
+            userEntity.WorkspaceName = userDto.WorkspaceName ?? userEntity.WorkspaceName;
+            if (avatar != null)
+            {
+                userEntity.AvatarLink = await _imageService.UploadToGyazo(avatar, _configuration["GyazoKey"]);
+            }
+
+            _context.Users.Update(userEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserPasswordEmail(UpdateUserDTO userDto)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+            if (userEntity == null) { return; }
+
+            if (!SecurityHelper.IsValidPassword(userEntity.Password, userDto.PasswordCurrent, userEntity.Salt))
+            {
+                throw new InvalidUserNameOrPasswordException();
+            }
+
+            userEntity.Email = userDto.Email ?? userEntity.Email;
+            if (!String.IsNullOrWhiteSpace(userDto.PasswordNew) &&
+                !String.IsNullOrWhiteSpace(userDto.PasswordCurrent))
+            {
+                var salt = SecurityHelper.GetRandomBytes();
+                userEntity.Salt = Convert.ToBase64String(salt);
+                userEntity.Password = SecurityHelper.HashPassword(userDto.PasswordNew, salt);
+            }
+
+            _context.Users.Update(userEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ResetPassword(int userId)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (userEntity == null) { return; }
+
+            string newPassword = Guid.NewGuid().ToString().Substring(0, 10);
+            var salt = SecurityHelper.GetRandomBytes();
+            userEntity.Salt = Convert.ToBase64String(salt);
+            userEntity.Password = SecurityHelper.HashPassword(newPassword, salt);
+
+            string message = "Temp password: " + newPassword;
+            await EmailService.SendEmailAsync(userEntity.Email, "New Password", message, _configuration);
+        }
+
+        public async Task DeleteUser(int userId)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (userEntity == null) { return; }
+
+            _context.Users.Remove(userEntity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<UserDTO> GetUserById(int userId)

@@ -19,19 +19,10 @@ namespace RecodoDesktop
         }
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<RecorderService>();
-            services.AddSingleton<VideoRecordingForm>();
-            services.AddSingleton<StickPanel>();
-            //services.AddSingleton<Countdown>();
         }
 
         void App_Startup(object sender, StartupEventArgs e)
         {
-            VideoRecordingForm videoRecordingForm = serviceProvider.GetService<VideoRecordingForm>();
-            videoRecordingForm.Show();
-
-            StickPanel stickPanel = serviceProvider.GetService<StickPanel>();
-            stickPanel.Show();
         }
     }
 }

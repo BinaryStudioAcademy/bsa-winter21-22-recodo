@@ -23,6 +23,8 @@
     "@angular/router": "~13.2.0",
     "@vime/angular": "^5.3.1",
     "@vime/core": "^5.3.1",
+    "jwt-decode": "^3.1.2",
+    "ngx-dropzone": "^3.1.0",
     "angularx-social-login": "^4.0.1",
     "jwt-decode": "^3.1.2",
     "ngx-trim-directive": "^2.0.0",

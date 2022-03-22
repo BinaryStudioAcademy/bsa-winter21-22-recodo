@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Recodo.BLL.JWT;
 using Recodo.BLL.Services;
 using Recodo.Common.Auth;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Recodo.BLL.MappingProfiles;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Recodo.API.Extensions
 {
@@ -23,12 +22,15 @@ namespace Recodo.API.Extensions
             services.AddScoped<AuthService>();
             services.AddScoped<UserService>();
             services.AddScoped<FolderService>();
+            services.AddScoped<ImageService>();
             services.AddScoped<VideoService>();
+            services.AddScoped<FileService>();
         }
 
         public static void RegisterAutoMapper(this IServiceCollection services)
         {
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddMaps("Recodo.BLL");
             });
 

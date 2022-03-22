@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
 using Recodo.BLL.Services;
+using Recodo.Common.Dtos.User;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
@@ -35,9 +37,37 @@ namespace Recodo.API.Controllers
             return Ok(auth);
         }
 
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromForm] UpdateUserDTO userDTO, [FromForm] IFormFile avatar)
+        {
+            await _userService.UpdateUser(userDTO, avatar);
+            return NoContent();
+        }
+
+        [HttpPost("Update-Password-Email")]
+        public async Task<IActionResult> UpdatePasswordEmail([FromBody] UpdateUserDTO userDTO)
+        {
+            await _userService.UpdateUserPasswordEmail(userDTO);
+            return NoContent();
+        }
+
+        [HttpPost("Reset-Password/{userId:int}")]
+        public async Task<IActionResult> ResetPassword(int userId)
+        {
+            await _userService.ResetPassword(userId);
+            return NoContent();
+        }
+
+        [HttpPost("Delete-User/{userId:int}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            await _userService.DeleteUser(userId);
+            return NoContent();
+        }
+
         [HttpGet]
         [AllowAnonymous]
-        [Route("fromToken")]
+        [Route("FromToken")]
         public async Task<IActionResult> GetUserFromToken()
         {
             var user = await _userService.GetUserById(this.GetUserIdFromToken());

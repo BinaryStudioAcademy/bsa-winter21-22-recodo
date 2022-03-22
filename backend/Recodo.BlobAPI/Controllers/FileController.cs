@@ -28,18 +28,39 @@ namespace Recodo.BlobAPI.Controllers
             var (response, errorCode) = await _blobService.DownloadAsync(id, accessToken);
             if (errorCode.HasValue)
                 return Unauthorized();
-            return Ok(File(response, "application/mp4", id.ToString()+".mp4"));
+            return Ok(File(response, "application/mp4", id.ToString() + ".mp4"));
+        }
+
+        [HttpGet("GetUrl")]
+        public async Task<IActionResult> GetFileUrl(int id, string token)
+        {
+            var accessToken = token;
+            var response = await _blobService.GetUrlAsync(id, accessToken);
+
+            return Redirect(response);
         }
 
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile()
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
-            var id = await _blobService.UploadAsync(file, accessToken.FirstOrDefault());
-            if (id != null)
+            int videoId = 0;
+            try
             {
-                return Ok(id);
+                var headerResult = Request.Headers["videoId"].First().ToString();
+                videoId = Convert.ToInt32(headerResult);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            Stream file = Request.Body;
+            var responseId = await _blobService.UploadAsync(file, accessToken, videoId);
+            if (responseId != null)
+            {
+                return Ok(responseId);
             }
 
             return BadRequest();
