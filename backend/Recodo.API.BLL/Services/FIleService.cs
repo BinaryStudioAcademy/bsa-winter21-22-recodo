@@ -72,9 +72,7 @@ namespace Recodo.API.BLL.Services
 
 				var blob = blobContainer.GetBlockBlobReference(id.ToString());
 
-				var uri = blob.Uri.AbsoluteUri;
-
-				return uri;
+				return blob.Uri.AbsoluteUri; ;
 			}
 			return null;
 		}
