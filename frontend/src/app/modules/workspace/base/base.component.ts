@@ -20,7 +20,12 @@ export class BaseComponent {
 
     this.registrationService.getUser()
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((user) => (this.currentUser = user));;
+    .subscribe((user) => {
+      if(user.avatarLink === null) {
+        user.avatarLink = '../../assets/icons/test-user-logo.png';
+      }
+      this.currentUser = user;
+    });
   }
 
 }

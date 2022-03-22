@@ -13,6 +13,7 @@ const routes: Routes = [
       {
         path: '',
         component: PersonalComponent,
+
       },
       {
         path: '',
@@ -23,6 +24,10 @@ const routes: Routes = [
         path: 'video',
         component: VideoPageComponent,
       },
+      {
+        path: ':id',
+        component: PersonalComponent,
+      }
     ],
   },
 ];
