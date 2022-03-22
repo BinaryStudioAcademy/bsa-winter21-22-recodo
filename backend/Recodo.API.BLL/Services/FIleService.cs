@@ -66,15 +66,15 @@ namespace Recodo.API.BLL.Services
 
 		public async Task<string> GetUrlAsync(int id, string token)
         {
-			if (await _requestService.SendGetRequest(id, token))
-			{
-				var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+			var res = await _requestService.SendGetRequest(id, token);
+			if (!res)
+				return null;
 
-				var blob = blobContainer.GetBlockBlobReference(id.ToString());
+			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 
-				return blob.Uri.AbsoluteUri; ;
-			}
-			return null;
+			var blob = blobContainer.GetBlockBlobReference(id.ToString());
+
+			return blob.Uri.AbsoluteUri; ;
 		}
     }
 }
