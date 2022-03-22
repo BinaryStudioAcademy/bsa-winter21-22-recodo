@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
 import { BaseRoutingModule } from './workspace-routing.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { VideoPageComponent } from './video/video-page/video-page.component';
@@ -23,10 +23,11 @@ import { VideoReactionsComponent } from './video/video-reactions/video-reactions
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
-import { FolderComponent } from './folder/folder.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
-
 
 @NgModule({
   declarations: [
@@ -38,10 +39,12 @@ import { DialogComponent } from './dialog/dialog.component';
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    SettingsComponent,
     FolderComponent,
     DialogComponent,
   ],
   imports: [
+    NgxDropzoneModule,
     CommonModule,
     BaseRoutingModule,
     FormsModule,
@@ -60,7 +63,9 @@ import { DialogComponent } from './dialog/dialog.component';
     MatTableModule,
     SharedModule,
     VimeModule,
-    MatDialogModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
 })
 export class WorkspaceModule {}
