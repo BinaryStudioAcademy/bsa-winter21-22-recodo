@@ -1,11 +1,17 @@
 <div class="w-100">
-  <div class="actions-container">
+  <div *ngIf="this.checked" class="actions-container">
     <button mat-button class="button-outlined">{{ viewsNumber }} views</button>
     <button mat-icon-button>
       <mat-icon svgIcon="details"></mat-icon>
     </button>
   </div>
-  <app-video-player></app-video-player>
-  <app-video-reactions class="reactions-container"></app-video-reactions>
-  <h1><strong>Screenshot 11 February 2022</strong></h1>
+  <app-video-player *ngIf="this.checked"></app-video-player>
+  <app-video-reactions
+    *ngIf="this.checked"
+    class="reactions-container"
+  ></app-video-reactions>
+  <h1 *ngIf="this.checked"><strong>Screenshot 11 February 2022</strong></h1>
+  <div *ngIf="!this.checked">
+    <p>You have no access for watching this video</p>
+  </div>
 </div>

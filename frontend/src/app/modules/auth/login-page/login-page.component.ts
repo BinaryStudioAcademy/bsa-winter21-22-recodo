@@ -20,6 +20,7 @@ export class LoginPageComponent implements OnInit {
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
   redirectUrl: string | undefined;
+  private videoId: number | undefined;
 
   constructor(
     private router: Router,
@@ -34,6 +35,7 @@ export class LoginPageComponent implements OnInit {
     this.validateForm();
     this.route.queryParams.subscribe((params) => {
       this.redirectUrl = params['redirect_url'];
+      this.videoId = params['id'];
     });
   }
 
@@ -65,13 +67,20 @@ export class LoginPageComponent implements OnInit {
       next: (response) => {
         this.currentUser = response;
         if (this.loginService.areTokensExist()) {
-          this.router.navigate(['/personal']).then(() => {
-            if (this.redirectUrl) {
-              window.location.href = `${
-                this.redirectUrl
-              }?access_token=${localStorage.getItem('accessToken')}`;
-            }
-          });
+          const videoId = localStorage.getItem('videoId');
+          if (videoId != null) {
+            const sharedUrl = '/shared/'.concat(videoId);
+            localStorage.removeItem('videoId');
+            this.router.navigate([sharedUrl]);
+          } else {
+            this.router.navigate(['/personal']).then(() => {
+              if (this.redirectUrl) {
+                window.location.href = `${
+                  this.redirectUrl
+                }?access_token=${localStorage.getItem('accessToken')}`;
+              }
+            });
+          }
         }
       },
       error: (error) => {

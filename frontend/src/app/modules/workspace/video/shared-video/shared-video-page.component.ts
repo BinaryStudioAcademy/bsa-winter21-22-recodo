@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
+import { AccessForLinkService } from 'src/app/services/access-for-video-link.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-shared-video-page',
@@ -12,21 +13,29 @@ import { VideoService } from 'src/app/services/video.service';
 export class SharedVideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
-  public link: string;
   public checked: boolean = false;
+  public isPrivate: boolean = false;
+  public userId = {} as number;
   constructor(
     private activateRoute: ActivatedRoute,
     private snackBarService: SnackBarService,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private accessForLinkService: AccessForLinkService,
+    private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
+    this.registrationService.getUser().subscribe((resp) => {
+      this.userId = resp.id;
+    });
     this.videoId = activateRoute.snapshot.params['videoId'];
-    this.link = `${environment.appUrl}/personal/video/${this.videoId}`;
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
-        this.checked = resp.body.isPrivate;
+        this.isPrivate = resp.body.isPrivate;
       }
     });
+    if (this.accessForLinkService.GetAccessedUser(this.videoId, this.userId) || this.isPrivate) {
+      this.checked = true;
+    }
   }
   public openSnackBar() {
     this.snackBarService.openSnackBar('Link was successfully copied!');

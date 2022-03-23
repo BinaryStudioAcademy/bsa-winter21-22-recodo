@@ -61,9 +61,10 @@ namespace Recodo.BLL.Services
             return _mapper.Map<AccessForUnregisteredUsersDTO>(foundUser);
         }
 
-        public async Task<AccessForRegisteredUsersDTO> FindRegisteredUserAccess(int userId)
+        public async Task<AccessForRegisteredUsersDTO> FindRegisteredUserAccess(AccessForRegisteredUsersDTO accessedUserDTO)
         {
-            var foundUser = await _context.AccessesForRegisteredUsers.FindAsync(userId);
+            var accessedUser = _mapper.Map<AccessForRegisteredUsers>(accessedUserDTO);
+            var foundUser = await _context.AccessesForRegisteredUsers.FindAsync(accessedUser);
             return _mapper.Map<AccessForRegisteredUsersDTO>(foundUser);
         }
     }
