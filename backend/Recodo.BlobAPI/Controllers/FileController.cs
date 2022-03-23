@@ -28,7 +28,16 @@ namespace Recodo.BlobAPI.Controllers
             var (response, errorCode) = await _blobService.DownloadAsync(id, accessToken);
             if (errorCode.HasValue)
                 return Unauthorized();
-            return Ok(File(response, "application/mp4", id.ToString()+".mp4"));
+            return Ok(File(response, "application/mp4", id.ToString() + ".mp4"));
+        }
+
+        [HttpGet("GetUrl")]
+        public async Task<IActionResult> GetFileUrl(int id, string token)
+        {
+            var accessToken = token;
+            var response = await _blobService.GetUrlAsync(id, accessToken);
+
+            return Redirect(response);
         }
 
         [HttpPost]

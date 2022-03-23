@@ -52,9 +52,7 @@ export class LoginPageComponent implements OnInit {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern(
-            /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/
-          ),
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         ],
       ],
     });
@@ -88,7 +86,10 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
+  public googleLogin = (event: FocusEvent) => {
+    event.preventDefault();
+    this.externalAuthService.signInWithGoogle().catch(() => {
+      this.snackbarService.openSnackBar('Unable to login using Google');
+    });
   };
 }
