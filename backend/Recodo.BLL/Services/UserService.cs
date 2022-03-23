@@ -73,5 +73,11 @@ namespace Recodo.BLL.Services
                 return _mapper.Map<UserDTO>(userEntity);
             }
         }
+
+        public async Task<UserDTO> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }

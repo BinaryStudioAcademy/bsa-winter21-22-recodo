@@ -27,10 +27,16 @@
           : "private (only you can see this video)"
       }}
     </p>
-    <button class="link-button" *ngIf="this.checked" (click)="changeProperty()">
+    <button
+      id="change-property"
+      class="link-button"
+      *ngIf="this.checked"
+      (click)="changeProperty()"
+    >
       Make video private
     </button>
     <button
+      id="change-property"
       class="link-button"
       *ngIf="!this.checked"
       (click)="changeProperty()"
