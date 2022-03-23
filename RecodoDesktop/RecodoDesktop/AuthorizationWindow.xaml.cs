@@ -14,12 +14,12 @@ namespace Recodo.Desktop.Main
     {
         public AuthorizationWindow()
         {
-            if(!checkSavedToken())
+            if(!CheckSavedToken())
                 InitializeComponent();
             else
             {
                 this.Hide();
-                openRecordingForm();
+                OpenRecordingForm();
             }
         }
 
@@ -42,7 +42,7 @@ namespace Recodo.Desktop.Main
             try
             {
                 token = await auth.Authorize();
-                saveToken(token);
+                SaveToken(token);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
@@ -52,17 +52,17 @@ namespace Recodo.Desktop.Main
             }
 
             this.Hide();
-            openRecordingForm();
+            OpenRecordingForm();
         }
 
-        private void saveToken(Token token)
+        private void SaveToken(Token token)
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Recodo");
             key.SetValue("token", token.AccessToken);
             key.Close();
         }
 
-        private bool checkSavedToken()
+        private bool CheckSavedToken()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Recodo");
             if(key != null)
@@ -75,7 +75,7 @@ namespace Recodo.Desktop.Main
                 return false;
             }
         }
-        private void openRecordingForm()
+        private void OpenRecordingForm()
         {
             RecorderService recorderService = new RecorderService(token);
             VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
