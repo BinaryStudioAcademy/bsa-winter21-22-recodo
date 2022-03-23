@@ -29,9 +29,17 @@ namespace Recodo.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFile(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);           
-            await _fileService.CheckAccessToFile(Convert.ToInt32(userId), id);
-            return Ok();
+            Request.Headers.TryGetValue(HeaderNames.Authorization, out Microsoft.Extensions.Primitives.StringValues value);
+            var token = value.ToString();
+          
+            if(await _fileService.CheckAccessToFile(token, id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
