@@ -6,6 +6,11 @@ import { LoginService } from 'src/app/services/login.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
+import {
+  cannotContainSpace,
+  passwordMatchValidator,
+  startsOrEndWithSpace,
+} from 'src/app/core/validators/customValidators';
 
 @Component({
   selector: 'app-settings',
@@ -58,9 +63,12 @@ export class SettingsComponent implements OnInit {
           validators: [
             Validators.required,
             Validators.minLength(3),
-            Validators.maxLength(20),
-            // prettier-ignore
-            Validators.pattern('^[a-zA-Z`\'][a-zA-Z-`\' ]+[a-zA-Z`\']?$'),
+            Validators.maxLength(30),
+            Validators.pattern(
+              // prettier-ignore
+              '^[а-яА-ЯёЁa-zA-Z\`\'][а-яА-ЯёЁa-zA-Z-\`\' ]+[а-яА-ЯёЁa-zA-Z\`\']?$'
+            ),
+            startsOrEndWithSpace,
           ],
         },
       ],
@@ -70,7 +78,10 @@ export class SettingsComponent implements OnInit {
       email: [
         this.oldEmail,
         {
-          validators: [Validators.required, Validators.email],
+          validators: [
+            Validators.required,
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          ],
         },
       ],
       passOld: [
@@ -83,6 +94,7 @@ export class SettingsComponent implements OnInit {
             Validators.pattern(
               /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/
             ),
+            cannotContainSpace,
           ],
         },
       ],
@@ -96,6 +108,7 @@ export class SettingsComponent implements OnInit {
             Validators.pattern(
               /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/
             ),
+            cannotContainSpace,
           ],
         },
       ],
