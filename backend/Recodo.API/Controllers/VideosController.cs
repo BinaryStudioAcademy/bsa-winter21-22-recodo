@@ -30,6 +30,11 @@ namespace Recodo.API.Controllers
         {
             return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
         }
+        [HttpGet("check/{id:int}")]
+        public async Task<ActionResult> GetFileState(int id)
+        {
+            return Ok(await _videoService.CheckVideoState(id));
+        }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
