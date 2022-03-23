@@ -8,7 +8,6 @@ import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import {
   cannotContainSpace,
-  passwordMatchValidator,
   startsOrEndWithSpace,
 } from 'src/app/core/validators/customValidators';
 
