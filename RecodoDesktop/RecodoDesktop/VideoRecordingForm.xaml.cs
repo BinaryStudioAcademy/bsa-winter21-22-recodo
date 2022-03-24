@@ -34,7 +34,6 @@ namespace Recodo.Desktop.Main
 
         public VideoRecordingForm()
         {
-            _recorderService = new RecorderService();
             _options = new RecorderConfiguration();
 
             InitializeComponent();

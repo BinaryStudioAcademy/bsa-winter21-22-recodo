@@ -9,28 +9,28 @@ body {
   height: 100%;
   margin: 0;
   overflow-x: hidden;
-  button{
-     &:hover{
-       cursor:pointer
-      }
+  button {
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
 }
 
 .input-form .mat-form-field-wrapper .mat-form-field-flex {
-    background-color: white;
-    padding: 0 .75em 0 .75em;
+  background-color: white;
+  padding: 0 0.75em 0 0.75em;
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
 }
 
 .button-accent {
@@ -57,25 +57,25 @@ input:-webkit-autofill:active {
 
 ::-webkit-scrollbar {
   width: 1em;
-	background-color: rgba($color: #1a0c0c3d, $alpha: 0.2)
+  background-color: rgba($color: #1a0c0c3d, $alpha: 0.2);
 }
 
 ::-webkit-scrollbar-track {
-  background: linear-gradient(90deg,#434343,#434343 1px,#111 0,#111);
- }
-
+  background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
+}
 
 ::-webkit-scrollbar-thumb {
   background: #434343;
-  box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%), inset -2px -2px 2px rgb(0 0 0 / 25%);
+  box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%),
+    inset -2px -2px 2px rgb(0 0 0 / 25%);
 }
 
 ::selection {
   background: #b6445d;
 }
 
-mat-select-min-line ng-tns-c111-2 ng-star-inserted{
-	font-weight: bold;
+mat-select-min-line ng-tns-c111-2 ng-star-inserted {
+  font-weight: bold;
 }
 
 .not-empty-select.mat-selected {
@@ -83,10 +83,15 @@ mat-select-min-line ng-tns-c111-2 ng-star-inserted{
 }
 
 .not-empty-select.mat-selected {
-	color: white;
-	font-size: 30px;
+  color: white;
+  font-size: 30px;
 }
 
 .mat-select-value-text {
-	color: white;
+  color: white;
+}
+
+.snackbar {
+  background-color: #b6445d;
+  color: #fff;
 }

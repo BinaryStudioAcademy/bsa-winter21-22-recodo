@@ -1,4 +1,5 @@
-﻿using Recodo.Desktop.Logic;
+﻿using Microsoft.Win32;
+using Recodo.Desktop.Logic;
 using Recodo.Desktop.Models.Auth;
 using System.Configuration;
 using System.Threading.Tasks;
@@ -13,7 +14,13 @@ namespace Recodo.Desktop.Main
     {
         public AuthorizationWindow()
         {
-            InitializeComponent();
+            if(!CheckSavedToken())
+                InitializeComponent();
+            else
+            {
+                this.Hide();
+                OpenRecordingForm();
+            }
         }
 
         private Token token;
@@ -35,6 +42,7 @@ namespace Recodo.Desktop.Main
             try
             {
                 token = await auth.Authorize();
+                SaveToken(token);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
@@ -44,6 +52,31 @@ namespace Recodo.Desktop.Main
             }
 
             this.Hide();
+            OpenRecordingForm();
+        }
+
+        private void SaveToken(Token token)
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Recodo");
+            key.SetValue("token", token.AccessToken);
+            key.Close();
+        }
+
+        private bool CheckSavedToken()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Recodo");
+            if(key != null)
+            {
+                token = new Token(key.GetValue("token").ToString(), "");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private void OpenRecordingForm()
+        {
             RecorderService recorderService = new RecorderService(token);
             VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
             recordingForm.Show();

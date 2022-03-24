@@ -11,7 +11,7 @@
         <mat-icon svgIcon="details"></mat-icon>
       </button>
     </div>
-    <div matLine class="item-photo">
+    <div matLine class="item-photo" [routerLink]="['video',video.id]">
       <video
         src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4#t=1"
         alt="video"
@@ -47,7 +47,7 @@
       </div>
     </th>
     <td mat-cell *matCellDef="let element">
-      <div class="icon-text-cell">
+      <div class="icon-text-cell pointer" [routerLink]="['video', element.id]">
         <mat-icon svgIcon="folder"></mat-icon>
         <span class="cell-text">{{element.name}}</span>
       </div>

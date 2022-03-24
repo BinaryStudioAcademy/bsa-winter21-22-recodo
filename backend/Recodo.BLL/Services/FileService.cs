@@ -59,17 +59,27 @@ namespace Recodo.BLL.Services
             _context.Videos.Update(video);
             await _context.SaveChangesAsync();
         }
-        public async Task CheckAccessToFile(int userId, int videoId)
+        public async Task<bool> CheckAccessToFile(string token, int videoId)
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+            if (authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
             if (video == null)
             {
                 throw new Exception("Video with such identifier is not found.");
             }
-            if (video.AuthorId != userId)
+            if (video.AuthorId != Convert.ToInt32(authorId))
             {
-                throw new Exception("User doesn't have acces to this video.");
-            }            
+                return false;
+            }
+
+            return true;
         }
 
     }
