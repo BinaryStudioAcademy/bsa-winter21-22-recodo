@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Recodo.API.BLL.Interfaces;
+using Recodo.FileAPI.Dtos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,12 +33,13 @@ namespace Recodo.BlobAPI.Controllers
         }
 
         [HttpGet("GetUrl")]
-        public async Task<IActionResult> GetFileUrl(int id, string token)
+        public async Task<ActionResult<FileDto>> GetFileUrl(int id)
         {
-            var accessToken = token;
-            var response = await _blobService.GetUrlAsync(id, accessToken);
+            var token = Request.Headers[HeaderNames.Authorization];
 
-            return Redirect(response);
+            var response = await _blobService.GetUrlAsync(id, token.ToString());
+
+            return Ok(new FileDto(response));
         }
 
         [HttpPost]
