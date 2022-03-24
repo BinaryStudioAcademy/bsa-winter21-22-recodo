@@ -38,7 +38,7 @@ namespace Recodo.FIle.BLL.Services
 
         public async Task<bool> SendGetRequest(int videoId, string token)
         {
-            Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
+            Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token.Trim('"','\\'));
 
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUrl +
                 $"File?id={videoId}"));

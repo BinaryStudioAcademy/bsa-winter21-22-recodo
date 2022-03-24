@@ -135,6 +135,7 @@
                                 <Setter Property="Width" Value="354"/>
                             </Style>
                         </ComboBox.ItemContainerStyle>
+                        <ComboBoxItem>None</ComboBoxItem>
                     </ComboBox>
                 </Border>
             </StackPanel>

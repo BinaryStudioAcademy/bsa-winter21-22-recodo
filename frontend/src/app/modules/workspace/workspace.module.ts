@@ -23,8 +23,10 @@ import { VideoReactionsComponent } from './video/video-reactions/video-reactions
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
-import { FolderComponent } from './folder/folder.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -44,6 +46,7 @@ import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/
     VideoPlayerComponent,
     VideoReactionsComponent,
     VideoDescriptionComponent,
+    SettingsComponent,
     FolderComponent,
     DialogComponent,
     ShareByEmailDialogComponent,
@@ -52,6 +55,7 @@ import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/
     SharingVideoDialogComponent,
   ],
   imports: [
+    NgxDropzoneModule,
     CommonModule,
     BaseRoutingModule,
     FormsModule,
@@ -74,6 +78,8 @@ import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/
     ToastrModule.forRoot(),
     ClipboardModule,
     MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class WorkspaceModule {}

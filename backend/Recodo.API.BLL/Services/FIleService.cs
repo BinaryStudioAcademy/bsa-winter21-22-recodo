@@ -1,16 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Recodo.API.BLL.Interfaces;
+﻿using Recodo.API.BLL.Interfaces;
 using Recodo.FIle.BLL.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Recodo.API.BLL.Services
@@ -26,17 +17,15 @@ namespace Recodo.API.BLL.Services
 			_requestService = requestService;
 		}
 
-		public async Task<string> UploadAsync(IFormFile files, string token)
+		public async Task<string> UploadAsync(Stream files, string token, int id)
 		{
-			var id = await _requestService.SendSaveRequest(token);
-
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
-			var blob = blobContainer.GetBlockBlobReference(id);
+			var blob = blobContainer.GetBlockBlobReference(id + ".mp4");
 
-			await using var fileStream = files.OpenReadStream();
+			await using var fileStream = files;
 			await blob.UploadFromStreamAsync(fileStream);
 
-			return await _requestService.SendFinishRequest(Convert.ToInt32(id));	
+			return await _requestService.SendFinishRequest(Convert.ToInt32(id));
 		}
 
 		public async Task DeleteAsync(int id)
@@ -62,6 +51,19 @@ namespace Recodo.API.BLL.Services
             {
 				return (null, 403);
             }
+		}
+
+		public async Task<string> GetUrlAsync(int id, string token)
+        {
+			var res = await _requestService.SendGetRequest(id, token.Replace("Bearer ", ""));
+			if (!res)
+				return null;
+
+			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+
+			var blob = blobContainer.GetBlockBlobReference(id.ToString()+".mp4");
+
+			return blob.Uri.AbsoluteUri; ;
 		}
     }
 }

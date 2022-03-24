@@ -1,12 +1,12 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System;
-using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Recodo.BLL.Services
@@ -20,15 +20,25 @@ namespace Recodo.BLL.Services
             _context = context;
         }
 
-        public async Task<int> SaveVideo(int authorId)
+        public async Task<int> SaveVideo(string token)
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+            if(authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
             Video newVideo = new Video()
             {
                 IsPrivate = true,
-                IsSaving = true,
-                AuthorId = authorId,
+                IsSaving = false, //Rename to IsSaved
+                AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
-                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}"
+                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
+                Link = "",
+                FolderId = null
             };
 
             await _context.AddAsync(newVideo);
@@ -45,19 +55,32 @@ namespace Recodo.BLL.Services
                 throw new Exception("Video with such identifier is not found.");
             }
 
-            video.IsSaving = false;
+            video.IsSaving = true; //Rename to IsSaved
+
+            _context.Videos.Update(video);
+            await _context.SaveChangesAsync();
         }
-        public async Task CheckAccessToFile(int userId, int videoId)
+        public async Task<bool> CheckAccessToFile(string token, int videoId)
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+            if (authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
             if (video == null)
             {
                 throw new Exception("Video with such identifier is not found.");
             }
-            if (video.AuthorId != userId)
+            if (video.AuthorId != Convert.ToInt32(authorId))
             {
-                throw new Exception("User doesn't have acces to this video.");
-            }            
+                return false;
+            }
+
+            return true;
         }
 
     }

@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+
+COPY ./Recodo.API/*.csproj ./Recodo.API/
+COPY ./Recodo.BLL/*.csproj ./Recodo.BLL/
+COPY ./Recodo.DAL/*.csproj ./Recodo.DAL/
+COPY ./Recodo.Common/*.csproj ./Recodo.Common/
+RUN dotnet restore "Recodo.API/Recodo.API.csproj"
+
+COPY ./Recodo.API ./Recodo.API
+COPY ./Recodo.BLL ./Recodo.BLL
+COPY ./Recodo.DAL ./Recodo.DAL
+COPY ./Recodo.Common ./Recodo.Common
+RUN dotnet publish -c Release -o out "Recodo.API/Recodo.API.csproj"
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY --from=build /src/out .
+EXPOSE 5050
+ENTRYPOINT ["dotnet", "Recodo.API.dll"]

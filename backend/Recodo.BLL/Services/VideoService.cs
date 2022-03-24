@@ -43,6 +43,18 @@ namespace Recodo.BLL.Services
             return videos;
         }
 
+        public async Task<bool> CheckVideoState(int id)
+        {
+            var videoEntity = await _context.Videos.FirstOrDefaultAsync(v => v.Id == id);
+
+            if(videoEntity is null)
+            {
+                throw new NotFoundException(nameof(Video), id);
+            }
+
+            return videoEntity.IsSaving;
+        }
+
         public async Task Delete(int videoId)
         {
             var videoEntity = await _context.Videos.FirstOrDefaultAsync(v => v.Id == videoId);
