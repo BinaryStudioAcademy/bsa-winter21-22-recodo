@@ -28,7 +28,7 @@ export class VideoPageComponent {
     private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
-    this.videoId = activateRoute.snapshot.params['videoId'];
+    this.videoId = activateRoute.snapshot.params['id'];
     this.link = `${environment.appUrl}/shared/${this.videoId}`;
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {

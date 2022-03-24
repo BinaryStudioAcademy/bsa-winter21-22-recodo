@@ -36,7 +36,11 @@ namespace Recodo.BLL.Services
                         UserId = user.Id,
                         VideoId = videoId
                     };
-                    _context.AccessesForRegisteredUsers.Add(registeredUser);
+                    var foundRegisteredUser = FindRegisteredUserAccess(_mapper.Map<AccessForRegisteredUsersDTO>(registeredUser));
+                    if(foundRegisteredUser == null)
+                    {
+                        _context.AccessesForRegisteredUsers.Add(registeredUser);
+                    }
                 }
                 else
                 {

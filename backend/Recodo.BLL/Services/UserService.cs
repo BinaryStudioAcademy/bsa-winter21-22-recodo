@@ -13,7 +13,6 @@ using Recodo.DAL.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Thread_.NET.BLL.Services;
 
 namespace Recodo.BLL.Services
 {

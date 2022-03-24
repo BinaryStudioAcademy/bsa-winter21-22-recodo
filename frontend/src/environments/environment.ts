@@ -4,8 +4,8 @@
 
 export const environment = {
   appUrl: 'http://localhost:4200',
-  apiUrl: 'https://localhost:44316/api',
-  blobApiUrl: 'https://localhost:44362/api',
+  apiUrl: 'https://localhost:5001/api',
+  blobApiUrl: 'https://localhost:5001/api',
   production: false,
   googleKey: '',
 };
