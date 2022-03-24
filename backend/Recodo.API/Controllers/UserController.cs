@@ -77,7 +77,6 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-
         [HttpGet]
         [AllowAnonymous]
         [Route("Add-To-Team/{token}")]
