@@ -7,7 +7,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { VideoService } from 'src/app/services/video.service';
 import { ActivatedRoute } from '@angular/router';
-import { ReactionType } from 'src/app/models/common/reaction-type';
 
 @Component({
   selector: 'app-video-page',

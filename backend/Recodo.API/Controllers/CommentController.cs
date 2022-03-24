@@ -25,9 +25,9 @@ namespace Recodo.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CommentDTO>>> GetComments()
+        public async Task<ActionResult<List<CommentDTO>>> GetComments(int videoId)
         {
-            return Ok(await _commentService.GetAllComments());
+            return Ok(await _commentService.GetAllVideosComments(videoId));
         }
 
         [HttpPut]

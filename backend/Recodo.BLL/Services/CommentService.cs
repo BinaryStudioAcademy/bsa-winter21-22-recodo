@@ -6,6 +6,7 @@ using Recodo.Common.Dtos.Comment;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Recodo.BLL.Services
 {
@@ -45,10 +46,10 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<CommentDTO>> GetAllComments()
+        public async Task<List<CommentDTO>> GetAllVideosComments(int videoId)
         {
-            var allComments = await _context.Comments.ToListAsync();
-            var allCommentsDTO = _mapper.Map<List<Comment>, List<CommentDTO>>(allComments);
+            var allComments = await _context.Comments.Where(comment => comment.VideoId == videoId).ToListAsync();
+            var allCommentsDTO = _mapper.Map<List<CommentDTO>>(allComments);
             return allCommentsDTO;
         }
     }

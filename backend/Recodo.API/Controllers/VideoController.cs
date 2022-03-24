@@ -26,7 +26,7 @@ namespace Recodo.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<VideoDTO>>> GetVideo()
+        public async Task<ActionResult<List<VideoDTO>>> GetVideos()
         {
             return Ok(await _videoService.GetVideos());
         }
