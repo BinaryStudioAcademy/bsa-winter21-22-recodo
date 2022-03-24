@@ -40,7 +40,6 @@ mat-list-item:hover {
 .mat-row .mat-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
-  cursor: pointer;
 }
 .icon-text-cell {
   display: flex;
@@ -81,6 +80,7 @@ mat-list-item:hover {
   img {
     margin-bottom: 10px;
   }
+  cursor: pointer;
 }
 
 .item-header {
@@ -354,4 +354,8 @@ mat-menu-item {
 
 .folder-active {
   background-color: white;
+}
+
+.pointer {
+  cursor: pointer;
 }

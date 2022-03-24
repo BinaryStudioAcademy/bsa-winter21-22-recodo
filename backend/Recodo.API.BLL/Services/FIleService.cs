@@ -55,13 +55,13 @@ namespace Recodo.API.BLL.Services
 
 		public async Task<string> GetUrlAsync(int id, string token)
         {
-			var res = await _requestService.SendGetRequest(id, token);
+			var res = await _requestService.SendGetRequest(id, token.Replace("Bearer ", ""));
 			if (!res)
 				return null;
 
 			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
 
-			var blob = blobContainer.GetBlockBlobReference(id.ToString());
+			var blob = blobContainer.GetBlockBlobReference(id.ToString()+".mp4");
 
 			return blob.Uri.AbsoluteUri; ;
 		}
