@@ -21,6 +21,22 @@ namespace Recodo.API.Controllers
             _userService = userService;
         }
 
+        [HttpPost("ResetPassword/{email}")]
+        public async Task<IActionResult> ResetPassword(string email)
+        {
+            await _userService.ResetPassword(email);
+            return NoContent();
+        }
+
+        [HttpPost("ResetPasswordFinish/{email}/{newPass}")]
+        public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
+        {
+            var loginDto = await _userService.ResetPasswordFinish(email, newPass);
+            var auth = await _authService.Authorize(loginDto, false);
+
+            return Ok(auth);
+        }
+
         [HttpPost("Update")]
         public async Task<IActionResult> Update([FromForm] UpdateUserDTO userDTO, [FromForm] IFormFile avatar)
         {
