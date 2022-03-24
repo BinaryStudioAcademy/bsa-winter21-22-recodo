@@ -20,9 +20,9 @@ namespace Recodo.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> AddNewAccess(string email, int videoId)
-        {
-            await _accessToVideoService.AddUserAccess(email, videoId);
+        public async Task<IActionResult> AddNewAccess(AccessForUnregisteredUsersDTO accessForUnregisteredUsersDTO)
+        {   
+            await _accessToVideoService.AddUserAccess(accessForUnregisteredUsersDTO.Email, accessForUnregisteredUsersDTO.VideoId);
             return Ok();
         }
 

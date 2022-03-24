@@ -23,7 +23,7 @@ export class VideoPageComponent {
   ) {
     this.viewsNumber = 10;
     this.videoId = activateRoute.snapshot.params['videoId'];
-    this.link = `${environment.appUrl}/personal/video/${this.videoId}`;
+    this.link = `${environment.appUrl}/shared/${this.videoId}`;
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
         this.checked = resp.body.isPrivate;

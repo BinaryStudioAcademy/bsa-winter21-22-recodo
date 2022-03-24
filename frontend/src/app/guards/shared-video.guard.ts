@@ -13,7 +13,7 @@ export class SharedVideoGuard implements CanActivate {
   ) {}
   canActivate(): boolean {
     if (!this.loginService.areTokensExist()) {
-      this.route.queryParams.subscribe((params) => {
+      this.route.params.subscribe((params) => {
         localStorage.setItem('videoId', params['videoId']);
       });
       this.router.navigate(['/login']);

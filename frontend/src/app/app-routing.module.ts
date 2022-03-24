@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'shared/:videoId',
     component: SharedVideoPageComponent,
-    canActivate: [SharedVideoGuard],
+    canActivate: [TokenExistsGuard],
   },
 ];
 

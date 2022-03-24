@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 import { VideoDto } from 'src/app/models/video/video-dto';
+import { AccessForLinkService } from 'src/app/services/access-for-video-link.service';
+import { AccessForUnregisteredUsersService } from 'src/app/services/access-for-unregistered-users.service';
 
 @Component({
   selector: 'app-share-by-email',
@@ -34,7 +36,9 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
     private videoService: VideoService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private mailService: MailService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private accessForRegisteredUsers: AccessForLinkService,
+    private accessForUnregisteredUsers: AccessForUnregisteredUsersService
   ) {
     this.title = 'Share video with other users';
     this.email = 'Write an email';
@@ -62,12 +66,9 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
         this.matDialog.closeAll();
         this.snackBarService.openSnackBar('Email was successfully sent!');
       });
-    this.videoService.getVideoById(this.videoId).subscribe((resp) => {
-      if (resp.body) {
-        this.currentVideo = resp.body;
-      }
-    });
-    this.currentVideo.sharedEmails.push(this.email);
-    this.videoService.update(this.currentVideo).subscribe();
+    this.accessForUnregisteredUsers.addNewAccess(this.email, this.videoId);
+    console.log(
+      'new access in workspace: ' + this.email + ' ' + this.videoId.toString()
+    );
   }
 }

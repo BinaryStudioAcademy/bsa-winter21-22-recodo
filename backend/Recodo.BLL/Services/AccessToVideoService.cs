@@ -4,6 +4,8 @@ using Recodo.DAL.Entities;
 using AutoMapper;
 using System.Threading.Tasks;
 using Recodo.Common.Dtos.Access;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Recodo.BLL.Services
 {
@@ -18,53 +20,63 @@ namespace Recodo.BLL.Services
 
         public async Task AddUserAccess(string email, int videoId)
         {
-            var user = await _userService.GetUserByEmail(email);
-            if(user != null)
+            var unRegisteredUser = new AccessForUnregisteredUsersDTO
             {
-                var registeredUser = new AccessForRegisteredUsers
+                Email = email,
+                VideoId = videoId
+            };            
+            var user = await _userService.GetUserByEmail(email);
+            var accessedUser = await FindUnregisteredUser(unRegisteredUser);
+            if(accessedUser == null)
+            {
+                if(user != null)
                 {
-                    UserId = user.Id,
-                    VideoId = videoId
-                };
-                _context.AccessesForRegisteredUsers.Add(registeredUser);
+                    var registeredUser = new AccessForRegisteredUsers
+                    {
+                        UserId = user.Id,
+                        VideoId = videoId
+                    };
+                    _context.AccessesForRegisteredUsers.Add(registeredUser);
+                }
+                else
+                {
+                    var unRegisteredUserEntity = _mapper.Map<AccessForUnregisteredUsers>(unRegisteredUser);
+                    _context.AccessesForUnregisteredUsers.Add(unRegisteredUserEntity);
+                }
             }
             else
             {
-                var unRegisteredUser = new AccessForUnregisteredUsers
-                {
-                    Email = email,
-                    VideoId = videoId
-                };
-                _context.AccessesForUnregisteredUsers.Add(unRegisteredUser);
+                await ChangeUserAccess(unRegisteredUser);
             }
             _context.SaveChanges();
         }
 
-        public async Task ChangeUserAccess(string email, int videoId)
+        public async Task ChangeUserAccess(AccessForUnregisteredUsersDTO unregisteredUser)
         {
-            var foundUnregisteredUserDTO = await FindUnregisteredUser(email);
+            var foundUnregisteredUserDTO = await FindUnregisteredUser(unregisteredUser);
             var foundUnregisteredUser = _mapper.Map<AccessForUnregisteredUsers>(foundUnregisteredUserDTO);
-            var foundUser = await _userService.GetUserByEmail(email);
+            var foundUser = await _userService.GetUserByEmail(unregisteredUser.Email);
             var registeredUser = new AccessForRegisteredUsers
             {
                 UserId = foundUser.Id,
-                VideoId = videoId
+                VideoId = unregisteredUser.VideoId
             };
             _context.AccessesForUnregisteredUsers.Remove(foundUnregisteredUser);
             _context.AccessesForRegisteredUsers.Add(registeredUser);
             _context.SaveChanges();
         }
 
-        private async Task<AccessForUnregisteredUsersDTO> FindUnregisteredUser(string email)
+        private async Task<AccessForUnregisteredUsersDTO> FindUnregisteredUser(AccessForUnregisteredUsersDTO unregisteredUser)
         {
-            var foundUser = await _context.AccessesForUnregisteredUsers.FindAsync(email);
+            var accessedUsers = await _context.AccessesForUnregisteredUsers.Where(user => user.Email == unregisteredUser.Email).ToListAsync();
+            var foundUser = accessedUsers.FirstOrDefault(user => user.VideoId == unregisteredUser.VideoId);
             return _mapper.Map<AccessForUnregisteredUsersDTO>(foundUser);
         }
 
         public async Task<AccessForRegisteredUsersDTO> FindRegisteredUserAccess(AccessForRegisteredUsersDTO accessedUserDTO)
         {
-            var accessedUser = _mapper.Map<AccessForRegisteredUsers>(accessedUserDTO);
-            var foundUser = await _context.AccessesForRegisteredUsers.FindAsync(accessedUser);
+            var accessedUsers = await _context.AccessesForRegisteredUsers.Where(user => user.UserId == accessedUserDTO.UserId).ToListAsync();
+            var foundUser = accessedUsers.FirstOrDefault(user => user.UserId == accessedUserDTO.VideoId);
             return _mapper.Map<AccessForRegisteredUsersDTO>(foundUser);
         }
     }

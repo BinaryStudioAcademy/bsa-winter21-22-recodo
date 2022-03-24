@@ -15,7 +15,7 @@ export class SharedVideoPageComponent {
   public videoId: number;
   public checked: boolean = false;
   public isPrivate: boolean = false;
-  public userId = {} as number;
+  private userId?: number;
   constructor(
     private activateRoute: ActivatedRoute,
     private snackBarService: SnackBarService,
@@ -24,20 +24,53 @@ export class SharedVideoPageComponent {
     private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
+    this.videoId = parseInt(activateRoute.snapshot.params['videoId']);
     this.registrationService.getUser().subscribe((resp) => {
-      this.userId = resp.id;
+      localStorage.setItem('userId', resp.id.toString());
     });
-    this.videoId = activateRoute.snapshot.params['videoId'];
+    const userIdString = localStorage.getItem('userId');
+    if (userIdString) {
+      this.userId = parseInt(userIdString);
+      localStorage.removeItem('userId');
+    }
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
-        this.isPrivate = resp.body.isPrivate;
+        if (resp.body.isPrivate) {
+          localStorage.setItem('isPrivate', 'true');
+        } else {
+          localStorage.setItem('isPrivate', 'false');
+        }
       }
     });
-    if (this.accessForLinkService.GetAccessedUser(this.videoId, this.userId) || this.isPrivate) {
-      this.checked = true;
+    if (localStorage.getItem('isPrivate') == 'true') {
+      this.isPrivate = true;
+    } else {
+      this.isPrivate = false;
+    }
+    localStorage.removeItem('isPrivate');
+    if (this.userId) {
+      console.log(
+        'het accessed user: ' +
+          this.accessForLinkService.GetAccessedUser(this.videoId, this.userId)
+      );
+      if (
+        this.accessForLinkService.GetAccessedUser(this.videoId, this.userId) ||
+        this.isPrivate
+      ) {
+        this.checked = true;
+      }
     }
   }
+
   public openSnackBar() {
     this.snackBarService.openSnackBar('Link was successfully copied!');
+  }
+
+  private getUserId(): Promise<number> {
+    return new Promise((r) => {
+      this.registrationService.getUser().subscribe((resp) => {
+        return r(resp.id);
+      });
+    });
   }
 }

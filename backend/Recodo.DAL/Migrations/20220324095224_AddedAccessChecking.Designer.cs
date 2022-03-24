@@ -11,7 +11,7 @@ using Recodo.DAL.Context;
 namespace Recodo.DAL.Migrations
 {
     [DbContext(typeof(RecodoDbContext))]
-    [Migration("20220322231441_AddedAccessChecking")]
+    [Migration("20220324095224_AddedAccessChecking")]
     partial class AddedAccessChecking
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,48 @@ namespace Recodo.DAL.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("PermissionUser");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("AccessesForRegisteredUsers");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("AccessesForUnregisteredUsers");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>
@@ -315,6 +357,36 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
+                {
+                    b.HasOne("Recodo.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
+                {
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>
