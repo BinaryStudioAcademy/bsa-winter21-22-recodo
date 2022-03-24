@@ -27,7 +27,11 @@ export class UserService extends ResourceService<UserDto> {
   }
 
   public addToTeam(email: string) {
-    return this.getWithUrl(email, 'AddToTeam');
+    return this.getWithUrl(email, 'Add-To-Team');
+  }
+
+  public sendInviteLink(email: string) {
+    return this.getWithUrl(email, 'Send-Invite-Link');
   }
 
   public resetPassword(subUrl: string) {

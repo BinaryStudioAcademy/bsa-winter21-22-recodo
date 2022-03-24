@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Recodo.BLL.Exceptions;
+using Recodo.BLL.JWT;
 using Recodo.BLL.Services.Abstract;
 using Recodo.Common.Dtos.Auth;
 using Recodo.Common.Dtos.User;
@@ -22,12 +23,14 @@ namespace Recodo.BLL.Services
         private readonly TeamService _teamService;
         private readonly ImageService _imageService;
         private readonly IConfiguration _configuration;
+        private readonly JwtFactory _jwtFactory;
 
-        public UserService(ImageService imageService, TeamService teamService, RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
+        public UserService(ImageService imageService, TeamService teamService, RecodoDbContext context, IMapper mapper, IConfiguration configuration, JwtFactory jwtFactory) : base(context, mapper)
         {
             _imageService = imageService;
             _configuration = configuration;
             _teamService = teamService;
+            _jwtFactory = jwtFactory;
         }
 
         public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)
@@ -60,10 +63,15 @@ namespace Recodo.BLL.Services
             var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
             if (userEntity == null) { return; }
 
-            userEntity.WorkspaceName = userDto.WorkspaceName ?? userEntity.WorkspaceName;
             if (avatar != null)
             {
                 userEntity.AvatarLink = await _imageService.UploadToGyazo(avatar, _configuration["GyazoKey"]);
+            }
+
+            if (string.IsNullOrEmpty(userEntity.WorkspaceName) == false)
+            {
+                userEntity.WorkspaceName = userDto.WorkspaceName;
+                await _teamService.UpdateTeam(userDto.Id, userDto.WorkspaceName);
             }
 
             _context.Users.Update(userEntity);
@@ -127,20 +135,26 @@ namespace Recodo.BLL.Services
             return userDto;
         }
 
-        public async Task AddToTeam(int userId, string authorEmail)
+        public async Task AddToTeam(int userId, string token)
         {
-            var author = await _context.Users.Where(q => q.Email == authorEmail).FirstOrDefaultAsync();
-            if (author != null)
-            {
-                var team = await _context.Teams.Include(q => q.Users).Where(q => q.AuthorId == author.Id).FirstOrDefaultAsync();
-                if (team != null)
-                {
-                    var user = await _context.Users.Where(q => q.Id == userId).FirstOrDefaultAsync();
-                    team.Users.Add(user);
+            string authorId = _jwtFactory.GetValueFromToken(token, "sub");
+            int authorIdInt = Convert.ToInt32(authorId);
 
-                    await _context.SaveChangesAsync();
-                }
+            var author = await _context.Users.Where(q => q.Id == authorIdInt).FirstOrDefaultAsync();
+            if (author == null)
+            {
+                throw new NotFoundException("User");
             }
+
+            var team = await _context.Teams.Include(q => q.Users).Where(q => q.AuthorId == author.Id).FirstOrDefaultAsync();
+            if (team == null)
+            {
+                throw new NotFoundException("Team");
+            }
+
+            var user = await _context.Users.Where(q => q.Id == userId).FirstOrDefaultAsync();
+            team.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<UserDTO> CreateGoogleUser(ExternalAuthDto userRegisterDTO,

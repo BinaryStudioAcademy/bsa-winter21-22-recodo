@@ -16,7 +16,7 @@ const routes: Routes = [
         path: '',
         component: PersonalComponent,
       },
-      { path: 'inviteteam/:email', component: InviteFinishComponent },
+      { path: 'team-invite/:token', component: InviteFinishComponent },
       {
         path: 'settings',
         component: SettingsComponent,

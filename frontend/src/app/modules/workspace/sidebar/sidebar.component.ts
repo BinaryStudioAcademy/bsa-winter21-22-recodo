@@ -4,6 +4,7 @@ import { TeamDto } from 'src/app/models/user/team-dto';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { TeamInviteComponent } from '../team-invite/team-invite.component';
 import { environment } from '../../../../environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,7 @@ export class SidebarComponent implements OnChanges {
   members: number | undefined;
   value: string = '';
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private userService: UserService) {}
 
   ngOnChanges() {
     this.selectedCriteria = this.user.teams.filter(
@@ -43,9 +44,6 @@ export class SidebarComponent implements OnChanges {
   showInvite() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.data =
-      environment.clientUrl + '/inviteteam/' + this.user.email;
-
     this.dialog.open(TeamInviteComponent, dialogConfig);
   }
 }

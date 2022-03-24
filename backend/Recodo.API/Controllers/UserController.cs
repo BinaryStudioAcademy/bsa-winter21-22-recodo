@@ -14,11 +14,13 @@ namespace Recodo.API.Controllers
     {
         private readonly AuthService _authService;
         private readonly UserService _userService;
+        private readonly TeamService _teamService;
 
-        public UserController(AuthService authService, UserService userService)
+        public UserController(AuthService authService, UserService userService, TeamService teamService)
         {
             _authService = authService;
             _userService = userService;
+            _teamService = teamService;
         }
 
         [HttpPost("Update")]
@@ -62,13 +64,21 @@ namespace Recodo.API.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("AddToTeam/{authorEmail}")]
-        public async Task<IActionResult> AddToTeam(string authorEmail)
+        [Route("Add-To-Team/{token}")]
+        public async Task<IActionResult> AddToTeam(string token)
         {
-            await _userService.AddToTeam(this.GetUserIdFromToken(), authorEmail);
+            await _userService.AddToTeam(this.GetUserIdFromToken(), token);
 
             return NoContent();
         }
 
+        [HttpGet]
+        [Route("Send-Invite-Link/{email}")]
+        public async Task<IActionResult> SendInviteLink(string email)
+        {
+            await _teamService.SendInviteLink(this.GetUserIdFromToken(), email);
+
+            return NoContent();
+        }
     }
 }

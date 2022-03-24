@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./invite-finish.component.scss'],
 })
 export class InviteFinishComponent implements OnInit {
-  email!: string;
+  token!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,14 +21,14 @@ export class InviteFinishComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.email = params['email'];
+      this.token = params['token'];
     });
 
     this.joinToTeam();
   }
 
   joinToTeam() {
-    this.userService.addToTeam(this.email).subscribe({
+    this.userService.addToTeam(this.token).subscribe({
       next: () => {
         this.snackBarService.openSnackBar('Successfully added to team');
       },

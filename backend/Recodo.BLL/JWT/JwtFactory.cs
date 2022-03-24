@@ -3,6 +3,7 @@ using Recodo.Common.Auth;
 using Recodo.Common.Security;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -50,6 +51,15 @@ namespace Recodo.BLL.JWT
         public string GenerateRefreshToken()
         {
             return Convert.ToBase64String(SecurityHelper.GetRandomBytes());
+        }
+
+        public string GetValueFromToken(string token, string value)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = jsonToken as JwtSecurityToken;
+
+            return tokenS.Claims.First(claim => claim.Type == value)?.Value;
         }
 
         private static ClaimsIdentity GenerateClaimsIdentity(int id, string userName)
