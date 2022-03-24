@@ -3,10 +3,14 @@ import { User } from 'src/app/models/user/user';
 import { VideoDTO } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
-import { Subject, takeUntil } from 'rxjs';
 import { NewComment } from 'src/app/models/comment/new-comment';
-import { VideoService } from 'src/app/services/video.service';
 import { ActivatedRoute } from '@angular/router';
+import { SendDialogService } from 'src/app/services/send-dialog.service';
+import { environment } from 'src/environments/environment';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { VideoService } from 'src/app/services/video.service';
+import { RegistrationService } from 'src/app/services/registration.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-video-page',
@@ -14,20 +18,43 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./video-page.component.scss'],
 })
 export class VideoPageComponent {
+  public userWorkspaceName = {} as string;
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDTO;
   public currentUser: User;
   public newComment = {} as NewComment;
+  public link: string;
+  public checked: boolean = false;
   private unsubscribe$ = new Subject<void>();
   constructor(
     private commentService: CommentService,
     private videoService: VideoService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private sendDialogService: SendDialogService,
+    private snackBarService: SnackBarService,
+    private registrationService: RegistrationService
   ) {
-    this.viewsNumber = 10;
-    this.videoId = activateRoute.snapshot.params['videoId'];
     this.updateVideo();
+    this.viewsNumber = 10;
+    this.videoId = activateRoute.snapshot.params['id'];
+    this.link = `${environment.appUrl}/shared/${this.videoId}`;
+    this.videoService.getVideoById(this.videoId).subscribe((resp) => {
+      if (resp.body) {
+        this.checked = resp.body.isPrivate;
+      }
+    });
+    this.registrationService
+      .getUser()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user) => {
+        localStorage.setItem('workspaceName', user.workspaceName);
+      });
+    const workspaceName = localStorage.getItem('workspaceName');
+    if (workspaceName) {
+      this.userWorkspaceName = workspaceName;
+    }
+    localStorage.removeItem('workspaceName');
   }
 
   public deleteComment(commentId: number) {
@@ -83,5 +110,17 @@ export class VideoPageComponent {
           this.currentVideo = resp.body;
         }
       });
+  }
+  public openSendDialog() {
+    this.sendDialogService.openSendDialog(
+      this.link,
+      this.videoId,
+      this.checked,
+      this.userWorkspaceName
+    );
+  }
+
+  public openSnackBar() {
+    this.snackBarService.openSnackBar('Link was successfully copied!');
   }
 }

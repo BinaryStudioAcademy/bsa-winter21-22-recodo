@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { AccessForLinkService } from 'src/app/services/access-for-video-link.service';
+import { AccessForUnregisteredUsersService } from 'src/app/services/access-for-unregistered-users.service';
 
 @Component({
   selector: 'app-login-page',
@@ -20,6 +22,7 @@ export class LoginPageComponent implements OnInit {
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
   redirectUrl: string | undefined;
+  private videoId: number | undefined;
 
   constructor(
     private router: Router,
@@ -27,13 +30,16 @@ export class LoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private externalAuthService: ExternalAuthService,
-    private snackbarService: SnackBarService
+    private snackbarService: SnackBarService,
+    private accessService: AccessForLinkService,
+    private accessForUnregisteredUsersService: AccessForUnregisteredUsersService
   ) {}
 
   ngOnInit() {
     this.validateForm();
     this.route.queryParams.subscribe((params) => {
       this.redirectUrl = params['redirect_url'];
+      this.videoId = params['id'];
     });
   }
 
@@ -52,9 +58,7 @@ export class LoginPageComponent implements OnInit {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(20),
-          Validators.pattern(
-            /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9*.!@#$%^&`(){}[\]:;<>,‘.?/~_+=|-]+)$/
-          ),
+          Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         ],
       ],
     });
@@ -65,13 +69,25 @@ export class LoginPageComponent implements OnInit {
       next: (response) => {
         this.currentUser = response;
         if (this.loginService.areTokensExist()) {
-          this.router.navigate(['/personal']).then(() => {
-            if (this.redirectUrl) {
-              window.location.href = `${
-                this.redirectUrl
-              }?access_token=${localStorage.getItem('accessToken')}`;
+          const videoId = localStorage.getItem('videoId');
+          if (videoId != null) {
+            const sharedUrl = '/shared/' + videoId;
+            this.accessForUnregisteredUsersService.addNewAccess(_user.email, parseInt(videoId));
+            localStorage.removeItem('videoId');
+            if (videoId != undefined) {
+              this.router.navigate([sharedUrl]);
+            } else {
+              this.router.navigate(['personal']);
             }
-          });
+          } else {
+            this.router.navigate(['/personal']).then(() => {
+              if (this.redirectUrl) {
+                window.location.href = `${
+                  this.redirectUrl
+                }?access_token=${localStorage.getItem('accessToken')}`;
+              }
+            });
+          }
         }
       },
       error: (error) => {
@@ -88,7 +104,10 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  public googleLogin = () => {
-    this.externalAuthService.signInWithGoogle();
+  public googleLogin = (event: FocusEvent) => {
+    event.preventDefault();
+    this.externalAuthService.signInWithGoogle().catch(() => {
+      this.snackbarService.openSnackBar('Unable to login using Google');
+    });
   };
 }

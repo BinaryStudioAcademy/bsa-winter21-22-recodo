@@ -3,9 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  appUrl: 'http://localhost:4200',
   apiUrl: 'https://localhost:5001/api',
+  blobApiUrl: 'https://localhost:5001/api',
   production: false,
-  googleKey: '54145526113-h05a76lsjgu9t08a5quvq283qih1vagj.apps.googleusercontent.com'
+  googleKey: '',
 };
 
 /*

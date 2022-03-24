@@ -7,8 +7,10 @@ export interface VideoDTO {
   description: string;
   link: string;
   authorId: number;
-  createdAt: Date;
   folderId: number;
+  createdAt: Date;
+  isPrivate: boolean;
+  sharedEmails: string[];
   reactions: VideoReactionDTO[];
   comments: Comment[];
 }

@@ -28,7 +28,7 @@ namespace Recodo.BLL.Services
             _configuration = configuration;
         }
 
-        public async Task<AuthUserDTO> Authorize(LoginUserDTO userDTO)
+        public async Task<AuthUserDTO> Authorize(LoginUserDTO userDTO, bool checkPass = true)
         {
             var userEntity = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == userDTO.Email);
@@ -38,7 +38,7 @@ namespace Recodo.BLL.Services
                 throw new NotFoundException(nameof(User));
             }
 
-            if (!SecurityHelper.IsValidPassword(userEntity.Password, userDTO.Password, userEntity.Salt))
+            if (checkPass == true && !SecurityHelper.IsValidPassword(userEntity.Password, userDTO.Password, userEntity.Salt))
             {
                 throw new InvalidUserNameOrPasswordException();
             }
