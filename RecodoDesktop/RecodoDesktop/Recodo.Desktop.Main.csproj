@@ -7,7 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="camera_preview.jpg" />
 		<None Remove="Icons\bell.png" />
 		<None Remove="Icons\camera.png" />
 		<None Remove="Icons\home.png" />
@@ -37,7 +36,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Icons\camera_preview.jpg" />
 		<Resource Include="Icons\bell.png" />
 		<Resource Include="Icons\camera.png" />
 		<Resource Include="Icons\home.png" />
