@@ -16,18 +16,16 @@ export class ExternalAuthService {
   constructor(
     private http: HttpClient,
     private googleAuthService: SocialAuthService,
-    private router : Router,
+    private router: Router
   ) {}
 
   public signInWithGoogle = () => {
-    this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (res) => {
+    return this.googleAuthService
+      .signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((res) => {
         const user: SocialUser = { ...res };
         this.validateExternalAuth(user);
-      },
-      () => {
-      }
-    );
+      });
   };
 
   public signOutExternal = () => {
@@ -35,17 +33,25 @@ export class ExternalAuthService {
   };
 
   private validateExternalAuth(user: SocialUser) {
-    let auth : AuthOAuthDto = { provider: user.provider, idToken: user.idToken };
+    let auth: AuthOAuthDto = { provider: user.provider, idToken: user.idToken };
 
-    return this.http.post<AuthUserDto>(`${this.APIUrl}/GoogleLogin`, auth).subscribe({
-      next: (data: AuthUserDto) => {
-        localStorage.setItem('accessToken', JSON.stringify(data.token.accessToken));
-        localStorage.setItem('refreshToken', JSON.stringify(data.token.refreshToken));
-        this.router.navigate(['/personal']);
-      },
-      error: () => {
-        this.signOutExternal();
-      },
-    });
+    return this.http
+      .post<AuthUserDto>(`${this.APIUrl}/GoogleLogin`, auth)
+      .subscribe({
+        next: (data: AuthUserDto) => {
+          localStorage.setItem(
+            'accessToken',
+            JSON.stringify(data.token.accessToken)
+          );
+          localStorage.setItem(
+            'refreshToken',
+            JSON.stringify(data.token.refreshToken)
+          );
+          this.router.navigate(['/personal']);
+        },
+        error: () => {
+          this.signOutExternal();
+        },
+      });
   }
 }

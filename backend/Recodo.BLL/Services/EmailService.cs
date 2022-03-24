@@ -2,6 +2,7 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+
 namespace Thread_.NET.BLL.Services
 {
     public class EmailService
