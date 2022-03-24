@@ -74,7 +74,6 @@ export class LoginPageComponent implements OnInit {
           const videoId = localStorage.getItem('videoId');
           if (videoId != null) {
             const sharedUrl = '/shared/' + videoId;
-            console.log('login items: ' + videoId + ' ' + _user.email);
             this.accessForUnregisteredUsersService.addNewAccess(_user.email, parseInt(videoId));
             localStorage.removeItem('videoId');
             if (videoId != undefined) {

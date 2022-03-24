@@ -20,11 +20,6 @@ export class AccessForUnregisteredUsersService extends ResourceService<AccessFor
       videoId: videoId,
       email: email,
     } as AccessForUnregisteredUsers;
-    console.log(
-      'adding new unregistered user: ' +
-        accessUnregisteredUser.email +
-        accessUnregisteredUser.videoId.toString()
-    );
-    this.update(accessUnregisteredUser);
+    this.update(accessUnregisteredUser).subscribe();
   }
 }

@@ -76,7 +76,7 @@ namespace Recodo.BLL.Services
         public async Task<AccessForRegisteredUsersDTO> FindRegisteredUserAccess(AccessForRegisteredUsersDTO accessedUserDTO)
         {
             var accessedUsers = await _context.AccessesForRegisteredUsers.Where(user => user.UserId == accessedUserDTO.UserId).ToListAsync();
-            var foundUser = accessedUsers.FirstOrDefault(user => user.UserId == accessedUserDTO.VideoId);
+            var foundUser = accessedUsers.FirstOrDefault(user => user.VideoId == accessedUserDTO.VideoId);
             return _mapper.Map<AccessForRegisteredUsersDTO>(foundUser);
         }
     }

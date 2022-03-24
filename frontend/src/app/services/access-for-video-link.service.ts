@@ -21,9 +21,18 @@ export class AccessForLinkService extends ResourceService<AccessForRegisteredUse
     } as AccessForRegisteredUsers;
     this.add(accessRegisteredUser).subscribe((resp) => {
       if (resp.body != null) {
-        this.isAccessed = true;
+        localStorage.setItem('isAccessed', 'true');
+      } else {
+        localStorage.setItem('isAccessed', 'false');
       }
     });
+    const isAccessed = localStorage.getItem('isAccessed');
+    if (isAccessed == 'true') {
+      this.isAccessed = true;
+    } else {
+      this.isAccessed = false;
+    }
+    localStorage.removeItem('isAccessed');
     return this.isAccessed;
   }
 }

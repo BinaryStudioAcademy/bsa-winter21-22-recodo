@@ -26,6 +26,7 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
   public title: string;
   public videoId = {} as number;
   public currentVideo = {} as VideoDto;
+  public workspaceName = {} as string;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -47,6 +48,7 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.link = this.data.link;
     this.videoId = this.data.videoId;
+    this.workspaceName = this.data.workspaceName;
   }
 
   public ngOnDestroy() {
@@ -60,15 +62,15 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
 
   public sendLink() {
     this.mailService
-      .sendLink({ email: this.email, link: this.link })
+      .sendLink({
+        email: this.email,
+        link: this.link,
+      })
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.matDialog.closeAll();
         this.snackBarService.openSnackBar('Email was successfully sent!');
       });
     this.accessForUnregisteredUsers.addNewAccess(this.email, this.videoId);
-    console.log(
-      'new access in workspace: ' + this.email + ' ' + this.videoId.toString()
-    );
   }
 }

@@ -11,7 +11,10 @@
     class="reactions-container"
   ></app-video-reactions>
   <h1 *ngIf="this.checked"><strong>Screenshot 11 February 2022</strong></h1>
-  <div *ngIf="!this.checked">
-    <p>You have no access for watching this video</p>
+  <div *ngIf="!this.checked" class="no-access-container">
+    <img class="no-access-image" src="../../../../../assets/no-access.png" />
+    <p class="no-access-text">
+      <strong>Such video doesn't exist or you have no access to it</strong>
+    </p>
   </div>
 </div>

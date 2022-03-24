@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos.Video;
+using System.Threading.Tasks;
+using Recodo.API.Extensions;
 
 namespace Recodo.API.Controllers
 {
@@ -11,17 +13,20 @@ namespace Recodo.API.Controllers
     public class MailController : ControllerBase
     {
         private readonly MailService _mailService;
+        private readonly UserService _userService;
 
-        public MailController(MailService mailService)
+        public MailController(MailService mailService, UserService userService)
         {
             _mailService = mailService;
+            _userService = userService;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult SharePost(VideoShareDTO sharePostInfo)
+        public async Task<IActionResult> SharePost(VideoShareDTO sharePostInfo)
         {
-            _mailService.SendEmail(sharePostInfo.Link, sharePostInfo.Email);
+            var user = await _userService.GetUserById(this.GetUserIdFromToken());
+            _mailService.SendEmail(sharePostInfo.Link, sharePostInfo.Email, user.WorkspaceName);
             return Ok();
         }
     }

@@ -49,10 +49,6 @@ export class SharedVideoPageComponent {
     }
     localStorage.removeItem('isPrivate');
     if (this.userId) {
-      console.log(
-        'het accessed user: ' +
-          this.accessForLinkService.GetAccessedUser(this.videoId, this.userId)
-      );
       if (
         this.accessForLinkService.GetAccessedUser(this.videoId, this.userId) ||
         this.isPrivate

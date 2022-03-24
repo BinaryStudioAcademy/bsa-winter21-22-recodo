@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TokenExistsGuard } from './guards/token-exists.guard';
 import { TokenDoesnotExistGuard } from './guards/token-doesnot-exist.guard';
-import { SharedVideoGuard } from './guards/shared-video.guard';
-import { SharedVideoPageComponent } from './modules/workspace/video/shared-video/shared-video-page.component';
+import { BaseComponent } from './modules/workspace/base/base.component';
 
 const routes: Routes = [
   {
@@ -22,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'shared/:videoId',
-    component: SharedVideoPageComponent,
+    component: BaseComponent,
     canActivate: [TokenExistsGuard],
   },
 ];
