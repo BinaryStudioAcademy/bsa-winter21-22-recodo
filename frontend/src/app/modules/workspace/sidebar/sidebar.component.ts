@@ -3,7 +3,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TeamDto } from 'src/app/models/user/team-dto';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { TeamInviteComponent } from '../team-invite/team-invite.component';
-import { environment } from '../../../../environments/environment';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({

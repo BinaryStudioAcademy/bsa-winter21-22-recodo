@@ -48,12 +48,6 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  getWithUrl(id: string | number, subUrl: string): Observable<HttpResponse<T>> {
-    return this.httpClient
-      .get<T>(`${this.APIUrl}/${subUrl}/${id}`, { observe: 'response' })
-      .pipe(catchError(this.handleError));
-  }
-
   add<TRequest, TResponse>(
     resource: TRequest
   ): Observable<HttpResponse<TResponse>> {

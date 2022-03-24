@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,9 +9,9 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './team-invite.component.html',
   styleUrls: ['./team-invite.component.scss'],
 })
-export class TeamInviteComponent {
+export class TeamInviteComponent implements OnInit {
   public inviteForm: FormGroup = {} as FormGroup;
-  public email: string = '222';
+  public email: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<TeamInviteComponent>,
