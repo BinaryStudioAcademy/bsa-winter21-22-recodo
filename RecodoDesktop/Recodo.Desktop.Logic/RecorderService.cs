@@ -22,6 +22,7 @@ namespace Recodo.Desktop.Logic
         }
         private RecorderConfiguration _options;
         private readonly Token _token;
+        private string filePath;
         public void Configure(RecorderConfiguration options)
         {
             _options = options;
@@ -66,7 +67,8 @@ namespace Recodo.Desktop.Logic
             recorder.OnRecordingFailed += Rec_OnRecordingFailed;
             recorder.OnRecordingComplete += Rec_OnRecordingComplete;
             recorder.OnStatusChanged += Rec_OnStatusChanged;
-            recorder.Record(Path.ChangeExtension(Path.GetTempFileName(), ".mp4"));
+            filePath = Path.Combine(Path.GetTempPath(), Path.ChangeExtension(Path.GetRandomFileName(), ".mp4"));
+            recorder.Record(filePath);
 
             StartRec?.Invoke();
         }
@@ -84,10 +86,25 @@ namespace Recodo.Desktop.Logic
             }
         }
 
-        public void StopRecording()
+        public async void StopRecording()
         {
             recorder?.Stop();
+            await UploadVideo(filePath);
         }
+
+        public void RestartRecording()
+        {
+            recorder?.Stop();
+            recorder?.Dispose();
+            File.Delete(filePath);
+            StartRecording();
+        }
+
+        public void CancelRecording()
+        {
+            recorder?.Stop();
+            File.Delete(filePath);
+        } 
 
         public List<string> GetInputAudioDevices()
         {
@@ -133,7 +150,24 @@ namespace Recodo.Desktop.Logic
 
         private async void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
         {
-            string filePath = e.FilePath;
+         
+        }
+
+        private static void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
+        {
+            string error = e.Error;
+        }
+
+        private void OpenBrowser(string url)
+        {
+            var psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = url;
+            Process.Start(psi);
+        }
+
+        private async Task UploadVideo(string path)
+        {
             string blobApi = ConfigurationManager.AppSettings["blobApi"];
             string mainApi = ConfigurationManager.AppSettings["mainApi"];
 
@@ -155,7 +189,7 @@ namespace Recodo.Desktop.Logic
 
                     var responseBlobApi = await client.PostAsync(blobApi + $"Blob", inputData);
                     var id = await responseBlobApi.Content.ReadAsStringAsync();
-                    if(id is not null)
+                    if (id is not null)
                     {
                         //when video is saved on the Blob storage
                     }
@@ -166,19 +200,6 @@ namespace Recodo.Desktop.Logic
                 }
             }
             ///
-        }
-
-        private static void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
-        {
-            string error = e.Error;
-        }
-
-        private void OpenBrowser(string url)
-        {
-            var psi = new ProcessStartInfo();
-            psi.UseShellExecute = true;
-            psi.FileName = url;
-            Process.Start(psi);
         }
     }
 }
