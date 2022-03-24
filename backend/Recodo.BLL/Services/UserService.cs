@@ -19,13 +19,17 @@ namespace Recodo.BLL.Services
 {
     public class UserService : BaseService
     {
-        private readonly ImageService _imageService;
+        private readonly AuthService _authService;
         private readonly IConfiguration _configuration;
+        private readonly ImageService _imageService;
 
-        public UserService(ImageService imageService, RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
+        public UserService(RecodoDbContext context, IMapper mapper, AuthService authService,
+            IConfiguration configuration, ImageService imageService)
+            : base(context, mapper)
         {
-            _imageService = imageService;
+            _authService = authService;
             _configuration = configuration;
+            _imageService = imageService;
         }
 
         public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)
@@ -139,6 +143,40 @@ namespace Recodo.BLL.Services
             {
                 return _mapper.Map<UserDTO>(userEntity);
             }
+        }
+
+        public async Task ResetPassword(string email)
+        {
+            var existUser = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (existUser == null)
+            {
+                throw new UserNotFoundException(email);
+            }
+
+            var token = await _authService.GenerateAccessToken(existUser.Id, existUser.Email, existUser.Email);
+            string accessToken = token.AccessToken;
+            string clientHost = _configuration["ClientHost"];
+            string url = $"{clientHost}/reset-finish?token={accessToken}";
+
+            await EmailService.SendEmailAsync(email, "New Password", url, _configuration);
+        }
+
+        public async Task<LoginUserDTO> ResetPasswordFinish(string email, string newPass)
+        {
+            var existUser = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (existUser == null)
+            {
+                throw new UserNotFoundException(email);
+            }
+
+            var salt = SecurityHelper.GetRandomBytes();
+            existUser.Salt = Convert.ToBase64String(salt);
+            existUser.Password = SecurityHelper.HashPassword(newPass, salt);
+
+            _context.Users.Update(existUser);
+            await _context.SaveChangesAsync();
+
+            return new LoginUserDTO { Email = existUser.Email, Password = newPass };
         }
     }
 }
