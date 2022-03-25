@@ -26,12 +26,6 @@ namespace Recodo.API.Controllers
             _reactionService = reactionService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<VideoDTO>>> GetVideos()
-        {
-            return Ok(await _videoService.GetVideos());
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<VideoDTO>> GetVideoById(int id)
         {

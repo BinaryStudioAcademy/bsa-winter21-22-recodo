@@ -29,6 +29,7 @@ namespace Recodo.API.Extensions
             services.AddScoped<MailService>();
             services.AddScoped<AccessToVideoService>();
             services.AddScoped<FileService>();
+            services.AddScoped<EmailService>();
         }
 
         public static void RegisterAutoMapper(this IServiceCollection services)

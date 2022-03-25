@@ -19,7 +19,7 @@ namespace Recodo.BLL.Services
     {
         private readonly CommentService _commentService;
         public VideoService(RecodoDbContext context, IMapper mapper, CommentService commentService) : base(context, mapper) {
-            this._commentService = commentService;
+            _commentService = commentService;
          }
 
         public async Task<List<VideoDTO>> GetVideosByFolderId(int folderId)
@@ -88,7 +88,7 @@ namespace Recodo.BLL.Services
                 .Include(video => video.Reactions)
                 .Where(v => v.Id == id)
                 .FirstOrDefaultAsync();
-            var videoComments = _commentService.GetAllVideosComments(foundVideo.Id);
+            var videoComments = _commentService.GetAllVideosComments(videoEntity.Id);
             videoEntity.Comments = _mapper.Map<List<Comment>>(videoComments);
             return _mapper.Map<VideoDTO>(videoEntity);
         }

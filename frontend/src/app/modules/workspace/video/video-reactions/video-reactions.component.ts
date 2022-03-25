@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
-import { VideoDTO } from 'src/app/models/video/video-dto';
+import { VideoDto } from 'src/app/models/video/video-dto';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   styleUrls: ['./video-reactions.component.scss'],
 })
 export class VideoReactionsComponent {
-  @Input() public video: VideoDTO;
+  @Input() public video: VideoDto;
   @Output() newReaction = new EventEmitter<boolean>();
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();

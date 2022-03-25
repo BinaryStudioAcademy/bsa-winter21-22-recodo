@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/user/user';
-import { VideoDTO } from 'src/app/models/video/video-dto';
+import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
@@ -21,7 +21,7 @@ export class VideoPageComponent {
   public userWorkspaceName = {} as string;
   public viewsNumber: number;
   public videoId: number;
-  public currentVideo: VideoDTO;
+  public currentVideo: VideoDto;
   public currentUser: User;
   public newComment = {} as NewComment;
   public link: string;

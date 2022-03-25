@@ -1,4 +1,5 @@
 using AutoMapper;
+using Recodo.Common.Dtos;
 using Recodo.Common.Dtos.User;
 using Recodo.Common.Dtos.Video;
 using Recodo.DAL.Entities;

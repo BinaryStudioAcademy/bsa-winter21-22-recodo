@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { VideoDTO } from '../models/video/video-dto';
+import { VideoDto } from '../models/video/video-dto';
 import { ResourceService } from './resource.service';
 import { map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class VideoService extends ResourceService<VideoDTO> {
+export class VideoService extends ResourceService<VideoDto> {
   getResourceUrl(): string {
     return '/video';
   }
@@ -20,17 +20,17 @@ export class VideoService extends ResourceService<VideoDTO> {
   }
 
   public getAllVideosByFolderId(id: number) {
-    return this.getFullRequest<VideoDTO>(`video/${id}`).pipe(
+    return this.getFullRequest<VideoDto>(`video/${id}`).pipe(
       map((resp) => {
-        return resp.body as unknown as VideoDTO[];
+        return resp.body as unknown as VideoDto[];
       })
     );
   }
 
   public getAllVideosWithoutFolderByUserId(id: number) {
-    return this.getFullRequest<VideoDTO>(`video/user/${id}`).pipe(
+    return this.getFullRequest<VideoDto>(`video/user/${id}`).pipe(
       map((resp) => {
-        return resp.body as unknown as VideoDTO[];
+        return resp.body as unknown as VideoDto[];
       })
     );
   }
@@ -43,7 +43,7 @@ export class VideoService extends ResourceService<VideoDTO> {
     return this.delete(id);
   }
 
-  public updateVideo(video: VideoDTO) {
+  public updateVideo(video: VideoDto) {
     this.update(video);
   }
 }
