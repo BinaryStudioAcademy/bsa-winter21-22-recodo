@@ -183,11 +183,11 @@ namespace Recodo.Desktop.Logic
                     // Open browser with video id, but video is just starting to be saved on the blob storage
                     OpenBrowser(ConfigurationManager.AppSettings["recodoUrl"] + $"video/{videoId}");
 
-                    var filestream = File.OpenRead(filePath);
+                    var filestream = File.OpenRead(path);
                     var inputData = new StreamContent(filestream);
                     client.DefaultRequestHeaders.Add("videoId", videoId);
 
-                    var responseBlobApi = await client.PostAsync(blobApi + $"Blob", inputData);
+                    var responseBlobApi = await client.PostAsync(blobApi, inputData);
                     var id = await responseBlobApi.Content.ReadAsStringAsync();
                     if (id is not null)
                     {
