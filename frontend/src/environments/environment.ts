@@ -6,8 +6,7 @@ export const environment = {
   apiUrl: 'https://localhost:5001/api',
   blobApiUrl: 'https://localhost:44362/api',
   production: false,
-  googleKey:
-    '54145526113-h05a76lsjgu9t08a5quvq283qih1vagj.apps.googleusercontent.com',
+  googleKey: '',
   clientUrl: 'http://localhost:4200',
 };
 

@@ -12,11 +12,13 @@ namespace Recodo.BLL.Services
     {
         private readonly RecodoDbContext _context;
         private readonly AuthService _authService;
+        private readonly EmailService _emailService;
         private readonly IConfiguration _configuration;
 
-        public TeamService(RecodoDbContext context, IConfiguration configuration, AuthService authService)
+        public TeamService(RecodoDbContext context, IConfiguration configuration, AuthService authService, EmailService emailService)
         {
             _authService = authService;
+            _emailService = emailService;
             _configuration = configuration;
             _context = context;
         }
@@ -52,10 +54,10 @@ namespace Recodo.BLL.Services
             }
 
             var token = await _authService.GenerateAccessToken(userId, existUser.Email, existUser.Email);
-            string clientHost = _configuration["ClientUrl"];
+            string clientHost = _configuration["ClientHost"];
             string url = $"{clientHost}/team-invite/" + token.AccessToken;
 
-            await EmailService.SendEmailAsync(email, "Team Invite", url, _configuration);
+            await _emailService.SendEmailAsync(email, "Team Invite", url);
 
             return url;
         }

@@ -21,18 +21,21 @@ namespace Recodo.BLL.Services
     public class UserService : BaseService
     {
         private readonly TeamService _teamService;
+        private readonly EmailService _emailService;
         private readonly ImageService _imageService;
         private readonly IConfiguration _configuration;
         private readonly JwtFactory _jwtFactory;
         private readonly AuthService _authService;
 
         public UserService(RecodoDbContext context, IMapper mapper, AuthService authService,
-            IConfiguration configuration, ImageService imageService, JwtFactory jwtFactory, TeamService teamService)
+            IConfiguration configuration, ImageService imageService, JwtFactory jwtFactory,
+            TeamService teamService, EmailService emailService)
             : base(context, mapper)
         {
             _authService = authService;
             _configuration = configuration;
             _teamService = teamService;
+            _emailService = emailService;
             _jwtFactory = jwtFactory;
             _imageService = imageService;
         }
@@ -116,7 +119,7 @@ namespace Recodo.BLL.Services
             userEntity.Password = SecurityHelper.HashPassword(newPassword, salt);
 
             string message = "Temp password: " + newPassword;
-            await EmailService.SendEmailAsync(userEntity.Email, "New Password", message, _configuration);
+            await _emailService.SendEmailAsync(userEntity.Email, "New Password", message);
         }
 
         public async Task DeleteUser(int userId)
@@ -197,7 +200,7 @@ namespace Recodo.BLL.Services
             string clientHost = _configuration["ClientHost"];
             string url = $"{clientHost}/reset-finish?token={accessToken}";
 
-            await EmailService.SendEmailAsync(email, "New Password", url, _configuration);
+            await _emailService.SendEmailAsync(email, "New Password", url);
         }
 
         public async Task<LoginUserDTO> ResetPasswordFinish(string email, string newPass)

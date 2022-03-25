@@ -9,6 +9,7 @@ using Recodo.Common.Auth;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Thread_.NET.BLL.Services;
 
 namespace Recodo.API.Extensions
 {
@@ -26,6 +27,7 @@ namespace Recodo.API.Extensions
             services.AddScoped<VideoService>();
             services.AddScoped<TeamService>();
             services.AddScoped<FileService>();
+            services.AddScoped<EmailService>();
         }
 
         public static void RegisterAutoMapper(this IServiceCollection services)

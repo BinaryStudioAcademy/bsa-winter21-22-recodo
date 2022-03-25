@@ -23,14 +23,14 @@ namespace Recodo.API.Controllers
             _teamService = teamService;
         }
 
-        [HttpPost("ResetPassword/{email}")]
+        [HttpPost("Reset-Password/{email}")]
         public async Task<IActionResult> ResetPassword(string email)
         {
             await _userService.ResetPassword(email);
             return NoContent();
         }
 
-        [HttpPost("ResetPasswordFinish/{email}/{newPass}")]
+        [HttpPost("Reset-Password-Finish/{email}/{newPass}")]
         public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
         {
             var loginDto = await _userService.ResetPasswordFinish(email, newPass);

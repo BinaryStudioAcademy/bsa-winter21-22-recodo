@@ -1,31 +1,30 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 using System.Threading.Tasks;
 
 namespace Thread_.NET.BLL.Services
 {
     public class EmailService
     {
-        public static async Task SendEmailAsync(string toEmail, string subject, string message, IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+
+        public EmailService(IConfiguration configuration)
         {
-            try
-            {
-                string apiKey = configuration["SendGridKey"];
-                string fromEmail = configuration["SendGridFromEmail"];
-                var client = new SendGridClient(apiKey);
+            _configuration = configuration;
+        }
 
-                var from = new EmailAddress(fromEmail, "Admin Recodo");
-                var to = new EmailAddress(toEmail, toEmail);
+        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        {
+            string apiKey = _configuration["SendGridKey"];
+            string fromEmail = _configuration["SendGridFromEmail"];
+            var client = new SendGridClient(apiKey);
 
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
-                await client.SendEmailAsync(msg);
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("SendEmailAsync: " + message);
-            }
+            var from = new EmailAddress(fromEmail, "Admin Recodo");
+            var to = new EmailAddress(toEmail, toEmail);
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
+            await client.SendEmailAsync(msg);
         }
     }
 }

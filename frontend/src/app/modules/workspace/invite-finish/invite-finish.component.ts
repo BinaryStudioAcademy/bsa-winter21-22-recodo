@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invite-finish',
@@ -16,7 +17,8 @@ export class InviteFinishComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     protected httpClient: HttpClient,
-    protected snackBarService: SnackBarService
+    protected snackBarService: SnackBarService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class InviteFinishComponent implements OnInit {
         this.snackBarService.openSnackBar('Successfully added to team');
       },
       error: () => {
+        this.router.navigate(['/']);
         this.snackBarService.openSnackBar('Unable to add current user to team');
       },
     });
