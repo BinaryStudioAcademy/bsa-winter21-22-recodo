@@ -90,5 +90,23 @@ namespace Recodo.Desktop.Main
                 Timer?.Start();
             }
         }
+
+        private void ButtonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Timer?.Stop();
+            time = TimeSpan.FromSeconds(0);
+            TimeLabel.Content = TimeSpan.FromSeconds(0).ToString(@"m\:ss");
+            _recorderService.RestartRecording();
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            _recorderService.CancelRecording();
+            if (Timer is not null)
+            {
+                Timer.Stop();
+                this.Close();
+            }
+        }
     }
 }
