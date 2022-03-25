@@ -86,7 +86,7 @@ namespace Recodo.Desktop.Logic
             }
         }
 
-        public async void StopRecording()
+        public async Task StopRecording()
         {
             recorder?.Stop();
             await UploadVideo(filePath);
