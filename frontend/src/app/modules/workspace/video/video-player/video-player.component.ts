@@ -67,7 +67,7 @@ export class VideoPlayerComponent {
     const params = new HttpParams()
     .set('id', this.videoId);
 
-    return this.videoUrlService.getFullRequest<FileDto>(`${this.blobApiUrl}/Blob/GetUrl`, params).pipe(
+    return this.videoUrlService.getFullRequest<FileDto>(`${this.blobApiUrl}/blob/GetUrl`, params).pipe(
       map((resp) => {
         return resp;
       })
