@@ -4,14 +4,13 @@ import { Router } from '@angular/router';
 import { ReactionType } from '../models/common/reaction-type';
 import { NewVideoReactionDTO } from '../models/reaction/new-video-reaction';
 import { VideoReactionDTO } from '../models/reaction/video-reaction-dto';
-import { User } from '../models/user/user';
-import { VideoDTO } from '../models/video/video-dto';
+import { VideoDto } from '../models/video/video-dto';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VideoReactionService extends ResourceService<VideoDTO> {
+export class VideoReactionService extends ResourceService<VideoDto> {
   constructor(override httpClient: HttpClient, private router: Router) {
     super(httpClient);
   }
@@ -33,7 +32,7 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
   }
 
   public reactVideo(
-    currentVideo: VideoDTO,
+    currentVideo: VideoDto,
     reactionType: ReactionType,
     userId: number
   ) {
@@ -78,7 +77,7 @@ export class VideoReactionService extends ResourceService<VideoDTO> {
     return newReaction;
   }
 
-  public deleteReaction(userId: number, currentVideo: VideoDTO) {
+  public deleteReaction(userId: number, currentVideo: VideoDto) {
     const foundReaction = currentVideo.reactions.find(
       (reaction) =>
         reaction.userId === userId && reaction.videoId === currentVideo.id

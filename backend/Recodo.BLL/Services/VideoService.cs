@@ -13,7 +13,10 @@ namespace Recodo.BLL.Services
 {
     public sealed class VideoService : BaseService
     {
-        public VideoService(RecodoDbContext context, IMapper mapper) : base(context, mapper) { }
+        private readonly CommentService _commentService;
+        public VideoService(RecodoDbContext context, IMapper mapper, CommentService commentService) : base(context, mapper) {
+            _commentService = commentService;
+         }
 
         public async Task<ICollection<VideoDTO>> GetVideos()
         {
@@ -23,8 +26,13 @@ namespace Recodo.BLL.Services
 
         public async Task<VideoDTO> GetVideoById(int id)
         {
-            var foundVideo = await _context.Videos.FindAsync(id);
-            return _mapper.Map<VideoDTO>(foundVideo);
+            var videoEntity = await _context.Videos.AsNoTracking()
+                .Include(video => video.Reactions)
+                .Where(v => v.Id == id)
+                .FirstOrDefaultAsync();
+            var videoComments = _commentService.GetAllVideosComments(videoEntity.Id);
+            videoEntity.Comments = _mapper.Map<List<Comment>>(videoComments);
+            return _mapper.Map<VideoDTO>(videoEntity);
         }
 
         public async Task<VideoDTO> AddVideo (NewVideoDTO newVideo)

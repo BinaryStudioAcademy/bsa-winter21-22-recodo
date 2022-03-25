@@ -1,7 +1,7 @@
 import { Comment } from '../comment/comment';
 import { VideoReactionDTO } from '../reaction/video-reaction-dto';
 
-export interface VideoDTO {
+export interface VideoDto {
   id: number;
   name: string;
   description: string;

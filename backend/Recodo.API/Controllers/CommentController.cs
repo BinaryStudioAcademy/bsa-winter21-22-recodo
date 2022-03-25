@@ -31,14 +31,14 @@ namespace Recodo.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateComments([FromBody] CommentDTO comment)
+        public async Task<IActionResult> UpdateComments(CommentDTO comment)
         {
             await _commentService.UpdateComment(comment);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<CommentDTO>> CreateComment([FromBody] NewCommentDTO comment)
+        public async Task<ActionResult<CommentDTO>> CreateComment(NewCommentDTO comment)
         {
             return Ok(await _commentService.CreateComment(comment));
         }
