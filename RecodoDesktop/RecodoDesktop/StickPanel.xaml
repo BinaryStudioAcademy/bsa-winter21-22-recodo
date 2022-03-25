@@ -73,7 +73,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonRefresh" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonRefresh" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="ButtonRefresh_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -141,7 +141,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="ButtonDelete" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Button Name="ButtonDelete" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="ButtonDelete_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
