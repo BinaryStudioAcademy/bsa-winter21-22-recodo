@@ -16,6 +16,8 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { UpdateVideoDto } from 'src/app/models/video/update-video-dto';
+import { UpdateVideoDialogComponent } from '../video/update-video-dialog/update-video-dialog.component';
 
 @Component({
   selector: 'app-content',
@@ -108,6 +110,12 @@ export class PersonalComponent implements OnInit {
     });
   }
 
+  updateVideo(videoDto: UpdateVideoDto) {
+    this.videoService.updateVideo(videoDto).subscribe(() => {
+      this.getVideos(this.currentUser.id);
+    });
+  }
+
   showNewFolderForm(folder?: FolderDto) {
     const dialogConfig = new MatDialogConfig;
 
@@ -138,6 +146,25 @@ export class PersonalComponent implements OnInit {
           }
           this.updateFolder(folderUpdated);
         }
+      }
+    );
+  }
+
+  showVideoUpdateDialog(video: VideoDto) {
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = video.name;
+
+    const dialogRef = this.dialog.open(UpdateVideoDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      videoName => {
+        let videoUpdated : UpdateVideoDto = {
+          id: video.id,
+          name: videoName,
+        }
+        this.updateVideo(videoUpdated);
       }
     );
   }

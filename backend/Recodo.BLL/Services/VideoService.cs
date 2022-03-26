@@ -81,5 +81,20 @@ namespace Recodo.BLL.Services
             _context.Videos.Remove(videoEntity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task Update(UpdateVideoDTO videoDTO)
+        {
+            var videoEntity = await _context.Videos.FirstOrDefaultAsync(v => v.Id == videoDTO.Id);
+
+            if(videoEntity is null)
+            {
+                throw new NotFoundException(nameof(Video), videoDTO.Id);
+            }
+
+            videoEntity.Name = videoDTO.Name;
+
+            _context.Videos.Update(videoEntity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

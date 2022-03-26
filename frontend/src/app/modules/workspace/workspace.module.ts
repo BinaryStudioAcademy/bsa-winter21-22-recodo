@@ -28,6 +28,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DialogComponent } from './dialog/dialog.component';
     SettingsComponent,
     FolderComponent,
     DialogComponent,
+    UpdateVideoDialogComponent,
   ],
   imports: [
     NgxDropzoneModule,

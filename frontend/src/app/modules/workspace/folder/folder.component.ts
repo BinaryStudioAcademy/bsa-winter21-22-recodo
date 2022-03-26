@@ -1,14 +1,17 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
+import { UpdateVideoDto } from 'src/app/models/video/update-video-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { TimeService } from 'src/app/services/time.service';
 import { VideoService } from 'src/app/services/video.service';
 import { environment } from 'src/environments/environment';
+import { UpdateVideoDialogComponent } from '../video/update-video-dialog/update-video-dialog.component';
 
 @Component({
   selector: 'app-folder',
@@ -29,7 +32,8 @@ export class FolderComponent {
     private route: ActivatedRoute,
     private videoService: VideoService,
     private timeService: TimeService,
-    private snackBarService: SnackBarService) {
+    private snackBarService: SnackBarService,
+    public dialog: MatDialog,) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id => {
         this.getVideos(id);
@@ -67,6 +71,31 @@ export class FolderComponent {
 
   private getVideos(id: number) {
     return this.videoService.getAllVideosByFolderId(id).subscribe(res => this.videos = res)
+  }
+
+  updateVideo(videoDto: UpdateVideoDto) {
+    this.videoService.updateVideo(videoDto).subscribe(() => {
+      this.getVideos(this.folderId);
+    });
+  }
+
+  showVideoUpdateDialog(video: VideoDto) {
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = video.name;
+
+    const dialogRef = this.dialog.open(UpdateVideoDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      videoName => {
+        let videoUpdated : UpdateVideoDto = {
+          id: video.id,
+          name: videoName,
+        }
+        this.updateVideo(videoUpdated);
+      }
+    );
   }
 
 }

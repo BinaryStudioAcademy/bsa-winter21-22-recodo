@@ -31,6 +31,7 @@ namespace Recodo.API.Controllers
         {
             return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
         }
+
         [HttpGet("check/{id:int}")]
         public async Task<ActionResult> GetFileState(int id)
         {
@@ -44,6 +45,13 @@ namespace Recodo.API.Controllers
             var token = value.ToString();
 
             await _videoService.Delete(id, token);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] UpdateVideoDTO videoDTO)
+        {
+            await _videoService.Update(videoDTO);
             return NoContent();
         }
     }

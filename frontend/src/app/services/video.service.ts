@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { UpdateVideoDto } from '../models/video/update-video-dto';
 import { VideoDto } from '../models/video/video-dto';
 import { RequestService } from './request.service';
 import { ResourceService } from './resource.service';
@@ -34,6 +35,14 @@ export class VideoService extends ResourceService<VideoDto> {
       map((response) => {
         return response;
       }),
+    );
+  }
+
+  public updateVideo(resource: UpdateVideoDto) {
+    return this.update<UpdateVideoDto, UpdateVideoDto>(resource).pipe(
+      map((response) => {
+        return response;
+      })
     );
   }
 
