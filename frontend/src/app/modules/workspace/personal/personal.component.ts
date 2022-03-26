@@ -166,7 +166,7 @@ export class PersonalComponent implements OnInit {
   public deleteVideo(id: number) {
     if(confirm('Are you sure you want to delete the video ?'))
     {
-      const url = environment.blobApiUrl+'/Blob';
+      const url = environment.blobApiUrl+'/blob';
       const params = new HttpParams()
       .set('id', id);
 
