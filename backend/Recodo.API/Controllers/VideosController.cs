@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos;
 using System;
@@ -39,9 +40,11 @@ namespace Recodo.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _videoService.Delete(id);
+            Request.Headers.TryGetValue(HeaderNames.Authorization, out Microsoft.Extensions.Primitives.StringValues value);
+            var token = value.ToString();
+
+            await _videoService.Delete(id, token);
             return NoContent();
         }
-
     }
 }

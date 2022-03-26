@@ -10,6 +10,7 @@ using Recodo.Common.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Recodo.BLL.Exceptions;
 using Recodo.DAL.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Recodo.BLL.Services
 {
@@ -55,13 +56,26 @@ namespace Recodo.BLL.Services
             return videoEntity.IsSaving;
         }
 
-        public async Task Delete(int videoId)
+        public async Task Delete(int videoId, string token)
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+
+            if (authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
             var videoEntity = await _context.Videos.FirstOrDefaultAsync(v => v.Id == videoId);
 
             if(videoEntity is null)
             {
                 throw new NotFoundException(nameof(Video), videoId);
+            }
+            if (videoEntity.AuthorId != Convert.ToInt32(authorId))
+            {
+                throw new Exception("No access to file");
             }
 
             _context.Videos.Remove(videoEntity);

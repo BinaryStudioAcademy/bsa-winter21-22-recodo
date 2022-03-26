@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Subscription, timer } from 'rxjs';
 import { FileDto } from 'src/app/models/file/file-dto';
-import { VideoUrlService } from 'src/app/services/video-url.service';
+import { RequestService } from 'src/app/services/request.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -24,7 +24,7 @@ export class VideoPlayerComponent {
   private requestsCount: number = 0;
   constructor(
     private route: ActivatedRoute,
-    private videoUrlService: VideoUrlService,
+    private videoUrlService: RequestService,
     protected httpClient: HttpClient) {
     route.params.pipe(map(p => p['id']))
       .subscribe(id => {

@@ -28,13 +28,29 @@ namespace Recodo.API.BLL.Services
 			return await _requestService.SendFinishRequest(Convert.ToInt32(id));
 		}
 
-		public async Task DeleteAsync(int id)
+		public async Task<bool> DeleteAsync(int id, string token)
 		{
-			var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+			if (token is null)
+			{
+				return false;
+			}
 
-			var blob = blobContainer.GetBlockBlobReference(id.ToString());
+			var deleteResult = await _requestService.SendDeleteRequest(id, token.Replace("Bearer ", ""));
 
-			await blob.DeleteIfExistsAsync();
+			if (deleteResult)
+			{
+				var blobContainer = await _azureBlobConnectionFactory.GetBlobContainer();
+
+				var blob = blobContainer.GetBlockBlobReference(id.ToString() + ".mp4");
+
+				var blobResult = await blob.DeleteIfExistsAsync();
+				
+				return blobResult;
+			}
+            else
+            {
+				return false;
+            }
 		}
 
         public async Task<(Stream response, int? errorCode)> DownloadAsync(int id, string token)

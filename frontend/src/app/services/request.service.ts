@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class VideoUrlService {
+export class RequestService {
 
   constructor(protected httpClient: HttpClient) { }
 
@@ -14,6 +14,14 @@ export class VideoUrlService {
     httpParams?: HttpParams
   ): Observable<HttpResponse<TRequest>> {
     return this.httpClient.get<TRequest>(`${url}`, {
+      observe: 'response',
+      params: httpParams,
+    });
+  }
+
+  public delete(url: string,
+    httpParams?: HttpParams) {
+    return this.httpClient.delete(`${url}`, {
       observe: 'response',
       params: httpParams,
     });
