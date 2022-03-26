@@ -75,7 +75,7 @@ export class VideoPlayerComponent {
   }
 
   private checkVideoState() {
-    return this.videoUrlService.getFullRequest<boolean>(`${this.mainApi}/Videos/check/${this.videoId}`).pipe(
+    return this.videoUrlService.getFullRequest<boolean>(`${this.mainApi}/video/check/${this.videoId}`).pipe(
       map((response) => {
         return response.body;
       })
