@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar src="{{ comment.author.avatarLink }}" alt="Avatar" />
-    <mat-card-title>{{ comment.author.workspaceName }} </mat-card-title>
-    <div>{{ comment.createdAt | date: "d/M/yy, h:mm a" }}</div>
+    <img mat-card-avatar src="{{ commentAuthor.avatarLink }}" alt="Avatar" /> 
+    <mat-card-title>{{ commentAuthor.workspaceName }} </mat-card-title> 
+    <div>{{ comment.createdAt | date: 'd/M/yy, h:mm a' }}</div>
   </mat-card-header>
   <mat-card-content *ngIf="!isEditingMode">
     <p>{{ comment.body }}</p>
@@ -28,7 +28,6 @@
     <button
       mat-icon-button
       color="accent"
-      *ngIf="currentUser?.id === comment.author.id"
       (click)="toggleIsEditingMode()"
     >
       <mat-icon aria-label="Edit">edit</mat-icon>
@@ -36,7 +35,6 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="currentUser?.id === comment.author.id"
       (click)="onDeleteComment()"
     >
       <mat-icon aria-label="Delete">delete</mat-icon>

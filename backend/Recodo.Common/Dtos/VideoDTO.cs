@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recodo.Common.Dtos.Comment;
+using System;
 using System.Collections.Generic;
 
 
@@ -14,6 +15,7 @@ namespace Recodo.Common.Dtos
         public DateTime CreatedAt { get; set; }
         public int FolderId { get; set; }
         public bool IsPrivate { get; set; }
+        public List<CommentDTO> Comments { get; set; }
         public ICollection<VideoReactionDTO> Reactions { get; set; }
         public List<string> SharedEmails { get; set; }
     }

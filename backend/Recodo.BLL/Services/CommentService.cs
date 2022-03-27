@@ -12,7 +12,10 @@ namespace Recodo.BLL.Services
 {
     public sealed class CommentService : BaseService
     {
-        public CommentService(RecodoDbContext context, IMapper mapper) : base(context, mapper) { }
+        private readonly UserService _userService;
+        public CommentService(RecodoDbContext context, IMapper mapper, UserService userService) : base(context, mapper) {
+            _userService = userService;
+        }
 
         public async Task<CommentDTO> CreateComment(NewCommentDTO newComment)
         {

@@ -29,6 +29,7 @@ export class BaseComponent {
       }
     });
     const isSharedCheck = localStorage.getItem('isShared');
+    localStorage.removeItem('isShared');
     if (isSharedCheck == 'true') {
       this.isShared = true;
     } else {

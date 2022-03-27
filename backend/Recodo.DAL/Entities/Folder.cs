@@ -5,7 +5,7 @@ namespace Recodo.DAL.Entities
     public class Folder
     {
         public int Id { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public string Name { get; set; }
         public int AuthorId { get; set; }
         public User Author { get; set; }

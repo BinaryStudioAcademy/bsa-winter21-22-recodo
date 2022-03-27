@@ -15,6 +15,7 @@
       [comment]="_comment"
       [currentUser]="currentUser"
       (deletedComment)="deleteComment($event)"
+      (editedComment)="sendComment()"
     ></app-video-comments>
   </div>
   <app-video-reactions

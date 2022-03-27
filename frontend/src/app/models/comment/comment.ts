@@ -1,11 +1,10 @@
-import { User } from '../user/user';
 import { CommentReactionDTO } from '../reaction/comment-reaction';
 
 export interface Comment {
   id: number;
   createdAt: Date;
   videoID: number;
-  author: User;
+  authorId: number;
   body: string;
   reactions: CommentReactionDTO[];
 }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
@@ -73,6 +73,12 @@ namespace Recodo.API.Controllers
             var user = await _userService.GetUserById(this.GetUserIdFromToken());
 
             return Ok(user);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            return Ok(await _userService.GetUserById(id));
         }
     }
 }

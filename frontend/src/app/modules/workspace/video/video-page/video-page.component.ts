@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/models/user/user';
+import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
@@ -22,7 +22,7 @@ export class VideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDto;
-  public currentUser: User;
+  public currentUser: UserDto;
   public newComment = {} as NewComment;
   public link: string;
   public checked: boolean = false;
@@ -48,13 +48,8 @@ export class VideoPageComponent {
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
-        localStorage.setItem('workspaceName', user.workspaceName);
+        this.userWorkspaceName = user.workspaceName;
       });
-    const workspaceName = localStorage.getItem('workspaceName');
-    if (workspaceName) {
-      this.userWorkspaceName = workspaceName;
-    }
-    localStorage.removeItem('workspaceName');
   }
 
   public deleteComment(commentId: number) {
