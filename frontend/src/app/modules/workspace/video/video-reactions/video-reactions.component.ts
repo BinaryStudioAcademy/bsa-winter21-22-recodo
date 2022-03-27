@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
@@ -10,7 +16,7 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   templateUrl: './video-reactions.component.html',
   styleUrls: ['./video-reactions.component.scss'],
 })
-export class VideoReactionsComponent {
+export class VideoReactionsComponent implements OnChanges {
   @Input() public video: VideoDto;
   @Output() newReaction = new EventEmitter<boolean>();
   public allReactions: VideoReactionDTO[];
@@ -18,10 +24,16 @@ export class VideoReactionsComponent {
 
   constructor(private reactionsService: VideoReactionService) {
     this.allReactions = this.video?.reactions;
-    this.updateReactions();
+  }
+
+  public ngOnChanges() {
+    this.allReactions = this.video?.reactions;
   }
 
   public addReaction(reactionNumber: number) {
+    if (this.video == null) {
+      return;
+    }
     switch (reactionNumber) {
       case 1:
         this.reactionsService.reactVideo(
@@ -29,7 +41,7 @@ export class VideoReactionsComponent {
           ReactionType.Like,
           this.video.authorId
         );
-        window.location.reload();
+        this.newReaction.emit(true);
         break;
       case 2:
         this.reactionsService.reactVideo(
@@ -37,7 +49,7 @@ export class VideoReactionsComponent {
           ReactionType.Dislike,
           this.video.authorId
         );
-        window.location.reload();
+        this.newReaction.emit(true);
         break;
       case 3:
         this.reactionsService.reactVideo(
@@ -45,7 +57,7 @@ export class VideoReactionsComponent {
           ReactionType.Love,
           this.video.authorId
         );
-        window.location.reload();
+        this.newReaction.emit(true);
         break;
       case 4:
         this.reactionsService.reactVideo(
@@ -53,7 +65,7 @@ export class VideoReactionsComponent {
           ReactionType.Fun,
           this.video.authorId
         );
-        window.location.reload();
+        this.newReaction.emit(true);
         break;
       case 5:
         this.reactionsService.reactVideo(
@@ -61,7 +73,7 @@ export class VideoReactionsComponent {
           ReactionType.Astonishment,
           this.video.authorId
         );
-        window.location.reload();
+        this.newReaction.emit(true);
         break;
       case 6:
         this.reactionsService.reactVideo(
@@ -69,16 +81,18 @@ export class VideoReactionsComponent {
           ReactionType.Magically,
           this.video.authorId
         );
+        this.newReaction.emit(true);
         break;
       default:
         break;
     }
-    this.updateReactions();
+    this.allReactions = this.video?.reactions;
   }
 
   public GetReactions(reactionNumber: number) {
     if (!this.allReactions) {
-      this.updateReactions();
+      this.allReactions = this.video?.reactions;
+      this.newReaction.emit(true);
       return 0;
     } else {
       switch (reactionNumber) {
@@ -109,10 +123,5 @@ export class VideoReactionsComponent {
           return 0;
       }
     }
-  }
-
-  private updateReactions() {
-    this.allReactions = this.video?.reactions;
-    this.newReaction.emit(true);
   }
 }

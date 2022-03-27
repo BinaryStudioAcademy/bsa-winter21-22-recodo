@@ -51,6 +51,31 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
+  public deleteWithParams<TRequest>(
+    url: string,
+    params?:
+      | HttpParams
+      | {
+          [param: string]:
+            | string
+            | number
+            | boolean
+            | ReadonlyArray<string | number | boolean>;
+        }
+  ): Observable<HttpResponse<TRequest>> {
+    return this.httpClient.delete<TRequest>(`${environment.apiUrl}/${url}`, {
+      observe: 'response',
+      headers: this.getHeaders(),
+      params: params,
+    });
+  }
+
+  getWithUrl(id: string | number, subUrl: string): Observable<HttpResponse<T>> {
+    return this.httpClient
+      .get<T>(`${this.APIUrl}/${subUrl}/${id}`, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
+
   update<TRequest, TResponse>(
     resource: TRequest
   ): Observable<HttpResponse<TResponse>> {

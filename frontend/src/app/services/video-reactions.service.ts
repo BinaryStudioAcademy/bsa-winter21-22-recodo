@@ -45,7 +45,10 @@ export class VideoReactionService extends ResourceService<VideoDto> {
       if (hasReaction) {
         const deletedReaction = this.deleteReaction(userId, currentVideo);
         if (deletedReaction != null) {
-          this.delete(deletedReaction).subscribe();
+          this.deleteWithParams<void>('video/react', {
+            videoId: deletedReaction.videoId,
+            reaction: deletedReaction.reaction,
+          });
         }
         this.add(
           this.addNewReaction(userId, currentVideo.id, reactionType)
@@ -53,7 +56,10 @@ export class VideoReactionService extends ResourceService<VideoDto> {
       } else if (hasSuchReaction) {
         const deletedReaction = this.deleteReaction(userId, currentVideo);
         if (deletedReaction != null) {
-          this.delete(deletedReaction).subscribe();
+          this.deleteWithParams<void>('video/react', {
+            videoId: deletedReaction.videoId,
+            reaction: deletedReaction.reaction,
+          });
         }
       } else {
         return this.add(
@@ -83,6 +89,6 @@ export class VideoReactionService extends ResourceService<VideoDto> {
         reaction.userId === userId && reaction.videoId === currentVideo.id
     );
     currentVideo.reactions.filter((reaction) => reaction != foundReaction);
-    return foundReaction?.id;
+    return foundReaction;
   }
 }

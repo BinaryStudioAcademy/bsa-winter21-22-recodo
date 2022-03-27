@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Comment } from 'src/app/models/comment/comment';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { CommentReactionDTO } from 'src/app/models/reaction/comment-reaction';
-import { User } from 'src/app/models/user/user';
+import { UserDto } from 'src/app/models/user/user-dto'
 import { CommentReactionService } from 'src/app/services/comment-reaction.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CommentReactionService } from 'src/app/services/comment-reaction.servic
 })
 export class CommentReactionsComponent implements OnChanges {
   @Input() public comment: Comment;
-  @Input() public user: User;
+  @Input() public user: UserDto;
   public allReactions: CommentReactionDTO[];
 
   constructor(private reactionsService: CommentReactionService) {

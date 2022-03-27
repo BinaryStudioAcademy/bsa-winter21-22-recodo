@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactionType } from '../models/common/reaction-type';
-import { User } from '../models/user/user';
+import { UserDto } from '../models/user/user-dto';
 import { ResourceService } from './resource.service';
 import { Comment } from '../models/comment/comment';
 import { CommentReactionDTO } from '../models/reaction/comment-reaction';
@@ -22,7 +22,7 @@ export class CommentReactionService extends ResourceService<Comment> {
 
   private checkHasReaction(
     reactions: CommentReactionDTO[],
-    currentUser: User,
+    currentUser: UserDto,
     reactionType: ReactionType
   ) {
     const hasReaction = reactions.some((x) => x.userId === currentUser.id);
@@ -35,7 +35,7 @@ export class CommentReactionService extends ResourceService<Comment> {
   public reactComment(
     currentComment: Comment,
     reactionType: ReactionType,
-    currentUser: User
+    currentUser: UserDto
   ) {
     if (currentComment != null) {
       const [hasReaction, hasSuchReaction] = this.checkHasReaction(
@@ -44,7 +44,16 @@ export class CommentReactionService extends ResourceService<Comment> {
         reactionType
       );
       if (hasReaction) {
-        this.deleteReaction(currentUser, currentComment);
+        const deletedReaction = this.deleteReaction(
+          currentUser,
+          currentComment
+        );
+        if (deletedReaction != null) {
+          this.deleteWithParams<void>('comment/react', {
+            videoId: deletedReaction.commentId,
+            reaction: deletedReaction.reaction,
+          });
+        }
         this.add(
           this.addNewReaction(currentUser.id, currentComment.id, reactionType)
         );
@@ -54,7 +63,10 @@ export class CommentReactionService extends ResourceService<Comment> {
           currentComment
         );
         if (deletedReaction != null) {
-          this.delete(deletedReaction);
+          this.deleteWithParams<void>('comment/react', {
+            commentId: deletedReaction.commentId,
+            reaction: deletedReaction.reaction,
+          });
         }
       } else {
         this.add(
@@ -77,13 +89,13 @@ export class CommentReactionService extends ResourceService<Comment> {
     return newReaction;
   }
 
-  public deleteReaction(currentUser: User, currentComment: Comment) {
+  public deleteReaction(currentUser: UserDto, currentComment: Comment) {
     const foundReaction = currentComment.reactions.find(
       (reaction) =>
         reaction.userId === currentUser.id &&
         reaction.commentId === currentComment.id
     );
     currentComment.reactions.filter((reaction) => reaction != foundReaction);
-    return foundReaction?.id;
+    return foundReaction;
   }
 }

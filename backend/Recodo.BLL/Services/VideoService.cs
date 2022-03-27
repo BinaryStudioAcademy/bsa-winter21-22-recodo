@@ -26,13 +26,13 @@ namespace Recodo.BLL.Services
 
         public async Task<VideoDTO> GetVideoById(int id)
         {
-            var videoEntity = await _context.Videos.AsNoTracking()
+            var videoEntity = await _context.Videos
                 .Include(video => video.Reactions)
-                .Where(v => v.Id == id)
-                .FirstOrDefaultAsync();
-            var videoComments = _commentService.GetAllVideosComments(videoEntity.Id);
-            videoEntity.Comments = _mapper.Map<List<Comment>>(videoComments);
-            return _mapper.Map<VideoDTO>(videoEntity);
+                .FirstOrDefaultAsync(video => video.Id == id);
+            var videoDto = _mapper.Map<VideoDTO>(videoEntity);
+            var videoComments = await _commentService.GetAllVideosComments(videoDto.Id);
+            videoDto.Comments = videoComments;
+            return videoDto;
         }
 
         public async Task<VideoDTO> AddVideo (NewVideoDTO newVideo)

@@ -58,5 +58,17 @@ namespace Recodo.API.Controllers
             await _reactionService.ReactComment(reaction);
             return Ok();
         }
+
+        [HttpDelete("react")]
+        public async Task<IActionResult> DeleteReaction(int commentId, Reaction reaction)
+        {
+            var newReaction = new NewCommentReactionDTO {
+                CommentId = commentId,
+                Reaction = reaction
+            };
+            newReaction.UserId = this.GetUserIdFromToken();
+            await _reactionService.ReactComment(newReaction);
+            return NoContent();
+        }
     }
 }

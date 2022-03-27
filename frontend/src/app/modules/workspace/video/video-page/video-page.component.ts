@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/models/user/user';
+import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
@@ -18,7 +18,7 @@ export class VideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDto;
-  public currentUser: User;
+  public currentUser: UserDto;
   public newComment = {} as NewComment;
   private unsubscribe$ = new Subject<void>();
   constructor(
@@ -27,8 +27,19 @@ export class VideoPageComponent {
     private activateRoute: ActivatedRoute
   ) {
     this.viewsNumber = 10;
-    this.videoId = activateRoute.snapshot.params['videoId'];
-    this.updateVideo();
+    this.videoId = activateRoute.snapshot.params['id'];
+    this.link = `${environment.appUrl}/shared/${this.videoId}`;
+    this.videoService.getVideoById(this.videoId).subscribe((resp) => {
+      if (resp.body) {
+        this.checked = resp.body.isPrivate;
+      }
+    });
+    this.registrationService
+      .getUser()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user) => {
+        this.userWorkspaceName = user.workspaceName;
+      });
   }
 
   public deleteComment(commentId: number) {

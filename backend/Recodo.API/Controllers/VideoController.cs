@@ -46,11 +46,15 @@ namespace Recodo.API.Controllers
             return Ok();
         }
 
-        [HttpDelete("react/{reactionId}")]
-        public async Task<IActionResult> DeleteReaction(NewVideoReactionDTO reaction)
+        [HttpDelete("react")]
+        public async Task<IActionResult> DeleteReaction(int videoId, Reaction reaction)
         {
-            reaction.UserId = this.GetUserIdFromToken();
-            await _reactionService.ReactVideo(reaction);
+            var newReaction = new NewVideoReactionDTO {
+                VideoId = videoId,
+                Reaction = reaction
+            };
+            newReaction.UserId = this.GetUserIdFromToken();
+            await _reactionService.ReactVideo(newReaction);
             return NoContent();
         }
 
