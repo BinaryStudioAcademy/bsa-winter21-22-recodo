@@ -232,17 +232,19 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUser() {
-    let userId = this.userId;
-    this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
-      next: () => {
-        this.loginService.logOut();
-        this.snackbarService.openSnackBar('User deleted successfully');
-      },
-      error: () => {
-        this.snackbarService.openSnackBar(
-          'User not deleted. Something went wrong'
-        );
-      },
-    });
+    if (confirm('Are you sure you want to delete the user ?')) {
+      let userId = this.userId;
+      this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
+        next: () => {
+          this.loginService.logOut();
+          this.snackbarService.openSnackBar('User deleted successfully');
+        },
+        error: () => {
+          this.snackbarService.openSnackBar(
+            'User not deleted. Something went wrong'
+          );
+        },
+      });
+    }
   }
 }
