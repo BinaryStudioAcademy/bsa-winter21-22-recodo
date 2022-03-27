@@ -54,6 +54,9 @@
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
@@ -64,6 +67,9 @@
                                     <Setter Property="Source" Value="Icons/panel/stop.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonStop, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="Icons/panel/stop_focus.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonStop, Path=IsMouseOver}" Value="True">
                                             <Setter Property="Source" Value="Icons/panel/stop_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -88,6 +94,9 @@
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
@@ -98,6 +107,9 @@
                                     <Setter Property="Source" Value="Icons/panel/refresh.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonRefresh, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="Icons/panel/refresh_focus.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonRefresh, Path=IsMouseOver}" Value="True">
                                             <Setter Property="Source" Value="Icons/panel/refresh_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -122,6 +134,9 @@
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
@@ -133,6 +148,9 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsFocused}" Value="True">
                                             <Setter Property="Source" Value="Icons/Panel/pause_focus.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Source" Value="Icons/panel/pause_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -156,6 +174,9 @@
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
@@ -166,6 +187,9 @@
                                     <Setter Property="Source" Value="Icons/panel/delete.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonDelete, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="Icons/panel/delete_focus.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonDelete, Path=IsMouseOver}" Value="True">
                                             <Setter Property="Source" Value="Icons/panel/delete_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -190,6 +214,9 @@
                                 <Trigger Property="Button.IsFocused" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="#B6445D" />
                                 </Trigger>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#B6445D" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
@@ -200,6 +227,9 @@
                                     <Setter Property="Source" Value="Icons/panel/edit.png" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ButtonEdit, Path=IsFocused}" Value="True">
+                                            <Setter Property="Source" Value="Icons/panel/edit_focus.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=ButtonEdit, Path=IsMouseOver}" Value="True">
                                             <Setter Property="Source" Value="Icons/panel/edit_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
