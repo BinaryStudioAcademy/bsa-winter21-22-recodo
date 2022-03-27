@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { ISendLink } from '../models/mail/send-link';
 import { VideoDto } from '../models/video/video-dto';
 import { ResourceService } from './resource.service';
 
@@ -38,6 +39,10 @@ export class VideoService extends ResourceService<VideoDto> {
 
   public updateVideo(video: VideoDto) {
     this.update(video);
+  }
+
+  public sendLink(sendLinkInfo: ISendLink) {
+    return this.addWithUrl<ISendLink, ISendLink>('share', sendLinkInfo);
   }
 
   constructor(override httpClient: HttpClient) {

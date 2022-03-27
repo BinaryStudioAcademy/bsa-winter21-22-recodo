@@ -7,7 +7,6 @@ import {
 } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MailService } from 'src/app/services/mail.service';
 import { ToastrService } from 'ngx-toastr';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
@@ -36,7 +35,6 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private videoService: VideoService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private mailService: MailService,
     private toastr: ToastrService,
     private accessForRegisteredUsers: AccessForLinkService,
     private accessForUnregisteredUsers: AccessForUnregisteredUsersService
@@ -61,7 +59,7 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
   }
 
   public sendLink() {
-    this.mailService
+    this.videoService
       .sendLink({
         email: this.email,
         link: this.link,

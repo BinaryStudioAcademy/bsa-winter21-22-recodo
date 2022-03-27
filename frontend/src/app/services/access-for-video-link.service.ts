@@ -14,13 +14,13 @@ export class AccessForLinkService extends ResourceService<AccessForRegisteredUse
   constructor(override httpClient: HttpClient) {
     super(httpClient);
   }
-  public GetAccessedUser(videoId: number, userId: number) {
-    const accessRegisteredUser = {
-      userId: userId,
+
+  public CheckAccessedUser(videoId: number, userId: number) {
+    this.getFullRequestWithParams<boolean>('access/check', {
       videoId: videoId,
-    } as AccessForRegisteredUsers;
-    this.add(accessRegisteredUser).subscribe((resp) => {
-      if (resp.body != null) {
+      userId: userId,
+    }).subscribe((resp) => {
+      if (resp.body) {
         localStorage.setItem('isAccessed', 'true');
       } else {
         localStorage.setItem('isAccessed', 'false');

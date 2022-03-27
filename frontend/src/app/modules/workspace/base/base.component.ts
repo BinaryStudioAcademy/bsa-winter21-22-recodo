@@ -13,7 +13,7 @@ import { RegistrationService } from 'src/app/services/registration.service';
 export class BaseComponent {
   public currentUser: UserDto = {} as UserDto;
   private unsubscribe$ = new Subject<void>();
-  public isShared = {} as boolean;
+  public isShared: boolean = false;
 
   constructor(
     private customService: CustomIconService,
@@ -23,17 +23,11 @@ export class BaseComponent {
     this.customService.init();
     this.route.params.subscribe((params) => {
       if (params['videoId']) {
-        localStorage.setItem('isShared', 'true');
+        this.isShared = true;
       } else {
-        localStorage.setItem('isShared', 'false');
+        this.isShared = false;
       }
     });
-    const isSharedCheck = localStorage.getItem('isShared');
-    if (isSharedCheck == 'true') {
-      this.isShared = true;
-    } else {
-      this.isShared = false;
-    }
     this.registrationService
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))
