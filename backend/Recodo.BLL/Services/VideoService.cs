@@ -10,14 +10,16 @@ using Recodo.Common.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Recodo.BLL.Exceptions;
 using Recodo.DAL.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace Recodo.BLL.Services
 {
     public class VideoService : BaseService
     {
-        public VideoService(RecodoDbContext context, IMapper mapper) : base(context, mapper)
+        private readonly IConfiguration _configuration;
+        public VideoService(RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
         {
-
+            _configuration = configuration;
         }
         public async Task<List<VideoDTO>> GetVideosByFolderId(int folderId)
         {
@@ -86,6 +88,11 @@ namespace Recodo.BLL.Services
                 .Where(v => v.Id == id)
                 .FirstOrDefaultAsync();
             return _mapper.Map<VideoDTO>(videoEntity);
+        }
+
+        public async Task SendEmail(string body, string email, string name = "")
+        {
+            await EmailService.SendEmailAsync(email, name, body, _configuration);
         }
     }
 }

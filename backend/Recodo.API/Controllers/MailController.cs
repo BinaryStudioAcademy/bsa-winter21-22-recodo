@@ -23,7 +23,7 @@ namespace Recodo.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SharePost(VideoShareDTO sharePostInfo)
+        public async Task<IActionResult> Share(VideoShareDTO sharePostInfo)
         {
             var user = await _userService.GetUserById(this.GetUserIdFromToken());
             _mailService.SendEmail(sharePostInfo.Link, sharePostInfo.Email, user.WorkspaceName);

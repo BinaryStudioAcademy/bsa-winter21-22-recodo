@@ -36,7 +36,7 @@ namespace Recodo.BLL.Services
                         UserId = user.Id,
                         VideoId = videoId
                     };
-                    var foundRegisteredUser = FindRegisteredUserAccess(_mapper.Map<AccessForRegisteredUsersDTO>(registeredUser));
+                    var foundRegisteredUser = await FindRegisteredUserAccess(_mapper.Map<AccessForRegisteredUsersDTO>(registeredUser));
                     if(foundRegisteredUser == null)
                     {
                         _context.AccessesForRegisteredUsers.Add(registeredUser);
@@ -72,16 +72,31 @@ namespace Recodo.BLL.Services
 
         private async Task<AccessForUnregisteredUsersDTO> FindUnregisteredUser(AccessForUnregisteredUsersDTO unregisteredUser)
         {
-            var accessedUsers = await _context.AccessesForUnregisteredUsers.Where(user => user.Email == unregisteredUser.Email).ToListAsync();
-            var foundUser = accessedUsers.FirstOrDefault(user => user.VideoId == unregisteredUser.VideoId);
-            return _mapper.Map<AccessForUnregisteredUsersDTO>(foundUser);
+            var accessedUser = await _context.AccessesForUnregisteredUsers.FirstOrDefaultAsync(
+                user => user.Email == unregisteredUser.Email && user.Email == unregisteredUser.Email
+            );
+            return accessedUser == null ? null : _mapper.Map<AccessForUnregisteredUsersDTO>(accessedUser);
         }
 
         public async Task<AccessForRegisteredUsersDTO> FindRegisteredUserAccess(AccessForRegisteredUsersDTO accessedUserDTO)
         {
-            var accessedUsers = await _context.AccessesForRegisteredUsers.Where(user => user.UserId == accessedUserDTO.UserId).ToListAsync();
-            var foundUser = accessedUsers.FirstOrDefault(user => user.VideoId == accessedUserDTO.VideoId);
-            return _mapper.Map<AccessForRegisteredUsersDTO>(foundUser);
+            var accessedUser = await _context.AccessesForRegisteredUsers.FirstOrDefaultAsync(
+                user => user.UserId == accessedUserDTO.UserId && user.VideoId == accessedUserDTO.VideoId);
+            return accessedUser == null ? null : _mapper.Map<AccessForRegisteredUsersDTO>(accessedUser);
+        }
+
+        public async Task<bool> CheckRegisteredUser(int videoId, int userId)
+        {
+            var accessedUsers = await _context.AccessesForRegisteredUsers.Where(user => user.UserId == userId).ToListAsync();
+            var foundUser = accessedUsers.FirstOrDefault(user => user.VideoId == videoId);
+            if(foundUser != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -25,12 +25,11 @@ namespace Recodo.API.Controllers
             await _accessToVideoService.AddUserAccess(accessForUnregisteredUsersDTO.Email, accessForUnregisteredUsersDTO.VideoId);
             return Ok();
         }
-
-        [HttpPost]
-        public async Task<ActionResult<AccessForRegisteredUsersDTO>> GetRegisteredUser(AccessForRegisteredUsersDTO AccessedUser)
+        
+        [HttpGet("check")]
+        public async Task<ActionResult<bool>> CheckRegisteredUser(int videoId, int userId)
         {
-            var registeredUser = await _accessToVideoService.FindRegisteredUserAccess(AccessedUser);
-            return Ok(registeredUser);
+            return Ok (await _accessToVideoService.CheckRegisteredUser(videoId, userId));
         }
     }
 }

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Recodo.Common.Dtos.Video;
+using Recodo.API.Extensions;
 
 namespace Recodo.API.Controllers
 {
@@ -13,10 +15,12 @@ namespace Recodo.API.Controllers
     [ApiController]
     public class VideoController : ControllerBase
     {
+        private readonly UserService _userService;
         private readonly VideoService _videoService;
-        public VideoController(VideoService videoService)
+        public VideoController(VideoService videoService, UserService userService)
         {
             _videoService = videoService;
+            _userService = userService;
         }
 
         [HttpGet("{id}")]
@@ -55,5 +59,14 @@ namespace Recodo.API.Controllers
             await _videoService.Update(video);
             return NoContent();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ShareVideo(VideoShareDTO sharePostInfo)
+        {
+            var user = await _userService.GetUserById(this.GetUserIdFromToken());
+            await _videoService.SendEmail(sharePostInfo.Link, sharePostInfo.Email, user.WorkspaceName);
+            return Ok();
+        }
+
     }
 }
