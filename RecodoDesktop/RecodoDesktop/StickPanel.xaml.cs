@@ -1,7 +1,10 @@
 ﻿using Recodo.Desktop.Logic;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace Recodo.Desktop.Main
@@ -24,12 +27,24 @@ namespace Recodo.Desktop.Main
 
             TimeLabel.Content = TimeSpan.FromSeconds(0).ToString(@"m\:ss");
 
-            this.Top = (SystemParameters.PrimaryScreenHeight - this.Height)/ 2;
+            this.Top = (SystemParameters.PrimaryScreenHeight - this.Height) / 2;
             this.Left = 0;
             this.Topmost = true;
             this.ShowInTaskbar = true;
 
             _recorderService.StartRec += _recorderService_StartRec;
+        }
+
+        public StickPanel()
+        {
+            InitializeComponent();
+
+            TimeLabel.Content = TimeSpan.FromSeconds(0).ToString(@"m\:ss");
+
+            this.Top = (SystemParameters.PrimaryScreenHeight - this.Height) / 2;
+            this.Left = 0;
+            this.Topmost = true;
+            this.ShowInTaskbar = true;
         }
 
         private void _recorderService_StartRec()
@@ -67,6 +82,8 @@ namespace Recodo.Desktop.Main
 
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
+
+            return;
             _recorderService.StopRecording();
             if (Timer is not null)
             {
@@ -77,17 +94,28 @@ namespace Recodo.Desktop.Main
 
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
+            var brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri("Icons/Panel/delete.png", UriKind.Relative));
+            (sender as Button).Background = brush;
+
+            string name = (sender as Button).Name;
+            var Image = (Image)this.FindName("Image" + name.Replace("Button", ""));
+
+
+
             isPause = !isPause;
 
             if (isPause)
             {
-                _recorderService.PauseRecording();
-                Timer?.Stop();
+                Image.Source = new BitmapImage(new Uri("Icons/Panel/pause_focus.png", UriKind.Relative));
+                //_recorderService.PauseRecording();
+                //Timer?.Stop();
             }
             else
             {
-                _recorderService.ResumeRecording();
-                Timer?.Start();
+                Image.Source = new BitmapImage(new Uri("Icons/Panel/delete_focus.png", UriKind.Relative));
+                //_recorderService.ResumeRecording();
+                //Timer?.Start();
             }
         }
 

@@ -141,16 +141,13 @@
                         </ControlTemplate>
                     </Button.Template>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="10">
+                        <Image x:Name="ImagePause" Margin="10">
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Setter Property="Source" Value="Icons/panel/pause.png" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsFocused}" Value="True">
-                                            <Setter Property="Source" Value="Icons/Panel/pause_focus.png" />
-                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding ElementName=ButtonPause, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Source" Value="Icons/panel/pause_focus.png" />
+                                            <Setter Property="Source" Value="Icons/panel/delete_focus.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
