@@ -20,7 +20,6 @@ namespace Recodo.Desktop.Main
         private List<string> audioDevices;
         private List<string> recordableWindows;
 
-        private bool videoFormOpened = false;
         CameraService _cameraService = CameraService.GetInstance();
 
         public VideoRecordingForm(RecorderService recorderService)
@@ -47,7 +46,7 @@ namespace Recodo.Desktop.Main
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Countdown countdown = new(_recorderService);
+            Countdown countdown = new(_recorderService, _cameraService);
             countdown.Topmost = true;
             this.Hide();
             countdown.Show();
