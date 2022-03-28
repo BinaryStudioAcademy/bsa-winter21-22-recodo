@@ -108,7 +108,6 @@ namespace Recodo.Desktop.Main
             for (int i = 0; i < devices.Count; i++)
             {
                 cameraComboBox.Items.Add(devices[i]);
-                cameraComboBox.Items.Add(devices[i]);
             }
         }
 
