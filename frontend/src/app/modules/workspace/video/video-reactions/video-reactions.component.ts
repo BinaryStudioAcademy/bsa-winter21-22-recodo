@@ -4,9 +4,10 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChange,
-  SimpleChanges,
+  OnInit,
+  SimpleChanges
 } from '@angular/core';
+import { Video } from '@vime/angular';
 import { Subject } from 'rxjs';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
@@ -18,74 +19,29 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
   templateUrl: './video-reactions.component.html',
   styleUrls: ['./video-reactions.component.scss'],
 })
-export class VideoReactionsComponent {
-  @Input() set video(video:VideoDto) {
-    console.log(video);
-  }
+export class VideoReactionsComponent implements OnInit {
+  @Input() video: VideoDto;
   @Output() newReaction = new EventEmitter<boolean>();
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
   constructor(private reactionsService: VideoReactionService) {
-    this.allReactions = this.video?.reactions;
+  }
+
+  ngOnInit(): void {
+    this.allReactions = this.video.reactions;
   }
 
   public addReaction(reactionNumber: number) {
     if (this.video == null) {
       return;
     }
-    switch (reactionNumber) {
-      case 1:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Like,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      case 2:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Dislike,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      case 3:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Love,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      case 4:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Fun,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      case 5:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Astonishment,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      case 6:
-        this.reactionsService.reactVideo(
-          this.video,
-          ReactionType.Magically,
-          this.video.authorId
-        );
-        this.newReaction.emit(true);
-        break;
-      default:
-        break;
-    }
+    this.reactionsService.reactVideo(
+      this.video,
+      reactionNumber,
+      this.video.authorId,
+      this.newReaction
+    )
   }
 
   public GetReactions(reactionNumber: number) {

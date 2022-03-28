@@ -20,10 +20,10 @@ export class VideoPlayerComponent {
     private videoUrlService: VideoUrlService,
     protected httpClient: HttpClient
   ) {
-    route.params.pipe(map((p) => p['id'])).subscribe((id) => {
-      this.videoId = id;
-      this.getVideoUrl();
-    });
+    // route.params.pipe(map((p) => p['id'])).subscribe((id) => {
+    //   this.videoId = id;
+    //   this.getVideoUrl();
+    // });
   }
 
   public getVideoUrl() {

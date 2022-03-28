@@ -17,29 +17,20 @@ namespace Recodo.BLL.Services
         public async Task ReactVideo(NewVideoReactionDTO reaction)
         {
             var video = await _context.Videos.FindAsync(reaction.VideoId);
-            if (video.Reactions.Any())
+            var userReaction = video.Reactions.FirstOrDefault(x => x.UserId == reaction.UserId);
+            if (userReaction != null)
             {
-                if (reaction.Reaction == video.Reactions.FirstOrDefault().Reaction)
-                {   
-                    video.Reactions.Clear();
-                    await _context.SaveChangesAsync();
+                video.Reactions.Remove(userReaction);
+                await _context.SaveChangesAsync();
+                if (userReaction.Reaction == reaction.Reaction)
+                {
                     return;
                 }
-                else
-                {
-                    video.Reactions.Clear();
-                    await _context.SaveChangesAsync();
-                }
             }
-            var newReaction = new VideoReaction
-            {
-                VideoId = reaction.VideoId,
-                Reaction = reaction.Reaction,
-                UserId = reaction.UserId
-            };
+
+            var newReaction = _mapper.Map<VideoReaction>(reaction);
             video.Reactions.Add(newReaction);
             await _context.SaveChangesAsync();
-            var createdReactionDTO = _mapper.Map<VideoReactionDTO>(newReaction);            
         }
         
         public async Task ReactComment(NewCommentReactionDTO reaction)
