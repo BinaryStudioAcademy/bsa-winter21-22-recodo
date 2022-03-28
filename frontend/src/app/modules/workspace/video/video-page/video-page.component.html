@@ -18,12 +18,14 @@
       (editedComment)="sendComment()"
     ></app-video-comments>
   </div>
-  <app-video-reactions
-    class="reactions-container"
-    [video]="currentVideo"
-    (newReaction)="updateVideo()"
-  >
-  </app-video-reactions>
+  <div *ngIf="currentVideo">
+    <app-video-reactions
+      class="reactions-container"
+      [video]="currentVideo"
+      (newReaction)="updateVideo()"
+    >
+    </app-video-reactions>
+  </div>
   <h1><strong>Screenshot 11 February 2022</strong></h1>
   <app-video-description
     [username]="'Username'"
