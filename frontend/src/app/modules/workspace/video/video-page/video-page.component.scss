@@ -1,11 +1,18 @@
 .actions-container {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 30px;
   button {
     margin-left: 10px;
     border-radius: 8px;
   }
+}
+
+.sticky {
+  background-color: #F4E9E9;
+  position: sticky;
+  padding-top: 30px;
+  z-index: 100;
+  top: 115px;
 }
 
 .reactions-container {
