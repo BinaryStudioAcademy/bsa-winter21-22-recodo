@@ -24,6 +24,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   @Input() public currentUser: UserDto;
   @Output() deletedComment = new EventEmitter<number>();
   @Output() editedComment = new EventEmitter<Comment>();
+  @Output() newReaction = new EventEmitter<boolean>();
 
   public commentAuthor: UserDto;
   public allReactions?: VideoReactionDTO[];
@@ -40,6 +41,10 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
     this.userService.getUserById(this.comment.authorId).subscribe((resp) => {
       if (resp.body) {
         this.commentAuthor = resp.body;
+        if (this.commentAuthor.avatarLink === null) {
+          this.commentAuthor.avatarLink =
+            '../../assets/icons/test-user-logo.png';
+        }
       }
     });
   }
@@ -60,6 +65,12 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   public onEditComment() {
     this.commentService
       .editComment({ ...this.comment, body: this.comment.body })
-      .pipe(takeUntil(this.unsubscribe$)).subscribe();
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+    this.toggleIsEditingMode();
+  }
+
+  public updateReaction() {
+    this.newReaction.emit(true);
   }
 }

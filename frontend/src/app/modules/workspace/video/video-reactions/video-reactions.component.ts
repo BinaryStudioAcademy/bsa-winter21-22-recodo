@@ -1,17 +1,12 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  OnInit,
-  SimpleChanges
-} from '@angular/core';
-import { Video } from '@vime/angular';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { NewComment } from 'src/app/models/comment/new-comment';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { VideoReactionDTO } from 'src/app/models/reaction/video-reaction-dto';
+import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
+import { CommentService } from 'src/app/services/comment.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 
 @Component({
@@ -22,14 +17,25 @@ import { VideoReactionService } from 'src/app/services/video-reactions.service';
 export class VideoReactionsComponent implements OnInit {
   @Input() video: VideoDto;
   @Output() newReaction = new EventEmitter<boolean>();
+  @Output() newCommentCreated = new EventEmitter<NewComment>();
+  public currentUser: UserDto;
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();
+  public isEditingMode = false;
+  public newComment: NewComment;
 
-  constructor(private reactionsService: VideoReactionService) {
-  }
+  constructor(
+    private reactionsService: VideoReactionService,
+    private commentService: CommentService,
+    private registrationService: RegistrationService
+  ) {}
 
   ngOnInit(): void {
     this.allReactions = this.video.reactions;
+    this.registrationService.getUser().subscribe((resp) => {
+      this.currentUser = resp;
+      this.updateNewComment();
+    });
   }
 
   public addReaction(reactionNumber: number) {
@@ -39,9 +45,18 @@ export class VideoReactionsComponent implements OnInit {
     this.reactionsService.reactVideo(
       this.video,
       reactionNumber,
-      this.video.authorId,
+      this.currentUser.id,
       this.newReaction
-    )
+    );
+  }
+
+  public toggleIsEditingMode() {
+    this.isEditingMode = !this.isEditingMode;
+  }
+
+  public createComment() {
+    this.newCommentCreated.emit(this.newComment);
+    this.toggleIsEditingMode();
   }
 
   public GetReactions(reactionNumber: number) {
@@ -71,5 +86,13 @@ export class VideoReactionsComponent implements OnInit {
       default:
         return 0;
     }
+  }
+
+  public updateNewComment() {
+    this.newComment = {
+      authorId: this.currentUser.id,
+      videoId: this.video.id,
+      body: '',
+    };
   }
 }

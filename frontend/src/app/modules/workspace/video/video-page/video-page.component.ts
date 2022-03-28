@@ -65,6 +65,11 @@ export class VideoPageComponent {
       });
   }
 
+  public createComment(comment: NewComment) {
+    this.commentService.createComment(comment).subscribe();
+    this.updateVideo();
+  }
+
   public sendComment() {
     if (this.currentVideo != null) {
       this.newComment.authorId = this.currentVideo.authorId;

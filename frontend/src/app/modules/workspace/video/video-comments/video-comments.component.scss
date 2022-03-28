@@ -43,3 +43,15 @@ button {
     margin-left: 0.25rem;
   }
 }
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #fb6d3a !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  background-color: #fb6d3a !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: #fb6d3a !important;
+}

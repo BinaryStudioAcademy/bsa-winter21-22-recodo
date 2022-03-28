@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactionType } from '../models/common/reaction-type';
 import { UserDto } from '../models/user/user-dto';
@@ -17,7 +17,7 @@ export class CommentReactionService extends ResourceService<Comment> {
   }
 
   getResourceUrl(): string {
-    return 'comment/react';
+    return '/comment/react';
   }
 
   private checkHasReaction(
@@ -35,45 +35,14 @@ export class CommentReactionService extends ResourceService<Comment> {
   public reactComment(
     currentComment: Comment,
     reactionType: ReactionType,
-    currentUser: UserDto
+    userId: number,
+    eventEmitter: EventEmitter<boolean>
   ) {
-    if (currentComment != null) {
-      const [hasReaction, hasSuchReaction] = this.checkHasReaction(
-        currentComment.reactions,
-        currentUser,
-        reactionType
-      );
-      if (hasReaction) {
-        const deletedReaction = this.deleteReaction(
-          currentUser,
-          currentComment
-        );
-        if (deletedReaction != null) {
-          this.deleteWithParams<void>('comment/react', {
-            videoId: deletedReaction.commentId,
-            reaction: deletedReaction.reaction,
-          });
-        }
-        this.add(
-          this.addNewReaction(currentUser.id, currentComment.id, reactionType)
-        );
-      } else if (hasSuchReaction) {
-        const deletedReaction = this.deleteReaction(
-          currentUser,
-          currentComment
-        );
-        if (deletedReaction != null) {
-          this.deleteWithParams<void>('comment/react', {
-            commentId: deletedReaction.commentId,
-            reaction: deletedReaction.reaction,
-          });
-        }
-      } else {
-        this.add(
-          this.addNewReaction(currentUser.id, currentComment.id, reactionType)
-        );
-      }
-    }
+    this.add(
+      this.addNewReaction(userId, currentComment.id, reactionType)
+    ).subscribe(() => {
+      eventEmitter.emit(true);
+    });
   }
 
   public addNewReaction(
