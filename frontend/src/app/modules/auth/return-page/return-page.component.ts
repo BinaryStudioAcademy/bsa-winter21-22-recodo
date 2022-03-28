@@ -11,7 +11,7 @@ export class ReturnPageComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      window.alert("Please return to your Desktop app!");
+      window.alert('Please return to your Desktop app!');
     },
     100 );
   }
