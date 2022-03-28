@@ -1,17 +1,24 @@
-<div class="w-100" *ngIf="this.checked">
-  <div class="actions-container">
-    <button mat-button class="button-outlined">{{ viewsNumber }} views</button>
-    <button mat-icon-button>
-      <mat-icon svgIcon="details"></mat-icon>
-    </button>
+<mat-progress-spinner *ngIf="this.isLoading; else loaded"></mat-progress-spinner>
+<ng-template #loaded>
+  <div class="no-access-container" *ngIf="this.checked; else elseBlock">
+    <img class="no-access-image" src="../../../../../assets/no-access.png" />
+    <p class="no-access-text">
+      <strong>Such video doesn't exist or you have no access to it</strong>
+    </p>
   </div>
-  <app-video-player></app-video-player>
-  <app-video-reactions class="reactions-container"></app-video-reactions>
-  <h1><strong>Screenshot 11 February 2022</strong></h1>
-</div>
-<div *ngIf="!this.checked" class="no-access-container">
-  <img class="no-access-image" src="../../../../../assets/no-access.png" />
-  <p class="no-access-text">
-    <strong>Such video doesn't exist or you have no access to it</strong>
-  </p>
-</div>
+  <ng-template #elseBlock>
+    <div class="w-100">
+      <div class="actions-container">
+        <button mat-button class="button-outlined">
+          {{ viewsNumber }} views
+        </button>
+        <button mat-icon-button>
+          <mat-icon svgIcon="details"></mat-icon>
+        </button>
+      </div>
+      <app-video-player></app-video-player>
+      <app-video-reactions class="reactions-container"></app-video-reactions>
+      <h1><strong>Screenshot 11 February 2022</strong></h1>
+    </div>
+  </ng-template>
+</ng-template>

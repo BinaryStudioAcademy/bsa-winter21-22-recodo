@@ -16,23 +16,9 @@ export class AccessForLinkService extends ResourceService<AccessForRegisteredUse
   }
 
   public CheckAccessedUser(videoId: number, userId: number) {
-    this.getFullRequestWithParams<boolean>('access/check', {
+    return this.getFullRequestWithParams<boolean>('access/check', {
       videoId: videoId,
       userId: userId,
-    }).subscribe((resp) => {
-      if (resp.body) {
-        localStorage.setItem('isAccessed', 'true');
-      } else {
-        localStorage.setItem('isAccessed', 'false');
-      }
     });
-    const isAccessed = localStorage.getItem('isAccessed');
-    if (isAccessed == 'true') {
-      this.isAccessed = true;
-    } else {
-      this.isAccessed = false;
-    }
-    localStorage.removeItem('isAccessed');
-    return this.isAccessed;
   }
 }

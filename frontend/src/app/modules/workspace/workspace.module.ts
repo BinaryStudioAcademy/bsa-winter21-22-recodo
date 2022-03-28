@@ -35,6 +35,7 @@ import { SharePropertiesComponent } from './sharing-propetries/share-properties-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
 })
 export class WorkspaceModule {}

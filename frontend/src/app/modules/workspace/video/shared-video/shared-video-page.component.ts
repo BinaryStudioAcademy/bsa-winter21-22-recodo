@@ -11,10 +11,11 @@ import { RegistrationService } from 'src/app/services/registration.service';
   styleUrls: ['./shared-video-page.component.scss'],
 })
 export class SharedVideoPageComponent {
+  public isLoading = true;
   public viewsNumber: number;
   public videoId: number;
-  public checked: boolean = false;
-  public isPrivate: boolean = false;
+  public checked = true;
+  public isPrivate?: boolean;
   private userId?: number;
   constructor(
     private activateRoute: ActivatedRoute,
@@ -25,51 +26,40 @@ export class SharedVideoPageComponent {
   ) {
     this.viewsNumber = 10;
     this.videoId = parseInt(activateRoute.snapshot.params['videoId']);
+    this.getUserId();
+  }
+
+  public getUserId() {
     this.registrationService.getUser().subscribe((resp) => {
-      localStorage.setItem('userId', resp.id.toString());
+      this.userId = resp.id;
+      this.getVideo();
     });
-    const userIdString = localStorage.getItem('userId');
-    if (userIdString) {
-      this.userId = parseInt(userIdString);
-      localStorage.removeItem('userId');
-    }
+  }
+
+  public getVideo() {
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
-        if (resp.body.isPrivate) {
-          localStorage.setItem('isPrivate', 'true');
-        } else {
-          localStorage.setItem('isPrivate', 'false');
-        }
+        this.isPrivate = resp.body.isPrivate;
+        this.checkAccess();
       }
     });
-    if (localStorage.getItem('isPrivate') == 'true') {
-      this.isPrivate = true;
-    } else {
-      this.isPrivate = false;
-    }
-    localStorage.removeItem('isPrivate');
+  }
+
+  public checkAccess() {
     if (this.userId) {
-      if (
-        this.accessForLinkService.CheckAccessedUser(
-          this.videoId,
-          this.userId
-        ) ||
-        this.isPrivate
-      ) {
-        this.checked = true;
-      }
+      this.accessForLinkService
+        .CheckAccessedUser(this.videoId, this.userId)
+        .subscribe((resp) => {
+          if (resp.body || this.isPrivate) {
+            this.checked = false;
+          }
+          setTimeout(() => (this.isLoading = false), 1000);
+        });
     }
+    // this.isLoading = false;
   }
 
   public openSnackBar() {
     this.snackBarService.openSnackBar('Link was successfully copied!');
-  }
-
-  private getUserId(): Promise<number> {
-    return new Promise((r) => {
-      this.registrationService.getUser().subscribe((resp) => {
-        return r(resp.id);
-      });
-    });
   }
 }
