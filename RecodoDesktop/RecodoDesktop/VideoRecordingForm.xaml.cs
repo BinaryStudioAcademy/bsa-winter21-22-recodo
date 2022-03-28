@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Recodo.Desktop.Main
 {
@@ -19,7 +20,6 @@ namespace Recodo.Desktop.Main
         private List<string> audioDevices;
         private List<string> recordableWindows;
 
-        private bool inputAudiButtonIsActive = true;
         private bool videoFormOpened = false;
         CameraService _cameraService = CameraService.GetInstance();
 
@@ -56,20 +56,25 @@ namespace Recodo.Desktop.Main
         private void AudioDevices_Initialized(object sender, EventArgs e)
         {
             audioDevices = _recorderService.GetInputAudioDevices();
+            audioDevices.Add("None");
             this.AudioDevices.ItemsSource = audioDevices;
             this.AudioDevices.SelectedIndex = 0;
         }
 
-        private void Microphone_Click(object sender, RoutedEventArgs e)
-        {
-            this.Microphone.Content = FindResource(this.Microphone.Content == FindResource("Mic") ? "MicOff" : "Mic");
-            inputAudiButtonIsActive = !inputAudiButtonIsActive;
-            _options.IsAudioEnable = inputAudiButtonIsActive;
-        }
-
         private void AudioDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _options.SelectedAudioInputDevice = this.AudioDevices.SelectedItem.ToString();
+            string selectedAudio = this.AudioDevices.SelectedItem.ToString();
+            if (selectedAudio != "None")
+            {
+                _options.SelectedAudioInputDevice = selectedAudio;
+                _options.IsAudioEnable = true;
+                this.Microphone.Content = FindResource("Mic");
+            }
+            else
+            {
+                _options.IsAudioEnable = false;
+                this.Microphone.Content = FindResource("MicOff");
+            }
         }
 
         private void RecordableWindows_Initialized(object sender, EventArgs e)
@@ -108,7 +113,6 @@ namespace Recodo.Desktop.Main
             for (int i = 0; i < devices.Count; i++)
             {
                 cameraComboBox.Items.Add(devices[i]);
-                cameraComboBox.Items.Add(devices[i]);
             }
         }
 
@@ -122,13 +126,20 @@ namespace Recodo.Desktop.Main
                 {
                     _cameraService.StartCapture(cameraComboBox.SelectedIndex-1);
                     videoForm.Show();
+                    this.Camera.Content = FindResource("Camera");
                 }
                 else
                 {
                     _cameraService.StopCapture();
                     videoForm.Hide();
+                    this.Camera.Content = FindResource("CameraOff");
                 }
             });
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
