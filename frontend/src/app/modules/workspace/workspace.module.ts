@@ -42,6 +42,7 @@ import { SharePropertiesComponent } from './sharing-propetries/share-properties-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
+import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/
     SharePropertiesComponent,
     SharedVideoPageComponent,
     SharingVideoDialogComponent,
+    UpdateVideoDialogComponent,
   ],
   imports: [
     NgxDropzoneModule,

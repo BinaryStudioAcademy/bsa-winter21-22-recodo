@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recodo.API.Extensions;
+using Microsoft.Net.Http.Headers;
 using Recodo.BLL.Services;
-using Recodo.Common.Dtos.Comment;
-using Recodo.Common.Dtos.Reactions;
-using Recodo.Common.Dtos.Video;
-using Recodo.Common.Enums;
 using Recodo.Common.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Recodo.Common.Dtos.Reactions;
+using Recodo.API.Extensions;
+using Recodo.Common.Enums;
 
 namespace Recodo.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class VideoController : ControllerBase
     {
         private readonly VideoService _videoService;
@@ -32,13 +31,39 @@ namespace Recodo.API.Controllers
             return Ok(await _videoService.GetVideoById(id));
         }
 
-        [HttpPost("react")]
-        public async Task<IActionResult> ReactVideo(NewVideoReactionDTO reaction)
+        [HttpGet("folder/{id:int}")]
+        public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
         {
-            reaction.UserId = this.GetUserIdFromToken();
-            await _reactionService.ReactVideo(reaction);
+            return Ok(await _videoService.GetVideosByFolderId(id));
+        }
 
-            return Ok();
+        [HttpGet("user/{id:int}")]
+        public async Task<ActionResult<List<VideoDTO>>> GetVideosByUserIdWithoutFolder(int id)
+        {
+            return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
+        }
+
+        [HttpGet("check/{id:int}")]
+        public async Task<ActionResult> GetFileState(int id)
+        {
+            return Ok(await _videoService.CheckVideoState(id));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            Request.Headers.TryGetValue(HeaderNames.Authorization, out Microsoft.Extensions.Primitives.StringValues value);
+            var token = value.ToString();
+
+            await _videoService.Delete(id, token);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] UpdateVideoDTO videoDTO)
+        {
+            await _videoService.Update(videoDTO);
+            return NoContent();
         }
 
         [HttpDelete("react")]
@@ -52,43 +77,13 @@ namespace Recodo.API.Controllers
             await _reactionService.ReactVideo(newReaction);
             return NoContent();
         }
-
-        [HttpPost]
-        public async Task<ActionResult<VideoDTO>> CreateVideo(NewVideoDTO newVideo)
-        {
-            var createdVideo = await _videoService.AddVideo(newVideo);
-            return Ok(createdVideo);
-        }
         
-        [HttpGet("{id:int}/videos")]
-        public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
+        [HttpPost("react")]
+        public async Task<IActionResult> ReactVideo(NewVideoReactionDTO reaction)
         {
-            return Ok(await _videoService.GetVideosByFolderId(id));
-        }
-
-        [HttpGet("user/{id:int}")]
-        public async Task<ActionResult<List<VideoDTO>>> GetVideosByUserIdWithoutFolder(int id)
-        {
-            return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
-        }
-        [HttpGet("check/{id:int}")]
-        public async Task<ActionResult> GetFileState(int id)
-        {
-            return Ok(await _videoService.CheckVideoState(id));
-        }
-
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            await _videoService.Delete(id);
-            return NoContent();
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] VideoDTO video)
-        {
-            await _videoService.Update(video);
-            return NoContent();
+            reaction.UserId = this.GetUserIdFromToken();
+            await _reactionService.ReactVideo(reaction);
+            return Ok();
         }
     }
 }

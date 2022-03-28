@@ -108,6 +108,7 @@ export class VideoPageComponent {
       .subscribe((resp) => {
         if (resp.body != null) {
           this.currentVideo = resp.body;
+          console.log(resp.body);
         }
       });
   }
