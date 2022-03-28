@@ -13,7 +13,7 @@ namespace Recodo.API.BLL.Interfaces
     {
         Task<string> UploadAsync(Stream files, string token, int videoId);
         Task<(Stream response, int? errorCode)> DownloadAsync(int id, string token);
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id, string token);
         Task<string> GetUrlAsync(int id, string token);
     }
 }

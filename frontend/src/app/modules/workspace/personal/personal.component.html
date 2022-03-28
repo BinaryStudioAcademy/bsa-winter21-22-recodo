@@ -79,6 +79,7 @@
     </div>
     <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
       <button mat-menu-item (click)="deleteVideo(video.id)">Delete</button>
+      <button mat-menu-item (click)="showVideoUpdateDialog(video)">Rename</button>
     </mat-menu>
   </mat-list-item>
   
@@ -123,6 +124,7 @@
       </button>
       <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
         <button mat-menu-item (click)="deleteVideo(element.id)">Delete</button>
+        <button mat-menu-item (click)="showVideoUpdateDialog(element)">Rename</button>
       </mat-menu>
     </td>
   </ng-container>

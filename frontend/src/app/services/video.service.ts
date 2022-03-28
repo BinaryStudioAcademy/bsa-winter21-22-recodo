@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { UpdateVideoDto } from '../models/video/update-video-dto';
 import { VideoDto } from '../models/video/video-dto';
+import { RequestService } from './request.service';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -28,11 +30,24 @@ export class VideoService extends ResourceService<VideoDto> {
     );
   }
 
-  public deleteVideo(id: number) {
-    return this.delete(id);
+  public deleteVideo(url: string, params?: HttpParams) {
+    return this.requestService.delete(url, params).pipe(
+      map((response) => {
+        return response;
+      }),
+    );
   }
 
-  constructor(override httpClient: HttpClient) {
+  public updateVideo(resource: UpdateVideoDto) {
+    return this.update<UpdateVideoDto, UpdateVideoDto>(resource).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  constructor(private requestService: RequestService,
+    override httpClient: HttpClient) {
     super(httpClient);
    }
 }
