@@ -25,8 +25,7 @@ export class VideoReactionsComponent implements OnInit {
   public allReactions: VideoReactionDTO[];
   public unsubscribe$ = new Subject<void>();
 
-  constructor(private reactionsService: VideoReactionService) {
-  }
+  constructor(private reactionsService: VideoReactionService) {}
 
   ngOnInit(): void {
     this.allReactions = this.video.reactions;
@@ -41,7 +40,7 @@ export class VideoReactionsComponent implements OnInit {
       reactionNumber,
       this.video.authorId,
       this.newReaction
-    )
+    );
   }
 
   public GetReactions(reactionNumber: number) {
