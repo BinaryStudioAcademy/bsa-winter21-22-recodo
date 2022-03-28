@@ -17,6 +17,7 @@
       [currentUser]="currentUser"
       (deletedComment)="deleteComment($event)"
       (editedComment)="sendComment()"
+      (newReaction)="updateVideo()"
     ></app-video-comments>
   </div>
   <div *ngIf="currentVideo">
@@ -24,6 +25,7 @@
       class="reactions-container"
       [video]="currentVideo"
       (newReaction)="updateVideo()"
+      (newCommentCreated)="createComment($event)"
     >
     </app-video-reactions>
   </div>

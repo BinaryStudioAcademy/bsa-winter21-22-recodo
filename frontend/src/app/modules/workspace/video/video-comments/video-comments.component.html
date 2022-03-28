@@ -44,5 +44,6 @@
     class="reactions-container"
     [comment]="this.comment"
     [user]="this.currentUser"
+    (newReaction)="updateReaction()"
   ></app-comment-reactions>
 </mat-card>

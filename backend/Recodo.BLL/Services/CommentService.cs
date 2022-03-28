@@ -19,13 +19,12 @@ namespace Recodo.BLL.Services
         public async Task<CommentDTO> CreateComment(NewCommentDTO newComment)
         {
             var commentEntity = _mapper.Map<Comment>(newComment);
-
+            
             _context.Comments.Add(commentEntity);
             await _context.SaveChangesAsync();
 
             var createdComment = await _context.Comments
                 .Include(comment => comment.Author)
-                    .ThenInclude(user => user.AvatarLink)
                 .FirstAsync(comment => comment.Id == commentEntity.Id);
 
             return _mapper.Map<CommentDTO>(createdComment);
@@ -34,7 +33,7 @@ namespace Recodo.BLL.Services
         public async Task DeleteComment(int commentId)
         {
             var commentEntity = await _context.Comments.FirstOrDefaultAsync(p => p.Id == commentId);
-            _context.Comments.Update(commentEntity);
+            _context.Comments.Remove(commentEntity);
             await _context.SaveChangesAsync();
         }
 

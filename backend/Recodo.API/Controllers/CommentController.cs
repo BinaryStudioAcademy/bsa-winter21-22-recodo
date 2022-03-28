@@ -54,8 +54,8 @@ namespace Recodo.API.Controllers
         public async Task<IActionResult> ReactComment(NewCommentReactionDTO reaction)
         {
             reaction.UserId = this.GetUserIdFromToken();
-
             await _reactionService.ReactComment(reaction);
+
             return Ok();
         }
 

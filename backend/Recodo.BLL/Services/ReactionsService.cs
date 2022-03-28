@@ -35,29 +35,21 @@ namespace Recodo.BLL.Services
         
         public async Task ReactComment(NewCommentReactionDTO reaction)
         {
-            var reactions = _context.CommentReactions.Where(x => x.UserId == reaction.UserId && x.CommentId == reaction.CommentId);
-
-            if (reactions.Any())
+            var comment = await _context.Comments.FindAsync(reaction.CommentId);
+            var userReaction = comment.Reactions.FirstOrDefault(x => x.UserId == reaction.UserId);
+            if (userReaction != null)
             {
-                _context.CommentReactions.RemoveRange(reactions);
+                comment.Reactions.Remove(userReaction);
                 await _context.SaveChangesAsync();
-                if (reactions.First().Reaction == reaction.Reaction)
+                if (userReaction.Reaction == reaction.Reaction)
                 {
                     return;
                 }
             }
 
-            var newReaction = new CommentReaction
-            {
-                CommentId = reaction.CommentId,
-                Reaction = reaction.Reaction,
-                UserId = reaction.UserId
-            };
-            _context.CommentReactions.Add(newReaction);
-
+            var newReaction = _mapper.Map<CommentReaction>(reaction);
+            comment.Reactions.Add(newReaction);
             await _context.SaveChangesAsync();
-            var createdReaction = await _context.CommentReactions.FindAsync(newReaction);
-            var createdReactionDTO = _mapper.Map<CommentReactionDTO>(createdReaction);            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Recodo.Common.Dtos.Comment
 {
     public class NewCommentDTO
     {
-        public int UserId { get; set; }
+        public int AuthorId { get; set; }
         public int VideoId { get; set; }
         public string Body { get; set; }
         public ICollection<NewCommentReactionDTO> Reactions { get; set; }
