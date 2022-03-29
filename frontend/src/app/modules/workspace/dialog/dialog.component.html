@@ -7,6 +7,22 @@
                 placeholder="Folder name"
                formControlName="folderName">
     </mat-form-field>
+    <div class="errors">
+        <span *ngIf="form.controls['folderName'].touched">
+          <small
+            *ngIf="form.controls['folderName'].errors?.['required']"
+          >
+            Workspace is a required property.
+          </small>
+          <small
+            *ngIf="
+            form.controls['folderName'].errors?.['minlength'] ||
+            form.controls['folderName'].errors?.['maxlength']"
+          >
+            Must be 3-30 characters 
+          </small>
+        </span>
+      </div>
  
 </mat-dialog-content>
 

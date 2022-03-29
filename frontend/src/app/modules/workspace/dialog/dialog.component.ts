@@ -25,6 +25,7 @@ export class DialogComponent implements OnInit {
       folderName: [, {
         validators: [
           Validators.required,
+          Validators.minLength(3),
           Validators.maxLength(30),
         ],
         updateOn: 'change',

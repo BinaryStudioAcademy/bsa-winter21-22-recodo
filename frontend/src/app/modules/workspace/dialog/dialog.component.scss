@@ -15,3 +15,12 @@ button:disabled {
     background: #e0d8d7;
     color: #989898;
 }
+
+.errors {
+    width: 100%;
+    min-height: 25px;
+    
+    small {
+        color: red;
+    }
+}
