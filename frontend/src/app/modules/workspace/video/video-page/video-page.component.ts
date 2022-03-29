@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
@@ -21,7 +20,6 @@ export class VideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDto;
-  public currentUser: UserDto;
   public newComment = {} as NewComment;
   public link: string;
   public checked: boolean = false;
@@ -91,14 +89,6 @@ export class VideoPageComponent {
     );
   }
 
-  public isCurrentVideo() {
-    if (this.currentVideo) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public updateVideo() {
     this.videoService
       .getVideoById(this.videoId)
@@ -106,7 +96,6 @@ export class VideoPageComponent {
       .subscribe((resp) => {
         if (resp.body != null) {
           this.currentVideo = resp.body;
-          console.log(resp.body);
         }
       });
   }

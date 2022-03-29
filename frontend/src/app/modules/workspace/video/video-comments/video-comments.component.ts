@@ -13,6 +13,7 @@ import { CommentReactionService } from 'src/app/services/comment-reaction.servic
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { UserService } from 'src/app/services/user.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-video-comments',
@@ -21,20 +22,22 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class VideoCommentsComponent implements OnDestroy, OnInit {
   @Input() public comment: Comment;
-  @Input() public currentUser: UserDto;
   @Output() deletedComment = new EventEmitter<number>();
   @Output() editedComment = new EventEmitter<Comment>();
   @Output() newReaction = new EventEmitter<boolean>();
 
   public commentAuthor: UserDto;
+  public currentUser: UserDto;
   public allReactions?: VideoReactionDTO[];
   public isEditingMode = false;
   private unsubscribe$ = new Subject<void>();
+  public isCommentAuthor = false;
 
   constructor(
     private commentReactionService: CommentReactionService,
     private commentService: CommentService,
-    private userService: UserService
+    private userService: UserService,
+    private registrationService: RegistrationService
   ) {}
 
   public ngOnInit() {
@@ -45,6 +48,11 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
           this.commentAuthor.avatarLink =
             '../../assets/icons/test-user-logo.png';
         }
+        this.registrationService.getUser().subscribe((resp) => {
+          if (resp.id == this.commentAuthor.id) {
+            this.isCommentAuthor = true;
+          }
+        });
       }
     });
   }
@@ -72,5 +80,13 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
 
   public updateReaction() {
     this.newReaction.emit(true);
+  }
+
+  public checkAuthor() {
+    this.registrationService.getUser().subscribe((resp) => {
+      if (resp == this.commentAuthor) {
+        this.isCommentAuthor = true;
+      }
+    });
   }
 }

@@ -114,7 +114,6 @@ namespace Recodo.BLL.Services
         {
             var video = _mapper.Map<Video>(newVideo);
             video.CreatedAt = DateTime.Now;
-            video.Reactions = _mapper.Map<List<VideoReaction>>(newVideo.Reactions);
             await _context.Videos.AddAsync(video);
             _context.SaveChanges();
             return _mapper.Map<VideoDTO>(video);

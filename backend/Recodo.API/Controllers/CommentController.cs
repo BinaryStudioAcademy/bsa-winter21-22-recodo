@@ -40,7 +40,8 @@ namespace Recodo.API.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentDTO>> CreateComment(NewCommentDTO comment)
         {
-            return Ok(await _commentService.CreateComment(comment));
+            await _commentService.CreateComment(comment);
+            return Ok();
         }
 
         [HttpDelete("{id}")]

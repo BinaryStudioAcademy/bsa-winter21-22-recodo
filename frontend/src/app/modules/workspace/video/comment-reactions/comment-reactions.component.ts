@@ -19,7 +19,6 @@ import { RegistrationService } from 'src/app/services/registration.service';
 })
 export class CommentReactionsComponent implements OnInit {
   @Input() public comment: Comment;
-  @Input() public user: UserDto;
   @Output() newReaction = new EventEmitter<boolean>();
   public currentUser: UserDto;
   public allReactions: CommentReactionDTO[];
