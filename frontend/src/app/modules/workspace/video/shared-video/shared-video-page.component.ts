@@ -56,7 +56,6 @@ export class SharedVideoPageComponent {
           setTimeout(() => (this.isLoading = false), 1000);
         });
     }
-    // this.isLoading = false;
   }
 
   public openSnackBar() {

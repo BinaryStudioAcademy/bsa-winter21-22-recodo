@@ -92,7 +92,7 @@ namespace Recodo.BLL.Services
 
         public async Task SendEmail(string body, string email, string name = "")
         {
-            await EmailService.SendEmailAsync(email, name, body, _configuration);
+            await EmailService.SendEmailAsync(email, "Shared video", body, _configuration, name);
         }
     }
 }

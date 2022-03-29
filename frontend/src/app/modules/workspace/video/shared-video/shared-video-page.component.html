@@ -1,5 +1,7 @@
-<mat-progress-spinner *ngIf="this.isLoading; else loaded"></mat-progress-spinner>
-<ng-template #loaded>
+<div class="spinner" *ngIf="this.isLoading; else loaded">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<ng-template #loaded class="loaded-container">
   <div class="no-access-container" *ngIf="this.checked; else elseBlock">
     <img class="no-access-image" src="../../../../../assets/no-access.png" />
     <p class="no-access-text">
