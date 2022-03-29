@@ -81,5 +81,15 @@ namespace Recodo.Desktop.Main
             VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
             recordingForm.Show();
         }
+
+        private void GoogleButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
