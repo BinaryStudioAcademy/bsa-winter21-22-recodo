@@ -12,10 +12,14 @@ namespace Recodo.Desktop.Main
     /// </summary>
     public partial class AuthorizationWindow : Window
     {
+        private readonly RedirectWindow redirectWindow;
         public AuthorizationWindow()
         {
-            if(!CheckSavedToken())
+            if (!CheckSavedToken())
+            {
                 InitializeComponent();
+                this.redirectWindow = new RedirectWindow();
+            }
             else
             {
                 this.Hide();
@@ -26,33 +30,35 @@ namespace Recodo.Desktop.Main
         private Token token;
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
-        {       
+        {
+            this.Hide();
+            this.redirectWindow.Show();
             await GetToken(ConfigurationManager.AppSettings["recodoUrl"] + "login");
         }
 
         private async void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
+            this.redirectWindow.Show();
             await GetToken(ConfigurationManager.AppSettings["recodoUrl"] + "register");
         }
 
         private async Task GetToken(string endpoint)
         {
-            this.ProgressPanel.Visibility = Visibility.Visible;
             var auth = new AuthorizationService(endpoint);
             try
             {
                 token = await auth.Authorize();
                 SaveToken(token);
-                this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
             {
-                this.DeterminateCircularProgress.Visibility = Visibility.Hidden;
-                this.BrowserState.Text = "Some went wrong, please try again..";
+                redirectWindow.RedirectText.Text = "Something went wrong, please try again..";
             }
 
-            this.Hide();
+            this.redirectWindow?.Close();
             OpenRecordingForm();
+            this.Close();
         }
 
         private void SaveToken(Token token)
@@ -82,14 +88,9 @@ namespace Recodo.Desktop.Main
             recordingForm.Show();
         }
 
-        private void GoogleButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
     }
 }
