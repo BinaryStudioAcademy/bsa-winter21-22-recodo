@@ -71,9 +71,18 @@ namespace Recodo.BlobAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFile(int id)
         {
-            await _blobService.DeleteAsync(id);
+            var token = Request.Headers[HeaderNames.Authorization];
 
-            return NoContent();
+            bool result = await _blobService.DeleteAsync(id, token);
+
+            if (result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
     }
 }

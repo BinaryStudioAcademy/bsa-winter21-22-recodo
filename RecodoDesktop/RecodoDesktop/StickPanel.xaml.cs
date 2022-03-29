@@ -12,13 +12,15 @@ namespace Recodo.Desktop.Main
     public partial class StickPanel : Window
     {
         private readonly RecorderService _recorderService;
+        private readonly CameraService _cameraService;
         private TimeSpan time = TimeSpan.FromSeconds(0);
         private DispatcherTimer Timer;
         private bool isPause = false;
 
-        public StickPanel(RecorderService recorderService)
+        public StickPanel(RecorderService recorderService, CameraService cameraService)
         {
             _recorderService = recorderService;
+            _cameraService = cameraService; 
 
             InitializeComponent();
 
@@ -50,6 +52,7 @@ namespace Recodo.Desktop.Main
             else
             {
                 Timer.Stop();
+                _cameraService.StopCapture();
                 _recorderService.StopRecording();
                 this.Close();
             }
@@ -67,6 +70,7 @@ namespace Recodo.Desktop.Main
 
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
+            _cameraService.StopCapture();
             _recorderService.StopRecording();
             if (Timer is not null)
             {
@@ -88,6 +92,24 @@ namespace Recodo.Desktop.Main
             {
                 _recorderService.ResumeRecording();
                 Timer?.Start();
+            }
+        }
+
+        private void ButtonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Timer?.Stop();
+            time = TimeSpan.FromSeconds(0);
+            TimeLabel.Content = TimeSpan.FromSeconds(0).ToString(@"m\:ss");
+            _recorderService.RestartRecording();
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            _recorderService.CancelRecording();
+            if (Timer is not null)
+            {
+                Timer.Stop();
+                this.Close();
             }
         }
     }

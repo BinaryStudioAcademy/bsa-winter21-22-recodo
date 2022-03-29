@@ -56,5 +56,19 @@ namespace Recodo.FIle.BLL.Services
 
             return null;
         }
+
+        public async Task<bool> SendDeleteRequest(int videoId, string token)
+        {
+            Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token.Trim('"', '\\'));
+
+            var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Delete, BaseUrl +
+                $"Videos/{videoId}"));
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
