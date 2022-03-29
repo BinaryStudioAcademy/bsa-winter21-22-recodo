@@ -16,10 +16,9 @@
           </small>
           <small
             *ngIf="
-            form.controls['folderName'].errors?.['minlength'] ||
             form.controls['folderName'].errors?.['maxlength']"
           >
-            Must be 3-30 characters 
+            Must be 1-30 characters 
           </small>
         </span>
       </div>
