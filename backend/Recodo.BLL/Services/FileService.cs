@@ -35,7 +35,8 @@ namespace Recodo.BLL.Services
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
-                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
+                Name = $"Video_{FormatVideoTime(DateTime.Now.Day)}{FormatVideoTime(DateTime.Now.Month)}{DateTime.Now.Year}_" +
+                $"{FormatVideoTime(DateTime.Now.Hour)}{FormatVideoTime(DateTime.Now.Minute)}{FormatVideoTime(DateTime.Now.Second)}",
                 Link = "",
                 FolderId = null
             };
@@ -44,6 +45,15 @@ namespace Recodo.BLL.Services
             await _context.SaveChangesAsync();
 
             return newVideo.Id;
+        }
+
+        private string FormatVideoTime(int time)
+        {
+            if (time < 10)
+            {
+                return $"0{time}";
+            }
+            return time.ToString();
         }
 
         public async Task FinishLoadingFile(int id)
