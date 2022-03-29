@@ -26,7 +26,6 @@ namespace Recodo.API.Extensions
             services.AddScoped<ReactionService>();
             services.AddScoped<ImageService>();
             services.AddScoped<VideoService>();
-            services.AddScoped<AccessToVideoService>();
             services.AddScoped<FileService>();
             services.AddScoped<EmailService>();
         }
