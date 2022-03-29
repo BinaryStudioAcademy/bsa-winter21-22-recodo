@@ -5,7 +5,6 @@ import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { ActivatedRoute } from '@angular/router';
-import { SendDialogService } from 'src/app/services/send-dialog.service';
 import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
@@ -31,7 +30,6 @@ export class VideoPageComponent {
     private commentService: CommentService,
     private videoService: VideoService,
     private activateRoute: ActivatedRoute,
-    private sendDialogService: SendDialogService,
     private snackBarService: SnackBarService,
     private registrationService: RegistrationService
   ) {
@@ -111,14 +109,6 @@ export class VideoPageComponent {
           console.log(resp.body);
         }
       });
-  }
-  public openSendDialog() {
-    this.sendDialogService.openSendDialog(
-      this.link,
-      this.videoId,
-      this.checked,
-      this.userWorkspaceName
-    );
   }
 
   public openSnackBar() {

@@ -35,13 +35,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { SharePropertiesComponent } from './sharing-propetries/share-properties-dialog/share-properties.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
-import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
@@ -59,10 +55,6 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SettingsComponent,
     FolderComponent,
     DialogComponent,
-    ShareByEmailDialogComponent,
-    SharePropertiesComponent,
-    SharedVideoPageComponent,
-    SharingVideoDialogComponent,
     UpdateVideoDialogComponent,
   ],
   imports: [

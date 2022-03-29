@@ -5,8 +5,7 @@
   <mat-drawer-content>
     <app-navbar [user]="this.currentUser"></app-navbar>
     <div class="content mat-elevation-z4">
-      <app-shared-video-page *ngIf="this.isShared"></app-shared-video-page>
-      <router-outlet *ngIf="!this.isShared"></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

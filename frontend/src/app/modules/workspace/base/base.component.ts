@@ -21,20 +21,6 @@ export class BaseComponent {
     private route: ActivatedRoute
   ) {
     this.customService.init();
-    this.route.params.subscribe((params) => {
-      if (params['videoId']) {
-        localStorage.setItem('isShared', 'true');
-      } else {
-        localStorage.setItem('isShared', 'false');
-      }
-    });
-    const isSharedCheck = localStorage.getItem('isShared');
-    localStorage.removeItem('isShared');
-    if (isSharedCheck == 'true') {
-      this.isShared = true;
-    } else {
-      this.isShared = false;
-    }
     this.registrationService
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))
