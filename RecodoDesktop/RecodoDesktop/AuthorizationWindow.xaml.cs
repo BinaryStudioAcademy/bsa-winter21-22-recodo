@@ -2,6 +2,8 @@
 using Recodo.Desktop.Logic;
 using Recodo.Desktop.Models.Auth;
 using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -70,8 +72,12 @@ namespace Recodo.Desktop.Main
         }
         private void OpenRecordingForm()
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token.AccessToken.Trim('"'));
+            var workspaceName = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+
             RecorderService recorderService = new RecorderService(token);
-            VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
+            VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService, workspaceName);
             recordingForm.Show();
         }
     }

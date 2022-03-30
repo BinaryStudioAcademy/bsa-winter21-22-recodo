@@ -24,6 +24,7 @@
 	<ItemGroup>
 		<PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
 		<ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
 		<ProjectReference Include="..\Recodo.Desktop.Models\Recodo.Desktop.Models.csproj" />
 	</ItemGroup>

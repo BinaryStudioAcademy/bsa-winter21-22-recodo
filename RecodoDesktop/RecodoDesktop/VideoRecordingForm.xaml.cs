@@ -19,13 +19,15 @@ namespace Recodo.Desktop.Main
 
         private List<string> audioDevices;
         private List<string> recordableWindows;
+        private string _workspaceName;
 
         CameraService _cameraService = CameraService.GetInstance();
 
-        public VideoRecordingForm(RecorderService recorderService)
+        public VideoRecordingForm(RecorderService recorderService, string workspaceName)
         {
             _recorderService = recorderService;
             _options = new RecorderConfiguration();
+            _workspaceName = workspaceName;
 
             InitializeComponent();
             _recorderService.Configure(_options);
@@ -113,6 +115,7 @@ namespace Recodo.Desktop.Main
             {
                 cameraComboBox.Items.Add(devices[i]);
             }
+            this.WorkspaceName.Text = _workspaceName;
         }
 
         private void cameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

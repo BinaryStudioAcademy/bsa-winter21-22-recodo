@@ -74,11 +74,14 @@
                         <Image Source="Icons/Panel/delete_focus.png" Height="20" Width="20" />
                     </StackPanel>
                 </Button>
-                <Button Name="Logout" Height="35" Width="35" Padding="1,1,1,1" Background="Transparent" BorderBrush="Transparent" Margin="190,20,0,0" Click="Logout_Click">
-                    <StackPanel Width="32" Height="32">
-                        <Image Source="Icons/logout.png"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Margin="0,20,30,0" Orientation="Horizontal">
+                    <TextBlock Name="WorkspaceName" Width="150" Text="" Foreground="#78293B" VerticalAlignment="Center" TextAlignment="Right" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="16"></TextBlock>
+                    <Button Name="Logout" Height="35" Width="35" Padding="1,1,1,1" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Click="Logout_Click">
+                        <StackPanel Width="32" Height="32">
+                            <Image Source="Icons/logout.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </StackPanel>
 
             <Button Grid.Row="1" Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}">
