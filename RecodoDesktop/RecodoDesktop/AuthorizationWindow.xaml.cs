@@ -53,6 +53,8 @@ namespace Recodo.Desktop.Main
                 token = await auth.Authorize();
                 RegistryHelper.SaveToken(token.AccessToken);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
+                this.redirectWindow.Hide();
+                this.OpenRecordingForm();
             }
             catch
             {
