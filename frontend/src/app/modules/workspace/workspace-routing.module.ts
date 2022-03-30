@@ -30,9 +30,9 @@ const routes: Routes = [
         component: VideoPageComponent,
       },
       {
-        path: ':id',
+        path: 'folder/:id',
         component: PersonalComponent,
-      }
+      },
     ],
   },
 ];
