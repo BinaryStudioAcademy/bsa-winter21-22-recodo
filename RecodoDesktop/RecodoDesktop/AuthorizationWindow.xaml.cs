@@ -42,7 +42,7 @@ namespace Recodo.Desktop.Main
             try
             {
                 token = await auth.Authorize();
-                SaveToken(token);
+                RegistryHelper.SaveToken(token.AccessToken);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
@@ -55,17 +55,10 @@ namespace Recodo.Desktop.Main
             OpenRecordingForm();
         }
 
-        private void SaveToken(Token token)
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Recodo");
-            key.SetValue("token", token.AccessToken);
-            key.Close();
-        }
-
         private bool CheckSavedToken()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Recodo");
-            if(key != null)
+            if(key?.GetValue("token") is not null)
             {
                 token = new Token(key.GetValue("token").ToString(), "");
                 return true;

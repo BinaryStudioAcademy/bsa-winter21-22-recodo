@@ -140,5 +140,11 @@ namespace Recodo.Desktop.Main
         {
             Close();
         }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            RegistryHelper.DeleteToken();
+            Close();
+        }
     }
 }
