@@ -1,6 +1,6 @@
 <vm-player shortcut theme="dark" style="--vm-player-theme: #fb6d3a">
-  <vm-video poster="/media/poster.png">
-    <source data-src="/media/video.mp4" type="video/mp4" />
+  <vm-video>
+    <source data-src="{{this.videoUrl}}" type="video/mp4" *ngIf="isVideoSaved" />
   </vm-video>
   <vm-default-ui>
     <vm-controls> </vm-controls>

@@ -1,0 +1,86 @@
+﻿using Azure.Storage.Blobs;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Recodo.DAL.Context;
+using Recodo.DAL.Entities;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Recodo.BLL.Services
+{
+    public class FileService
+    {
+        private readonly RecodoDbContext _context;
+
+        public FileService(RecodoDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<int> SaveVideo(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+            if(authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
+            Video newVideo = new Video()
+            {
+                IsSaving = false, //Rename to IsSaved
+                AuthorId = Convert.ToInt32(authorId),
+                CreatedAt = DateTime.Now,
+                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
+                Link = "",
+                FolderId = null
+            };
+
+            await _context.AddAsync(newVideo);
+            await _context.SaveChangesAsync();
+
+            return newVideo.Id;
+        }
+
+        public async Task FinishLoadingFile(int id)
+        {
+            var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == id);
+            if (video == null)
+            {
+                throw new Exception("Video with such identifier is not found.");
+            }
+
+            video.IsSaving = true; //Rename to IsSaved
+
+            _context.Videos.Update(video);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> CheckAccessToFile(string token, int videoId)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var authorId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id")?.Value;
+            if (authorId == null)
+            {
+                throw new Exception("Can not get user id from token");
+            }
+
+            var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
+            if (video == null)
+            {
+                throw new Exception("Video with such identifier is not found.");
+            }
+            if (video.AuthorId != Convert.ToInt32(authorId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+    }
+}

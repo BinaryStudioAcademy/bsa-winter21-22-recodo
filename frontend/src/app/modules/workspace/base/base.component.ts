@@ -7,18 +7,19 @@ import { RegistrationService } from 'src/app/services/registration.service';
 @Component({
   selector: 'app-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
 })
 export class BaseComponent {
-
-  public currentUser: UserDto = {} as UserDto
+  public currentUser: UserDto = {} as UserDto;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private customService:CustomIconService,
-    private registrationService: RegistrationService) {
+  constructor(
+    private customService: CustomIconService,
+    private registrationService: RegistrationService
+  ) {
     this.customService.init();
     this.route.params.subscribe((params) => {
-      if (params['videoId']) {
+      if (params['id']) {
         localStorage.setItem('isShared', 'true');
       } else {
         localStorage.setItem('isShared', 'false');
@@ -41,5 +42,4 @@ export class BaseComponent {
         this.currentUser = user;
       });
   }
-
 }

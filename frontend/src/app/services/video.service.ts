@@ -38,11 +38,19 @@ export class VideoService extends ResourceService<VideoDto> {
     return this.get(videoId);
   }
 
-  public deleteVideo(id: number) {
-    return this.delete(id);
+  public deleteVideo(url: string, params?: HttpParams) {
+    return this.requestService.delete(url, params).pipe(
+      map((response) => {
+        return response;
+      }),
+    );
   }
 
-  public updateVideo(video: VideoDto) {
-    this.update(video);
+  public updateVideo(resource: UpdateVideoDto) {
+    return this.update<UpdateVideoDto, UpdateVideoDto>(resource).pipe(
+      map((response) => {
+        return response;
+      })
+    );
   }
 }

@@ -1,5 +1,5 @@
 <div class="personal-page-header">
-  <app-avatar [src]="src" [size]="96"></app-avatar>
+  <app-avatar src='{{currentUser.avatarLink}}' [size]="96"></app-avatar>
   <div class="page-header-text">
     <p class="page-header-username">{{this.currentUser.workspaceName}}</p>
     <p class="page-heeader-library-name">Personal library</p>
@@ -23,39 +23,51 @@
     <button mat-button class="button-accent">New Video</button>
   </div>
 </div>
-<h2>Folders</h2>
-<mat-card class="folder-form-container" *ngIf="isFolderFormShow" >
-  <div class="folder-form" [formGroup]="folderForm" (keydown.enter)="createFolder()">
-    <mat-form-field class="input-form" appearance="legacy" color="warn" floatLabel="never" hideRequiredMarker="true">
-      <input matInput placeholder="Enter a folder title"  formControlName="name">
-    </mat-form-field>
+
+<h2><a class="navigate" [routerLink]="['']" *ngIf="this.folders.length !== 0">Folders</a>{{selectedFolderName}}</h2>
+
+<div *ngFor="let folder of folders" class="folders" [routerLink]="['/folder',folder.id]" (click)="folderClick(folder)">
+  <div class="folder" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="folder-active">
+    <span>{{folder.name}}</span>
+    <button mat-icon-button class="details"
+      [matMenuTriggerFor]="folderContextMenu">
+        <mat-icon svgIcon="vertical-dots"></mat-icon>
+  </button>
   </div>
-</mat-card>
+  <mat-menu #folderContextMenu="matMenu" xPosition="after" class="item-menu">
+    <button mat-menu-item (click)="deleteFolder(folder.id, folder.name)"> Delete </button>
+    <button mat-menu-item (click)="showNewFolderForm(folder)"> Rename </button>
+  </mat-menu>
+</div>
 
+<app-folder *ngIf="selectedFolderId !== undefined" [groupValue]="group.value" [currentUser]="currentUser"></app-folder>
+
+<div *ngIf="selectedFolderId === undefined">
 <mat-list *ngIf="group.value === 'grid'">
-  <mat-list-item>
+  <mat-list-item *ngFor="let video of videos">
     <div matLine class="item-header">
       <img
-        src="../../assets/icons/test-user-logo.png"
+        src="{{currentUser.avatarLink}}"
         alt="avatar"
         class="item-avatar"
       />
-      <button mat-icon-button class="details">
+      <button mat-icon-button class="details"
+      [matMenuTriggerFor]="videoContextMenu">
         <mat-icon svgIcon="details"></mat-icon>
       </button>
     </div>
-    <div matLine class="item-photo">
-      <img
-        src="../../assets/icons/screenshot.png"
-        alt="screenshot"
-        class="screenshot-image"
-      />
+    <div matLine class="item-photo" [routerLink]="['video',video.id]">
+      <video
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4#t=1"
+        alt="video"
+        class="screenshot-image">
+      </video>
     </div>
     <div matLine class="item-name">
-      <p>Screenshot name Screenshot name Screenshot name</p>
+      <p>{{video.name}}</p>
     </div>
     <div matLine class="item-footer">
-      <span class="footer-date"> 6 days ago </span>
+      <span class="footer-date">{{calculateTimeDifference(video.createdAt)}}</span>
       <div class="footer-icons">
         <button mat-icon-button>
           <mat-icon svgIcon="star"></mat-icon>
@@ -65,111 +77,15 @@
         </button>
       </div>
     </div>
+    <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
+      <button mat-menu-item (click)="deleteVideo(video.id)">Delete</button>
+      <button mat-menu-item (click)="showVideoUpdateDialog(video)">Rename</button>
+    </mat-menu>
   </mat-list-item>
-
-  <mat-list-item>
-    <div matLine class="item-header">
-      <img
-        src="../../assets/icons/test-user-logo.png"
-        alt="avatar"
-        class="item-avatar"
-      />
-      <button mat-icon-button class="details">
-        <mat-icon svgIcon="details"></mat-icon>
-      </button>
-    </div>
-    <div matLine class="item-photo">
-      <img
-        src="../../assets/icons/screenshot.png"
-        alt="screenshot"
-        class="screenshot-image"
-      />
-    </div>
-    <div matLine class="item-name">
-      <p>Screenshot name Screenshot name Screenshot name</p>
-    </div>
-    <div matLine class="item-footer">
-      <span class="footer-date"> 6 days ago </span>
-      <div class="footer-icons">
-        <button mat-icon-button>
-          <mat-icon svgIcon="star"></mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon svgIcon="share-link"></mat-icon>
-        </button>
-      </div>
-    </div>
-  </mat-list-item>
-  <mat-list-item>
-    <div matLine class="item-header">
-      <img
-        src="../../assets/icons/test-user-logo.png"
-        alt="avatar"
-        class="item-avatar"
-      />
-      <button mat-icon-button class="details">
-        <mat-icon svgIcon="details"></mat-icon>
-      </button>
-    </div>
-    <div matLine class="item-photo">
-      <img
-        src="../../assets/icons/screenshot.png"
-        alt="screenshot"
-        class="screenshot-image"
-      />
-    </div>
-    <div matLine class="item-name">
-      <p>Screenshot name Screenshot name Screenshot name</p>
-    </div>
-    <div matLine class="item-footer">
-      <span class="footer-date"> 6 days ago </span>
-      <div class="footer-icons">
-        <button mat-icon-button>
-          <mat-icon svgIcon="star"></mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon svgIcon="share-link"></mat-icon>
-        </button>
-      </div>
-    </div>
-  </mat-list-item>
-  <mat-list-item>
-    <div matLine class="item-header">
-      <img
-        src="../../assets/icons/test-user-logo.png"
-        alt="avatar"
-        class="item-avatar"
-      />
-      <button mat-icon-button class="details">
-        <mat-icon svgIcon="details"></mat-icon>
-      </button>
-    </div>
-    <div matLine class="item-photo">
-      <img
-        src="../../assets/icons/screenshot.png"
-        alt="screenshot"
-        class="screenshot-image"
-      />
-    </div>
-    <div matLine class="item-name">
-      <p>Screenshot name Screenshot name Screenshot name</p>
-    </div>
-    <div matLine class="item-footer">
-      <span class="footer-date"> 6 days ago </span>
-      <div class="footer-icons">
-        <button mat-icon-button>
-          <mat-icon svgIcon="star"></mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon svgIcon="share-link"></mat-icon>
-        </button>
-      </div>
-    </div>
-  </mat-list-item>
+  
 </mat-list>
 
-<table mat-table *ngIf="group.value === 'list'" [dataSource]="dataSource" class="folder-table">
-  <!-- Title Column -->
+<table mat-table *ngIf="group.value === 'list' && videos !== undefined" [dataSource]="videos" class="folder-table">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>
       <div class="icon-text-cell">
@@ -178,35 +94,38 @@
       </div>
     </th>
     <td mat-cell *matCellDef="let element">
-      <div class="icon-text-cell">
+      <div class="icon-text-cell pointer" [routerLink]="['video', element.id]">
         <mat-icon svgIcon="folder"></mat-icon>
         <span class="cell-text">{{element.name}}</span>
       </div>
     </td>
   </ng-container>
 
-  <!-- Owner Column -->
   <ng-container matColumnDef="owner">
     <th mat-header-cell *matHeaderCellDef>Owner</th>
     <td mat-cell *matCellDef="let element">
       <div class="icon-text-cell">
         <img
-          src="../../assets/icons/test-user-logo.png"
+          src='{{currentUser.avatarLink}}'
           alt="avatar"
           class="item-avatar"
         />
-        <span class="cell-text">{{element.owner}}</span>
+        <span class="cell-text">{{currentUser.workspaceName}}</span>
       </div>
     </td>
   </ng-container>
 
-  <!-- Details Column -->
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element"> 
-      <button mat-icon-button class="details">
+      <button mat-icon-button class="details"
+      [matMenuTriggerFor]="videoContextMenu">
         <mat-icon svgIcon="details"></mat-icon>
       </button>
+      <mat-menu #videoContextMenu="matMenu" xPosition="after" class="item-menu">
+        <button mat-menu-item (click)="deleteVideo(element.id)">Delete</button>
+        <button mat-menu-item (click)="showVideoUpdateDialog(element)">Rename</button>
+      </mat-menu>
     </td>
   </ng-container>
 
@@ -216,3 +135,8 @@
       *matRowDef="let row; columns: displayedColumns;"
   ></tr>
 </table>
+
+  <div class="emptyData" *ngIf="videos?.length === 0 || videos === undefined">
+    <b>Here will be all your uploaded videos</b>
+  </div>
+</div>

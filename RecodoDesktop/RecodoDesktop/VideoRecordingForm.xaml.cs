@@ -2,16 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Recodo.Desktop.Main
 {
@@ -25,14 +19,22 @@ namespace Recodo.Desktop.Main
 
         private List<string> audioDevices;
         private List<string> recordableWindows;
+        private string _workspaceName;
 
-        private bool inputAudiButtonIsActive = true;
-        private bool videoFormOpened = false;
         CameraService _cameraService = CameraService.GetInstance();
-        
-        public VideoRecordingForm(RecorderService recorderService)
+
+        public VideoRecordingForm(RecorderService recorderService, string workspaceName)
         {
             _recorderService = recorderService;
+            _options = new RecorderConfiguration();
+            _workspaceName = workspaceName;
+
+            InitializeComponent();
+            _recorderService.Configure(_options);
+        }
+
+        public VideoRecordingForm()
+        {
             _options = new RecorderConfiguration();
 
             InitializeComponent();
@@ -46,7 +48,7 @@ namespace Recodo.Desktop.Main
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Countdown countdown = new(_recorderService);
+            Countdown countdown = new(_recorderService, _cameraService);
             countdown.Topmost = true;
             this.Hide();
             countdown.Show();
@@ -55,21 +57,25 @@ namespace Recodo.Desktop.Main
         private void AudioDevices_Initialized(object sender, EventArgs e)
         {
             audioDevices = _recorderService.GetInputAudioDevices();
-
+            audioDevices.Add("None");
             this.AudioDevices.ItemsSource = audioDevices;
             this.AudioDevices.SelectedIndex = 0;
         }
 
-        private void Microphone_Click(object sender, RoutedEventArgs e)
-        {
-            this.Microphone.Content = FindResource(this.Microphone.Content == FindResource("Mic") ? "MicOff" : "Mic");
-            inputAudiButtonIsActive = !inputAudiButtonIsActive;
-            _options.IsAudioEnable = inputAudiButtonIsActive;
-        }
-
         private void AudioDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _options.SelectedAudioInputDevice = this.AudioDevices.SelectedItem.ToString();
+            string selectedAudio = this.AudioDevices.SelectedItem.ToString();
+            if (selectedAudio != "None")
+            {
+                _options.SelectedAudioInputDevice = selectedAudio;
+                _options.IsAudioEnable = true;
+                this.Microphone.Content = FindResource("Mic");
+            }
+            else
+            {
+                _options.IsAudioEnable = false;
+                this.Microphone.Content = FindResource("MicOff");
+            }
         }
 
         private void RecordableWindows_Initialized(object sender, EventArgs e)
@@ -77,12 +83,12 @@ namespace Recodo.Desktop.Main
             recordableWindows = _recorderService.GetWindows();
             recordableWindows.Add("Full screen");
             this.RecordableWindows.ItemsSource = recordableWindows;
-            this.RecordableWindows.SelectedIndex = recordableWindows.Count-1;
+            this.RecordableWindows.SelectedIndex = recordableWindows.Count - 1;
         }
 
         private void RecordableWindows_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _options.RecorderWindowTitle = this.RecordableWindows.SelectedItem.ToString(); 
+            _options.RecorderWindowTitle = this.RecordableWindows.SelectedItem.ToString();
         }
 
         private void RecordingResolution_Initialized(object sender, EventArgs e)
@@ -101,7 +107,7 @@ namespace Recodo.Desktop.Main
             var selectedResolution = RecorderHelper.GetResolutionByName(selectedResolutionName);
             _options.Resolution = selectedResolution;
         }
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> devices = _cameraService.GetCameras().ToList();
@@ -109,6 +115,7 @@ namespace Recodo.Desktop.Main
             {
                 cameraComboBox.Items.Add(devices[i]);
             }
+            this.WorkspaceName.Text = _workspaceName;
         }
 
         private void cameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -116,22 +123,31 @@ namespace Recodo.Desktop.Main
             this.Dispatcher.Invoke(() =>
             {
                 VideoForm videoForm = new VideoForm(cameraComboBox.SelectedIndex);
-            
-                if (!videoFormOpened)
-                {
-                        videoFormOpened = true;
-                        return;
-                }
+                
                 if (cameraComboBox.SelectedIndex != 0)
                 {
-                        _cameraService.StopCapture();
-                        videoForm.Show();
+                    _cameraService.StartCapture(cameraComboBox.SelectedIndex-1);
+                    videoForm.Show();
+                    this.Camera.Content = FindResource("Camera");
                 }
                 else
                 {
-                        _cameraService.StopCapture();               
+                    _cameraService.StopCapture();
+                    videoForm.Hide();
+                    this.Camera.Content = FindResource("CameraOff");
                 }
             });
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            RegistryHelper.DeleteToken();
+            Close();
         }
     }
 }

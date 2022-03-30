@@ -30,6 +30,15 @@ import { CommentReactionService } from 'src/app/services/comment-reaction.servic
 import { CommentService } from 'src/app/services/comment.service';
 import { VideoService } from 'src/app/services/video.service';
 import { CommentReactionsComponent } from './video/comment-reactions/comment-reactions.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FolderComponent } from './folder/folder.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { TeamInviteComponent } from './team-invite/team-invite.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
+import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,13 +52,21 @@ import { CommentReactionsComponent } from './video/comment-reactions/comment-rea
     VideoDescriptionComponent,
     VideoCommentsComponent,
     CommentReactionsComponent,
+    SettingsComponent,
+    FolderComponent,
+    DialogComponent,
+    TeamInviteComponent,
+    InviteFinishComponent,
+    UpdateVideoDialogComponent,
   ],
   imports: [
+    NgxDropzoneModule,
     CommonModule,
     BaseRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
+    MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
@@ -70,6 +87,11 @@ import { CommentReactionsComponent } from './video/comment-reactions/comment-rea
     CommentReactionService,
     CommentService,
     VideoService,
+    MatDialogModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
 })
 export class WorkspaceModule {}

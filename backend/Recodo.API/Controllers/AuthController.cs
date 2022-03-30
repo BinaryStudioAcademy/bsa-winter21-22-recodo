@@ -23,8 +23,7 @@ namespace Recodo.API.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<AuthUserDTO>> Register([FromBody] NewUserDTO userDTO)
         {
-            var createdUser = await _userService.CreateUser(userDTO);
-
+            UserDTO createdUser = await _userService.CreateUser(userDTO);
             var token = await _authService.GenerateAccessToken(createdUser.Id, createdUser.WorkspaceName, createdUser.Email);
 
             var result = new AuthUserDTO
@@ -62,5 +61,6 @@ namespace Recodo.API.Controllers
 
             return new JsonResult(result);
         }
+
     }
 }

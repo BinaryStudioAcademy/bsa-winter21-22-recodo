@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Net.Http.Headers;
+using Recodo.Desktop.Models.Auth;
 using ScreenRecorderLib;
 
 namespace Recodo.Desktop.Logic
 {
     public class RecorderService
     {
+        public RecorderService(Token token)
+        {
+            _token = token;
+        }
         private RecorderConfiguration _options;
+        private readonly Token _token;
+        private string filePath;
         public void Configure(RecorderConfiguration options)
         {
             _options = options;
@@ -54,7 +67,8 @@ namespace Recodo.Desktop.Logic
             recorder.OnRecordingFailed += Rec_OnRecordingFailed;
             recorder.OnRecordingComplete += Rec_OnRecordingComplete;
             recorder.OnStatusChanged += Rec_OnStatusChanged;
-            recorder.Record(Path.ChangeExtension(Path.GetTempFileName(), ".mp4"));
+            filePath = Path.Combine(Path.GetTempPath(), Path.ChangeExtension(Path.GetRandomFileName(), ".mp4"));
+            recorder.Record(filePath);
 
             StartRec?.Invoke();
         }
@@ -72,10 +86,25 @@ namespace Recodo.Desktop.Logic
             }
         }
 
-        public void StopRecording()
+        public async Task StopRecording()
         {
             recorder?.Stop();
+            await UploadVideo(filePath);
         }
+
+        public void RestartRecording()
+        {
+            recorder?.Stop();
+            recorder?.Dispose();
+            File.Delete(filePath);
+            StartRecording();
+        }
+
+        public void CancelRecording()
+        {
+            recorder?.Stop();
+            File.Delete(filePath);
+        } 
 
         public List<string> GetInputAudioDevices()
         {
@@ -119,14 +148,58 @@ namespace Recodo.Desktop.Logic
             }
         }
 
-        private static void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
+        private async void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
         {
-            string filePath = e.FilePath;
+         
         }
 
         private static void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
         {
             string error = e.Error;
+        }
+
+        private void OpenBrowser(string url)
+        {
+            var psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = url;
+            Process.Start(psi);
+        }
+
+        private async Task UploadVideo(string path)
+        {
+            string blobApi = ConfigurationManager.AppSettings["blobApi"];
+            string mainApi = ConfigurationManager.AppSettings["mainApi"];
+
+            ///
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add(HeaderNames.Authorization, _token.AccessToken.Trim('"'));
+                var responseMainApi = await client.SendAsync(new HttpRequestMessage(HttpMethod.Post, mainApi + $"File"));
+                var videoId = await responseMainApi.Content.ReadAsStringAsync();
+
+                if (videoId != null)
+                {
+                    // Open browser with video id, but video is just starting to be saved on the blob storage
+                    OpenBrowser(ConfigurationManager.AppSettings["recodoUrl"] + $"video/{videoId}");
+
+                    var filestream = File.OpenRead(path);
+                    var inputData = new StreamContent(filestream);
+                    client.DefaultRequestHeaders.Add("videoId", videoId);
+
+                    var responseBlobApi = await client.PostAsync(blobApi, inputData);
+                    var id = await responseBlobApi.Content.ReadAsStringAsync();
+                    if (id is not null)
+                    {
+                        //when video is saved on the Blob storage
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("video id is null");
+                }
+            }
+            ///
         }
     }
 }

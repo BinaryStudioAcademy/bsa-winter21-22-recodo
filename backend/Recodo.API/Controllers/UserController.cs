@@ -3,23 +3,73 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
 using Recodo.BLL.Services;
+using Recodo.Common.Dtos.User;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
 {
-    [Route("api/users")]
     [ApiController]
+    [Route("api/User")]
     public class UserController : ControllerBase
     {
-        private UserService _userService;
-        public UserController(UserService userService)
+        private readonly AuthService _authService;
+        private readonly UserService _userService;
+        private readonly TeamService _teamService;
+
+        public UserController(AuthService authService, UserService userService, TeamService teamService)
         {
+            _authService = authService;
             _userService = userService;
+            _teamService = teamService;
+        }
+
+        [HttpPost("Reset-Password/{email}")]
+        public async Task<IActionResult> ResetPassword(string email)
+        {
+            await _userService.ResetPassword(email);
+            return NoContent();
+        }
+
+        [HttpPost("Reset-Password-Finish/{email}/{newPass}")]
+        public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
+        {
+            var loginDto = await _userService.ResetPasswordFinish(email, newPass);
+            var auth = await _authService.Authorize(loginDto, false);
+
+            return Ok(auth);
+        }
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromForm] UpdateUserDTO userDTO, [FromForm] IFormFile avatar)
+        {
+            await _userService.UpdateUser(userDTO, avatar);
+            return NoContent();
+        }
+
+        [HttpPost("Update-Password-Email")]
+        public async Task<IActionResult> UpdatePasswordEmail([FromBody] UpdateUserDTO userDTO)
+        {
+            await _userService.UpdateUserPasswordEmail(userDTO);
+            return NoContent();
+        }
+
+        [HttpPost("Reset-Password/{userId:int}")]
+        public async Task<IActionResult> ResetPassword(int userId)
+        {
+            await _userService.ResetPassword(userId);
+            return NoContent();
+        }
+
+        [HttpPost("Delete-User/{userId:int}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            await _userService.DeleteUser(userId);
+            return NoContent();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("fromToken")]
+        [Route("FromToken")]
         public async Task<IActionResult> GetUserFromToken()
         {
             var user = await _userService.GetUserById(this.GetUserIdFromToken());
@@ -27,7 +77,8 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpGet]
+        [AllowAnonymous]
         [Route("Add-To-Team/{token}")]
         public async Task<IActionResult> AddToTeam(string token)
         {

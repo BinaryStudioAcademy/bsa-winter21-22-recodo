@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos.Folder;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Recodo.API.Controllers
@@ -19,7 +20,27 @@ namespace Recodo.API.Controllers
         [HttpPost]
         public async Task<ActionResult<FolderDTO>> Create([FromBody] NewFolderDTO newFolderDTO)
         {
-            return Ok(await _folderService.CreateFolder(newFolderDTO));
+            return Ok(await _folderService.Create(newFolderDTO));
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<FolderDTO>>> Get(int id)
+        {
+            return Ok(await _folderService.GetFoldersByAuthorId(id));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _folderService.Delete(id);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] FolderDTO folderDto)
+        {
+            await _folderService.Update(folderDto);
+            return NoContent();
         }
     }
 }

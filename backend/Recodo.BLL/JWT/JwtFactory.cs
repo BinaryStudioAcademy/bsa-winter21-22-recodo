@@ -3,6 +3,7 @@ using Recodo.Common.Auth;
 using Recodo.Common.Security;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace Recodo.BLL.JWT
             {
                  new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
                  new Claim(JwtRegisteredClaimNames.Email, email),
+                 new Claim(JwtRegisteredClaimNames.Name, userName),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst("id")
@@ -45,10 +47,19 @@ namespace Recodo.BLL.JWT
 
             return _jwtSecurityTokenHandler.WriteToken(jwt);
         }
-        
+
         public string GenerateRefreshToken()
         {
             return Convert.ToBase64String(SecurityHelper.GetRandomBytes());
+        }
+
+        public string GetValueFromToken(string token, string value)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = jsonToken as JwtSecurityToken;
+
+            return tokenS.Claims.First(claim => claim.Type == value)?.Value;
         }
 
         private static ClaimsIdentity GenerateClaimsIdentity(int id, string userName)

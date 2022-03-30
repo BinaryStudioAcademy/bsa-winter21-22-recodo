@@ -79,6 +79,12 @@ export class CustomIconService {
         '../assets/icons/Star.svg'
       )
     );
+     this.matIconRegistry.addSvgIcon(
+       'vertical-dots',
+       this.domSanitizer.bypassSecurityTrustResourceUrl(
+         '../assets/icons/verticalDots.svg'
+       )
+     );
 
     //Toggle button group  icons
     this.matIconRegistry.addSvgIcon(

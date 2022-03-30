@@ -6,18 +6,22 @@ import { TokenDoesnotExistGuard } from './guards/token-doesnot-exist.guard';
 const routes: Routes = [
   {
     path: 'personal',
-    loadChildren: () => import('./modules/workspace/workspace.module').then(m => m.WorkspaceModule),
-    // canActivate : [TokenExistsGuard]
+    loadChildren: () =>
+      import('./modules/workspace/workspace.module').then(
+        (m) => m.WorkspaceModule
+      ),
+    canActivate: [TokenExistsGuard],
   },
   {
     path: '',
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
-    // canActivate : [TokenDoesnotExistGuard]
-  }
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [TokenDoesnotExistGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
