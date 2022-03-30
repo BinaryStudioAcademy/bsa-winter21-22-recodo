@@ -64,5 +64,11 @@
 		<Resource Include="Icons\Panel\stop_focus.png" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Resources\return.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 
 </Project>

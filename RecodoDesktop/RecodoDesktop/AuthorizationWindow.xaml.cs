@@ -50,15 +50,14 @@ namespace Recodo.Desktop.Main
             {
                 token = await auth.Authorize();
                 SaveToken(token);
+                this.redirectWindow?.Hide();
+                OpenRecordingForm();
+                //this.Close();
             }
             catch
             {
                 redirectWindow.RedirectText.Text = "Something went wrong, please try again..";
             }
-
-            this.redirectWindow?.Close();
-            OpenRecordingForm();
-            this.Close();
         }
 
         private void SaveToken(Token token)
