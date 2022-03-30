@@ -2,6 +2,8 @@
 using Recodo.Desktop.Logic;
 using Recodo.Desktop.Models.Auth;
 using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -42,7 +44,7 @@ namespace Recodo.Desktop.Main
             try
             {
                 token = await auth.Authorize();
-                SaveToken(token);
+                RegistryHelper.SaveToken(token.AccessToken);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
             }
             catch
@@ -55,17 +57,10 @@ namespace Recodo.Desktop.Main
             OpenRecordingForm();
         }
 
-        private void SaveToken(Token token)
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Recodo");
-            key.SetValue("token", token.AccessToken);
-            key.Close();
-        }
-
         private bool CheckSavedToken()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Recodo");
-            if(key != null)
+            if(key?.GetValue("token") is not null)
             {
                 token = new Token(key.GetValue("token").ToString(), "");
                 return true;
@@ -77,8 +72,12 @@ namespace Recodo.Desktop.Main
         }
         private void OpenRecordingForm()
         {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token.AccessToken.Trim('"'));
+            var workspaceName = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+
             RecorderService recorderService = new RecorderService(token);
-            VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService);
+            VideoRecordingForm recordingForm = new VideoRecordingForm(recorderService, workspaceName);
             recordingForm.Show();
         }
     }
