@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         AllowsTransparency="True"
         Background="Transparent" 
-        Title="Recodo" Height="180" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
-    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="6">
+        Title="Recodo" Height="180" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="6" BorderBrush="#78293B" BorderThickness="2">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

@@ -53,6 +53,8 @@ namespace Recodo.Desktop.Main
                 token = await auth.Authorize();
                 RegistryHelper.SaveToken(token.AccessToken);
                 this.ProgressPanel.Visibility = Visibility.Hidden;
+                this.redirectWindow.Hide();
+                this.OpenRecordingForm();
             }
             catch
             {
@@ -87,6 +89,11 @@ namespace Recodo.Desktop.Main
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }
