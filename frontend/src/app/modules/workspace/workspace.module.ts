@@ -31,6 +31,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { TeamInviteComponent } from './team-invite/team-invite.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
+import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { InviteFinishComponent } from './invite-finish/invite-finish.component';
     DialogComponent,
     TeamInviteComponent,
     InviteFinishComponent,
+    UpdateVideoDialogComponent,
   ],
   imports: [
     NgxDropzoneModule,
