@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Recodo.BLL.Services.Abstract;
-using Recodo.Common.Dtos.Comment;
+using Recodo.Common.Dtos;
 using Recodo.DAL.Context;
 using Recodo.DAL.Entities;
 using System.Collections.Generic;
 using Recodo.Common.Dtos.Video;
 using System;
+using System.Linq;
+using Recodo.API.Middleware;
 
 namespace Recodo.BLL.Services
 {

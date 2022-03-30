@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
 using Recodo.BLL.Services;
-using Recodo.Common.Dtos.Comment;
+using Recodo.Common.Dtos;
 using Recodo.Common.Dtos.Reactions;
 using Recodo.Common.Dtos.Video;
 using Recodo.Common.Enums;
