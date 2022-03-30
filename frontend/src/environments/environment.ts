@@ -8,6 +8,7 @@ export const environment = {
   blobApiUrl: 'https://localhost:5001/api',
   production: false,
   googleKey: '',
+  clientUrl: 'http://localhost:4200',
 };
 
 /*

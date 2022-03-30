@@ -14,21 +14,23 @@ namespace Recodo.API.Controllers
     {
         private readonly AuthService _authService;
         private readonly UserService _userService;
+        private readonly TeamService _teamService;
 
-        public UserController(AuthService authService, UserService userService)
+        public UserController(AuthService authService, UserService userService, TeamService teamService)
         {
             _authService = authService;
             _userService = userService;
+            _teamService = teamService;
         }
 
-        [HttpPost("ResetPassword/{email}")]
+        [HttpPost("Reset-Password/{email}")]
         public async Task<IActionResult> ResetPassword(string email)
         {
             await _userService.ResetPassword(email);
             return NoContent();
         }
 
-        [HttpPost("ResetPasswordFinish/{email}/{newPass}")]
+        [HttpPost("Reset-Password-Finish/{email}/{newPass}")]
         public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
         {
             var loginDto = await _userService.ResetPasswordFinish(email, newPass);
@@ -75,10 +77,21 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        [Route("Add-To-Team/{token}")]
+        public async Task<IActionResult> AddToTeam(string token)
         {
-            return Ok(await _userService.GetUserById(id));
+            await _userService.AddToTeam(this.GetUserIdFromToken(), token);
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        [Route("Send-Invite-Link/{email}")]
+        public async Task<IActionResult> SendInviteLink(string email)
+        {
+            await _teamService.SendInviteLink(this.GetUserIdFromToken(), email);
+
+            return NoContent();
         }
     }
 }

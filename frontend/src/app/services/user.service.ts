@@ -27,15 +27,23 @@ export class UserService extends ResourceService<UserDto> {
     return '/User';
   }
 
+  public addToTeam(email: string) {
+    return this.getWithUrl(email, 'Add-To-Team');
+  }
+
+  public sendInviteLink(email: string) {
+    return this.getWithUrl(email, 'Send-Invite-Link');
+  }
+
   public resetPassword(email: string) {
-    return this.addWithUrl<{}, {}>(`Resetpassword/${email}`, {
+    return this.addWithUrl<{}, {}>(`Reset-Password/${email}`, {
       email,
     });
   }
 
   public resetPasswordFinish(email: string, password: string) {
     return this.addWithUrl<{}, AuthUserDto>(
-      `ResetPasswordFinish/${email}/${password}`,
+      `Reset-Password-Finish/${email}/${password}`,
       {
         email,
         passwordNew: password,

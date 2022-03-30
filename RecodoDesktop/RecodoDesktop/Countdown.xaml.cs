@@ -8,13 +8,15 @@ namespace Recodo.Desktop.Main
     public partial class Countdown : Window
     {
         private RecorderService _recorderService;
+        private CameraService _cameraService;
         DispatcherTimer Timer;
         TimeSpan time = TimeSpan.FromSeconds(3);
 
-        public Countdown(RecorderService recorderService)
+        public Countdown(RecorderService recorderService, CameraService cameraService)
         {
             InitializeComponent();
             _recorderService = recorderService;
+            _cameraService = cameraService;
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Tick += Timer_Tick;
@@ -33,7 +35,7 @@ namespace Recodo.Desktop.Main
             else
             {
                 Timer.Stop();
-                StickPanel stickPanel = new StickPanel(_recorderService);
+                StickPanel stickPanel = new StickPanel(_recorderService, _cameraService);
                 stickPanel.Show();
                 this.Hide();
 

@@ -38,6 +38,9 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { TeamInviteComponent } from './team-invite/team-invite.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
@@ -55,6 +58,8 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SettingsComponent,
     FolderComponent,
     DialogComponent,
+    TeamInviteComponent,
+    InviteFinishComponent,
     UpdateVideoDialogComponent,
   ],
   imports: [
@@ -83,6 +88,8 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     ToastrModule.forRoot(),
     ClipboardModule,
     MatFormFieldModule,
+    MatDialogModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
   ],
