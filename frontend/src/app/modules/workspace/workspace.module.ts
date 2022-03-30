@@ -36,6 +36,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { TeamInviteComponent } from './team-invite/team-invite.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
@@ -55,6 +58,8 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SharePropertiesComponent,
     SharedVideoPageComponent,
     SharingVideoDialogComponent,
+    TeamInviteComponent,
+    InviteFinishComponent,
     UpdateVideoDialogComponent,
   ],
   imports: [
@@ -81,9 +86,10 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     ToastrModule.forRoot(),
     ClipboardModule,
     MatFormFieldModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
 })
 export class WorkspaceModule {}

@@ -42,7 +42,6 @@ export abstract class ResourceService<T> {
       .get<T>(`${this.APIUrl}/${id}`, { observe: 'response' })
       .pipe(catchError(this.handleError));
   }
-
   getWithUrl(id: string | number, subUrl: string): Observable<HttpResponse<T>> {
     return this.httpClient
       .get<T>(`${this.APIUrl}/${subUrl}/${id}`, { observe: 'response' })
