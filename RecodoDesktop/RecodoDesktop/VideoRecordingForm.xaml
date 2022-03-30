@@ -37,7 +37,7 @@
             <Image x:Key="CameraOff" Source="Icons/cameraOff.png" Height="20" Width="16.4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ResourceDictionary>
     </Window.Resources>
-    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="10">
+    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="10" BorderBrush="#78293B" BorderThickness="2">
         <Grid Height="517">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="230.98"/>
