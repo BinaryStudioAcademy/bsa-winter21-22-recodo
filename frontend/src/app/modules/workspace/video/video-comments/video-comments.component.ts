@@ -23,7 +23,6 @@ import { RegistrationService } from 'src/app/services/registration.service';
 export class VideoCommentsComponent implements OnDestroy, OnInit {
   @Input() public comment: Comment;
   @Output() deletedComment = new EventEmitter<number>();
-  @Output() editedComment = new EventEmitter<Comment>();
   @Output() newReaction = new EventEmitter<boolean>();
 
   public commentAuthor: UserDto;
@@ -32,7 +31,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   public isEditingMode = false;
   private unsubscribe$ = new Subject<void>();
   public isCommentAuthor = false;
-
+  public isLoading = false;
   constructor(
     private commentReactionService: CommentReactionService,
     private commentService: CommentService,
@@ -41,6 +40,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   ) {}
 
   public ngOnInit() {
+    console.log(this.comment);
     this.userService.getUserById(this.comment.authorId).subscribe((resp) => {
       if (resp.body) {
         this.commentAuthor = resp.body;
@@ -53,6 +53,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
             this.isCommentAuthor = true;
           }
         });
+        this.isLoading = true;
       }
     });
   }

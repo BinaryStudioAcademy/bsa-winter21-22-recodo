@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="this.isLoading">
   <mat-card-header>
     <img mat-card-avatar src="{{ commentAuthor.avatarLink }}" alt="Avatar" />
     <mat-card-title>{{ commentAuthor.workspaceName }} </mat-card-title>

@@ -93,5 +93,11 @@ namespace Recodo.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            return Ok(await _userService.GetUserById(id));
+        }
     }
 }

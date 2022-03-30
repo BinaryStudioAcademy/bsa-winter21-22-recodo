@@ -24,6 +24,8 @@ export class VideoPageComponent {
   public link: string;
   public checked: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  public isLoading = true;
+
   constructor(
     private commentService: CommentService,
     private videoService: VideoService,
@@ -46,6 +48,7 @@ export class VideoPageComponent {
       .subscribe((user) => {
         this.userWorkspaceName = user.workspaceName;
       });
+    setTimeout(() => (this.isLoading = false), 1000);
   }
 
   public deleteComment(commentId: number) {
@@ -61,13 +64,9 @@ export class VideoPageComponent {
       });
   }
 
-  public createComment(comment: NewComment) {
-    this.commentService.createComment(comment).subscribe();
-    this.updateVideo();
-  }
-
-  public sendComment() {
+  public sendComment(comment: NewComment) {
     if (this.currentVideo != null) {
+      this.newComment.body = comment.body;
       this.newComment.authorId = this.currentVideo.authorId;
       this.newComment.videoId = this.currentVideo.id;
     }
@@ -82,6 +81,7 @@ export class VideoPageComponent {
           this.newComment.body = '';
         }
       });
+    this.updateVideo();
   }
   private sortCommentArray(array: Comment[]): Comment[] {
     return array.sort(
@@ -94,6 +94,8 @@ export class VideoPageComponent {
       .getVideoById(this.videoId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
+        console.log('update video:');
+        console.log(resp.body);
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }
