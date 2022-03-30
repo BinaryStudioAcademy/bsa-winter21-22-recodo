@@ -56,7 +56,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="0"  Margin="35.32,22.92,0,39.15" Orientation="Horizontal">
+            <StackPanel Grid.Column="0" Grid.Row="0"  Margin="35.32,40,0,39.15" Orientation="Horizontal">
                 <Border CornerRadius="32" Width="56" Height="56"  Background="{DynamicResource SecondaryHueMidBrush}" >
                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel Width="22.04" Height="29.47" Margin="17.25,13.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
@@ -68,7 +68,21 @@
                 <TextBlock FontSize="28px" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Medium" Height="42" Margin="12.29,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="107" UseLayoutRounding="False" Padding="0,5,0,0">Recodo</TextBlock>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,27.32,0"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" Grid.Column="1">
+                <Button Name="CloseButton" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" materialDesign:ButtonAssist.CornerRadius="4" Height="28" Width="28" Padding="4,4,4,4" Click="CloseButton_Click" Margin="197,2,2,0" Background="#B6445D">
+                    <StackPanel Width="20" Height="20">
+                        <Image Source="Icons/Panel/delete_focus.png" Height="20" Width="20" />
+                    </StackPanel>
+                </Button>
+                <StackPanel Margin="0,20,30,0" Orientation="Horizontal">
+                    <TextBlock Name="WorkspaceName" Width="150" Text="" Foreground="#78293B" VerticalAlignment="Center" TextAlignment="Right" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="16"></TextBlock>
+                    <Button Name="Logout" Height="35" Width="35" Padding="1,1,1,1" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Click="Logout_Click">
+                        <StackPanel Width="32" Height="32">
+                            <Image Source="Icons/logout.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
 
             <Button Grid.Row="1" Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}">
                 <Button.BorderBrush>
@@ -151,11 +165,7 @@
                     <TextBlock FontWeight="Light" FontSize="12" VerticalAlignment="Bottom" Margin="13.78,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">5 minutes limit</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="CloseButton" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" materialDesign:ButtonAssist.CornerRadius="4" Height="28" Width="28" Padding="4,4,4,4" Click="CloseButton_Click" Grid.Column="1" Margin="190,10,10,83" Background="#B6445D">
-                <StackPanel Width="20" Height="20">
-                    <Image Source="Icons/Panel/delete_focus.png" Height="20" Width="20" />
-                </StackPanel>
-            </Button>
+
         </Grid>
     </Border>
 </Window>
