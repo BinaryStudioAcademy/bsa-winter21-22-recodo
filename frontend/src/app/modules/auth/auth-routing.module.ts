@@ -6,7 +6,6 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { ResetDonePageComponent } from './reset-done-page/reset-done-page.component';
 import { ResetPassPageComponent } from './reset-pass-page/reset-pass-page.component';
 
-import { ReturnPageComponent } from './return-page/return-page.component';
 
 const routes: Routes = [
   {
@@ -24,10 +23,6 @@ const routes: Routes = [
   {
     path: 'reset-finish',
     component: ResetDonePageComponent,
-  },
-  {
-    path: 'return',
-    component: ReturnPageComponent,
   },
   {
     path: '',
