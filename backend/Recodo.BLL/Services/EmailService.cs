@@ -7,10 +7,17 @@ namespace Thread_.NET.BLL.Services
 {
     public class EmailService
     {
-        public static async Task SendEmailAsync(string toEmail, string subject, string message, IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+
+        public EmailService(IConfiguration configuration)
         {
-            string apiKey = configuration["SendGridKey"];
-            string fromEmail = configuration["SendGridFromEmail"];
+            _configuration = configuration;
+        }
+
+        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        {
+            string apiKey = _configuration["SendGridKey"];
+            string fromEmail = _configuration["SendGridFromEmail"];
             var client = new SendGridClient(apiKey);
 
             var from = new EmailAddress(fromEmail, "Admin Recodo");

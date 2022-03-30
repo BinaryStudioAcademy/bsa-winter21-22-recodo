@@ -28,6 +28,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { TeamInviteComponent } from './team-invite/team-invite.component';
+import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
 
 @NgModule({
@@ -43,6 +46,8 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SettingsComponent,
     FolderComponent,
     DialogComponent,
+    TeamInviteComponent,
+    InviteFinishComponent,
     UpdateVideoDialogComponent,
   ],
   imports: [
@@ -65,6 +70,8 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     MatTableModule,
     SharedModule,
     VimeModule,
+    MatDialogModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
