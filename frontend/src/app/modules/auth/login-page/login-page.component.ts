@@ -20,6 +20,7 @@ export class LoginPageComponent implements OnInit {
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
   redirectUrl: string | undefined;
+  private videoId: number | undefined;
 
   constructor(
     private router: Router,
@@ -34,6 +35,7 @@ export class LoginPageComponent implements OnInit {
     this.validateForm();
     this.route.queryParams.subscribe((params) => {
       this.redirectUrl = params['redirect_url'];
+      this.videoId = params['id'];
     });
   }
 

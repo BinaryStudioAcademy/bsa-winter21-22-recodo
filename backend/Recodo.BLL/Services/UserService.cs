@@ -14,7 +14,6 @@ using Recodo.DAL.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Thread_.NET.BLL.Services;
 
 namespace Recodo.BLL.Services
 {
@@ -187,6 +186,11 @@ namespace Recodo.BLL.Services
             }
         }
 
+        public async Task<UserDTO> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
+            return _mapper.Map<UserDTO>(user);
+        }
         public async Task ResetPassword(string email)
         {
             var existUser = _context.Users.FirstOrDefault(u => u.Email == email);

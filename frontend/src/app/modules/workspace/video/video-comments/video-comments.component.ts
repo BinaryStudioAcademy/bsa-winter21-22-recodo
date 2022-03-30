@@ -30,7 +30,8 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   public allReactions?: VideoReactionDTO[];
   public isEditingMode = false;
   private unsubscribe$ = new Subject<void>();
-
+  public isCommentAuthor = false;
+  public isLoading = false;
   constructor(
     private commentReactionService: CommentReactionService,
     private commentService: CommentService,

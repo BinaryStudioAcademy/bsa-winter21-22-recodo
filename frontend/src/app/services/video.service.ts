@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { UpdateVideoDto } from '../models/video/update-video-dto';
 import { VideoDto } from '../models/video/video-dto';
+import { RequestService } from './request.service';
 import { ResourceService } from './resource.service';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +13,11 @@ export class VideoService extends ResourceService<VideoDto> {
     return '/video';
   }
 
-  constructor(override httpClient: HttpClient, private router: Router) {
+  constructor(
+    override httpClient: HttpClient,
+    private router: Router,
+    private requestService: RequestService
+  ) {
     super(httpClient);
   }
 
@@ -19,7 +26,7 @@ export class VideoService extends ResourceService<VideoDto> {
   }
 
   public getAllVideosByFolderId(id: number) {
-    return this.getFullRequest<VideoDto>(`video/${id}`).pipe(
+    return this.getFullRequest<VideoDto>(`video/folder/${id}`).pipe(
       map((resp) => {
         return resp.body as unknown as VideoDto[];
       })
@@ -42,7 +49,7 @@ export class VideoService extends ResourceService<VideoDto> {
     return this.requestService.delete(url, params).pipe(
       map((response) => {
         return response;
-      }),
+      })
     );
   }
 
@@ -52,5 +59,9 @@ export class VideoService extends ResourceService<VideoDto> {
         return response;
       })
     );
+  }
+
+  public getVideoById(videoId: number) {
+    return this.get(videoId);
   }
 }

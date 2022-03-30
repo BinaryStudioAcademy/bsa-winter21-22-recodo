@@ -3,11 +3,13 @@ import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
-import { Subject, takeUntil } from 'rxjs';
 import { NewComment } from 'src/app/models/comment/new-comment';
+import { environment } from 'src/environments/environment';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 import { ActivatedRoute } from '@angular/router';
-import { ReactionType } from 'src/app/models/common/reaction-type';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-video-page',
@@ -15,16 +17,23 @@ import { ReactionType } from 'src/app/models/common/reaction-type';
   styleUrls: ['./video-page.component.scss'],
 })
 export class VideoPageComponent {
+  public userWorkspaceName = {} as string;
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDto;
   public currentUser: UserDto;
   public newComment = {} as NewComment;
+  public link: string;
+  public checked: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  public isLoading = true;
+
   constructor(
     private commentService: CommentService,
     private videoService: VideoService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private snackBarService: SnackBarService,
+    private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
     this.videoId = activateRoute.snapshot.params['id'];
@@ -77,6 +86,7 @@ export class VideoPageComponent {
           this.newComment.body = '';
         }
       });
+    this.updateVideo();
   }
   private sortCommentArray(array: Comment[]): Comment[] {
     return array.sort(
@@ -84,22 +94,20 @@ export class VideoPageComponent {
     );
   }
 
-  public isCurrentVideo() {
-    if (this.currentVideo) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public updateVideo() {
     this.videoService
       .getVideoById(this.videoId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
+        console.log('update video:');
+        console.log(resp.body);
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }
       });
+  }
+
+  public openSnackBar() {
+    this.snackBarService.openSnackBar('Link was successfully copied!');
   }
 }

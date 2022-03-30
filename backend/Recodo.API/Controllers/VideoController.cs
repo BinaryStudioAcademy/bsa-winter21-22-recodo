@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recodo.API.Extensions;
+using Microsoft.Net.Http.Headers;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos;
 using Recodo.Common.Dtos.Reactions;
@@ -10,11 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Recodo.Common.Dtos.Reactions;
+using Recodo.API.Extensions;
+using Recodo.Common.Enums;
 
 namespace Recodo.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class VideoController : ControllerBase
     {
         private readonly VideoService _videoService;
@@ -25,37 +28,53 @@ namespace Recodo.API.Controllers
             _reactionService = reactionService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<VideoDTO>>> GetVideo()
-        {
-            return Ok(await _videoService.GetVideos());
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<VideoDTO>> GetVideoById(int id)
         {
             return Ok(await _videoService.GetVideoById(id));
         }
 
+        [HttpGet("folder/{id:int}")]
+        public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
+        {
+            return Ok(await _videoService.GetVideosByFolderId(id));
+        }
+
+        [HttpGet("user/{id:int}")]
+        public async Task<ActionResult<List<VideoDTO>>> GetVideosByUserIdWithoutFolder(int id)
+        {
+            return Ok(await _videoService.GetVideosByUserIdWithoutFolder(id));
+        }
+
+        [HttpGet("check/{id:int}")]
+        public async Task<ActionResult> GetFileState(int id)
+        {
+            return Ok(await _videoService.CheckVideoState(id));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            Request.Headers.TryGetValue(HeaderNames.Authorization, out Microsoft.Extensions.Primitives.StringValues value);
+            var token = value.ToString();
+
+            await _videoService.Delete(id, token);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] UpdateVideoDTO videoDTO)
+        {
+            await _videoService.Update(videoDTO);
+            return NoContent();
+        }
+        
         [HttpPost("react")]
         public async Task<IActionResult> ReactVideo(NewVideoReactionDTO reaction)
         {
             reaction.UserId = this.GetUserIdFromToken();
             await _reactionService.ReactVideo(reaction);
-
             return Ok();
-        }
-
-        [HttpDelete("react")]
-        public async Task<IActionResult> DeleteReaction(int videoId, Reaction reaction)
-        {
-            var newReaction = new NewVideoReactionDTO {
-                VideoId = videoId,
-                Reaction = reaction
-            };
-            newReaction.UserId = this.GetUserIdFromToken();
-            await _reactionService.ReactVideo(newReaction);
-            return NoContent();
         }
 
         [HttpPost]

@@ -77,8 +77,7 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
         [Route("Add-To-Team/{token}")]
         public async Task<IActionResult> AddToTeam(string token)
         {

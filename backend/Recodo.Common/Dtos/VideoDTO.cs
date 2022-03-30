@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recodo.Common.Dtos.Comment;
+using System;
 using System.Collections.Generic;
 using Recodo.Common.Dtos.Comment;
 
@@ -16,5 +17,6 @@ namespace Recodo.Common.Dtos
         public int FolderId { get; set; }
         public List<CommentDTO> Comments { get; set; }
         public ICollection<VideoReactionDTO> Reactions { get; set; }
+        public List<string> SharedEmails { get; set; }
     }
 }

@@ -5,17 +5,13 @@
     <button mat-icon-button>
       <mat-icon svgIcon="details"></mat-icon>
     </button>
-    <button mat-icon-button>
-      <mat-icon svgIcon="share-link"></mat-icon>
-    </button>
   </div>
   <div class="sticky"></div>
   <app-video-player></app-video-player>
-  <div *ngIf="isCurrentVideo()">
+  <div *ngIf="currentVideo">
     <app-video-comments
       *ngFor="let _comment of currentVideo.comments"
       [comment]="_comment"
-      [currentUser]="currentUser"
       (deletedComment)="deleteComment($event)"
       (editedComment)="sendComment()"
       (newReaction)="updateVideo()"

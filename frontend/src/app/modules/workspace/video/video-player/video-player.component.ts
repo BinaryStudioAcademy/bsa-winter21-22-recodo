@@ -33,38 +33,35 @@ export class VideoPlayerComponent {
   }
 
   public getVideoUrl() {
-    return this.timerSubscription = timer(0, 5000).pipe(
-      map(() => {
-        //Check how many  requests have been sent
-        this.requestsCount++;
-        if(this.requestsCount > 12) {
+    return (this.timerSubscription = timer(0, 5000)
+      .pipe(
+        map(() => {
+          //Check how many  requests have been sent
+          this.requestsCount++;
+          if (this.requestsCount > 12) {
             this.timerSubscription.unsubscribe();
-        }
-
-        this.checkVideoState().subscribe(
-          response => {
-            //Check if video is saved
-            if(response) {
-              //Get video url
-              this.loadData().subscribe(
-                response => {
-                  if(response.status === 200 && response.body !== null) {
-                    this.videoUrl = response.body.url;
-                    this.timerSubscription.unsubscribe();
-                    this.isVideoSaved = true;
-                  }
-                }
-              );
-            }
           }
-        );
-      })
-    ).subscribe();
+
+          this.checkVideoState().subscribe((response) => {
+            //Check if video is saved
+            if (response) {
+              //Get video url
+              this.loadData().subscribe((response) => {
+                if (response.status === 200 && response.body !== null) {
+                  this.videoUrl = response.body.url;
+                  this.timerSubscription.unsubscribe();
+                  this.isVideoSaved = true;
+                }
+              });
+            }
+          });
+        })
+      )
+      .subscribe());
   }
 
   private loadData() {
-    const params = new HttpParams()
-    .set('id', this.videoId);
+    const params = new HttpParams().set('id', this.videoId);
 
     return this.videoUrlService.getFullRequest<FileDto>(`${this.blobApiUrl}/blob/GetUrl`, params).pipe(
       map((resp) => {
@@ -74,10 +71,12 @@ export class VideoPlayerComponent {
   }
 
   private checkVideoState() {
-    return this.videoUrlService.getFullRequest<boolean>(`${this.mainApi}/Videos/check/${this.videoId}`).pipe(
-      map((response) => {
-        return response.body;
-      })
-    );
+    return this.videoUrlService
+      .getFullRequest<boolean>(`${this.mainApi}/video/check/${this.videoId}`)
+      .pipe(
+        map((response) => {
+          return response.body;
+        })
+      );
   }
 }

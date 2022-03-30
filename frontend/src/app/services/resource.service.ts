@@ -57,18 +57,6 @@ export abstract class ResourceService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  addWithUrl<TRequest, TResponse>(
-    subUrl: string,
-    resource: TRequest
-  ): Observable<HttpResponse<TResponse>> {
-    return this.httpClient
-      .post<TResponse>(`${this.APIUrl}/${subUrl}`, resource, {
-        observe: 'response',
-      })
-
-      .pipe(catchError(this.handleError));
-  }
-
   public deleteWithParams<TRequest>(
     url: string,
     params?:
@@ -99,6 +87,18 @@ export abstract class ResourceService<T> {
   ): Observable<HttpResponse<TResponse>> {
     return this.httpClient
       .put<TResponse>(`${this.APIUrl}`, resource, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
+
+  addWithUrl<TRequest, TResponse>(
+    subUrl: string,
+    resource: TRequest
+  ): Observable<HttpResponse<TResponse>> {
+    return this.httpClient
+      .post<TResponse>(`${this.APIUrl}/${subUrl}`, resource, {
+        observe: 'response',
+      })
+
       .pipe(catchError(this.handleError));
   }
 

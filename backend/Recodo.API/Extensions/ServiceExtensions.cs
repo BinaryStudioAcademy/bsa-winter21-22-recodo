@@ -9,7 +9,6 @@ using Recodo.Common.Auth;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Thread_.NET.BLL.Services;
 
 namespace Recodo.API.Extensions
 {

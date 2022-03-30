@@ -23,7 +23,6 @@ import { VideoReactionsComponent } from './video/video-reactions/video-reactions
 import { VideoDescriptionComponent } from './video/video-description/video-description.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VimeModule } from '@vime/angular';
-import { MatBadgeModule } from '@angular/material/badge';
 import { VideoCommentsComponent } from './video/video-comments/video-comments.component';
 import { VideoReactionService } from 'src/app/services/video-reactions.service';
 import { CommentReactionService } from 'src/app/services/comment-reaction.service';
@@ -31,10 +30,14 @@ import { CommentService } from 'src/app/services/comment.service';
 import { VideoService } from 'src/app/services/video.service';
 import { CommentReactionsComponent } from './video/comment-reactions/comment-reactions.component';
 import { SettingsComponent } from './settings/settings.component';
+import { MatBadgeModule } from '@angular/material/badge';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TeamInviteComponent } from './team-invite/team-invite.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
@@ -81,6 +84,14 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     VimeModule,
     MatBadgeModule,
     FormsModule,
+    MatDialogModule,
+    ToastrModule.forRoot(),
+    ClipboardModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     VideoReactionService,

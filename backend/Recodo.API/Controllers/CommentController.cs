@@ -25,9 +25,9 @@ namespace Recodo.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CommentDTO>>> GetComments()
+        public async Task<ActionResult<List<CommentDTO>>> GetComments(int videoId)
         {
-            return Ok(await _commentService.GetAllComments());
+            return Ok(await _commentService.GetAllVideosComments(videoId));
         }
 
         [HttpPut]
@@ -40,7 +40,8 @@ namespace Recodo.API.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentDTO>> CreateComment(NewCommentDTO comment)
         {
-            return Ok(await _commentService.CreateComment(comment));
+            await _commentService.CreateComment(comment);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
