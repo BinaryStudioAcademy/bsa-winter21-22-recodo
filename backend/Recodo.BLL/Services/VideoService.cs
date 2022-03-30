@@ -13,7 +13,6 @@ using Recodo.BLL.Exceptions;
 using Recodo.DAL.Entities;
 using Recodo.Common.Dtos.Video;
 using System.IdentityModel.Tokens.Jwt;
-using Recodo.API.Middleware;
 
 namespace Recodo.BLL.Services
 {
@@ -114,18 +113,6 @@ namespace Recodo.BLL.Services
             _context.Videos.Update(videoEntity);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<VideoDTO> GetVideoById(int id)
-        {
-            var videoEntity = await _context.Videos
-                .Include(video => video.Reactions)
-                .FirstOrDefaultAsync(video => video.Id == id);
-            var videoDto = _mapper.Map<VideoDTO>(videoEntity);
-            var videoComments = await _commentService.GetAllVideosComments(videoDto.Id);
-            videoDto.Comments = videoComments;
-            return videoDto;
-        }
-
         public async Task<VideoDTO> AddVideo (NewVideoDTO newVideo)
         {
             var video = _mapper.Map<Video>(newVideo);

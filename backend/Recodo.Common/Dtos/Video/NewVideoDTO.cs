@@ -15,5 +15,6 @@ namespace Recodo.Common.Dtos.Video
         public int UserId { get; set; }
         public int FolderId { get; set; }
         public string Link { get; set; }
+        public List<VideoReactionDTO> Reactions { get; set; }
     }
 }

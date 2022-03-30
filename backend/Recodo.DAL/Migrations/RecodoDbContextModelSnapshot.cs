@@ -35,48 +35,6 @@ namespace Recodo.DAL.Migrations
                     b.ToTable("PermissionUser");
                 });
 
-            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("VideoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("AccessesForRegisteredUsers");
-                });
-
-            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<int>("VideoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("AccessesForUnregisteredUsers");
-                });
-
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -220,9 +178,6 @@ namespace Recodo.DAL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -315,6 +270,9 @@ namespace Recodo.DAL.Migrations
                     b.Property<int?>("FolderId1")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsSaving")
                         .HasColumnType("boolean");
 
@@ -368,36 +326,6 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
-                {
-                    b.HasOne("Recodo.DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
-                        .WithMany()
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("Video");
-                });
-
-            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
-                {
-                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
-                        .WithMany()
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>

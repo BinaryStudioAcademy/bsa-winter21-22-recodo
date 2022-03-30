@@ -32,13 +32,11 @@ namespace Recodo.BLL.Services
 
             Video newVideo = new Video()
             {
-                IsPrivate = true,
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
                 Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
                 Link = "",
-                FolderId = null
             };
 
             await _context.AddAsync(newVideo);

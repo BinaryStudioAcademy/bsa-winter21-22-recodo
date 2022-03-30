@@ -41,10 +41,6 @@ export class VideoService extends ResourceService<VideoDto> {
     );
   }
 
-  public getVideoById(videoId: number) {
-    return this.get(videoId);
-  }
-
   public deleteVideo(url: string, params?: HttpParams) {
     return this.requestService.delete(url, params).pipe(
       map((response) => {

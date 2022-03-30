@@ -6,14 +6,12 @@
       <mat-icon svgIcon="details"></mat-icon>
     </button>
   </div>
-  <div class="sticky"></div>
   <app-video-player></app-video-player>
   <div *ngIf="currentVideo">
     <app-video-comments
       *ngFor="let _comment of currentVideo.comments"
       [comment]="_comment"
       (deletedComment)="deleteComment($event)"
-      (editedComment)="sendComment()"
       (newReaction)="updateVideo()"
     ></app-video-comments>
   </div>
@@ -22,7 +20,7 @@
       class="reactions-container"
       [video]="currentVideo"
       (newReaction)="updateVideo()"
-      (newCommentCreated)="createComment($event)"
+      (newCommentCreated)="sendComment($event)"
     >
     </app-video-reactions>
   </div>

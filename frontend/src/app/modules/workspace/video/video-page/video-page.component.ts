@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { UserDto } from 'src/app/models/user/user-dto';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 import { RegistrationService } from 'src/app/services/registration.service';
-import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -21,7 +20,6 @@ export class VideoPageComponent {
   public viewsNumber: number;
   public videoId: number;
   public currentVideo: VideoDto;
-  public currentUser: UserDto;
   public newComment = {} as NewComment;
   public link: string;
   public checked: boolean = false;
@@ -50,6 +48,7 @@ export class VideoPageComponent {
       .subscribe((user) => {
         this.userWorkspaceName = user.workspaceName;
       });
+    setTimeout(() => (this.isLoading = false), 1000);
   }
 
   public deleteComment(commentId: number) {
@@ -65,13 +64,9 @@ export class VideoPageComponent {
       });
   }
 
-  public createComment(comment: NewComment) {
-    this.commentService.createComment(comment).subscribe();
-    this.updateVideo();
-  }
-
-  public sendComment() {
+  public sendComment(comment: NewComment) {
     if (this.currentVideo != null) {
+      this.newComment.body = comment.body;
       this.newComment.authorId = this.currentVideo.authorId;
       this.newComment.videoId = this.currentVideo.id;
     }
@@ -99,8 +94,6 @@ export class VideoPageComponent {
       .getVideoById(this.videoId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
-        console.log('update video:');
-        console.log(resp.body);
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }

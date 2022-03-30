@@ -23,7 +23,7 @@ export class VideoPlayerComponent {
   private requestsCount: number = 0;
   constructor(
     private route: ActivatedRoute,
-    private videoUrlService: VideoUrlService,
+    private videoUrlService: RequestService,
     protected httpClient: HttpClient
   ) {
     // route.params.pipe(map((p) => p['id'])).subscribe((id) => {
