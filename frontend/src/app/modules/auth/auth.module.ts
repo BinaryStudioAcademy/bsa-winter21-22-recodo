@@ -11,7 +11,6 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { ResetPassPageComponent } from './reset-pass-page/reset-pass-page.component';
 import { ResetDonePageComponent } from './reset-done-page/reset-done-page.component';
-import { ReturnPageComponent } from './return-page/return-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { ReturnPageComponent } from './return-page/return-page.component';
     LoginPageComponent,
     ResetPassPageComponent,
     ResetDonePageComponent,
-    ReturnPageComponent,
   ],
   imports: [
     CommonModule,

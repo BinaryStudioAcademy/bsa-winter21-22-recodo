@@ -10,6 +10,7 @@
 		<None Remove="Icons\bell.png" />
 		<None Remove="Icons\camera.png" />
 		<None Remove="Icons\cameraOff.png" />
+		<None Remove="Icons\google-icon.png" />
 		<None Remove="Icons\home.png" />
 		<None Remove="Icons\image.png" />
 		<None Remove="Icons\logout.png" />
@@ -42,6 +43,7 @@
 		<Resource Include="Icons\bell.png" />
 		<Resource Include="Icons\camera.png" />
 		<Resource Include="Icons\cameraOff.png" />
+		<Resource Include="Icons\google-icon.png" />
 		<Resource Include="Icons\home.png" />
 		<Resource Include="Icons\image.png" />
 		<Resource Include="Icons\logout.png" />
@@ -63,6 +65,12 @@
 		<Resource Include="Icons\Panel\pause_focus.png" />
 		<Resource Include="Icons\Panel\refresh_focus.png" />
 		<Resource Include="Icons\Panel\stop_focus.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\return.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 
