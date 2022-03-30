@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
@@ -78,7 +78,6 @@ namespace Recodo.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("Add-To-Team/{token}")]
         public async Task<IActionResult> AddToTeam(string token)
         {
@@ -95,5 +94,7 @@ namespace Recodo.API.Controllers
 
             return NoContent();
         }
+
+
     }
 }

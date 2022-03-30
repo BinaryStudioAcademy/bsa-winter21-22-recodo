@@ -17,10 +17,10 @@ namespace Recodo.BLL.Services
 {
     public class VideoService : BaseService
     {
-        private readonly IConfiguration _configuration;
-        public VideoService(RecodoDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
+        private EmailService _emailService;
+        public VideoService(RecodoDbContext context, IMapper mapper, EmailService emailService) : base(context, mapper)
         {
-            _configuration = configuration;
+            _emailService = emailService;
         }
         public async Task<List<VideoDTO>> GetVideosByFolderId(int folderId)
         {
@@ -109,7 +109,7 @@ namespace Recodo.BLL.Services
 
         public async Task SendEmail(string body, string email, string name = "")
         {
-            await EmailService.SendEmailAsync(email, "Shared video", body, _configuration, name);
+            await _emailService.SendEmailAsync(email, "Shared video", body, name);
         }
     }
 }

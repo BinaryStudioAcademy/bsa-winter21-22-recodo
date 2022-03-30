@@ -14,7 +14,7 @@ namespace Recodo.BLL.Services
             _configuration = configuration;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        public async Task SendEmailAsync(string toEmail, string subject, string message, string workspaceName = "")
         {
             string apiKey = _configuration["SendGridKey"];
             string fromEmail = _configuration["SendGridFromEmail"];

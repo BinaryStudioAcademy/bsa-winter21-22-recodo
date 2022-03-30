@@ -52,7 +52,7 @@ export class SharePropertiesComponent implements OnInit, OnDestroy {
   public changeProperty() {
     this.checked = !this.checked;
     this.currentVideo.isPrivate = this.checked;
-    this.videoService.update(this.currentVideo).subscribe();
+    this.videoService.updateVideo(this.currentVideo).subscribe();
     this.updateVideo();
     if (this.checked) {
       this.snackBarService.openSnackBar('This video is public now!');
