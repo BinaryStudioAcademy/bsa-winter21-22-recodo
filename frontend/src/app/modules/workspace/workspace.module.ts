@@ -39,7 +39,6 @@ import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email
 import { SharePropertiesComponent } from './sharing-propetries/share-properties-dialog/share-properties.component';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -47,6 +46,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TeamInviteComponent } from './team-invite/team-invite.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -101,6 +101,7 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     VideoReactionService,
@@ -113,7 +114,6 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule,
   ],
 })
 export class WorkspaceModule {}

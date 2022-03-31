@@ -47,13 +47,8 @@ export class VideoPageComponent {
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
-        localStorage.setItem('workspaceName', user.workspaceName);
+        this.userWorkspaceName = user.workspaceName;
       });
-    const workspaceName = localStorage.getItem('workspaceName');
-    if (workspaceName) {
-      this.userWorkspaceName = workspaceName;
-    }
-    localStorage.removeItem('workspaceName');
   }
 
   public openSendDialog() {

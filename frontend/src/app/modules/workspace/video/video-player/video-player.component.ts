@@ -26,10 +26,10 @@ export class VideoPlayerComponent {
     private videoUrlService: RequestService,
     protected httpClient: HttpClient
   ) {
-    // route.params.pipe(map((p) => p['id'])).subscribe((id) => {
-    //   this.videoId = id;
-    //   this.getVideoUrl();
-    // });
+    route.params.pipe(map((p) => p['id'])).subscribe((id) => {
+      this.videoId = id;
+      this.getVideoUrl();
+    });
   }
 
   public getVideoUrl() {
@@ -63,11 +63,13 @@ export class VideoPlayerComponent {
   private loadData() {
     const params = new HttpParams().set('id', this.videoId);
 
-    return this.videoUrlService.getFullRequest<FileDto>(`${this.blobApiUrl}/blob/GetUrl`, params).pipe(
-      map((resp) => {
-        return resp;
-      })
-    );
+    return this.videoUrlService
+      .getFullRequest<FileDto>(`${this.blobApiUrl}/blob/GetUrl`, params)
+      .pipe(
+        map((resp) => {
+          return resp;
+        })
+      );
   }
 
   private checkVideoState() {

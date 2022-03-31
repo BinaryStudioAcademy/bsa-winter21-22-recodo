@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import { ISendLink } from '../models/mail/send-link';
 import { UpdateVideoDto } from '../models/video/update-video-dto';
 import { VideoDto } from '../models/video/video-dto';
 import { RequestService } from './request.service';
@@ -59,5 +60,9 @@ export class VideoService extends ResourceService<VideoDto> {
         return response;
       })
     );
+  }
+
+  public sendLink(sendLinkInfo: ISendLink) {
+    return this.addWithUrl<ISendLink, ISendLink>('share', sendLinkInfo);
   }
 }

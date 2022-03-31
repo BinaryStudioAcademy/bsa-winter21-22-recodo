@@ -23,12 +23,7 @@ namespace Recodo.BLL.Services
             
             _context.Comments.Add(commentEntity);
             await _context.SaveChangesAsync();
-
-            var createdComment = await _context.Comments
-                .Include(comment => comment.Author)
-                .FirstAsync(comment => comment.Id == commentEntity.Id);
-
-            return _mapper.Map<CommentDTO>(createdComment);
+            return _mapper.Map<CommentDTO>(commentEntity);
         }
 
         public async Task DeleteComment(int commentId)

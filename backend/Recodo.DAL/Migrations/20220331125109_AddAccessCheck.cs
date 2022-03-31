@@ -1,24 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Recodo.DAL.Migrations
 {
-    public partial class AddedAccessChecking : Migration
+    public partial class AddAccessCheck : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateIndex(
-                name: "IX_Folders_ParentId",
-                table: "Folders",
-                column: "ParentId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Folders_Folders_ParentId",
-                table: "Folders",
-                column: "ParentId",
-                principalTable: "Folders",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.DropColumn(
+                name: "SharedEmails",
+                table: "Videos");
 
             migrationBuilder.CreateTable(
                 name: "AccessesForRegisteredUsers",
@@ -89,6 +81,12 @@ namespace Recodo.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccessesForUnregisteredUsers");
+
+            migrationBuilder.AddColumn<List<string>>(
+                name: "SharedEmails",
+                table: "Videos",
+                type: "text[]",
+                nullable: true);
         }
     }
 }

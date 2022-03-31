@@ -8,6 +8,7 @@ namespace Recodo.BLL.MappingProfiles
     {
         public CommentProfile()
         {
+            CreateMap<NewCommentDTO, CommentDTO>();
             CreateMap<NewCommentDTO, Comment>();
             CreateMap<Comment, CommentDTO>();
         }

@@ -73,7 +73,7 @@ namespace Recodo.API.Controllers
         public async Task<IActionResult> ShareVideo(VideoShareDTO sharePostInfo)
         {
             var user = await _userService.GetUserById(this.GetUserIdFromToken());
-            await _videoService.SendEmail(sharePostInfo.Link, sharePostInfo.Email, user.WorkspaceName);
+            await _videoService.SendEmail(sharePostInfo.Email, sharePostInfo.Link, user.WorkspaceName);
             return Ok();
         }
 

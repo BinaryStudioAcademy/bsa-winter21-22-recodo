@@ -1,4 +1,4 @@
 export interface ISendLink {
-    email: string;
-    link: string;
+  email: string;
+  link: string;
 }
