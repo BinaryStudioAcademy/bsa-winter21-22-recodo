@@ -16,13 +16,12 @@ import { UpdateVideoDialogComponent } from '../video/update-video-dialog/update-
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.component.html',
-  styleUrls: ['./folder.component.scss']
+  styleUrls: ['./folder.component.scss'],
 })
 export class FolderComponent {
-
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger = {} as MatMenuTrigger;
   @Input() groupValue: string = 'grid';
-  @Input() currentUser: UserDto = {} as UserDto
+  @Input() currentUser: UserDto = {} as UserDto;
 
   public videos: VideoDto[] = [];
   public folderId: number = 0;
@@ -33,13 +32,13 @@ export class FolderComponent {
     private videoService: VideoService,
     private timeService: TimeService,
     private snackBarService: SnackBarService,
-    public dialog: MatDialog,) {
-      route.params.pipe(map(p => p['id']))
-      .subscribe(id => {
-        this.getVideos(id);
-        this.folderId = id;
-      });
-    }
+    public dialog: MatDialog
+  ) {
+    route.params.pipe(map((p) => p['id'])).subscribe((id) => {
+      this.getVideos(id);
+      this.folderId = id;
+    });
+  }
 
   public calculateTimeDifference(oldDate: Date) {
     return this.timeService.calculateTimeDifference(oldDate);
@@ -51,18 +50,15 @@ export class FolderComponent {
   }
 
   public deleteVideo(id: number) {
-    if(confirm('Are you sure you want to delete the video ?'))
-    {
-      const url = environment.blobApiUrl+'/blob';
-      const params = new HttpParams()
-      .set('id', id);
+    if (confirm('Are you sure you want to delete the video ?')) {
+      const url = environment.blobApiUrl + '/blob';
+      const params = new HttpParams().set('id', id);
 
       this.videoService.deleteVideo(url, params).subscribe((response) => {
-        if(response.status === 204) {
+        if (response.status === 204) {
           this.getVideos(this.currentUser.id);
           this.snackBarService.openSnackBar('Video deleted successfully');
-        }
-        else {
+        } else {
           this.snackBarService.openSnackBar('Error');
         }
       });
@@ -70,7 +66,9 @@ export class FolderComponent {
   }
 
   private getVideos(id: number) {
-    return this.videoService.getAllVideosByFolderId(id).subscribe(res => this.videos = res)
+    return this.videoService
+      .getAllVideosByFolderId(id)
+      .subscribe((res) => (this.videos = res));
   }
 
   updateVideo(videoDto: UpdateVideoDto) {
@@ -80,22 +78,23 @@ export class FolderComponent {
   }
 
   showVideoUpdateDialog(video: VideoDto) {
-    const dialogConfig = new MatDialogConfig;
+    const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
     dialogConfig.data = video.name;
 
-    const dialogRef = this.dialog.open(UpdateVideoDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      videoName => {
-        let videoUpdated : UpdateVideoDto = {
-          id: video.id,
-          name: videoName,
-        }
-        this.updateVideo(videoUpdated);
-      }
+    const dialogRef = this.dialog.open(
+      UpdateVideoDialogComponent,
+      dialogConfig
     );
-  }
 
+    dialogRef.afterClosed().subscribe((videoName) => {
+      let videoUpdated: UpdateVideoDto = {
+        id: video.id,
+        name: videoName,
+        isPrivate: false,
+      };
+      this.updateVideo(videoUpdated);
+    });
+  }
 }

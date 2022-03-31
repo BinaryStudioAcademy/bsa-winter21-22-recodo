@@ -93,6 +93,7 @@ namespace Recodo.BLL.Services
             }
 
             videoEntity.Name = videoDTO.Name;
+            videoEntity.IsPrivate = videoDTO.IsPrivate;
 
             _context.Videos.Update(videoEntity);
             await _context.SaveChangesAsync();
