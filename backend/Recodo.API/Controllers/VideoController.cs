@@ -3,24 +3,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Recodo.BLL.Services;
 using Recodo.Common.Dtos;
+using Recodo.Common.Dtos.Reactions;
+using Recodo.Common.Dtos.Video;
+using Recodo.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Recodo.API.Extensions;
 
 namespace Recodo.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VideosController : ControllerBase
+    public class VideoController : ControllerBase
     {
         private readonly VideoService _videoService;
-        public VideosController(VideoService videoService)
+        private readonly ReactionService _reactionService;
+        public VideoController(VideoService videoService, ReactionService reactionService)
         {
             _videoService = videoService;
+            _reactionService = reactionService;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<VideoDTO>> GetVideoById(int id)
+        {
+            return Ok(await _videoService.GetVideoById(id));
+        }
+
+        [HttpGet("folder/{id:int}")]
         public async Task<ActionResult<List<VideoDTO>>> GetVideoByFolderId(int id)
         {
             return Ok(await _videoService.GetVideosByFolderId(id));
@@ -53,6 +65,21 @@ namespace Recodo.API.Controllers
         {
             await _videoService.Update(videoDTO);
             return NoContent();
+        }
+        
+        [HttpPost("react")]
+        public async Task<IActionResult> ReactVideo(NewVideoReactionDTO reaction)
+        {
+            reaction.UserId = this.GetUserIdFromToken();
+            await _reactionService.ReactVideo(reaction);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<VideoDTO>> CreateVideo(NewVideoDTO newVideo)
+        {
+            var createdVideo = await _videoService.AddVideo(newVideo);
+            return Ok(createdVideo);
         }
     }
 }

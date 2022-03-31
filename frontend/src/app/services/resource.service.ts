@@ -42,18 +42,52 @@ export abstract class ResourceService<T> {
       .get<T>(`${this.APIUrl}/${id}`, { observe: 'response' })
       .pipe(catchError(this.handleError));
   }
+
+  add<TRequest, TResponse>(
+    resource: TRequest
+  ): Observable<HttpResponse<TResponse>> {
+    return this.httpClient
+      .post<TResponse>(`${this.APIUrl}`, resource, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
+
+  delete(id: string | number): Observable<HttpResponse<T>> {
+    return this.httpClient
+      .delete<T>(`${this.APIUrl}/${id}`, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
+
+  public deleteWithParams<TRequest>(
+    url: string,
+    params?:
+      | HttpParams
+      | {
+          [param: string]:
+            | string
+            | number
+            | boolean
+            | ReadonlyArray<string | number | boolean>;
+        }
+  ): Observable<HttpResponse<TRequest>> {
+    return this.httpClient.delete<TRequest>(`${environment.apiUrl}/${url}`, {
+      observe: 'response',
+      headers: this.getHeaders(),
+      params: params,
+    });
+  }
+
   getWithUrl(id: string | number, subUrl: string): Observable<HttpResponse<T>> {
     return this.httpClient
       .get<T>(`${this.APIUrl}/${subUrl}/${id}`, { observe: 'response' })
       .pipe(catchError(this.handleError));
   }
 
-  add<TRequest, TResponse>(
+  update<TRequest, TResponse>(
     resource: TRequest
   ): Observable<HttpResponse<TResponse>> {
-    return this.httpClient.post<TResponse>(`${this.APIUrl}`, resource, {
-      observe: 'response',
-    });
+    return this.httpClient
+      .put<TResponse>(`${this.APIUrl}`, resource, { observe: 'response' })
+      .pipe(catchError(this.handleError));
   }
 
   addWithUrl<TRequest, TResponse>(
@@ -65,20 +99,6 @@ export abstract class ResourceService<T> {
         observe: 'response',
       })
 
-      .pipe(catchError(this.handleError));
-  }
-
-  delete(id: string | number): Observable<HttpResponse<T>> {
-    return this.httpClient
-      .delete<T>(`${this.APIUrl}/${id}`, { observe: 'response' })
-      .pipe(catchError(this.handleError));
-  }
-
-  update<TRequest, TResponse>(
-    resource: TRequest
-  ): Observable<HttpResponse<TResponse>> {
-    return this.httpClient
-      .put<TResponse>(`${this.APIUrl}`, resource, { observe: 'response' })
       .pipe(catchError(this.handleError));
   }
 

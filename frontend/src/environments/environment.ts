@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  appUrl: 'http://localhost:4200',
   apiUrl: 'https://localhost:5001/api',
-  blobApiUrl: 'https://localhost:44362/api',
+  blobApiUrl: 'https://localhost:5001/api',
   production: false,
   googleKey: '',
   clientUrl: 'http://localhost:4200',

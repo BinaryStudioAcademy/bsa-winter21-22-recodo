@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { CustomIconService } from 'src/app/services/custom-icon.service';
@@ -12,13 +13,14 @@ import { RegistrationService } from 'src/app/services/registration.service';
 export class BaseComponent {
   public currentUser: UserDto = {} as UserDto;
   private unsubscribe$ = new Subject<void>();
+  public isShared = {} as boolean;
 
   constructor(
     private customService: CustomIconService,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private route: ActivatedRoute
   ) {
     this.customService.init();
-
     this.registrationService
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))

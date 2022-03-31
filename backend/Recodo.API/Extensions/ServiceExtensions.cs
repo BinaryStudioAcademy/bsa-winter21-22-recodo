@@ -9,7 +9,6 @@ using Recodo.Common.Auth;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Thread_.NET.BLL.Services;
 
 namespace Recodo.API.Extensions
 {
@@ -23,6 +22,9 @@ namespace Recodo.API.Extensions
             services.AddScoped<AuthService>();
             services.AddScoped<UserService>();
             services.AddScoped<FolderService>();
+            services.AddScoped<VideoService>();
+            services.AddScoped<CommentService>();
+            services.AddScoped<ReactionService>();
             services.AddScoped<ImageService>();
             services.AddScoped<VideoService>();
             services.AddScoped<TeamService>();

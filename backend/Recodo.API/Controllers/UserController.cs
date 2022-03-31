@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
@@ -77,8 +77,7 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpPost]
         [Route("Add-To-Team/{token}")]
         public async Task<IActionResult> AddToTeam(string token)
         {
@@ -94,6 +93,12 @@ namespace Recodo.API.Controllers
             await _teamService.SendInviteLink(this.GetUserIdFromToken(), email);
 
             return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            return Ok(await _userService.GetUserById(id));
         }
     }
 }
