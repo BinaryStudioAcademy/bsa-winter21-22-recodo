@@ -43,9 +43,9 @@ namespace Recodo.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> FinishLoadingFile(int id)
+        public async Task<IActionResult> FinishLoadingFile(int id, string uri)
         {
-            await _fileService.FinishLoadingFile(id);
+            await _fileService.FinishLoadingFile(id, uri);
             return Ok();
         }
     }

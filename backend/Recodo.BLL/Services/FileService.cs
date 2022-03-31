@@ -46,7 +46,7 @@ namespace Recodo.BLL.Services
             return newVideo.Id;
         }
 
-        public async Task FinishLoadingFile(int id)
+        public async Task FinishLoadingFile(int id, string uri)
         {
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == id);
             if (video == null)
@@ -55,6 +55,7 @@ namespace Recodo.BLL.Services
             }
 
             video.IsSaving = true; //Rename to IsSaved
+            video.Link = uri;
 
             _context.Videos.Update(video);
             await _context.SaveChangesAsync();

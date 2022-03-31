@@ -45,10 +45,10 @@ namespace Recodo.FIle.BLL.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<string> SendFinishRequest(int videoId)
+        public async Task<string> SendFinishRequest(int videoId, string uri)
         {
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, BaseUrl +
-                $"File?id={videoId}"));
+                $"File?id={videoId}&uri={uri}"));
             if (response.IsSuccessStatusCode)
             {
                 return videoId.ToString();
