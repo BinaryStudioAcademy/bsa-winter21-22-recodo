@@ -10,8 +10,8 @@ using Recodo.DAL.Context;
 namespace Recodo.DAL.Migrations
 {
     [DbContext(typeof(RecodoDbContext))]
-    [Migration("20220331132241_ChangeComments")]
-    partial class ChangeComments
+    [Migration("20220331153939_AddVideoSharing")]
+    partial class AddVideoSharing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

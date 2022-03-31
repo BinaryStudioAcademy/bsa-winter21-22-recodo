@@ -113,6 +113,8 @@ namespace Recodo.BLL.Services
                 .Include(video => video.Reactions)
                 .Where(v => v.Id == id)
                 .FirstOrDefaultAsync();
+            var videoComments = await _context.Comments.Where(comment => comment.VideoId == id).ToListAsync();
+            videoEntity.Comments = videoComments;
             return _mapper.Map<VideoDTO>(videoEntity);
         }
 
