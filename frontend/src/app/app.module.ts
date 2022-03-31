@@ -10,9 +10,14 @@ import { WorkspaceModule } from './modules/workspace/workspace.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+} from 'angularx-social-login';
 import { environment } from '../environments/environment';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +29,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     WorkspaceModule,
     AuthModule,
     SocialLoginModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
   ],
   providers: [
     CustomIconService,
@@ -37,9 +43,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.googleKey
-            ),
+            provider: new GoogleLoginProvider(environment.googleKey),
           },
         ],
       } as SocialAuthServiceConfig,

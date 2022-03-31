@@ -24,9 +24,9 @@
   </div>
 </div>
 
-<h2><a class="navigate" [routerLink]="['']">Folders</a>{{selectedFolderName}}</h2>
+<h2><a class="navigate" [routerLink]="['']" *ngIf="this.folders.length !== 0">Folders</a>{{selectedFolderName}}</h2>
 
-<div *ngFor="let folder of folders" class="folders" [routerLink]="['',folder.id]" (click)="folderClick(folder)">
+<div *ngFor="let folder of folders" class="folders" [routerLink]="['/folder',folder.id]" (click)="folderClick(folder)">
   <div class="folder" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="folder-active">
     <span>{{folder.name}}</span>
     <button mat-icon-button class="details"
