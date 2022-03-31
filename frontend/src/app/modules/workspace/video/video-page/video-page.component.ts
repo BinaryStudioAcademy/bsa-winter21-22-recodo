@@ -3,7 +3,6 @@ import { VideoDto } from 'src/app/models/video/video-dto';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 import { RegistrationService } from 'src/app/services/registration.service';
@@ -35,7 +34,6 @@ export class VideoPageComponent {
     this.viewsNumber = 10;
     this.videoId = activateRoute.snapshot.params['id'];
     this.updateVideo();
-    this.link = `${environment.appUrl}/shared/${this.videoId}`;
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
         this.checked = resp.body.isPrivate;
