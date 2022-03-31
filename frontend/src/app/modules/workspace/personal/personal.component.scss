@@ -229,6 +229,7 @@ mat-list-item:hover {
     }
     .videos-button {
         &:hover{border-bottom:2px solid #FB6D3A;}
+        text-decoration: underline;
     }
 }
 
