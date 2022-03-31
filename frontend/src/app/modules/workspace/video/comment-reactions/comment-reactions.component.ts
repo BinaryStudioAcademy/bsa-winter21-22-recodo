@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Comment } from 'src/app/models/comment/comment';
 import { ReactionType } from 'src/app/models/common/reaction-type';
 import { CommentReactionDTO } from 'src/app/models/reaction/comment-reaction';
@@ -23,12 +17,14 @@ export class CommentReactionsComponent implements OnInit {
   @Output() newReaction = new EventEmitter<boolean>();
   public currentUser: UserDto;
   public allReactions: CommentReactionDTO[];
+  public isLoading = true;
 
   constructor(
     private reactionsService: CommentReactionService,
     private registrationService: RegistrationService
   ) {
     this.allReactions = this.comment?.reactions;
+    this.isLoading = false;
   }
 
   ngOnInit(): void {

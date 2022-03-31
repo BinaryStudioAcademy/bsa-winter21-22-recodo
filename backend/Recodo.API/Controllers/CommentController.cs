@@ -41,7 +41,8 @@ namespace Recodo.API.Controllers
         public async Task<ActionResult<CommentDTO>> CreateComment(NewCommentDTO comment)
         {
             await _commentService.CreateComment(comment);
-            return Ok();
+            var allComments = await _commentService.GetAllVideosComments(comment.VideoId);
+            return Ok(comment);
         }
 
         [HttpDelete("{id}")]

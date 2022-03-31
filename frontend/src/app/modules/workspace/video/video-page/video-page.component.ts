@@ -75,6 +75,7 @@ export class VideoPageComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
         if (resp && this.currentVideo != null) {
+          console.log(resp.body);
           this.currentVideo.comments = this.sortCommentArray(
             this.currentVideo.comments.concat(resp.body as Comment)
           );

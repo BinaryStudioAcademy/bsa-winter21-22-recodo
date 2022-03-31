@@ -10,9 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Recodo.Common.Dtos.Reactions;
 using Recodo.API.Extensions;
-using Recodo.Common.Enums;
 
 namespace Recodo.API.Controllers
 {

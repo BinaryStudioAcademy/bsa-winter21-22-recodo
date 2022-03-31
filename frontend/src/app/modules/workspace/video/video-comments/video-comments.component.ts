@@ -31,7 +31,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   public isEditingMode = false;
   private unsubscribe$ = new Subject<void>();
   public isCommentAuthor = false;
-  public isLoading = false;
+  public isLoading = true;
   constructor(
     private commentReactionService: CommentReactionService,
     private commentService: CommentService,
@@ -46,6 +46,7 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
           this.commentAuthor.avatarLink =
             '../../assets/icons/test-user-logo.png';
         }
+        this.isLoading = false;
       }
     });
   }

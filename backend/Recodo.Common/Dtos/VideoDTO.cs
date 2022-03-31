@@ -1,8 +1,6 @@
 ﻿using Recodo.Common.Dtos.Comment;
 using System;
 using System.Collections.Generic;
-using Recodo.Common.Dtos.Comment;
-
 
 namespace Recodo.Common.Dtos
 {
@@ -14,7 +12,7 @@ namespace Recodo.Common.Dtos
         public string Link { get; set; }
         public int AuthorId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int FolderId { get; set; }
+        public int? FolderId { get; set; }
         public List<CommentDTO> Comments { get; set; }
         public ICollection<VideoReactionDTO> Reactions { get; set; }
         public List<string> SharedEmails { get; set; }
