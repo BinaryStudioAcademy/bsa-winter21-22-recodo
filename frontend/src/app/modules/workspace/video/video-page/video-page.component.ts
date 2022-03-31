@@ -98,6 +98,7 @@ export class VideoPageComponent {
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }
+        console.log(this.currentVideo);
       });
   }
 
