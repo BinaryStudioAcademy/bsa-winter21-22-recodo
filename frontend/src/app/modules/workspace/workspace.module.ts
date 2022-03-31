@@ -35,10 +35,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
+import { ShareByEmailDialogComponent }
+  from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
 import { SharePropertiesComponent } from './sharing-propetries/share-properties-dialog/share-properties.component';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
+import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -67,6 +69,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     SharePropertiesComponent,
     SharedVideoPageComponent,
     SharingVideoDialogComponent,
+    DialogDeleteComponent,
     TeamInviteComponent,
     InviteFinishComponent,
     UpdateVideoDialogComponent,
