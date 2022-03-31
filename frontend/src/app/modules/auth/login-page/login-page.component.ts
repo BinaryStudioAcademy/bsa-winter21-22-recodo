@@ -69,25 +69,13 @@ export class LoginPageComponent implements OnInit {
       next: (response) => {
         this.currentUser = response;
         if (this.loginService.areTokensExist()) {
-          const videoId = localStorage.getItem('videoId');
-          if (videoId != null) {
-            const sharedUrl = '/shared/' + videoId;
-            this.accessForUnregisteredUsersService.addNewAccess(_user.email, parseInt(videoId));
-            localStorage.removeItem('videoId');
-            if (videoId != undefined) {
-              this.router.navigate([sharedUrl]);
-            } else {
-              this.router.navigate(['personal']);
+          this.router.navigate(['/personal']).then(() => {
+            if (this.redirectUrl) {
+              window.location.href = `${
+                this.redirectUrl
+              }?access_token=${localStorage.getItem('accessToken')}`;
             }
-          } else {
-            this.router.navigate(['/personal']).then(() => {
-              if (this.redirectUrl) {
-                window.location.href = `${
-                  this.redirectUrl
-                }?access_token=${localStorage.getItem('accessToken')}`;
-              }
-            });
-          }
+          });
         }
       },
       error: (error) => {

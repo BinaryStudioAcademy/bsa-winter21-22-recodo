@@ -21,7 +21,7 @@ namespace Recodo.BLL.Services
     {
         private readonly EmailService _emailService;
         private readonly CommentService _commentService;
-        public VideoService(RecodoDbContext context, IMapper mapper, EmailService emailService) : base(context, mapper)
+        public VideoService(RecodoDbContext context, IMapper mapper, EmailService emailService, CommentService commentService) : base(context, mapper)
         {
             _emailService = emailService;
             _commentService = commentService;
@@ -32,18 +32,6 @@ namespace Recodo.BLL.Services
             var allVideos = await _context.Videos.ToListAsync();
             return _mapper.Map<List<VideoDTO>>(allVideos);
         }
-
-        public async Task<VideoDTO> GetVideoById(int id)
-        {
-            var videoEntity = await _context.Videos
-                .Include(video => video.Reactions)
-                .FirstOrDefaultAsync(video => video.Id == id);
-            var videoDto = _mapper.Map<VideoDTO>(videoEntity);
-            var videoComments = await _commentService.GetAllVideosComments(videoDto.Id);
-            videoDto.Comments = videoComments;
-            return videoDto;
-        }
-
         public async Task<List<VideoDTO>> GetVideosByFolderId(int folderId)
         {
             var videoEntities = await _context.Videos.AsNoTracking()
@@ -128,7 +116,7 @@ namespace Recodo.BLL.Services
             return _mapper.Map<VideoDTO>(videoEntity);
         }
 
-        public async Task SendEmail(string body, string email, string name = "")
+        public async Task SendEmail(string email, string body, string name = "")
         {
             await _emailService.SendEmailAsync(email, "Shared video", body, name);
         }
