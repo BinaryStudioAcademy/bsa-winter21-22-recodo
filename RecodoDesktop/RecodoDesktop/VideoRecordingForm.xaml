@@ -34,13 +34,14 @@
             <Image x:Key="Mic" Source="Icons/mic.png" Height="20" Width="16.4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Image x:Key="MicOff" Source="Icons/microOff.png" Height="20" Width="16.4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Image x:Key="Camera" Source="Icons/camera.png" Height="15" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Key="CameraOff" Source="Icons/cameraOff.png" Height="20" Width="16.4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ResourceDictionary>
     </Window.Resources>
-    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="10">
-        <Grid>
+    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="10" BorderBrush="#78293B" BorderThickness="2">
+        <Grid Height="517">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="230.98"/>
-                <ColumnDefinition Width="230.98"/>
+                <ColumnDefinition Width="228.15"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -55,7 +56,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="0"  Margin="35.32,22.92,0,39.15" Orientation="Horizontal">
+            <StackPanel Grid.Column="0" Grid.Row="0"  Margin="35.32,40,0,39.15" Orientation="Horizontal">
                 <Border CornerRadius="32" Width="56" Height="56"  Background="{DynamicResource SecondaryHueMidBrush}" >
                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel Width="22.04" Height="29.47" Margin="17.25,13.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
@@ -67,22 +68,20 @@
                 <TextBlock FontSize="28px" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Medium" Height="42" Margin="12.29,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="107" UseLayoutRounding="False" Padding="0,5,0,0">Recodo</TextBlock>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,27.32,0"  >
-                <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="60" Margin="0,0,5,0">
-                    <StackPanel Width="20.33" Height="26.13">
-                        <Image Source="Icons/bell.png" />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" Grid.Column="1">
+                <Button Name="CloseButton" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" materialDesign:ButtonAssist.CornerRadius="4" Height="28" Width="28" Padding="4,4,4,4" Click="CloseButton_Click" Margin="197,2,2,0" Background="#B6445D">
+                    <StackPanel Width="20" Height="20">
+                        <Image Source="Icons/Panel/delete_focus.png" Height="20" Width="20" />
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="60" Margin="0,0,5,0" >
-                    <StackPanel Width="22.63" Height="24.68">
-                        <Image Source="Icons/home.png" />
-                    </StackPanel>
-                </Button>
-                <Button  Style="{StaticResource MaterialDesignFlatButton}" materialDesign:ButtonAssist.CornerRadius="10" Height="60" Width="48.4" Padding="10.7,4,10.7,4">
-                    <StackPanel Width="27" Height="6">
-                        <Image Source="Icons/menu.png" Height="6" Width="27" />
-                    </StackPanel>
-                </Button>
+                <StackPanel Margin="0,20,30,0" Orientation="Horizontal">
+                    <TextBlock Name="WorkspaceName" Width="150" Text="" Foreground="#78293B" VerticalAlignment="Center" TextAlignment="Right" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="16"></TextBlock>
+                    <Button Name="Logout" Height="35" Width="35" Padding="1,1,1,1" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Click="Logout_Click">
+                        <StackPanel Width="32" Height="32">
+                            <Image Source="Icons/logout.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </StackPanel>
 
             <Button Grid.Row="1" Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Margin="34.62,0,0,11.13" Height="36" Padding="0,4,16,4" HorizontalContentAlignment="Stretch" Width="198" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}">
@@ -106,12 +105,12 @@
                 </StackPanel>
             </Button>
 
-            <Border  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Margin="34.62,0,27.32,0" Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                <ComboBox SelectedIndex="0" Width="400" Height="37.89"  materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left">Screen only</ComboBox>
-            </Border>
+            <TextBlock Grid.Row="5" Grid.Column="0" Margin="35,0,231,6" FontSize="14" FontWeight="SemiBold" FontFamily="{DynamicResource MaterialDesignFont}" Grid.ColumnSpan="2" Height="21" VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="0,5,0,0" Width="135">Recording Settings</TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="35,0,231,6" FontSize="14" FontWeight="SemiBold" FontFamily="{DynamicResource MaterialDesignFont}" Grid.ColumnSpan="2" Height="21" VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="0,5,0,0" Width="135">Select screen</TextBlock>
 
             <Border  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="34.62,6.58,27.32,10" Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                <ComboBox Name="RecordableWindows" SelectedIndex="0" Width="400" Height="37.89"  materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left" Initialized="RecordableWindows_Initialized" SelectionChanged="RecordableWindows_SelectionChanged">
+                <ComboBox Name="RecordableWindows" SelectedIndex="0" Width="397" Height="38"  materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Center" Initialized="RecordableWindows_Initialized" SelectionChanged="RecordableWindows_SelectionChanged" VerticalAlignment="Center">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
                             <Setter Property="Width" Value="400"/>
@@ -120,16 +119,14 @@
                 </ComboBox>
             </Border>
 
-            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  materialDesign:ButtonAssist.CornerRadius="10" Width="400" Style="{StaticResource MaterialDesignOutlinedDarkButton}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="34.62,0,27.32,29.25" FontWeight="SemiBold"  FontSize="13" Height="36" Foreground="#FF181B1A" FontFamily="{DynamicResource MaterialDesignFont}" Padding="0,0,0,0">Create a recording canvas</Button>
-
             <TextBlock Grid.Row="5" Grid.Column="0" Margin="35,0,231,6" FontSize="14" FontWeight="SemiBold" FontFamily="{DynamicResource MaterialDesignFont}" Grid.ColumnSpan="2" Height="21" VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="0,5,0,0" Width="135">Recording Settings</TextBlock>
 
             <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,7.23">
-                <Button materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" BorderBrush="#4CE0748B" Background="#4CE0748B">
-                    <DynamicResource ResourceKey="Camera"/>
+                <Button Name="Camera" materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" BorderBrush="#4CE0748B" Background="#4CE0748B">
+                    <DynamicResource ResourceKey="CameraOff"/>
                 </Button>
                 <Border Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                    <ComboBox x:Name="cameraComboBox" SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left" SelectionChanged="cameraComboBox_SelectionChanged">
+                    <ComboBox x:Name="cameraComboBox" SelectedIndex="0" Width="351" Height="38" materialDesign:ColorZoneAssist.Mode="Light" HorizontalAlignment="Left" SelectionChanged="cameraComboBox_SelectionChanged" VerticalAlignment="Center">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
                                 <Setter Property="Width" Value="354"/>
@@ -141,12 +138,12 @@
             </StackPanel>
 
             <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="34.63,0,27.33,0">
-                <Button Name="Microphone" materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" Background="#4CE0748B" BorderBrush="#4CE0748B" Cursor="Hand" Click="Microphone_Click">
+                <Button Name="Microphone" materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}" Height="38" Width="39" Margin="0,0,7,0" Padding="0,0,0,0" Background="#4CE0748B" BorderBrush="#4CE0748B" Cursor="Hand">
                     <DynamicResource ResourceKey="Mic"/>
                 </Button>
 
                 <Border  Background="{StaticResource PrimaryHueLightForegroundBrush}" CornerRadius="5">
-                    <ComboBox Name="AudioDevices" SelectedIndex="0" Width="354" Height="37.89" materialDesign:ColorZoneAssist.Mode="Light"  HorizontalAlignment="Left" Initialized="AudioDevices_Initialized" SelectionChanged="AudioDevices_SelectionChanged">
+                    <ComboBox Name="AudioDevices" SelectedIndex="0" Width="351" Height="38" materialDesign:ColorZoneAssist.Mode="Light"  HorizontalAlignment="Left" Initialized="AudioDevices_Initialized" SelectionChanged="AudioDevices_SelectionChanged" VerticalAlignment="Center">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
                                 <Setter Property="Width" Value="354"/>
@@ -162,12 +159,13 @@
             </StackPanel>
             <ComboBox Name="RecordingResolution" Grid.Row="8" Grid.Column="1" Width="110.99" Height="20" Background="Transparent" Foreground="#181B1A"  HorizontalAlignment="Right" Margin="0,31.65,27.32,0" FontWeight="SemiBold" Padding="0,0,14,0" SelectedIndex="0" materialDesign:ColorZoneAssist.Mode="Light" Initialized="RecordingResolution_Initialized" SelectionChanged="RecordingResolution_SelectionChanged"></ComboBox>
 
-            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37" Click="Button_Click">
+            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" materialDesign:ButtonAssist.CornerRadius="5" Width="400" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Margin="34.62,26.75,27,53.37" Click="Button_Click" Cursor="Hand">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock FontSize="15" Height="18" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">Start recording</TextBlock>
                     <TextBlock FontWeight="Light" FontSize="12" VerticalAlignment="Bottom" Margin="13.78,0,0,0" HorizontalAlignment="Center" FontFamily="{DynamicResource MaterialDesignFont}">5 minutes limit</TextBlock>
                 </StackPanel>
             </Button>
+
         </Grid>
     </Border>
 </Window>

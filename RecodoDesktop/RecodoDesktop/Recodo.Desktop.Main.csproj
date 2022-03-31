@@ -9,8 +9,11 @@
 	<ItemGroup>
 		<None Remove="Icons\bell.png" />
 		<None Remove="Icons\camera.png" />
+		<None Remove="Icons\cameraOff.png" />
+		<None Remove="Icons\google-icon.png" />
 		<None Remove="Icons\home.png" />
 		<None Remove="Icons\image.png" />
+		<None Remove="Icons\logout.png" />
 		<None Remove="Icons\menu.png" />
 		<None Remove="Icons\mic.png" />
 		<None Remove="Icons\microOff.png" />
@@ -22,6 +25,7 @@
 	<ItemGroup>
 		<PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
 		<ProjectReference Include="..\Recodo.Desktop.Logic\Recodo.Desktop.Logic.csproj" />
 		<ProjectReference Include="..\Recodo.Desktop.Models\Recodo.Desktop.Models.csproj" />
 	</ItemGroup>
@@ -38,8 +42,11 @@
 	<ItemGroup>
 		<Resource Include="Icons\bell.png" />
 		<Resource Include="Icons\camera.png" />
+		<Resource Include="Icons\cameraOff.png" />
+		<Resource Include="Icons\google-icon.png" />
 		<Resource Include="Icons\home.png" />
 		<Resource Include="Icons\image.png" />
+		<Resource Include="Icons\logout.png" />
 		<Resource Include="Icons\menu.png" />
 		<Resource Include="Icons\mic.png" />
 		<Resource Include="Icons\microOff.png" />
@@ -58,6 +65,12 @@
 		<Resource Include="Icons\Panel\pause_focus.png" />
 		<Resource Include="Icons\Panel\refresh_focus.png" />
 		<Resource Include="Icons\Panel\stop_focus.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\return.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 

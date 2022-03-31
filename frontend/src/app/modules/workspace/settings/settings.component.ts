@@ -221,7 +221,7 @@ export class SettingsComponent implements OnInit {
   resetPassword() {
     let userId = this.userId;
 
-    this.userService.resetPassword(`Reset-Password/${userId}`).subscribe({
+    this.userService.resetPassword(userId).subscribe({
       next: () => {
         this.snackbarService.openSnackBar('Password reseted successfully');
       },

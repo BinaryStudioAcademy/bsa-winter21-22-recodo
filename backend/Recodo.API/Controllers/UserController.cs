@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recodo.API.Extensions;
@@ -14,21 +14,23 @@ namespace Recodo.API.Controllers
     {
         private readonly AuthService _authService;
         private readonly UserService _userService;
+        private readonly TeamService _teamService;
 
-        public UserController(AuthService authService, UserService userService)
+        public UserController(AuthService authService, UserService userService, TeamService teamService)
         {
             _authService = authService;
             _userService = userService;
+            _teamService = teamService;
         }
 
-        [HttpPost("ResetPassword/{email}")]
+        [HttpPost("Reset-Password/{email}")]
         public async Task<IActionResult> ResetPassword(string email)
         {
             await _userService.ResetPassword(email);
             return NoContent();
         }
 
-        [HttpPost("ResetPasswordFinish/{email}/{newPass}")]
+        [HttpPost("Reset-Password-Finish/{email}/{newPass}")]
         public async Task<IActionResult> ResetPasswordDone(string email, string newPass)
         {
             var loginDto = await _userService.ResetPasswordFinish(email, newPass);
@@ -73,6 +75,30 @@ namespace Recodo.API.Controllers
             var user = await _userService.GetUserById(this.GetUserIdFromToken());
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("Add-To-Team/{token}")]
+        public async Task<IActionResult> AddToTeam(string token)
+        {
+            await _userService.AddToTeam(this.GetUserIdFromToken(), token);
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        [Route("Send-Invite-Link/{email}")]
+        public async Task<IActionResult> SendInviteLink(string email)
+        {
+            await _teamService.SendInviteLink(this.GetUserIdFromToken(), email);
+
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            return Ok(await _userService.GetUserById(id));
         }
     }
 }

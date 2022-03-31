@@ -43,7 +43,9 @@
 
         <p class="input-label">
           Password
-          <a routerLink="/reset-password" href="#" class="forgot-password">(Forgot password)</a>
+          <a routerLink="/reset-password" href="#" class="forgot-password"
+            >(Forgot password)</a
+          >
         </p>
         <mat-form-field
           class="input-form"
@@ -70,6 +72,15 @@
             *ngIf=" loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
           >
             Password is a required property
+          </small>
+          <small
+            *ngIf=" 
+              loginForm.controls['password'].errors?.['pattern'] || 
+              loginForm.controls['password'].errors?.['minlength'] ||
+              loginForm.controls['password'].errors?.['maxlength'] ||
+              loginForm.controls['password'].errors?.['cannotContainSpace']"
+          >
+            At least 1 digit and 1 letter, 8-20 characters without spaces
           </small>
         </div>
 

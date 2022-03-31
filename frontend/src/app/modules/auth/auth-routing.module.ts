@@ -6,6 +6,7 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { ResetDonePageComponent } from './reset-done-page/reset-done-page.component';
 import { ResetPassPageComponent } from './reset-pass-page/reset-pass-page.component';
 
+
 const routes: Routes = [
   {
     path: 'register',

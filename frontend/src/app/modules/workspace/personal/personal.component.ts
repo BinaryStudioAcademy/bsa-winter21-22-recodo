@@ -13,6 +13,11 @@ import { VideoService } from 'src/app/services/video.service';
 import { TimeService } from 'src/app/services/time.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { environment } from 'src/environments/environment';
+import { HttpParams } from '@angular/common/http';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { UpdateVideoDto } from 'src/app/models/video/update-video-dto';
+import { UpdateVideoDialogComponent } from '../video/update-video-dialog/update-video-dialog.component';
 
 @Component({
   selector: 'app-content',
@@ -46,7 +51,8 @@ export class PersonalComponent implements OnInit {
     private videoService: VideoService,
     private timeService: TimeService,
     public dialog: MatDialog,
-    private router: Router ) {
+    private router: Router,
+    private snackBarService: SnackBarService ) {
       route.params.pipe(map(p => p['id']))
       .subscribe(id=> {
         this.selectedFolderId = id ;
@@ -104,6 +110,12 @@ export class PersonalComponent implements OnInit {
     });
   }
 
+  updateVideo(videoDto: UpdateVideoDto) {
+    this.videoService.updateVideo(videoDto).subscribe(() => {
+      this.getVideos(this.currentUser.id);
+    });
+  }
+
   showNewFolderForm(folder?: FolderDto) {
     const dialogConfig = new MatDialogConfig;
 
@@ -138,6 +150,25 @@ export class PersonalComponent implements OnInit {
     );
   }
 
+  showVideoUpdateDialog(video: VideoDto) {
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = video.name;
+
+    const dialogRef = this.dialog.open(UpdateVideoDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      videoName => {
+        let videoUpdated : UpdateVideoDto = {
+          id: video.id,
+          name: videoName,
+        }
+        this.updateVideo(videoUpdated);
+      }
+    );
+  }
+
   public folderClick(folder: FolderDto) {
     this.selectedFolderName = ' / '+folder.name;
     this.isFolderRouteActive = true;
@@ -162,8 +193,18 @@ export class PersonalComponent implements OnInit {
   public deleteVideo(id: number) {
     if(confirm('Are you sure you want to delete the video ?'))
     {
-      this.videoService.delete(id).subscribe(() => {
-        this.getVideos(this.currentUser.id);
+      const url = environment.blobApiUrl+'/blob';
+      const params = new HttpParams()
+      .set('id', id);
+
+      this.videoService.deleteVideo(url, params).subscribe((response) => {
+        if(response.status === 204) {
+          this.getVideos(this.currentUser.id);
+          this.snackBarService.openSnackBar('Video deleted successfully');
+        }
+        else {
+          this.snackBarService.openSnackBar('Error');
+        }
       });
     }
   }
