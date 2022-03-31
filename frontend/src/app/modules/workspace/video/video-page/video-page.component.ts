@@ -3,7 +3,6 @@ import { VideoDto } from 'src/app/models/video/video-dto';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { VideoService } from 'src/app/services/video.service';
 import { RegistrationService } from 'src/app/services/registration.service';
