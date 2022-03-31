@@ -20,6 +20,7 @@ namespace Recodo.BLL.Services
         public async Task<CommentDTO> CreateComment(NewCommentDTO newComment)
         {
             var commentEntity = _mapper.Map<Comment>(newComment);
+            commentEntity.CreatedAt = System.DateTime.Now;
             
             _context.Comments.Add(commentEntity);
             await _context.SaveChangesAsync();
