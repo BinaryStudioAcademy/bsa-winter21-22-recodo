@@ -35,6 +35,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -58,6 +59,7 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SettingsComponent,
     FolderComponent,
     DialogComponent,
+    DialogDeleteComponent,
     TeamInviteComponent,
     InviteFinishComponent,
     UpdateVideoDialogComponent,
