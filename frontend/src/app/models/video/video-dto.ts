@@ -1,3 +1,6 @@
+import { Comment } from '../comment/comment';
+import { VideoReactionDTO } from '../reaction/video-reaction-dto';
+
 export interface VideoDto {
   id: number;
   name: string;
@@ -8,4 +11,6 @@ export interface VideoDto {
   createdAt: Date;
   isPrivate: boolean;
   sharedEmails: string[];
+  reactions: VideoReactionDTO[];
+  comments: Comment[];
 }

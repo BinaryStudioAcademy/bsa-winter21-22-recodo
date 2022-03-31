@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,7 +65,10 @@ namespace Recodo.Desktop.Logic
             {
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "text/html";
-                await context.Response.WriteAsync("<h1>Please return to the app.</h1>");
+
+                var html = GetHtmlText("return.html");
+
+                await context.Response.WriteAsync(html);
                 await context.Response.Body.FlushAsync();
 
                 _source.TrySetResult(value);
@@ -78,6 +82,16 @@ namespace Recodo.Desktop.Logic
                 await context.Response.WriteAsync("<h1>Invalid request.</h1>");
                 await context.Response.Body.FlushAsync();
             }
+        }
+
+        private string GetHtmlText(string fileName)
+        {
+            string fullPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string directoryPath = Path.GetDirectoryName(fullPath) + $"\\Resources\\{fileName}";
+
+            var webClient = new WebClient();
+
+            return webClient.DownloadString(directoryPath);
         }
 
         public Task<string> WaitForCallbackAsync(int timeoutInSeconds = DefaultTimeout)

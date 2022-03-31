@@ -116,9 +116,15 @@ namespace Recodo.DAL.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FolderId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("ParentId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("integer");
@@ -126,6 +132,8 @@ namespace Recodo.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("FolderId");
 
                     b.HasIndex("TeamId");
 
@@ -211,9 +219,6 @@ namespace Recodo.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -304,6 +309,9 @@ namespace Recodo.DAL.Migrations
                     b.Property<int?>("FolderId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FolderId1")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("boolean");
 
@@ -326,6 +334,8 @@ namespace Recodo.DAL.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("FolderId");
+
+                    b.HasIndex("FolderId1");
 
                     b.ToTable("Videos");
                 });
@@ -398,8 +408,8 @@ namespace Recodo.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Recodo.DAL.Entities.Video", null)
-                        .WithMany()
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany("Comments")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -429,7 +439,7 @@ namespace Recodo.DAL.Migrations
 
                             b1.HasIndex("UserId");
 
-                            b1.ToTable("CommentReaction");
+                            b1.ToTable("CommentReactions");
 
                             b1.WithOwner()
                                 .HasForeignKey("CommentId");
@@ -446,6 +456,8 @@ namespace Recodo.DAL.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Reactions");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
@@ -455,6 +467,10 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Recodo.DAL.Entities.Folder", null)
+                        .WithMany("SubFolders")
+                        .HasForeignKey("FolderId");
 
                     b.HasOne("Recodo.DAL.Entities.Team", "Team")
                         .WithMany()
@@ -509,6 +525,10 @@ namespace Recodo.DAL.Migrations
                     b.HasOne("Recodo.DAL.Entities.Folder", null)
                         .WithMany()
                         .HasForeignKey("FolderId");
+
+                    b.HasOne("Recodo.DAL.Entities.Folder", null)
+                        .WithMany("Videos")
+                        .HasForeignKey("FolderId1");
 
                     b.OwnsMany("Recodo.DAL.Entities.VideoReaction", "Reactions", b1 =>
                         {
@@ -565,6 +585,18 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
+                {
+                    b.Navigation("SubFolders");
+
+                    b.Navigation("Videos");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.Video", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

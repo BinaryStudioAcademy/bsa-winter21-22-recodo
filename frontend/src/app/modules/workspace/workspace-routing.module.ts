@@ -33,7 +33,7 @@ const routes: Routes = [
         canActivate: [VideoAuthorGuard],
       },
       {
-        path: ':id',
+        path: 'folder/:id',
         component: PersonalComponent,
       },
     ],

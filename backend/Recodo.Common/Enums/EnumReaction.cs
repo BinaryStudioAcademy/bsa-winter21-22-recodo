@@ -12,5 +12,7 @@ namespace Recodo.Common.Enums
         Dislike,
         Love,
         Fun,
+        Astonishment,
+        Magically,
     }
 }

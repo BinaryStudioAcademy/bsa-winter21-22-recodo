@@ -38,7 +38,6 @@ namespace Recodo.BLL.Services
                 CreatedAt = DateTime.Now,
                 Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
                 Link = "",
-                FolderId = null
             };
 
             await _context.AddAsync(newVideo);

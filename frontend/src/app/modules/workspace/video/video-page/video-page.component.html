@@ -9,10 +9,22 @@
     </button>
   </div>
   <app-video-player></app-video-player>
-  <app-video-reactions class="reactions-container"></app-video-reactions>
-  <h1><strong>Screenshot 11 February 2022</strong></h1>
-  <app-video-description
-    [username]="'Username'"
-    [dateOfComment]="'25.02.2002'"
-  ></app-video-description>
+  <h1 class="video-name"><strong>Screenshot 11 February 2022</strong></h1>
+  <div *ngIf="currentVideo">
+    <app-video-comments
+      *ngFor="let _comment of currentVideo.comments"
+      [comment]="_comment"
+      (deletedComment)="deleteComment($event)"
+      (newReaction)="updateVideo()"
+    ></app-video-comments>
+  </div>
+  <div *ngIf="currentVideo">
+    <app-video-reactions
+      class="reactions-container"
+      [video]="currentVideo"
+      (newReaction)="updateVideo()"
+      (newCommentCreated)="sendComment($event)"
+    >
+    </app-video-reactions>
+  </div>
 </div>

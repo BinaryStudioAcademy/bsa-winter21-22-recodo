@@ -24,12 +24,12 @@ export class VideoPlayerComponent {
   constructor(
     private route: ActivatedRoute,
     private videoUrlService: RequestService,
-    protected httpClient: HttpClient) {
-    route.params.pipe(map(p => p['id']))
-      .subscribe(id => {
-        this.videoId = id;
-        this.getVideoUrl();
-      });
+    protected httpClient: HttpClient
+  ) {
+    // route.params.pipe(map((p) => p['id'])).subscribe((id) => {
+    //   this.videoId = id;
+    //   this.getVideoUrl();
+    // });
   }
 
   public getVideoUrl() {

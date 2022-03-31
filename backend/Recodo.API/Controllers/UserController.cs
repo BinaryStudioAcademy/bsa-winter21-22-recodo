@@ -77,7 +77,7 @@ namespace Recodo.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Add-To-Team/{token}")]
         public async Task<IActionResult> AddToTeam(string token)
         {
@@ -95,6 +95,10 @@ namespace Recodo.API.Controllers
             return NoContent();
         }
 
-
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            return Ok(await _userService.GetUserById(id));
+        }
     }
 }
