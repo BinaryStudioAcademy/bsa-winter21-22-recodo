@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { VideoDto } from 'src/app/models/video/video-dto';
-import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
 import { ActivatedRoute } from '@angular/router';
@@ -75,19 +74,10 @@ export class VideoPageComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp) => {
         if (resp && this.currentVideo != null) {
-          console.log(resp.body);
-          this.currentVideo.comments = this.sortCommentArray(
-            this.currentVideo.comments.concat(resp.body as Comment)
-          );
           this.newComment.body = '';
+          this.updateVideo();
         }
       });
-    this.updateVideo();
-  }
-  private sortCommentArray(array: Comment[]): Comment[] {
-    return array.sort(
-      (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)
-    );
   }
 
   public updateVideo() {
