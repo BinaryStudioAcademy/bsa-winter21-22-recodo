@@ -116,6 +116,26 @@ export abstract class ResourceService<T> {
       params: httpParams,
     });
   }
+
+  public getFullRequestWithParams<TRequest>(
+    url: string,
+    params?:
+      | HttpParams
+      | {
+          [param: string]:
+            | string
+            | number
+            | boolean
+            | ReadonlyArray<string | number | boolean>;
+        }
+  ): Observable<HttpResponse<TRequest>> {
+    return this.httpClient.get<TRequest>(`${environment.apiUrl}/${url}`, {
+      observe: 'response',
+      headers: this.getHeaders(),
+      params: params,
+    });
+  }
+
   private getHeaders() {
     return this.headers;
   }

@@ -68,7 +68,6 @@ namespace Recodo.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("FromToken")]
         public async Task<IActionResult> GetUserFromToken()
         {

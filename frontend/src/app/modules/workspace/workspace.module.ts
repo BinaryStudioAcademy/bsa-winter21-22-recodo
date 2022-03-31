@@ -35,6 +35,10 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
+import { SharePropertiesComponent } from './sharing-propetries/share-properties-dialog/share-properties.component';
+import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
+import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -43,6 +47,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TeamInviteComponent } from './team-invite/team-invite.component';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-video-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -59,6 +64,10 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     SettingsComponent,
     FolderComponent,
     DialogComponent,
+    ShareByEmailDialogComponent,
+    SharePropertiesComponent,
+    SharedVideoPageComponent,
+    SharingVideoDialogComponent,
     DialogDeleteComponent,
     TeamInviteComponent,
     InviteFinishComponent,
@@ -94,6 +103,7 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     VideoReactionService,
@@ -101,10 +111,11 @@ import { UpdateVideoDialogComponent } from './video/update-video-dialog/update-v
     CommentService,
     VideoService,
     MatDialogModule,
+    ClipboardModule,
+    MatFormFieldModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule,
   ],
 })
 export class WorkspaceModule {}

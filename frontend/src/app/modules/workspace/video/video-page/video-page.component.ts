@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SendDialogService } from 'src/app/services/send-dialog.service';
+import { environment } from 'src/environments/environment';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { CommentService } from 'src/app/services/comment.service';
 import { NewComment } from 'src/app/models/comment/new-comment';
@@ -17,22 +19,24 @@ export class VideoPageComponent {
   public userWorkspaceName = {} as string;
   public viewsNumber: number;
   public videoId: number;
-  public currentVideo: VideoDto;
-  public newComment = {} as NewComment;
   public link: string;
   public checked: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  public currentVideo: VideoDto;
+  public newComment = {} as NewComment;
   public isLoading = true;
 
   constructor(
-    private commentService: CommentService,
-    private videoService: VideoService,
     private activateRoute: ActivatedRoute,
+    private sendDialogService: SendDialogService,
     private snackBarService: SnackBarService,
+    private videoService: VideoService,
+    private commentService: CommentService,
     private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
     this.videoId = activateRoute.snapshot.params['id'];
+    this.link = `${environment.appUrl}/shared/${this.videoId}`;
     this.updateVideo();
     this.videoService.getVideoById(this.videoId).subscribe((resp) => {
       if (resp.body) {
@@ -45,7 +49,15 @@ export class VideoPageComponent {
       .subscribe((user) => {
         this.userWorkspaceName = user.workspaceName;
       });
-    setTimeout(() => (this.isLoading = false), 1000);
+  }
+
+  public openSendDialog() {
+    this.sendDialogService.openSendDialog(
+      this.link,
+      this.videoId,
+      this.checked,
+      this.userWorkspaceName
+    );
   }
 
   public deleteComment(commentId: number) {
@@ -86,6 +98,7 @@ export class VideoPageComponent {
         if (resp.body != null) {
           this.currentVideo = resp.body;
         }
+        console.log(this.currentVideo);
       });
   }
 

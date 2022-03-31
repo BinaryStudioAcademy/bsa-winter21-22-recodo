@@ -32,6 +32,7 @@ namespace Recodo.BLL.Services
 
             Video newVideo = new Video()
             {
+                IsPrivate = true,
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,

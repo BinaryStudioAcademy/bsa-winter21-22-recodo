@@ -11,6 +11,7 @@ using Recodo.Common.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Recodo.BLL.Exceptions;
 using Recodo.DAL.Entities;
+using Microsoft.Extensions.Configuration;
 using Recodo.Common.Dtos.Video;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -18,28 +19,19 @@ namespace Recodo.BLL.Services
 {
     public class VideoService : BaseService
     {
+        private readonly EmailService _emailService;
         private readonly CommentService _commentService;
-        public VideoService(RecodoDbContext context, IMapper mapper, CommentService commentService) : base(context, mapper) {
+        public VideoService(RecodoDbContext context, IMapper mapper, EmailService emailService, CommentService commentService) : base(context, mapper)
+        {
+            _emailService = emailService;
             _commentService = commentService;
-         }
+        }
 
         public async Task<ICollection<VideoDTO>> GetVideos()
         {
             var allVideos = await _context.Videos.ToListAsync();
             return _mapper.Map<List<VideoDTO>>(allVideos);
         }
-
-        public async Task<VideoDTO> GetVideoById(int id)
-        {
-            var videoEntity = await _context.Videos
-                .Include(video => video.Reactions)
-                .FirstOrDefaultAsync(video => video.Id == id);
-            var videoDto = _mapper.Map<VideoDTO>(videoEntity);
-            var videoComments = await _commentService.GetAllVideosComments(videoDto.Id);
-            videoDto.Comments = videoComments;
-            return videoDto;
-        }
-
         public async Task<List<VideoDTO>> GetVideosByFolderId(int folderId)
         {
             var videoEntities = await _context.Videos.AsNoTracking()
@@ -109,10 +101,28 @@ namespace Recodo.BLL.Services
             }
 
             videoEntity.Name = videoDTO.Name;
+            videoEntity.IsPrivate = videoDTO.IsPrivate;
 
             _context.Videos.Update(videoEntity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<VideoDTO> GetVideoById(int id)
+        {
+            var videoEntity = await _context.Videos.AsNoTracking()
+                .Include(video => video.Reactions)
+                .Where(v => v.Id == id)
+                .FirstOrDefaultAsync();
+            var videoComments = await _context.Comments.Where(comment => comment.VideoId == id).ToListAsync();
+            videoEntity.Comments = videoComments;
+            return _mapper.Map<VideoDTO>(videoEntity);
+        }
+
+        public async Task SendEmail(string email, string body, string name = "")
+        {
+            await _emailService.SendEmailAsync(email, "Shared video", body, name);
+        }
+        
         public async Task<VideoDTO> AddVideo (NewVideoDTO newVideo)
         {
             var video = _mapper.Map<Video>(newVideo);

@@ -18,12 +18,14 @@ namespace Recodo.API.Controllers
     [ApiController]
     public class VideoController : ControllerBase
     {
+        private readonly UserService _userService;
         private readonly VideoService _videoService;
         private readonly ReactionService _reactionService;
-        public VideoController(VideoService videoService, ReactionService reactionService)
+        public VideoController(VideoService videoService, UserService userService, ReactionService reactionService)
         {
-            _videoService = videoService;
             _reactionService = reactionService;
+            _videoService = videoService;
+            _userService = userService;
         }
 
         [HttpGet("{id}")]
@@ -66,6 +68,15 @@ namespace Recodo.API.Controllers
             await _videoService.Update(videoDTO);
             return NoContent();
         }
+
+        [HttpPost("share")]
+        public async Task<IActionResult> ShareVideo(VideoShareDTO sharePostInfo)
+        {
+            var user = await _userService.GetUserById(this.GetUserIdFromToken());
+            await _videoService.SendEmail(sharePostInfo.Email, sharePostInfo.Link, user.WorkspaceName);
+            return Ok();
+        }
+
         
         [HttpPost("react")]
         public async Task<IActionResult> ReactVideo(NewVideoReactionDTO reaction)

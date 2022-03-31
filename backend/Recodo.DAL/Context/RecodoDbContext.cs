@@ -19,7 +19,9 @@ namespace Recodo.DAL.Context
         public DbSet<TeamInvitation> TeamInvitations { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<CommentReaction> CommentReactions { get; set; }
+        public DbSet<AccessForRegisteredUsers> AccessesForRegisteredUsers{ get; set; }
+        public DbSet<AccessForUnregisteredUsers> AccessesForUnregisteredUsers { get; set; }
+
         public RecodoDbContext(DbContextOptions<RecodoDbContext> options) : base(options)
         {
 
@@ -28,10 +30,6 @@ namespace Recodo.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Configure();
-            modelBuilder.Entity<Comment>()
-            .HasOne(p => p.Video)
-            .WithMany(p => p.Comments)
-            .HasForeignKey(p => p.VideoId);
         }
     }
 }
