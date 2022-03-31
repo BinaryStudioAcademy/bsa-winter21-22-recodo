@@ -13,6 +13,7 @@ import { CommentReactionService } from 'src/app/services/comment-reaction.servic
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { UserService } from 'src/app/services/user.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-video-comments',
@@ -35,7 +36,8 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
   constructor(
     private commentReactionService: CommentReactionService,
     private commentService: CommentService,
-    private userService: UserService
+    private userService: UserService,
+    private registrationService: RegistrationService
   ) {}
 
   public ngOnInit() {
@@ -46,6 +48,11 @@ export class VideoCommentsComponent implements OnDestroy, OnInit {
           this.commentAuthor.avatarLink =
             '../../assets/icons/test-user-logo.png';
         }
+        this.registrationService.getUser().subscribe((resp) => {
+          if (resp.id == this.commentAuthor.id) {
+            this.isCommentAuthor = true;
+          }
+        });
         this.isLoading = false;
       }
     });
