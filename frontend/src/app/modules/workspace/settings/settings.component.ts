@@ -10,6 +10,8 @@ import {
   cannotContainSpace,
   startsOrEndWithSpace,
 } from 'src/app/core/validators/customValidators';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 
 @Component({
   selector: 'app-settings',
@@ -27,11 +29,13 @@ export class SettingsComponent implements OnInit {
   public userId: string = '';
   public name: string = '';
   public imageFile!: File;
+  public result: Boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private userService: UserService,
+    public dialog: MatDialog,
     private snackbarService: SnackBarService
   ) {}
 
@@ -232,17 +236,26 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUser() {
-    let userId = this.userId;
-    this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
-      next: () => {
-        this.loginService.logOut();
-        this.snackbarService.openSnackBar('User deleted successfully');
-      },
-      error: () => {
-        this.snackbarService.openSnackBar(
-          'User not deleted. Something went wrong'
-        );
-      },
-    });
+    const dialogConfig = new MatDialogConfig;
+
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(DialogDeleteComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((dialogResult : boolean) => {
+      if (dialogResult) {
+        let userId = this.userId;
+        this.userService.deleteUser(`Delete-User/${userId}`).subscribe({
+          next: () => {
+            this.loginService.logOut();
+            this.snackbarService.openSnackBar('User deleted successfully');
+          },
+          error: () => {
+            this.snackbarService.openSnackBar(
+              'User not deleted. Something went wrong'
+            );
+          },
+        });
+    }});
   }
 }

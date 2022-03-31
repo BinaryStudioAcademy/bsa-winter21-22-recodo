@@ -3,7 +3,7 @@
     <div class="registration-container">
       <img src="../../../../assets/icons/logo.svg" alt="logo" />
       <div class="to-login-container">
-        <h3>Hello {{ email }}</h3>
+        <h3 class="hello-msg">Hello {{ email }}</h3>
         <h2>Reset password</h2>
       </div>
       <form
@@ -22,7 +22,7 @@
             [type]="hidePass ? 'password' : 'text'"
             matInput
             minlength="8"
-            placeholder="password"
+            placeholder="Password"
             formControlName="password"
             trim
           />
@@ -62,7 +62,7 @@
             [type]="hideConfirmPass ? 'password' : 'text'"
             matInput
             minlength="8"
-            placeholder="confirm password"
+            placeholder="Confirm Password"
             formControlName="confirmPassword"
             trim
           />

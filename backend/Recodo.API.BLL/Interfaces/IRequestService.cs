@@ -11,7 +11,7 @@ namespace Recodo.FIle.BLL.Interfaces
     {
         Task<string> SendSaveRequest(string token);
         Task<bool> SendGetRequest(int id ,string token);
-        Task<string> SendFinishRequest(int videoId);
+        Task<string> SendFinishRequest(int videoId, string uri);
         Task<bool> SendDeleteRequest(int videoId, string token);
     }
 }
