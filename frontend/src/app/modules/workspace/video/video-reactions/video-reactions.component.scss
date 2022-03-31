@@ -58,6 +58,10 @@
   background-color: #fb6d3a !important;
 }
 
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #fb6d3a !important;
+}
+
 ::ng-deep.mat-form-field-ripple {
   background-color: #fb6d3a !important;
 }
