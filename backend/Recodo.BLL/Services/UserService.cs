@@ -14,6 +14,7 @@ using Recodo.DAL.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Recodo.Common.Dtos.Folder;
 
 namespace Recodo.BLL.Services
 {
@@ -25,10 +26,11 @@ namespace Recodo.BLL.Services
         private readonly IConfiguration _configuration;
         private readonly JwtFactory _jwtFactory;
         private readonly AuthService _authService;
+        private readonly FolderService _folderService;
 
         public UserService(RecodoDbContext context, IMapper mapper, AuthService authService,
             IConfiguration configuration, ImageService imageService, JwtFactory jwtFactory,
-            TeamService teamService, EmailService emailService)
+            TeamService teamService, EmailService emailService, FolderService folderService)
             : base(context, mapper)
         {
             _authService = authService;
@@ -37,6 +39,7 @@ namespace Recodo.BLL.Services
             _emailService = emailService;
             _jwtFactory = jwtFactory;
             _imageService = imageService;
+            _folderService = folderService;
         }
 
         public async Task<UserDTO> CreateUser(NewUserDTO userRegisterDTO)
@@ -47,7 +50,6 @@ namespace Recodo.BLL.Services
             var salt = SecurityHelper.GetRandomBytes();
             userEntity.Salt = Convert.ToBase64String(salt);
             userEntity.Password = SecurityHelper.HashPassword(userRegisterDTO.Password, salt);
-
             var existUser = _context.Users.FirstOrDefault(u => u.Email == userRegisterDTO.Email);
             if (existUser != null)
             {
@@ -56,6 +58,7 @@ namespace Recodo.BLL.Services
 
             _context.Users.Add(userEntity);
             await _context.SaveChangesAsync();
+            var sharedWithMeFolder = _folderService.Create(new NewFolderDTO {Name = "Shared with me", AuthorId = userEntity.Id});
 
             await _teamService.CreateTeam(userEntity);
             userEntity = _context.Users.Include(q => q.Teams)

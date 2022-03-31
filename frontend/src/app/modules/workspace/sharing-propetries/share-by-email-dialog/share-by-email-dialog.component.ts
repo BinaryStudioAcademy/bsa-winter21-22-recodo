@@ -13,6 +13,9 @@ import { VideoService } from 'src/app/services/video.service';
 import { VideoDto } from 'src/app/models/video/video-dto';
 import { AccessForLinkService } from 'src/app/services/access-for-video-link.service';
 import { AccessForUnregisteredUsersService } from 'src/app/services/access-for-unregistered-users.service';
+import { FolderService } from 'src/app/services/folder.service';
+import { UserService } from 'src/app/services/user.service';
+import { UserDto } from 'src/app/models/user/user-dto';
 
 @Component({
   selector: 'app-share-by-email',
@@ -26,6 +29,7 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
   public videoId = {} as number;
   public currentVideo = {} as VideoDto;
   public workspaceName = {} as string;
+  private currentUser: UserDto;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -37,7 +41,9 @@ export class ShareByEmailDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private toastr: ToastrService,
     private accessForRegisteredUsers: AccessForLinkService,
-    private accessForUnregisteredUsers: AccessForUnregisteredUsersService
+    private accessForUnregisteredUsers: AccessForUnregisteredUsersService,
+    private folderServide: FolderService,
+    private userService: UserService
   ) {
     this.title = 'Share video with other users';
     this.email = 'Write an email';

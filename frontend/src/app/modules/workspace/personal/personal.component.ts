@@ -68,6 +68,9 @@ export class PersonalComponent implements OnInit {
       .getAllFoldersByUserId(this.currentUser.id)
       .subscribe((result) => {
         this.folders = result;
+        this.folders = this.folders.filter(
+          (folder) => folder.name != 'Shared with me'
+        );
         let name = this.folders.find(
           (f) => f.id == this.selectedFolderId
         )?.name;
