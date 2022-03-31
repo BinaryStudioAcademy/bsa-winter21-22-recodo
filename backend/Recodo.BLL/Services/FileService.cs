@@ -35,8 +35,7 @@ namespace Recodo.BLL.Services
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
-                Name = $"Video_{FormatVideoTime(DateTime.Now.Day)}{FormatVideoTime(DateTime.Now.Month)}{DateTime.Now.Year}_" +
-                $"{FormatVideoTime(DateTime.Now.Hour)}{FormatVideoTime(DateTime.Now.Minute)}{FormatVideoTime(DateTime.Now.Second)}",
+                Name = DateTime.Now.ToString("yyyy`-`MM`-`dd`_`HH`:`mm`:`ss"),
                 Link = "",
                 FolderId = null
             };
