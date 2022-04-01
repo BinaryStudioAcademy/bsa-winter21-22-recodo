@@ -35,7 +35,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FolderComponent } from './folder/folder.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ShareByEmailDialogComponent } from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
+import { ShareByEmailDialogComponent }
+  from './sharing-propetries/share-by-email-dialog/share-by-email-dialog.component';
 import { SharePropertiesComponent } from './sharing-propetries/share-properties-dialog/share-properties.component';
 import { SharedVideoPageComponent } from './video/shared-video/shared-video-page.component';
 import { SharingVideoDialogComponent } from './sharing-propetries/sharing-video/sharing-video-dialog.component';

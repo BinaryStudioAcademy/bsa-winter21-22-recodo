@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
-import { VideoAuthorGuard } from './guards/video-author.guard';
 import { InviteFinishComponent } from './invite-finish/invite-finish.component';
 import { PersonalComponent } from './personal/personal.component';
 import { SettingsComponent } from './settings/settings.component';
