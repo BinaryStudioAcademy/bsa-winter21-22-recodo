@@ -36,7 +36,7 @@ namespace Recodo.BLL.Services
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
-                Name = DateTime.Now.ToString("yyyy`-`MM`-`dd`_`HH`:`mm`:`ss"),
+                Name = DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"),
                 Link = "",
             };
 
