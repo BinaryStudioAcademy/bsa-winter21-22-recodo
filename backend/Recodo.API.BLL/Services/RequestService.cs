@@ -62,7 +62,7 @@ namespace Recodo.FIle.BLL.Services
             Client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token.Trim('"', '\\'));
 
             var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Delete, BaseUrl +
-                $"Videos/{videoId}"));
+                $"Video/{videoId}"));
             if (response.IsSuccessStatusCode)
             {
                 return true;
