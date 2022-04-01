@@ -32,12 +32,12 @@ namespace Recodo.BLL.Services
 
             Video newVideo = new Video()
             {
+                IsPrivate = true,
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
                 Name = DateTime.Now.ToString("yyyy`-`MM`-`dd`_`HH`:`mm`:`ss"),
                 Link = "",
-                FolderId = null
             };
 
             await _context.AddAsync(newVideo);
@@ -46,16 +46,7 @@ namespace Recodo.BLL.Services
             return newVideo.Id;
         }
 
-        private string FormatVideoTime(int time)
-        {
-            if (time < 10)
-            {
-                return $"0{time}";
-            }
-            return time.ToString();
-        }
-
-        public async Task FinishLoadingFile(int id)
+        public async Task FinishLoadingFile(int id, string uri)
         {
             var video = await _context.Videos.FirstOrDefaultAsync(x => x.Id == id);
             if (video == null)
@@ -64,6 +55,7 @@ namespace Recodo.BLL.Services
             }
 
             video.IsSaving = true; //Rename to IsSaved
+            video.Link = uri;
 
             _context.Videos.Update(video);
             await _context.SaveChangesAsync();

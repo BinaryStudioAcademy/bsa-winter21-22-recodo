@@ -62,4 +62,8 @@ export class UserService extends ResourceService<UserDto> {
   public updatePassword(subUrl: string, data: UserUpdateDto) {
     return this.addWithUrl<UserUpdateDto, {}>(subUrl, data);
   }
+
+  public getUserById(videoId: number) {
+    return this.get(videoId);
+  }
 }

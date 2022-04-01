@@ -3,7 +3,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
-namespace Thread_.NET.BLL.Services
+namespace Recodo.BLL.Services
 {
     public class EmailService
     {
@@ -14,7 +14,7 @@ namespace Thread_.NET.BLL.Services
             _configuration = configuration;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        public async Task SendEmailAsync(string toEmail, string subject, string message, string workspaceName = "")
         {
             string apiKey = _configuration["SendGridKey"];
             string fromEmail = _configuration["SendGridFromEmail"];
@@ -22,6 +22,11 @@ namespace Thread_.NET.BLL.Services
 
             var from = new EmailAddress(fromEmail, "Admin Recodo");
             var to = new EmailAddress(toEmail, toEmail);
+
+            if(workspaceName != "")
+            {
+                message = $"{workspaceName} shared a video with you: {message}";
+            }
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
             await client.SendEmailAsync(msg);

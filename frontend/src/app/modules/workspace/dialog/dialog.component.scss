@@ -24,3 +24,11 @@ button:disabled {
         color: red;
     }
 }
+
+::ng-deep.mat-form-field-ripple {
+    background-color: #FB6D3A !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: #FB6D3A !important;
+}

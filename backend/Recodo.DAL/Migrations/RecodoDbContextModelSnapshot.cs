@@ -34,6 +34,48 @@ namespace Recodo.DAL.Migrations
                     b.ToTable("PermissionUser");
                 });
 
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("AccessesForRegisteredUsers");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("AccessesForUnregisteredUsers");
+                });
+
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -54,11 +96,16 @@ namespace Recodo.DAL.Migrations
                     b.Property<int>("VideoId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("VideoId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("VideoId");
+
+                    b.HasIndex("VideoId1");
 
                     b.ToTable("Comments");
                 });
@@ -73,9 +120,15 @@ namespace Recodo.DAL.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FolderId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("integer");
@@ -83,6 +136,8 @@ namespace Recodo.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("FolderId");
 
                     b.HasIndex("TeamId");
 
@@ -261,6 +316,12 @@ namespace Recodo.DAL.Migrations
                     b.Property<int?>("FolderId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FolderId1")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsSaving")
                         .HasColumnType("boolean");
 
@@ -277,6 +338,8 @@ namespace Recodo.DAL.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("FolderId");
+
+                    b.HasIndex("FolderId1");
 
                     b.ToTable("Videos");
                 });
@@ -311,6 +374,36 @@ namespace Recodo.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForRegisteredUsers", b =>
+                {
+                    b.HasOne("Recodo.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.AccessForUnregisteredUsers", b =>
+                {
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Video");
+                });
+
             modelBuilder.Entity("Recodo.DAL.Entities.Comment", b =>
                 {
                     b.HasOne("Recodo.DAL.Entities.User", "Author")
@@ -324,6 +417,10 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Recodo.DAL.Entities.Video", "Video")
+                        .WithMany("Comments")
+                        .HasForeignKey("VideoId1");
 
                     b.OwnsMany("Recodo.DAL.Entities.CommentReaction", "Reactions", b1 =>
                         {
@@ -367,6 +464,8 @@ namespace Recodo.DAL.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Reactions");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
@@ -376,6 +475,10 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Recodo.DAL.Entities.Folder", null)
+                        .WithMany("SubFolders")
+                        .HasForeignKey("FolderId");
 
                     b.HasOne("Recodo.DAL.Entities.Team", "Team")
                         .WithMany()
@@ -430,6 +533,10 @@ namespace Recodo.DAL.Migrations
                     b.HasOne("Recodo.DAL.Entities.Folder", null)
                         .WithMany()
                         .HasForeignKey("FolderId");
+
+                    b.HasOne("Recodo.DAL.Entities.Folder", null)
+                        .WithMany("Videos")
+                        .HasForeignKey("FolderId1");
 
                     b.OwnsMany("Recodo.DAL.Entities.VideoReaction", "Reactions", b1 =>
                         {
@@ -486,6 +593,18 @@ namespace Recodo.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.Folder", b =>
+                {
+                    b.Navigation("SubFolders");
+
+                    b.Navigation("Videos");
+                });
+
+            modelBuilder.Entity("Recodo.DAL.Entities.Video", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

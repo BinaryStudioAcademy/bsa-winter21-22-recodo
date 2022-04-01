@@ -25,7 +25,9 @@ namespace Recodo.API.BLL.Services
 			await using var fileStream = files;
 			await blob.UploadFromStreamAsync(fileStream);
 
-			return await _requestService.SendFinishRequest(Convert.ToInt32(id));
+			var uri = blob.Uri.AbsoluteUri;
+
+			return await _requestService.SendFinishRequest(Convert.ToInt32(id), uri);
 		}
 
 		public async Task<bool> DeleteAsync(int id, string token)
@@ -79,7 +81,7 @@ namespace Recodo.API.BLL.Services
 
 			var blob = blobContainer.GetBlockBlobReference(id.ToString()+".mp4");
 
-			return blob.Uri.AbsoluteUri; ;
+			return blob.Uri.AbsoluteUri;
 		}
     }
 }

@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserDto } from 'src/app/models/user/user-dto';
 import { ExternalAuthService } from 'src/app/services/external-auth.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { AccessForLinkService } from 'src/app/services/access-for-video-link.service';
+import { AccessForUnregisteredUsersService } from 'src/app/services/access-for-unregistered-users.service';
 
 @Component({
   selector: 'app-login-page',
@@ -20,6 +22,7 @@ export class LoginPageComponent implements OnInit {
   public hideConfirmPass = true;
   public currentUser: UserDto = {} as UserDto;
   redirectUrl: string | undefined;
+  private videoId: number | undefined;
 
   constructor(
     private router: Router,
@@ -27,13 +30,16 @@ export class LoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private externalAuthService: ExternalAuthService,
-    private snackbarService: SnackBarService
+    private snackbarService: SnackBarService,
+    private accessService: AccessForLinkService,
+    private accessForUnregisteredUsersService: AccessForUnregisteredUsersService
   ) {}
 
   ngOnInit() {
     this.validateForm();
     this.route.queryParams.subscribe((params) => {
       this.redirectUrl = params['redirect_url'];
+      this.videoId = params['id'];
     });
   }
 
