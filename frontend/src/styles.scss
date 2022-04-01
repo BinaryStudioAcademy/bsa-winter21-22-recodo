@@ -95,3 +95,17 @@ mat-select-min-line ng-tns-c111-2 ng-star-inserted {
 .workspace-user .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: transparent;
 }
+
+.share-dialog {
+  .mat-dialog-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgb(115, 41, 57, 0.6);
+    ::selection {
+      background: #b6445d;
+    }
+  }
+}

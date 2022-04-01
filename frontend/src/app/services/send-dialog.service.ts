@@ -20,6 +20,7 @@ export class SendDialogService implements OnDestroy {
       minWidth: 600,
       autoFocus: true,
       backdropClass: 'dialog-backdrop',
+      panelClass: 'share-dialog',
     });
   }
 
