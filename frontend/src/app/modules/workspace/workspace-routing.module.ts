@@ -30,7 +30,6 @@ const routes: Routes = [
       {
         path: 'video/:id',
         component: VideoPageComponent,
-        canActivate: [VideoAuthorGuard],
       },
       {
         path: 'folder/:id',
