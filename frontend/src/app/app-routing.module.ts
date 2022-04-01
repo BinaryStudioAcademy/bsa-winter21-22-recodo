@@ -20,7 +20,7 @@ const routes: Routes = [
     canActivate: [TokenDoesnotExistGuard],
   },
   {
-    path: 'shared/:videoId',
+    path: 'shared/:id',
     component: BaseComponent,
     canActivate: [TokenExistsGuard],
   },

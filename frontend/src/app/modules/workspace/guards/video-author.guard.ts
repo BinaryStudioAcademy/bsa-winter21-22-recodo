@@ -18,7 +18,7 @@ export class VideoAuthorGuard implements CanActivate {
   ) {}
   canActivate(route: ActivatedRouteSnapshot): boolean {
     this.videoService
-      .getVideoById(route.queryParams['videoId'])
+      .getVideoById(route.queryParams['id'])
       .subscribe((resp) => {
         if (resp.body) {
           this.currentVideo = resp.body;

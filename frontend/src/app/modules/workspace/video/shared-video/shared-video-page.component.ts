@@ -25,7 +25,7 @@ export class SharedVideoPageComponent {
     private registrationService: RegistrationService
   ) {
     this.viewsNumber = 10;
-    this.videoId = parseInt(activateRoute.snapshot.params['videoId']);
+    this.videoId = parseInt(activateRoute.snapshot.params['id']);
     this.getUserId();
   }
 

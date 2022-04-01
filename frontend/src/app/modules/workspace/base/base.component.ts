@@ -22,7 +22,7 @@ export class BaseComponent {
   ) {
     this.customService.init();
     this.route.params.subscribe((params) => {
-      if (params['videoId']) {
+      if (params['id']) {
         this.isShared = true;
       } else {
         this.isShared = false;
