@@ -34,7 +34,7 @@ export class VideoPageComponent {
     private commentService: CommentService,
     private registrationService: RegistrationService
   ) {
-    this.viewsNumber = 10;
+    this.viewsNumber = 1;
     this.videoId = activateRoute.snapshot.params['id'];
     this.link = `${environment.appUrl}/shared/${this.videoId}`;
     this.updateVideo();
