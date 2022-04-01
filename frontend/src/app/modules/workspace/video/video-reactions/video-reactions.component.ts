@@ -31,7 +31,7 @@ export class VideoReactionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.allReactions = this.video.reactions;
+    this.allReactions = this.video?.reactions;
     this.registrationService.getUser().subscribe((resp) => {
       this.currentUser = resp;
       this.updateNewComment();
@@ -63,24 +63,24 @@ export class VideoReactionsComponent implements OnInit {
     this.allReactions = this.video?.reactions;
     switch (reactionNumber) {
       case 1:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Like)
+        return this.allReactions?.filter((x) => x.reaction == ReactionType.Like)
           .length;
       case 2:
-        return this.allReactions.filter(
+        return this.allReactions?.filter(
           (x) => x.reaction == ReactionType.Dislike
         ).length;
       case 3:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Love)
+        return this.allReactions?.filter((x) => x.reaction == ReactionType.Love)
           .length;
       case 4:
-        return this.allReactions.filter((x) => x.reaction == ReactionType.Fun)
+        return this.allReactions?.filter((x) => x.reaction == ReactionType.Fun)
           .length;
       case 5:
-        return this.allReactions.filter(
+        return this.allReactions?.filter(
           (x) => x.reaction == ReactionType.Astonishment
         ).length;
       case 6:
-        return this.allReactions.filter(
+        return this.allReactions?.filter(
           (x) => x.reaction == ReactionType.Magically
         ).length;
       default:
