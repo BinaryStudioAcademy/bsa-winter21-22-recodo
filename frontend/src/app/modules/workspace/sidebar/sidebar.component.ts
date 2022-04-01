@@ -19,11 +19,10 @@ export class SidebarComponent implements OnChanges {
   constructor(public dialog: MatDialog, private userService: UserService) {}
 
   ngOnChanges() {
-    this.selectedCriteria = this.user.teams.filter(
+    this.selectedCriteria = this.user?.teams?.filter(
       (t) => t.authorId === this.user.id
     )[0];
-
-    this.value = this.selectedCriteria.name;
+    this.value = this.selectedCriteria?.name;
     this.initValues();
   }
 
@@ -32,7 +31,7 @@ export class SidebarComponent implements OnChanges {
   }
 
   onChange() {
-    this.selectedCriteria = this.user.teams.filter(
+    this.selectedCriteria = this.user?.teams?.filter(
       (t) => t.name === this.value
     )[0];
 
