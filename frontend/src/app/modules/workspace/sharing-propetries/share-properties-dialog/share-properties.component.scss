@@ -31,6 +31,8 @@
     border-radius: 3px;
     .text-link {
       padding: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
