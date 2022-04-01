@@ -4,6 +4,6 @@
     {
         public string Provider { get; set; }
         public string IdToken { get; set; }
-        public string WorkspaceName { get; set; } = "Default";
+        public string WorkspaceName { get; set; } = "My Workspace";
     }
 }
