@@ -1,4 +1,4 @@
-FROM node:lts as build
+FROM node:latest as build
 COPY package.json package-lock.json ./
 RUN npm install && mkdir /build && mv ./node_modules ./build
 WORKDIR /build

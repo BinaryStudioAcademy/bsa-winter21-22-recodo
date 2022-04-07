@@ -22,13 +22,7 @@ export class BaseComponent {
   ) {
     this.customService.init();
     this.route.params.subscribe((params) => {
-      if (params['videoId']) {
-        this.isShared = true;
-      } else {
-        this.isShared = false;
-      }
-    });
-    this.registrationService
+      this.registrationService
       .getUser()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
@@ -37,5 +31,12 @@ export class BaseComponent {
         }
         this.currentUser = user;
       });
+
+      if (params['id']) {
+        this.isShared = true;
+      } else {
+        this.isShared = false;
+      }
+    });
   }
 }

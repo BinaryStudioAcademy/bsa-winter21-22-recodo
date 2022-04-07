@@ -16,6 +16,15 @@ button:disabled {
     color: #989898;
 }
 
+.errors {
+    width: 100%;
+    min-height: 25px;
+    
+    small {
+        color: red;
+    }
+}
+
 ::ng-deep.mat-form-field-ripple {
     background-color: #FB6D3A !important;
 }

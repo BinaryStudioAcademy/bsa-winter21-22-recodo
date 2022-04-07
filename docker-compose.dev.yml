@@ -2,13 +2,17 @@ version: '3.1'
 
 services:
   azurite:
+    container_name: 'azurite'
     image: mcr.microsoft.com/azure-storage/azurite
     restart: always
-    command: "azurite --blobHost 127.0.0.1 --blobPort 10000"
+    command: "azurite --blobHost 0.0.0.0 --blobPort 10000"
     ports:
       - 10000:10000
+    networks:
+      - backend
 
   db:
+    container_name: 'postgres-database'
     image: postgres
     restart: always
     ports:
@@ -47,13 +51,15 @@ services:
     environment:
         ASPNETCORE_URLS: http://+:5060
         ConnectionStrings__BlobConnection: "UseDevelopmentStorage=true"
-        ConnectionStrings__BlobConnectionString: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+        ConnectionStrings__BlobConnectionString: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;"
+        MainApiUrl: http://host.docker.internal:5050/api/
     depends_on:
       - azurite
 
   recodo-frontend:
     depends_on:
         - recodo-backend
+        - recodo-file-api
     build:
       context: frontend
       dockerfile: Dockerfile.dev

@@ -36,7 +36,7 @@ namespace Recodo.BLL.Services
                 IsSaving = false, //Rename to IsSaved
                 AuthorId = Convert.ToInt32(authorId),
                 CreatedAt = DateTime.Now,
-                Name = $"Video_{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}_{DateTime.Now.Hour}{DateTime.Now.Minute}",
+                Name = DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"),
                 Link = "",
             };
 

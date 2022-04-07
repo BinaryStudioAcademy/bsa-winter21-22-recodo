@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { SharingVideoDialogComponent } from '../modules/workspace/sharing-propetries/sharing-video/sharing-video-dialog.component';
+import { SharingVideoDialogComponent }
+  from '../modules/workspace/sharing-propetries/sharing-video/sharing-video-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class SendDialogService implements OnDestroy {
@@ -20,6 +21,7 @@ export class SendDialogService implements OnDestroy {
       minWidth: 600,
       autoFocus: true,
       backdropClass: 'dialog-backdrop',
+      panelClass: 'share-dialog',
     });
   }
 
