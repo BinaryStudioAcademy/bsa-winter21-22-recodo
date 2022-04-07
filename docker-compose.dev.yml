@@ -1,0 +1,72 @@
+version: '3.1'
+
+services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    restart: always
+    command: "azurite --blobHost 127.0.0.1 --blobPort 10000"
+    ports:
+      - 10000:10000
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+    environment:
+      POSTGRES_DB: recododb
+      POSTGRES_PASSWORD: strong_unique_password
+
+  recodo-backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile.API
+    container_name: 'recodo-backend'
+    ports:
+      - 5050:5050
+    networks:
+      - backend
+    environment:
+      ASPNETCORE_URLS: http://+:5050
+      ConnectionStrings__DefaultConnection: 'Server=db;Port=5432;Database=recododb;Username=postgres;Password=strong_unique_password'
+      SecretJWTKey: "secret_jwt_key_recodo"
+    depends_on:
+      - db
+
+  recodo-file-api:
+    build: 
+      context: backend
+      dockerfile: Dockerfile.FileAPI
+    container_name: 'recodo-file-api'
+    ports:
+      - 5060:5060
+    networks:
+      - backend
+    environment:
+        ASPNETCORE_URLS: http://+:5060
+        ConnectionStrings__BlobConnection: "UseDevelopmentStorage=true"
+        ConnectionStrings__BlobConnectionString: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+    depends_on:
+      - azurite
+
+  recodo-frontend:
+    depends_on:
+        - recodo-backend
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    container_name: 'recodo-frontend'
+    restart: on-failure
+    ports:
+        - "4200:80"
+    networks:
+        - backend
+        - frontend
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
