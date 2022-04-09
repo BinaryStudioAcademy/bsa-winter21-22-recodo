@@ -1,0 +1,35 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Recodo.Desktop.Main"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Recodo.Desktop.Main.RedirectWindow"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Background="Transparent" 
+        Title="Recodo" Height="180" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Border Background="{StaticResource MaterialDesignLightBackground}" CornerRadius="6" BorderBrush="#78293B" BorderThickness="2">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="ProgressPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0" Visibility="Visible">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" x:Name="DeterminateCircularProgress" IsIndeterminate="True" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12 12 12 12" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30">
+                <TextBlock FontSize="16" Margin="0,0,0,0" HorizontalAlignment="Center"><Bold><Run Text="Sign in from your browser to continue"/></Bold></TextBlock>
+                <TextBlock Name="RedirectText" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="14"><Run Text="Your default browser opened automatically"/></TextBlock>
+            </StackPanel>
+            <Button Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#B6445D" Margin="0,0,0,0" Height="28" Width="28" Padding="4,4,4,4" materialDesign:ButtonAssist.CornerRadius="6" Click="Button_Click">
+                <StackPanel Width="20" Height="20">
+                    <Image Source="/Icons/Panel/delete_focus.png" Height="20" Width="20" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Border>
+</Window>

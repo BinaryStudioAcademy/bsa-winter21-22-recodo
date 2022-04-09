@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+
+  recodo-backend:
+    image: jyuart/recodo-backend
+    container_name: 'recodo-backend'
+    ports:
+      - 5050:5050
+    networks:
+      - backend
+    environment:
+      ASPNETCORE_URLS: http://+:5050
+      ASPNETCORE_ENVIRONMENT: 'Production'
+      ConnectionStrings__DefaultConnection: 'Server=db;Port=5432;Database=recododb;Username=postgres;Password=strong_unique_password'
+
+  recodo-file-api:
+    image: jyuart/recodo-file-api
+    container_name: 'recodo-file-api'
+    ports:
+      - 5060:5060
+    networks:
+      - backend
+    environment:
+        ASPNETCORE_URLS: http://+:5060
+        ASPNETCORE_ENVIRONMENT: 'Production'
+
+  recodo-frontend:
+    depends_on:
+        - recodo-backend
+    image: jyuart/recodo-frontend
+    container_name: 'recodo-frontend'
+    restart: on-failure
+    ports:
+        - "80:80"
+        - "443:443"
+    networks:
+        - backend
+        - frontend
+    volumes:
+      - /etc/letsencrypt:/cert
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge

@@ -1,0 +1,30 @@
+<div class="spinner" *ngIf="this.isLoading; else loaded">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<ng-template #loaded class="loaded-container">
+  <div class="no-access-container" *ngIf="this.checked; else elseBlock">
+    <img class="no-access-image" src="../../../../../assets/no-access.png" />
+    <p class="no-access-text">
+      <strong>Such video doesn't exist or you have no access to it</strong>
+    </p>
+  </div>
+  <ng-template #elseBlock>
+    <div class="w-100">
+      <div class="actions-container">
+        <button mat-button class="button-outlined">
+          {{ viewsNumber }} views
+        </button>
+        <button mat-icon-button>
+          <mat-icon svgIcon="details"></mat-icon>
+        </button>
+      </div>
+      <app-video-player></app-video-player>
+      <h1 class="video-name"><strong>{{this.currentVideo?.name}}</strong></h1>
+      <app-video-reactions
+      class="reactions-container"
+      [video]="currentVideo"
+      (newReaction)="updateVideo()"
+      (newCommentCreated)="sendComment($event)"></app-video-reactions>
+    </div>
+  </ng-template>
+</ng-template>

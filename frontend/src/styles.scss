@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@vime/core/themes/default.css';
+
+@import '~@vime/core/themes/light.css';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.input-form .mat-form-field-wrapper .mat-form-field-flex {
+  background-color: white;
+  padding: 0 0.75em 0 0.75em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
+.button-accent {
+  color: white;
+  background: #fb6d3a;
+  border: 1px solid #fb6d3a !important;
+}
+
+.button-outlined {
+  color: black;
+  background: #f4e9e9;
+  border: 1px solid #fb6d3a !important;
+}
+
+.button-disabled {
+  background: #e0d8d7;
+  color: #989898;
+  border: 1px solid #e0d8d7 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 1em;
+  background-color: rgba($color: #1a0c0c3d, $alpha: 0.2);
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #434343;
+  box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%),
+    inset -2px -2px 2px rgb(0 0 0 / 25%);
+}
+
+mat-select-min-line ng-tns-c111-2 ng-star-inserted {
+  font-weight: bold;
+}
+
+.not-empty-select.mat-selected {
+  color: green !important;
+}
+
+.not-empty-select.mat-selected {
+  color: white;
+  font-size: 30px;
+}
+
+.mat-select-value-text {
+  color: white;
+}
+
+.snackbar {
+  background-color: #b6445d;
+  color: #fff;
+}
+
+.workspace-user .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+}
+
+.share-dialog {
+  .mat-dialog-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgb(115, 41, 57, 0.6);
+    ::selection {
+      background: #b6445d;
+    }
+  }
+}
